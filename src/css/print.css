@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* CSS Document */
+
+.forPrint-allBorder{
+border:1px solid #CCCCCC;
+}
+
+
+.forPrint-topBorder{
+border-top:1px solid #CCCCCC;
+}
+
+.forPrint-topLeftBorder{
+border-top:1px solid #CCCCCC;
+border-left:1px solid #CCCCCC;
+}
+
+.forPrint-topLeftBtomBorder{
+border-top:1px solid #CCCCCC;
+border-left:1px solid #CCCCCC;
+border-left:1px solid #CCCCCC;
+}
+
+.forPrint-topBtomBorder{
+border-top:1px solid #CCCCCC;
+border-bottom:1px solid #CCCCCC;
+}
+

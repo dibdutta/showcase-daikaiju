@@ -1,0 +1,521 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>::Movie Poster Exchange::</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"  >
+<meta name="description" content="{$metaDescription}" >
+<meta name="keywords" content="{$metaKeywords}" >
+
+
+<!-- round corner start here  -->
+<!--<link rel="stylesheet" href="{$actualPath}/css/menu.css" type="text/css" media="screen" />
+-->
+<!-- round corner ends here  -->
+<link rel="shortcut icon" href="{$smarty.const.CLOUD_STATIC}favicon.ico" >
+
+<!--<link href="https://c15123524.ssl.cf2.rackcdn.com/template_test.css" rel="stylesheet" type="text/css"/>-->
+
+
+<link href="https://d2m46dmzqzklm5.cloudfront.net/css/style.css" rel="stylesheet" type="text/css" />
+<link href="https://d2m46dmzqzklm5.cloudfront.net/css/fonts.css" rel="stylesheet" type="text/css" />
+<link href="https://d2m46dmzqzklm5.cloudfront.net/css/template.css" rel="stylesheet" type="text/css" />
+
+
+
+
+{* <script type="text/javascript" src="{$smarty.const.PAGE_LINK_SSL_CSSJS}/javascript/common.js.php"></script> *}
+<script type="text/javascript" src="{$actualPath}/javascript/common.js.php"></script>
+
+
+ <!-- Photogallery script  -->
+ 
+ 	<link rel="stylesheet" href="https://d2m46dmzqzklm5.cloudfront.net/css/glob.css">
+
+	<script src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery.min.js"></script>
+	<script src="https://d2m46dmzqzklm5.cloudfront.net/js/slides.jquery.js"></script>
+    
+    {literal}
+	<script>
+		$(function(){
+			$('#slides').slides({
+				preload: true,
+				preloadImage: '{/literal}{$actualPath}{literal}/javascript/Slides-SlidesJS-1/examples/images-with-captions/img/loading.gif',
+				play: 1800,
+				pause: 1500,
+				hoverPause: true,
+				animationStart: function(current){
+					$('.caption').animate({
+						bottom:-35
+					},100);
+					if (window.console && console.log) {
+						// example return of current slide number
+						console.log('animationStart on slide: ', current);
+					};
+				},
+				animationComplete: function(current){
+					$('.caption').animate({
+						bottom:0
+					},200);
+					if (window.console && console.log) {
+						// example return of current slide number
+						console.log('animationComplete on slide: ', current);
+					};
+				},
+				slidesLoaded: function() {
+					$('.caption').animate({
+						bottom:0
+					},200);
+				}
+			});
+		});
+		
+	function submitDetailsForm(){
+        console.log("Inside submitDetailsForm");
+        console.log("Username:", $('#username').val());
+        console.log("Password:", $('#password').val() ? '***' : 'empty');
+		$.ajax({
+			url: 'auth.php',
+			type: 'get',
+			data: { username: $('#username').val(),password:$('#password').val(),mode:'process_login' },
+			success: function(data) {
+					   console.log("AJAX success, data:", data);
+					   if(data=='2'){
+					   	  window.location.href  = "buy.php?list=upcoming";
+					   }else if (data=='1'){
+					   	  window.location.href  = "buy.php?list=weekly";
+					   }else if (data=='3'){
+					   	  window.location.href  = "buy.php?list=weekly";
+					   }else{
+					   	 $("#error").text(data);
+					   }
+					 },
+			error: function(xhr, status, error) {
+					   console.log("AJAX error:", status, error);
+					   console.log("Response:", xhr.responseText);
+					 }
+		});
+	 }
+	
+	function hidelogin(){
+		$('#login-panel').hide();
+	}
+	function refine_search(type,id){
+		if(type=='decade'){
+			$('#decade_id').val(id);
+			$('#poster_size_id').val('');
+			$('#genre_id').val('');
+			$('#country_id').val('');
+		}
+		if(type=='poster_size'){
+			$('#poster_size_id').val(id);
+			$('#decade_id').val('');
+			$('#genre_id').val('');
+			$('#country_id').val('');
+		}
+		if(type=='country'){
+			$('#poster_size_id').val('');
+			$('#decade_id').val('');
+			$('#genre_id').val('');
+			$('#country_id').val(id);
+		}
+		if(type=='genre'){
+			$('#poster_size_id').val('');
+			$('#decade_id').val('');
+			$('#genre_id').val(id);
+			$('#country_id').val('');
+		}
+		$('#frm_refine').submit();
+ }
+ 	function check_session(){
+    $.post('ajax.php', {mode : 'delete_session'}, function(){
+
+    })
+	var actualPath=' {/literal}{$actualPath}{literal}';
+		$(location).attr('href',actualPath+'/register.php');
+}
+  function clear_text_for_poster(){
+    if($("#search_for_poster").val()=='Search For Items by Title,Descriptions,Genre..'){
+        $("#search_for_poster").val('');
+    }
+}
+	</script>
+    {/literal}
+
+
+    <!-- Featured Item slider script  -->
+    
+    
+    <!-- sign in popup  -->
+    <link rel="stylesheet" type="text/css" href="https://d2m46dmzqzklm5.cloudfront.net/css/dddropdownpanel.css" />
+	
+    
+    
+    
+
+</head>
+<body >
+
+<!--Page Starts-->
+<div id="page">
+ 	<div id="header-wrapper">
+    <!--Header Starts-->
+     <div id="header">
+	  <form name="frm_refine" id="frm_refine" method="get" action="{$actualPath}/buy.php">
+                <input type="hidden" name="mode" value="search" />
+                <input type="hidden" name="poster_size_id" id="poster_size_id" value="{$smarty.request.poster_size_id}" />
+                <input type="hidden" name="genre_id" id="genre_id" value="{$smarty.request.genre_id}" />
+                <input type="hidden" name="decade_id" id="decade_id" value="{$smarty.request.decade_id}" />
+                <input type="hidden" name="country_id" id="country_id" value="{$smarty.request.country_id}" />
+                {if $smarty.request.mode!='refinesrcStills'}
+                  <input type="hidden" name="list" id="list" value="{$smarty.request.list}" />
+				{else} 
+				  <input type="hidden" name="list" id="list" value="stills" />
+				{/if}
+				<input type="hidden" name="is_expired" value="{$is_expired}" />
+         </form>
+         <!--<div class="banner">
+             <a href="{$smarty.const.BANNER_LINK}" class="bannertxt" style="float:left;" title="Movie Poster Exchange" id="banner">{$smarty.const.BANNER_TITLE}</a>
+             <a href="http://www.gavelsnipe.com" target="_blank" style=""><img src="{$smarty.const.CLOUD_STATIC}banner2.png" alt="Gavelsnipe" title="Gavelsnipe"/></a>
+         </div>-->
+         {*<div style="position:absolute; left:167px; top:90px; background:#fff; height:15px;color:red;">
+		 <label>The site will be under maintainance for three(3) Hrs.sorry for the inconvenience caused</label>
+		 </div>*}
+        <div id="logopanel"><a href="{$actualPath}/index.php" title="Movie Poster Exchange"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/logo.png" alt="Movie Poster Exchange" title="Movie Poster Exchange" width="165" height="93"/></a></div>
+        <!--Header Top navigation Starts-->
+        <div id="mainnavigation" class="innerbg">
+          <ul class="menu">
+                <li {if $smarty.const.PHP_SELF == '' || $smarty.const.PHP_SELF == '/index.php'}class="active homeover"{/if}><a href="{$actualPath}/index.php" title="HOME"><span>HOME</span></a></li>
+                <li {if $smarty.request.list == 'weekly' || $smarty.request.list == 'extended'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly" title="BUY"><span>AUCTIONS</span></a></li>
+                <li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy.php?list=fixed" title="POSTER SHOP"><span>POSTER SHOP</span></a></li>
+                <li {if $smarty.const.PHP_SELF == '/sell.php'}class="active"{/if}><a href="{$actualPath}/sell.php" title="SELL"><span>SELL</span></a></li>
+                <li {if $smarty.const.PHP_SELF == '/faq.php'}class="active"{/if}><a href="{$actualPath}/faq.php" title="FAQ"><span>FAQ</span></a></li>
+                <li {if $smarty.const.PHP_SELF == '/contactus.php'}class="active"{/if}><a href="{$actualPath}/contactus.php" title="CONTACT"><span>CONTACT</span></a></li>
+                <li  ><a href="{$actualPath}/sold_item.php" title="SOLD ITEMS ARCHIVE"><span style="color:#CC0000;">SOLD ITEMS ARCHIVE</span></a></li>
+              </ul>
+              
+         
+           </div>    
+          <!-- ADD THIS ICON -->   
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <!-- FACEBOOK  -->
+         <!-- <a class="facebooklike" title="Like MoviePosterExchange on Facebook" href="https://www.facebook.com/pages/MoviePosterExchangecom/105014962910848" target="_blank">
+          <img src="{$smarty.const.CLOUD_STATIC}icon_facebook.jpg" alt="" /></a>-->
+          <!-- FACEBOOK -->
+          
+          <!-- TWITTER -->
+         <!-- <a class="btn" target="_blank" id="follow-button" title="Follow @MoviePosterExch on Twitter" href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Fwww.movieposterexchange.com%2Findex.php&amp;region=follow_link&amp;screen_name=MoviePosterExch&amp;source=followbutton&amp;variant=2.0">
+          <img src="{$smarty.const.CLOUD_STATIC}icon_twitter.jpg" alt="" /></a>-->
+          <!-- TWITTER -->
+          
+          
+          
+        </div>
+        <!--Search Panel Starts-->
+        
+        <div id="searchbar">
+        <!--<div class="search-left-bg"></div>-->
+            <div class="search-midrept-bg ">
+                <label><img src="https://d2m46dmzqzklm5.cloudfront.net/images/search-img.png" width="20" height="37" /></label>
+                <form name="frm_keysearch" method="get" action="{$actualPath}/buy.php">
+                    <input type="hidden" name="list" value="{$smarty.request.list}" class="srchbox-txt" />
+                    <input type="hidden" name="mode" value="key_search_global" class="srchbox-txt" />
+					<input type="hidden" name="is_expired" value="{$is_expired}"  />
+                    <input type="text" name="keyword"  id="search_for_poster" class="srchbox-txt"  {if $smarty.request.mode == 'key_search'} value="{$smarty.request.keyword}"{else} value="Search For Items by Title,Descriptions,Genre.." {/if} onclick="clear_text_for_poster();" />
+                    <!--<div style="float:left;"><img src="{$smarty.const.CLOUD_STATIC}search_right_crn.png" width="11" height="35" /></div>-->
+                    <!--<div class="styled-select">
+                        <select name="search_type" >
+                            <option value="title" {if $smarty.request.search_type=='title'}selected="selected" {/if}>Poster Titles</option>
+                            <option value="title_desc" {if $smarty.request.search_type=='title_desc'}selected="selected" {/if}>Poster Descriptions</option>
+							<option value="stills" {if $smarty.request.search_type=='stills'}selected="selected" {/if}>Photo Titles</option>
+                            <option value="stills_desc" {if $smarty.request.search_type=='stills_desc'}selected="selected" {/if}>Photo Descriptions</option>
+                        </select>
+                    </div>-->
+                    <input type="submit" value="" class="srchbtn-main" />
+                </form>
+                <input type="button" value="" class="refine-srchbtn-main" onclick="$(location).attr('href', '{$actualPath}/buy.php?mode=refinesrc');" />
+            </div>
+       
+        <!--<div class="search-right-bg"></div>-->
+        <!-- Mailchimp Stars -->
+       {if $smarty.session.sessUserID == ''}
+    	<div class="fll pl122">
+        
+         <ul>
+        <li><!--<a href="javascript:void(0);" class="drop" onclick="showlogin();" ><img src="{$actualPath}/images/signin.png" width="60" height="37" />-->
+        <div id="mypanel" class="ddpanel" style="margin-top:16px;">
+<!--<div id="mypanelcontent" class="ddpanelcontent">-->
+<div>
+<div id="signup-login" style="position: absolute; left: 0pt; top: 0pt; margin: 32px 0pt 0pt 700px; z-index:70000000;">
+<div class="col_2">
+			   <form name="frmlogin" id="frmlogin" method="post" action="auth.php">
+            	<input type="hidden" name="mode" value="process_login" />
+                
+                <table width="120" border="0" cellspacing="2" cellpadding="0" id="login-panel" style="display:none;">
+                <tr>
+                <td>
+               	 <h1>Member's Login</h1>
+                </td>
+                </tr>
+				<tr>
+				<td><div style="width: 30px; height: 30px; position: absolute; z-index: 8; margin: -60px 0px 0px 210px;"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/fancy_close.png" width="30" height="30" onclick="hidelogin();" style="cursor:pointer;"/></div></td>
+				</tr>
+                <tr>
+					<td id="error">
+					
+					</td>
+				  <tr>
+					<td>
+					<input type="text" id="username" name="username" {if $smarty.const.NewUserName!=''} value="{$smarty.const.NewUserName}" {/if} class="w170 required" />
+					</td>
+				  </tr>
+				  <tr>
+					<td>					
+					<input type="password" id="password" name="password" {if $smarty.const.NewPassWord!=''} value="{$smarty.const.NewPassWord}" {/if} class="w170 required"  style="font-size:10px;" onfocus="{literal}$(this).keypress(function(event){
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+			if(keycode == '13'){			
+			submitDetailsForm()
+			}	
+		}); {/literal}" />
+					</td>
+				  </tr>
+				  <tr>
+					<td><input type="button" class="login-blue-btn" value="Login" id="submitButton" name="submit" onclick="submitDetailsForm()" >
+									   </td>
+				  </tr>
+				  <tr>
+					<td> <a href="{$actualPath}/forget_password.php">Forgot password</a></td>
+				  </tr>
+				</table>
+              </form>
+            </div></div>
+
+
+</div>
+<div id="mypaneltab" class="ddpaneltab">
+<div class="pcontent"></div>
+<a href="javascript:void(0);" onclick="showLogIn();"><span>Sign In</span></a>
+</div>
+
+</div><!-- Begin Home Item -->
+         
+        <div ><!-- Begin 2 columns container -->
+    
+    
+            &nbsp;
+    
+            
+          
+        </div><!-- End 2 columns container -->
+    
+    </li>
+    </ul>  
+    	 </div>
+        
+        <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
+        <div class="w60 fll pt18 pl14 scart"><a href="javascript:void(0)" onclick="check_session()">Join Us</a></div>
+		{elseif $smarty.session.sessUserID != ''}
+        <div class="w60 fll pt07 pl122">
+		<ul id="menu"> 
+     <li class="menu_right"><a href="#" class="drop"> User Panel <!--Welcome {$smarty.session.sessUsername}!--></a>
+     <div class="pcontent"></div>
+         <div class="dropdown_4columns align_right"><!-- Begin 2 columns container -->
+    
+            <div class="col_1">
+            
+                <h3>MY BUYING</h3>
+                <ul>
+                   <li><a href="{$actualPath}/my_bid.php" >My Active Bids</a></li>
+                    <li><a  href="{$actualPath}/offers.php">My Outgoing Offers&nbsp;&nbsp;({$totalUnReadOutgoingOffer})</a></li>
+                    <li><a  href="{$actualPath}/offers.php?mode=incoming_counters" {if $totalUnReadIncomingCounters > 0} style="color:#FF4E09;" {/if}>My Incoming Counters&nbsp;&nbsp;({$totalUnReadIncomingCounters})</a></li>
+                    <li><a  href="{$actualPath}/my_bid.php?mode=closed">My Closed Items</a></li>
+                    <li><a  href="{$actualPath}/user_watching.php">Watch List&nbsp;&nbsp;({$count_watching})</a></li>
+                </ul>   
+                 
+            </div>
+    
+            <div class="col_1">
+            
+                <h3>MY SELLING</h3>
+                <ul>
+                    <li><a  href="{$actualPath}/myselling.php?mode=fixed">Manual Upload</a></li>
+                    <!--<li><a  href="{$actualPath}/myselling.php?mode=bulkupload">Bulk Upload</a></li>-->
+                    <li><a  href="{$actualPath}/myselling.php?mode=selling">Selling (Auction Items)</a></li>
+					<li><a  href="{$actualPath}/myselling.php?mode=fixed_selling">Selling (Fixed Items)</a></li>	
+                    <li><a  href="{$actualPath}/offers.php?mode=incoming_offers" {if $totalUnReadIncomingOffers > 0} style="color:#FF4E09;" {/if}>My Incoming Offers&nbsp;&nbsp;({$totalUnReadIncomingOffers})</a></li>
+                    <li><a  href="{$actualPath}/offers.php?mode=outgoing_counters">My Outgoing Counters&nbsp;&nbsp;({$totalUnReadOutgoingCounters})</a></li>
+					<li><a  href="{$actualPath}/myselling.php?mode=pending">Pending</a></li>
+					<li><a  href="{$actualPath}/myselling.php?mode=sold">Sold</a></li>
+					<li><a  href="{$actualPath}/myselling.php?mode=upcoming">Upcoming</a></li>
+					<li><a  href="{$actualPath}/myselling.php?mode=unsold">Unsold/Closed</a></li>
+					<li><a  href="{$actualPath}/myselling.php?mode=unpaid">Sale Pending</a></li>
+                </ul>   
+                 
+            </div>
+    
+            <div class="col_1">
+            
+                <h3>MY ACCOUNT</h3>
+                <ul>
+                    <li><a  href="{$actualPath}/myaccount.php">My Account / Dashboard</a></li>
+                    <li><a  href="{$actualPath}/myaccount.php?mode=profile">Profile</a></li>
+                    <li><a  href="{$actualPath}/send_message.php">Messages&nbsp;&nbsp;({$countMsg}) </a></li>
+                    <li><a  href="{$actualPath}/my_want_list.php">My Want List ({$total_want_count})</a></li>
+                    <li><a  href="{$actualPath}/my_invoice.php">Invoices/Reconciliation</a></li>
+					<li><a  href="{$actualPath}/my_report.php">Reports</a></li>
+					<li><a  href="{$actualPath}/myaccount.php?mode=change_password">Change Password</a></li>
+                </ul>   
+                 
+            </div>
+    
+            
+        </div><!-- End 4 columns container -->
+</li> 
+      </ul>  
+    	 </div>
+         <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
+        <div class="w60 fll pt18 pl14 scart"><a href="javascript:void(0)" onclick="$(location).attr('href','{$actualPath}/myaccount.php?mode=logout');">Sign Out</a></div>
+		{/if}
+        <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
+        <div class="w24 fll pt18 pl14"><a href="{$actualPath}/cart.php"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/cart1-icon.png" width="24" height="15" /></a></div>
+    	<div class="w24 fll pt18 pl14 scart">({$totalCartCount})</div>
+       
+    	  
+	</div> 
+    
+        	<div class="clb fll">
+            <div id="mainnav" style="z-index:100000; width:995px;" >
+        <ul style="margin-left:8px; width:972px;">
+        <li class="pr10 mr10 fll">
+            <div class="features_menu_column mr10">
+                <div class="features_selector">
+                    <div class="trigger" id="trg">
+                    <a href="#" style="float: left; ">CATEGORY / GENRE</a>
+                    <div>
+                    
+                        <ul style="z-index:100000;" id="selector_box">
+						{section name=counter loop=$rightPanelCatRows}
+						{if $rightPanelCatRows[counter].fk_cat_type_id==2 && $rightPanelCatRows[counter].is_stills==0}
+						<li><a href="javascript:void(0);" onclick="refine_search('genre',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value}</a>
+						{if $smarty.request.genre_id == $rightPanelCatRows[counter].cat_id}
+						<img class="srch-cnclbtn" src="https://d2m46dmzqzklm5.cloudfront.net/images/checked.png"  border="0" onclick="$('#genre_id').val('');$('#frm_refine').submit();" />
+						{/if}
+						</li>
+						{/if}
+            			{/section} 
+                        
+                       
+                        </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="pr10 mr10 fll">
+            <div class="features_menu_column mr10">
+                <div class="features_selector">
+                    <div class="trigger" id="trg">
+                    <a href="#" style="float: left; ">Search All Sizes</a>
+                    <div>
+                        <ul style="z-index:100000;" id="selector_box">
+                       {section name=counter loop=$rightPanelCatRows}
+						{if $rightPanelCatRows[counter].fk_cat_type_id==1 && $rightPanelCatRows[counter].cat_id !='34'}
+						<li><a href="javascript:void(0);" onclick="refine_search('poster_size',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value|escape:'html'}</a>
+						{if $smarty.request.poster_size_id == $rightPanelCatRows[counter].cat_id}
+						<img class="srch-cnclbtn" src="https://d2m46dmzqzklm5.cloudfront.net/images/checked.png"  border="0" onclick="$('#poster_size_id').val('');$('#frm_refine').submit();" />
+						{/if}
+						</li>
+						{/if} 
+						{/section} 
+                        </ul>
+                     </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="pr10 mr10 fll">
+            <div class="features_menu_column mr10">
+                <div class="features_selector">
+                    <div class="trigger" id="trg">
+                    <a href="#" style="float: left; ">Search all Decades</a>
+                    <div>
+                        <ul style="z-index:100000;" id="selector_box">
+                        {section name=counter loop=$rightPanelCatRows}
+							{if $rightPanelCatRows[counter].fk_cat_type_id==3}
+							<li><a href="javascript:void(0);" onclick="refine_search('decade',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value|escape:'html'}</a>
+							{if $smarty.request.decade_id == $rightPanelCatRows[counter].cat_id}
+							<img class="srch-cnclbtn" src="https://d2m46dmzqzklm5.cloudfront.net/images/checked.png"  border="0" onclick="$('#decade_id').val('');$('#frm_refine').submit();" />
+							{/if}
+							</li>
+							{/if} 
+						{/section} 
+                        </ul>
+                    </div>    
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="pr10 mr10 fll">
+            <div class="features_menu_column mr10">
+                <div class="features_selector">
+                    <div class="trigger" id="trg">
+                    <a href="#" style="float: left; ">Search Countries</a>
+                    <div>
+                        <ul style="z-index:100000;" id="selector_box">
+                        {section name=counter loop=$rightPanelCatRows}
+						{if $rightPanelCatRows[counter].fk_cat_type_id==4}
+						<li><a href="javascript:void(0);" onclick="refine_search('country',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value}</a>
+						{if $smarty.request.country_id == $rightPanelCatRows[counter].cat_id}
+						<img class="srch-cnclbtn" src="https://d2m46dmzqzklm5.cloudfront.net/images/checked.png"  border="0" onclick="$('#country_id').val('');$('#frm_refine').submit();" />
+						{/if}
+						</li>
+						{/if}
+					{/section} 
+                        </ul>
+                    </div>    
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="pr10 mr10 flr">
+            <div class="features_menu_column2">
+                <div class="features_selector2">
+                    <div class="trigger" id="trg">
+                    
+                    <div>
+						<!-- GOOGLE TRANSLATOR --> 
+          <div id="google_translate_element" style="border:0;"></div>
+          {literal}
+          <script>
+			function googleTranslateElementInit() {
+			  new google.translate.TranslateElement({
+			    pageLanguage: 'en',
+			    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+			  }, 'google_translate_element');
+			}
+		 </script>
+		<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+		{/literal}
+          <!-- GOOGLE TRANSLATOR -->
+
+                    </div>    
+                    </div>
+                </div>
+            </div>
+        </li>
+
+
+
+        </ul>
+        
+        </div>
+        
+          </div>
+    
+    
+    
+    	<!-- Mailchimp Ends -->
+    	</div>
+  </div>
+<!--Page Ends-->

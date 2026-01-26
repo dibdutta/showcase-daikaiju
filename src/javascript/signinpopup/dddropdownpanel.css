@@ -1,0 +1,62 @@
+.ddpanel .ddpanelcontent{ /*CSS for "content" DIV of Drop Down Panel*/
+/*background: transparent; background of Drop Down Panel*/
+/*Do NOT add any "padding" or "margin" properties here! Any padding/margin should be added to your content's container within this DIV instead */
+position:absolute;
+z-index:1000001;
+	font-family:'open_sanssemibold';
+	font-size:11px; 
+	color: #ffffff;
+	margin-top:40px;
+	/* Gradient background */
+	background:#d9d9d9;
+	background: -moz-linear-gradient(top, #EEEEEE, #BBBBBB);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#EEEEEE), to(#BBBBBB));
+
+	/* Rounded Corners */
+	-moz-border-radius: 0px 5px 5px 5px;
+	-webkit-border-radius: 0px 5px 5px 5px;
+	border-radius: 0px 5px 5px 5px;
+
+}
+
+.ddpanel .ddpaneltab{ /*CSS for "toggle" tab DIV of Drop Down Panel*/
+margin-right: 20px;
+font: normal 12px;
+}
+
+.ddpanel .ddpaneltab a{ /*"toggle" tab related CSS*/
+float: right;
+	font-family:'open_sanssemibold';
+	font-size:11px; 
+	color: #ffffff;
+/*background: black url(toggleleft.gif) no-repeat left bottom; background of toggle tab*/
+text-decoration: none;
+/*letter-spacing: 1px;*/
+}
+
+.ddpanel .ddpaneltab a span{ /*"toggle" tab related CSS*/
+float: left;
+display: block;
+/*background:url("img/drop.png") no-repeat right 7px;
+padding: 1px 12px 4px 13px;*/
+padding: 0;
+cursor: pointer;
+	
+}
+
+.ddpanel .ddpaneltab a span img.pointerimage{ /*CSS for pointer image within toggle tab*/
+margin-top: 2px;
+margin-left: 5px;
+}
+
+.ddpanel .ddpaneltab a:hover{ /*"toggle" tab related CSS*/
+background-color: transparent; /*background of toggle tab onMouseover*/
+}
+
+.ddpanel .ddpaneltab a:active, .ddpanel .ddpaneltab a:focus{ /*"toggle" tab related CSS*/
+outline: 0;
+}
+
+.ddpanel .ddpaneltab a:hover span{ /*"toggle" tab related CSS*/
+background-color: transparent;
+}

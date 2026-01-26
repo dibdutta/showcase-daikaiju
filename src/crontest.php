@@ -1,0 +1,1 @@
+<?php mail("ranjan.majumder@geotechinfo.net,madhur.raj@geotechinfo.net,soumya.roy@geotechinfo.net", "Cron Test", "This is a test!"); ?>

@@ -1,0 +1,498 @@
+ {include file="header.tpl"}
+<link href="{$smarty.const.DOMAIN_PATH}/javascript/jquery-countdown-1.5.9/jquery.countdown.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="{$smarty.const.DOMAIN_PATH}/javascript/jquery-countdown-1.5.9/jquery.countdown.js"></script>
+
+	{literal}	
+<script type="text/javascript">
+function toggleDiv(id,flagit,type,track) {
+ 	 var url = "bid_popup.php";
+	 if(type==1 && track==1){
+	 	$.get(url, {mode : 'offer_popup', id : id}, function(data){
+			$('#'+id).html(data);
+	 	});
+	 }else if(type==0 && track==1){
+	 	$.get(url, {mode : 'bid_popup', id : id}, function(data, textStatus){
+	 		$('#'+id).html(data);
+	 	});
+	 }
+	if (flagit=="1"){
+	document.getElementById(''+id+'').style.visibility = "visible";
+	}
+	else
+	if (flagit=="0"){
+	$('#'+id).html("");
+	document.getElementById(''+id+'').style.visibility = "hidden"
+	}
+}
+
+		function test_enter(auction_id){
+		//alert("hello");
+			var newData = auction_id.split("_");
+			$('#'+newData[2]).html("");
+			$("#offer_bttn_"+newData[2]).click();
+			return false;			 
+		}
+		function test_enter_for_bid(auction_id){
+		
+			var newData = auction_id.split("_");
+			$('#'+newData[2]).html("");
+			$("#bid_bttn_"+newData[2]).click();
+		}	
+		function test_blur(auction_id){
+			var newData = auction_id.split("_");
+			$('#'+auction_id).unbind('keypress');
+			$('#offer_bttn_'+newData[2]).unbind('click');
+
+		}
+		function test_blur_for_bid(auction_id){
+			var newData = auction_id.split("_");
+			$('#'+auction_id).unbind('keypress');
+			$('#bid_bttn_'+newData[2]).unbind('click');
+		}
+        function clear_text(){
+            if($("#search_buy_items").val()=='Search Auctions..'){
+                document.getElementById('search_buy_items').value='';
+            }if($("#search_buy_items").val()=='Search Stills..'){
+            document.getElementById('search_buy_items').value='';
+			}
+        }
+	
+		function search_buy_items_func(list){
+			var search_text= $('#search_buy_items').val();
+			var is_expired = $('#is_expired').val();
+
+			window.location.href="buy.php?list="+list+"&mode=key_search&is_expired="+is_expired+"&keyword="+encodeURIComponent(search_text);
+		}
+		function key_search_buy(list){
+		
+			var search_text= $('#search_buy_items').val();
+			var is_expired = $('#is_expired').val();
+			window.location.href="buy.php?list="+list+"&mode=key_search&is_expired="+is_expired+"&keyword="+encodeURIComponent(search_text);
+		}
+		function key_search_buy_clear(){
+			$('#search_buy_items').unbind('keypress');
+			//$('#search_buy_items_func').unbind('click');
+		}
+</script>
+<style type="text/css">
+.popDiv { position:absolute; min-width:120px; list-style-type:none; background-color:#881318 ; z-index:1000 ;color:#fff; z-index:50; font-size:12px; padding:6px; outline:4px solid #881318; border: 1px solid #a3595c; margin-left:220px; margin-top:230px;visibility:hidden;}
+.popDiv_Auction { position:absolute; min-width:120px; list-style-type:none; background-color:#881318 ; z-index:1000; color:#fff; font-size:12px; padding:6px; outline:4px solid #881318; border: 1px solid #a3595c; margin-left:250px; margin-top:150px;visibility:hidden;}
+</style>
+{/literal}
+<div id="forinnerpage-container">
+  <div id="wrapper">
+    <!--Header themepanel Starts-->
+    <div id="headerthemepanel">
+      <!--Header Theme Starts-->
+      {include file="search-login.tpl"}
+      <!--Header Theme Ends-->
+    </div>
+    <!--Header themepanel Ends-->
+    <!-- page listing starts -->
+    <div id="inner-container"> {include file="right-panel.tpl"}
+      <div id="center">
+        <div id="squeeze">
+          <div class="right-corner">
+            <div id="inner-left-container">
+              <div id="tabbed-inner-nav">
+                <div class="tabbed-inner-nav-left">
+                  <ul class="menu">
+                    <li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/buy.php"><span>See all Items</span></a></li>
+                    <li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy.php?list=fixed"><span>Fixed Price Items</span></a></li>
+                    <li {if $smarty.request.list == 'weekly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly"><span>{if $totalLiveWeekly > 0}Live Auction{else}Auction Results{/if}</span></a></li>
+                    {*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=monthly"><span>Event Auctions</span></a></li>*}
+                    <li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy.php?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
+                    <li {if $smarty.request.list == 'stills'} class="active"{/if}><a href="{$actualPath}/buy.php?list=stills"><span>Still/Photos Section</span></a></li>
+					{*<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy.php?list=stills"><span>Still/Photos Section</span></a></li>*}
+				  </ul>
+                  
+                </div>
+              </div>
+              <form name="listFrom" id="listForm" action="" method="post" onsubmit="return false;">
+                <input type="hidden" name="mode" value="select_watchlist" />
+                <input type="hidden" name="is_track" id="is_track" value="" />
+                <input type="hidden" name="offset" value="{$offset}" />
+                <input type="hidden" name="toshow" value="{$toshow}" />
+                <input type="hidden" name="list" value="{$smarty.request.list}" />
+				<input type="hidden" name="is_expired" id="is_expired" value="{$is_expired}" />
+                <div class="innerpage-container-main">
+                 <div class="top-mid"><div class="top-left"></div></div>
+                
+                  <div class="left-midbg">
+                    <div class="right-midbg">
+                      <div class="mid-rept-bg"> {if $errorMessage<>""}
+                        <div class="messageBox">{$errorMessage}</div>
+                        {/if}
+                        {if $total > 0}
+                        <div class="top-display-panel">
+                          <div class="left-area" >
+                            <div class="dis">View as :</div>
+                            <ul class="menu">
+                              <li class="lista"><span class="active"></span></li>
+                              |
+                              {if $smarty.request.keyword!=''}
+                              <li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}&search_type={$smarty.request.search_type}&is_expired={$is_expired}"></a></li>
+                              {elseif $smarty.request.mode=='search' || $smarty.request.mode=='dorefinesrc'}
+                              <li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode={$smarty.request.mode}&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}&is_expired={$is_expired}"></a></li>
+                              {else}
+                              <li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}"></a></li>
+                              {/if}
+                            </ul>
+                          </div>
+						  <div class="soldSearchblock">
+                            	
+							<div style="width:270px; height:26px;border:1px solid #cecfd0; float:left;">
+                                    <input style="width:232px; height:23px;border:0px solid #cecfd0; padding:3px 0 0 0;" type="text" class="midSearchbg_edit fll" id="search_buy_items" name="search_sold" {if $smarty.request.mode == 'key_search'} value="{$smarty.request.keyword}" {elseif $smarty.request.list == 'stills'} value="Search Stills.." {else} value="Search Auctions.."{/if} onclick="clear_text();" onfocus="{literal}$(this).keypress(function(event){
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+			if(keycode == '13' && keycode != ''){
+			var list= {/literal}{if $smarty.request.list==''}''{else}'{$smarty.request.list}'{/if}{literal};
+			key_search_buy(list);
+			}	
+		}); {/literal}" onblur="key_search_buy_clear()"   />
+                                <input type="button" class="rightSearchbg" value=""  onclick="search_buy_items_func('{$smarty.request.list}')" />
+                            </div>    
+                            </div>
+                          <div class="sortblock">{$displaySortByTXT}</div>
+                          
+                          
+                        </div>
+                        <div class="top-display-panel2"> 
+							<div class="left-area">
+								<div class="results-area">{$displayCounterTXT}</div>
+								<div class="pagination" style=" padding:0px 5px;">{$pageCounterTXT}</div>
+							  </div>
+						  </div>
+                        {/if}
+                        {if $smarty.session.sessUserID <> ""}
+                        <!--<div class="light-grey-bg-inner">
+                          <div class="inner-grey">
+                           
+                          </div>
+                          <div class="clear"></div>
+                        </div>-->
+                        {/if}
+                        {if $total > 0}                    
+                        {if $smarty.session.sessUserID <> "" && $is_expired=='0'}
+                        <div class="light-grey-bg-inner">
+                          <div class="inner-grey SelectionBtnPanel">
+                            <div style="float:left; padding:0px; margin:0px;">
+                              <input type="button" class="select-all-btn" onclick="javascript: markAllSelectedRows('listForm'); return false;" style=" cursor:pointer;" value=""/>
+                              <input type="button" class="deselect-all-btn"  onclick="javascript: unMarkSelectedRows('listForm'); return false;" style=" cursor:pointer;" value=""/>
+                            <input type="button" class="watch-slctd-btn" onclick="this.form.submit();" value=""/>
+                            </div>
+                            <!--<a href="#"><strong>How to Order?</strong></a>-->
+                            {if $smarty.request.list == 'fixed'}
+                            <input type="button" class="place-all-offers-btn" onclick="placeAllBids(dataArr);" value=""/>
+                            {else}
+                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="" />
+                            {/if} </div>
+                          <div class="clear"></div>
+                        </div>
+                        {/if}
+                        <!-- start of movie posters --->
+						<div id="container">
+                        {section name=counter loop=$auctionItems}
+                        <div class="display-listing-main mb02">
+
+                          <div class="buylist pt20 pb20">
+                          {if $smarty.request.list=='weekly'}
+                          <div  class="" style="color:#000000;padding:8px 0;font-size:15px; clear:both;"><b class="weeklyevent">Week :&nbsp;{$auctionItems[counter].auction_week_title}</b></div>
+                          {/if}
+                          <table width="711" border="0" cellspacing="0" cellpadding="0">
+                              <tr>
+							     <td width="25" valign="top" class="pt10 tac">
+								  {if $smarty.session.sessUserID <> ""}
+                                   	<input type="checkbox" name="auction_ids[]" value="{$auctionItems[counter].auction_id}"/>
+                                   {/if} 
+								 </td>
+                                 <td width="200" class="buylisttb">
+<div><a href="#"><img  class="image-brdr"  src="http://www.movieposterexchange.com:8081/poster_photo/thumb_buy/{$auctionItems[counter].poster_thumb}"  onclick="redirect_poster_details({$auctionItems[counter].auction_id});" style="cursor:pointer;"  /></a>
+                                           
+										   </div>								
+								 {if $auctionItems[counter].watch_indicator ==0}
+                                    <input type="button" value="Watch this item" class="track-btn" onclick="add_watchlist({$auctionItems[counter].auction_id});" />
+                                 {else}
+                                    <input type="button" value="You are watching&nbsp;&nbsp;" onclick="redirect_watchlist({$auctionItems[counter].auction_id});" class="track-btn"  />
+                                  {/if}
+								  </td>
+                                 <td valign="top" class="pr10">
+                  <!--3rd td-->  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+								    <tr>
+        							<td class="pb20"><h1><a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" ><strong>{$auctionItems[counter].poster_title}&nbsp;</strong></a> </h1></td>
+      							  </tr>
+								    <tr>
+									<td class="buylisttbtopbg"></td>
+								  </tr>
+								    <tr>
+								 	<td class="pb10">
+									<div class="descrp-area">
+										<div class="desp-txt"><b>Size : </b> {$auctionItems[counter].poster_size}</div>
+										<div class="desp-txt"><b>Genre : </b> {$auctionItems[counter].genre}</div>
+										<div class="desp-txt"><b>Decade : </b> {$auctionItems[counter].decade}</div>
+										<div class="desp-txt"><b>Country : </b> {$auctionItems[counter].country}</div>
+										<div class="desp-txt"><b>Condition : </b> {$auctionItems[counter].cond}</div>
+									</div>
+        							</td>
+								</tr>
+								    <tr>
+        						 <td class="buylisttbtopbg"></td>
+      							</tr>
+								<!-- Auction Items for Weekly And Stills Starts Here -->
+								{if $auctionItems[counter].fk_auction_type_id == 2 || $auctionItems[counter].fk_auction_type_id=='5'}
+								{if $is_expired=='0'}
+									<tr>
+									<td class="buylisttbcenter">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+									  <tr>
+										<td width="65"><div class="boldItalics time-left">Time Left</div></td>
+										<td width="146"><div class="timerwrapper" style="float:right">
+																 <!-- <div class="timer-left"></div>-->
+																  <div class="text-timer" id="timer_($auctionItems[counter].auction_id}">{$auctionItems[counter].auction_countdown}</div>
+																  <!--<div class="timer-right"></div>-->
+																  </div></td>
+										<td class="pl20"><div class="auction-row" id="auction_end_time_{$auctionItems[counter].auction_id}">
+																  <div class="buy-text boldItalics" style="margin-right:5px">End Time: </div>
+																  <div class="buy-text" style="float:none;">{$auctionItems[counter].auction_actual_end_datetime|date_format:"%I:%M:00 %p"} EDT</div>
+																  <div class="buy-text bold" style="margin-right:5px">{$auctionItems[counter].auction_actual_end_datetime|date_format:"%A"}</div>
+																  <div class="buy-text">{$auctionItems[counter].auction_actual_end_datetime|date_format:"%m/%d/%Y"}</div>
+																</div></td>
+									  </tr>
+									</table>
+                                    </td>
+								  </tr>
+								     <tr>
+        							<td class="buylisttbbottombg"></td>
+      							  </tr>
+								 	<div id="{$auctionItems[counter].auction_id}" class="popDiv"> </div>								  
+								{/if}
+								    <tr><td>
+								<div id="auction_data_{$auctionItems[counter].auction_id}">
+								{if $auctionItems[counter].last_bid_amount > 0}								   
+                                    <div class="auction-row">
+                                      
+                                    </div>								   	
+                                 {/if}
+								 </div> 
+								 </td></tr>
+                              		 <tr><td>
+                                 {if $is_expired=='0'}
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+									  <td class="pb10">
+                                      <div class="buylistbid">
+                                      <table width="260" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+										  <td><div ><div class="CurrencyDecimal"> $</div>
+											<input type="text" name="bid_price_{$auctionItems[counter].auction_id}" id="bid_price_{$auctionItems[counter].auction_id}" maxlength="8" class="inner-txtfld fll" onfocus="{literal}$(this).keypress(function(event){
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+			if(keycode == '13'){
+			var auc_id=this.id;
+			test_enter_for_bid(auc_id);
+			}	
+		}); {/literal}" onblur="test_blur_for_bid(this.id)"  />
+											<div class="CurrencyDecimal">.00</div> </div></td>
+										  <td><div>
+											<input type="button" id="bid_bttn_{$auctionItems[counter].auction_id}" value="" onclick="postBid({$auctionItems[counter].auction_id}, '{$auctionItems[counter].fk_user_id}',{$auctionItems[counter].auction_buynow_price});" class="bidnow-hammer-btn" style="margin:1px 0 0 0;" />
+											</div></td>
+										  </tr>
+										</table>
+                                        </div>
+                                      </td>
+									</tr>
+                                    
+                                    
+								</table>
+                                  </td></tr>
+                                  	{else}
+									<tr><td class="pb10">
+							<div class="auction-row" style="padding:0px;">
+									 <div class="buy-text bold"><span class="CurrentBidOffer"  style="font-size:12px; color:#000;">Sold For:</span> </div>
+									 <div class="buy-text offer_buyprice">${$auctionItems[counter].last_bid_amount}</div><div  class="buy-text-detpstr"  >&nbsp;<b class="OfferBidNumber">{$auctionItems[counter].bid_count} Bid(s)&nbsp;&nbsp;</b> </div>
+									 </div>
+							</td></tr>	
+                              {/if}    
+                              <!-- Auction Items for Weekly And Stills Ends Here -->
+							<!-- Fixed Items  Starts Here -->    
+                              {elseif  $auctionItems[counter].fk_auction_type_id == 1}
+									<tr><td>
+							<div class="auction-row">
+                                    <div id="auction_data_{$auctionItems[counter].auction_id}" >
+                                      
+                                    </div>
+                            </div>
+							</td></tr>
+									<div id="{$auctionItems[counter].auction_id}" class="popDiv_Auction"> </div>
+							{if $auctionItems[counter].auction_is_sold != '3'}
+                            		
+							 <tr>
+									  <td class="pb10">
+                                      <div class="buylistbid">
+                                      <table width="260" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+										  <td><div ><div class="CurrencyDecimal">${$auctionItems[counter].auction_asked_price|number_format:2}</div>
+											
+											 </div></td>
+										  <td><div>
+											<input type="button" id="buynow_bttn_{$auctionItems[counter].auction_id}" value="" onclick="redirect_to_cart({$auctionItems[counter].auction_id}, '{$auctionItems[counter].fk_user_id}')" class="bidnow-btn BuyNow" style="margin:1px 0 0 0;" />
+											</div></td>
+										  </tr>
+										</table>
+                                        </div>
+                                      </td>
+									</tr>
+									 
+                             <tr><td> 
+							{if $auctionItems[counter].auction_reserve_offer_price > 0}
+							{if $auctionItems[counter].is_reopened == '0'}
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								
+								<tr>
+									  <td class="pb10">
+                                      <div class="buylistbid">
+                                      <table width="260" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+										  <td><div ><div class="CurrencyDecimal"> $</div>
+											<input type="text" name="offer_price_{$auctionItems[counter].auction_id}" id="offer_price_{$auctionItems[counter].auction_id}" maxlength="8" class="inner-txtfld fll" onfocus="{literal}$(this).keypress(function(event){
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+			if(keycode == '13' && keycode != ''){
+			var auc_id=this.id;
+			test_enter(auc_id);
+			}	
+		}); {/literal}" onblur="test_blur(this.id)"  />
+											<div class="CurrencyDecimal">.00</div> </div></td>
+										  <td><div>
+											<input type="button" id="offer_bttn_{$auctionItems[counter].auction_id}" value="" onclick="postOffer({$auctionItems[counter].auction_id}, '{$auctionItems[counter].fk_user_id}','{$auctionItems[counter].auction_asked_price}');" class="bidnow-btn makeoffer" style="margin:1px 0 0 0;" />
+											</div></td>
+										  </tr>
+										</table>
+                                        </div>
+                                      </td>
+									</tr>
+							</table>
+                             
+							  {/if}
+							  {/if}
+							   </td></tr>
+                              </table>
+                              	</td>
+                              </tr>
+                                {/if}
+                             {/if} 
+                             <!-- Fixed Items  Ends Here -->       
+                      		 <!--- Code should come here--->          
+                           </table></td></tr></table></div>
+                         
+                        </div><!--containerdiv ends-->
+                        {/section}
+                        
+						</div>
+                        
+                        <div class="btomgrey-bg"></div>
+                        <div class="top-display-panel2">
+                          <div class="left-area">
+                            <div class="results-area">{$displayCounterTXT}</div>
+                            <div class="pagination" style=" padding:0px 5px;">{$pageCounterTXT}</div>
+                          </div>
+                        </div>
+                        <!-- end of movie posters --->
+                        {else}
+						<div class="top-display-panel">
+                          <div class="left-area" >
+                            <div class="dis">View as :</div>
+                            <ul class="menu">
+                              <li class="lista"><span class="active"></span></li>
+                              |
+                              {if $smarty.request.keyword!=''}
+                              <li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}&search_type={$smarty.request.search_type}&is_expired={$is_expired}"></a></li>
+                              {elseif $smarty.request.mode=='search' || $smarty.request.mode=='dorefinesrc'}
+                              <li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode={$smarty.request.mode}&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}&is_expired={$is_expired}"></a></li>
+                              {else}
+                              <li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}"></a></li>
+                              {/if}
+                            </ul>
+                          </div>
+						  <div class="soldSearchblock">
+                            	
+
+                                    <input type="text" class="midSearchbg" id="search_buy_items" name="search_sold" {if $smarty.request.mode == 'key_search'} value="{$smarty.request.keyword}" {elseif $smarty.request.list == 'stills'} value="Search Stills.." {else} value="Search Auctions.."{/if} onclick="clear_text();" onfocus="{literal}$(this).keypress(function(event){
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+			if(keycode == '13' && keycode != ''){
+			var list= {/literal}{if $smarty.request.list==''}''{else}'{$smarty.request.list}'{/if}{literal};
+			key_search_buy(list);
+			}	
+		}); {/literal}" onblur="key_search_buy_clear()"   />
+                                <input type="button" class="rightSearchbg" value=""  onclick="search_buy_items_func('{$smarty.request.list}')" />
+                            </div>
+                          <div class="sortblock">{$displaySortByTXT}</div>
+                          {if $smarty.request.list=='stills'}
+							<div class="msgsearchnorecords"> No results found for {$cat_value}.</div>
+					    {else}		
+							<div class="msgsearchnorecords"> Sorry no records found.</div>
+						{/if}
+                          
+                        </div>
+                        {/if}
+                        {if $total > 0} 
+                        {if $smarty.session.sessUserID <> "" && $is_expired=='0'}
+                        <div class="light-grey-bg-inner">
+                          <div class="inner-grey SelectionBtnPanel">
+                            <div style="float:left; padding:0px; margin:0px;">
+                              <input type="button" class="select-all-btn" onclick="javascript: markAllSelectedRows('listForm'); return false;" style=" cursor:pointer;" value=""/>
+                              <input type="button" class="deselect-all-btn"  onclick="javascript: unMarkSelectedRows('listForm'); return false;" style=" cursor:pointer;" value=""/>
+                           
+                            <input type="button" class="watch-slctd-btn" onclick="this.form.submit();" value="" />
+                             </div>
+                            {*<a href="#"><strong>How to Order?</strong></a>*}
+                            {if $smarty.request.list == 'fixed' }
+                            <input type="button" class="place-all-offers-btn" onclick="placeAllBids(dataArr);" value=""/>
+                            {else}
+                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value=""/>
+                            {/if} </div>
+                          <div class="clear"></div>
+                        </div>
+                        {/if}
+                        {/if}
+                        <div class="clear"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--<div class="btm-mid">
+                    <div class="btom-left"></div>
+                  </div>
+                  <div class="btom-right"></div>-->
+                </div>
+              </form>
+            </div>
+            
+            
+            
+          </div>
+        </div>
+      </div>
+      
+       </div>
+         <!--- Rightside Panel --->     
+        
+{include file="gavelsnipe.tpl"}        
+        
+        
+
+    <!-- page listing ends -->
+  </div>
+  <div class="clear"></div>
+</div>
+{include file="foot.tpl"}
+ {literal}
+ <script type="text/javascript">
+
+         $(document).ready(function(){
+ dataArr = {/literal}{$json_arr}{literal};
+     //setTimeout(function() {setInterval(function() { timeLeft(dataArr); }, 300)}, 10000);
+ var list= {/literal}{if $smarty.request.list==''}''{else}'{$smarty.request.list}'{/if}{literal};
+     setInterval(function() { timeLeft(dataArr,list); }, 1000);
+ })
+
+
+ </script>
+ {/literal}
+ 

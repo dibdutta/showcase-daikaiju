@@ -1,0 +1,86 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:q0="http://fedex.com/ws/rate/v9" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Body>
+    <q0:RateRequest>
+      <q0:WebAuthenticationDetail>
+        <q0:UserCredential>
+          <q0:Key></q0:Key>
+          <q0:Password></q0:Password>
+        </q0:UserCredential>
+      </q0:WebAuthenticationDetail>
+      <q0:ClientDetail>
+        <q0:AccountNumber></q0:AccountNumber>
+        <q0:MeterNumber></q0:MeterNumber>
+      </q0:ClientDetail>
+      <q0:TransactionDetail>
+        <q0:CustomerTransactionId>Rate a Single Package V9</q0:CustomerTransactionId>
+      </q0:TransactionDetail>
+      <q0:Version>
+        <q0:ServiceId>crs</q0:ServiceId>
+        <q0:Major>9</q0:Major>
+        <q0:Intermediate>0</q0:Intermediate>
+        <q0:Minor>0</q0:Minor>
+      </q0:Version>
+      <q0:ReturnTransitAndCommit>true</q0:ReturnTransitAndCommit>
+      <q0:CarrierCodes>FDXE</q0:CarrierCodes>
+      <q0:RequestedShipment>
+        <q0:ShipTimestamp>2010-10-25T09:30:47-05:00</q0:ShipTimestamp>
+        <q0:DropoffType>REGULAR_PICKUP</q0:DropoffType>
+        <q0:ServiceType>PRIORITY_OVERNIGHT</q0:ServiceType>
+        <q0:PackagingType>YOUR_PACKAGING</q0:PackagingType>
+        <q0:Shipper>
+          <q0:Contact>
+            <q0:PersonName>Joe Shipper</q0:PersonName>
+            <q0:CompanyName>ABC Widgets</q0:CompanyName>
+            <q0:PhoneNumber>8885551212</q0:PhoneNumber>
+          </q0:Contact>
+          <q0:Address>
+            <q0:StreetLines>Test Sndr Address Line 1</q0:StreetLines>
+            <q0:City>Memphis</q0:City>
+            <q0:StateOrProvinceCode>TN</q0:StateOrProvinceCode>
+            <q0:PostalCode>37501</q0:PostalCode>
+            <q0:CountryCode>US</q0:CountryCode>
+          </q0:Address>
+        </q0:Shipper>
+        <q0:Recipient>
+          <q0:Contact>
+            <q0:PersonName>Jane Recipient</q0:PersonName>
+            <q0:CompanyName>XYZ Company</q0:CompanyName>
+            <q0:PhoneNumber>8005551212</q0:PhoneNumber>
+          </q0:Contact>
+          <q0:Address>
+            <q0:StreetLines>Test Recipient Line 1</q0:StreetLines>
+            <q0:City>Long Beach</q0:City>
+            <q0:StateOrProvinceCode>CA</q0:StateOrProvinceCode>
+            <q0:PostalCode>90805</q0:PostalCode>
+            <q0:CountryCode>US</q0:CountryCode>
+          </q0:Address>
+        </q0:Recipient>
+        <q0:ShippingChargesPayment>
+          <q0:PaymentType>SENDER</q0:PaymentType>
+          <q0:Payor>
+            <q0:AccountNumber></q0:AccountNumber>
+            <q0:CountryCode>US</q0:CountryCode>
+          </q0:Payor>
+        </q0:ShippingChargesPayment>
+        <q0:RateRequestTypes>LIST</q0:RateRequestTypes>
+        <q0:PackageCount>1</q0:PackageCount>
+        <q0:PackageDetail>INDIVIDUAL_PACKAGES</q0:PackageDetail>
+        <q0:RequestedPackageLineItems>
+          <q0:SequenceNumber>1</q0:SequenceNumber>
+          <q0:Weight>
+            <q0:Units>LB</q0:Units>
+            <q0:Value>10.0</q0:Value>
+          </q0:Weight>
+          <q0:Dimensions>
+            <q0:Length>12</q0:Length>
+            <q0:Width>8</q0:Width>
+            <q0:Height>6</q0:Height>
+            <q0:Units>IN</q0:Units>
+          </q0:Dimensions>
+        </q0:RequestedPackageLineItems>
+      </q0:RequestedShipment>
+    </q0:RateRequest>
+  </soapenv:Body>
+</soapenv:Envelope>
+
+

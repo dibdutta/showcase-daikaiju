@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteRule ^\.htaccess$ - [F]
+
+RewriteRule ^(.+)\.html$ $1.html [L]
+RewriteRule ^(.+)\.htm$ $1.htm [L]
+RewriteRule ^(.+)\.php$ $1.php [L]

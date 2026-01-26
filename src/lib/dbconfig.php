@@ -1,0 +1,32 @@
+<?php
+
+//////////////   common variables  //////////////////////
+
+define ("HOST_NAME", $_SERVER['HTTP_HOST']);
+//echo $_SERVER['HTTP_HOST'];
+//define ("LOCAL_HOST_NAME", "localhost:100");
+
+define ("MULTIUSER_ADMIN", false);
+
+define ("FIXED_PAGE_CREATION", true);
+define ("CUSTOM_PAGE_CREATION", false);
+
+define ("SUPER_ADMIN_CREATION", false);
+
+////////////////////////////////////////////////////////
+
+
+//////////////   Database connection variables   ///////////////////////////////
+
+
+	define ("DB_SERVER", "mysql");
+	define ("DB_NAME", "mpe");
+	define ("DB_USER", "root");
+	define ("DB_PASSWORD", "root");
+	
+
+
+////////////////////////////////////////////
+
+
+?>
