@@ -7,6 +7,11 @@
 
 	//$smarty->caching = 1;
 	spl_autoload_register(function ($class) {
-		require_once INCLUDE_PATH."classes/$class.php";
+		// Only load classes from the classes directory if the file exists
+		// This prevents conflicts with Smarty's internal autoloader
+		$classFile = INCLUDE_PATH."classes/$class.php";
+		if (file_exists($classFile)) {
+			require_once $classFile;
+		}
 	});
 ?>

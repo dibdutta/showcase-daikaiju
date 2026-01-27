@@ -4,8 +4,11 @@ require_once "var.inc.php";
 $connect=mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME) or die("Cannot connect DB Server: " . mysqli_connect_error());
 $GLOBALS['db_connect'] = $connect;
 
-// Disable ONLY_FULL_GROUP_BY for MySQL 8 compatibility with legacy queries
-mysqli_query($connect, "SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+// Disable strict SQL modes for MySQL 8 compatibility with legacy queries
+// ONLY_FULL_GROUP_BY - allows GROUP BY without all selected columns
+// STRICT_TRANS_TABLES - allows INSERT without all required fields (uses defaults/empty)
+// NO_ZERO_DATE - allows '0000-00-00' dates
+mysqli_query($connect, "SET SESSION sql_mode='NO_ENGINE_SUBSTITUTION'");
 //date_default_timezone_set('America/Los_Angeles');
 date_default_timezone_set('America/New_York');
 

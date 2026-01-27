@@ -1,4 +1,5 @@
 <?php  
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 ob_start();
 define ("INCLUDE_PATH", "./");
 require_once INCLUDE_PATH."lib/inc.php";
@@ -99,48 +100,54 @@ function dispmiddle()
 	$objBid = new Bid();
 	$objBid->orderType= "DESC";
 	$dataBid = $objBid->fetchBidDetails($_SESSION['sessUserID'],'winning');
-    for($i=0;$i<count($dataBid);$i++){
-        if (file_exists("poster_photo/" . $dataBid[$i]['poster_thumb'])){
-            $dataBid[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataBid[$i]['poster_thumb'];
-        }else{
-            $dataBid[$i]['image_path']=CLOUD_POSTER_THUMB.$dataBid[$i]['poster_thumb'];
+    if(!empty($dataBid)) {
+        for($i=0;$i<count($dataBid);$i++){
+            if (file_exists("poster_photo/" . $dataBid[$i]['poster_thumb'])){
+                $dataBid[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataBid[$i]['poster_thumb'];
+            }else{
+                $dataBid[$i]['image_path']=CLOUD_POSTER_THUMB.$dataBid[$i]['poster_thumb'];
+            }
         }
+        $objBid->fetchMyBidByType($dataBid,$_SESSION['sessUserID'],'winning');
     }
-	$objBid->fetchMyBidByType($dataBid,$_SESSION['sessUserID'],'winning');
-	$smarty->assign('totalBids', count($dataBid));
+	$smarty->assign('totalBids', !empty($dataBid) ? count($dataBid) : 0);
 	$smarty->assign('bidDetails', $dataBid);
 	
 	/* Dash Board for Winning Offers */
 	$objOffer = new Offer();
 	$dataOfr = $objOffer->fetchMyWinningOffers($_SESSION['sessUserID']);
-    for($i=0;$i<count($dataOfr);$i++){
-        if (file_exists("poster_photo/" . $dataOfr[$i]['poster_thumb'])){
-            $dataOfr[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataOfr[$i]['poster_thumb'];
-        }else{
-            $dataOfr[$i]['image_path']=CLOUD_POSTER_THUMB.$dataOfr[$i]['poster_thumb'];
+    if(!empty($dataOfr)) {
+        for($i=0;$i<count($dataOfr);$i++){
+            if (file_exists("poster_photo/" . $dataOfr[$i]['poster_thumb'])){
+                $dataOfr[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataOfr[$i]['poster_thumb'];
+            }else{
+                $dataOfr[$i]['image_path']=CLOUD_POSTER_THUMB.$dataOfr[$i]['poster_thumb'];
+            }
         }
     }
 	$smarty->assign('dataOfr', $dataOfr);
-	$smarty->assign('totalOffers', count($dataOfr));
+	$smarty->assign('totalOffers', !empty($dataOfr) ? count($dataOfr) : 0);
 	
 	
 	$objAuction = new Auction();
 	$objAuction->orderType = 'DESC';
 	$totalSelling = $objAuction->countAuctionsByStatus($_SESSION['sessUserID'], $status);
 	$auctionRow = $objAuction->fetchAuctionsByStatus($_SESSION['sessUserID'], $status);
-    for($i=0;$i<count($auctionRow);$i++)
-    {
-        if (file_exists("poster_photo/" . $auctionRow[$i]['poster_thumb'])){
-            $auctionRow[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRow[$i]['poster_thumb'];
-        }else{
-            $auctionRow[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRow[$i]['poster_thumb'];
-        }
-        if($auctionRow[$i]['fk_auction_type_id']==1){
-            $offerObj=new Offer();
-            $offerObj->fetch_OfferCount_MaxOffer($auctionRow);
-        }elseif($auctionRow[$i]['fk_auction_type_id']==2){
-            $objBid = new Bid();
-            $objBid->fetch_BidCount_MaxBid($auctionRow);
+    if(!empty($auctionRow)) {
+        for($i=0;$i<count($auctionRow);$i++)
+        {
+            if (file_exists("poster_photo/" . $auctionRow[$i]['poster_thumb'])){
+                $auctionRow[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRow[$i]['poster_thumb'];
+            }else{
+                $auctionRow[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRow[$i]['poster_thumb'];
+            }
+            if($auctionRow[$i]['fk_auction_type_id']==1){
+                $offerObj=new Offer();
+                $offerObj->fetch_OfferCount_MaxOffer($auctionRow);
+            }elseif($auctionRow[$i]['fk_auction_type_id']==2){
+                $objBid = new Bid();
+                $objBid->fetch_BidCount_MaxBid($auctionRow);
+            }
         }
     }
    $smarty->assign('totalSelling', $totalSelling);
