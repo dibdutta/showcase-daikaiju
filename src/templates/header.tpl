@@ -514,7 +514,7 @@ function showTimer1(list,id){
                     <li><a  href="{$actualPath}/myaccount.php?mode=profile">Profile</a></li>
                     {*<li><a  href="{$actualPath}/send_message.php">Messages&nbsp;&nbsp;({$countMsg}) </a></li>*}
                     <li><a  href="{$actualPath}/my_want_list.php">My Want List&nbsp;&nbsp;({$total_want_count})</a></li>
-                    <li><a  href="https://www.movieposterexchange.com/my_invoice.php">Invoices/Reconciliation</a></li>
+                    <li><a  href="{$actualPath}/my_invoice.php">Invoices/Reconciliation</a></li>
 					<li><a  href="{$actualPath}/my_report.php">Reports</a></li>
 					<li><a  href="{$actualPath}/myaccount.php?mode=change_password">Change Password</a></li>
                 </ul>   

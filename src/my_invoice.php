@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 ob_start(); 
 define ("INCLUDE_PATH", "./");
 require_once INCLUDE_PATH."lib/inc.php";
@@ -123,16 +124,18 @@ function dispmiddle(){
 	//$dataArr = $objInvoice->AuctionIdByUserId($_SESSION['sessUserID']);
 	$data = array('invoice_id','auction_details','total_amount','invoice_generated_on','is_paid','is_approved','is_cancelled');
 	$dataArr = $objInvoice->auctionIdByUserId($_SESSION['sessUserID'],'1',true);
-	
+
 	if(empty($dataArr)){
 		$total = 0;
 	}else{
 		$total=count($dataArr);
 	}
-	
+
 	for($i=0;$i<$total;$i++){
-		$auctionDetails = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['auction_details'] ); 
-  		$auctionDetails = unserialize($auctionDetails);  
+		$auctionDetails = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($matches) {
+			return 's:' . strlen($matches[2]) . ':"' . $matches[2] . '";';
+		}, $dataArr[$i]['auction_details']);
+  		$auctionDetails = unserialize($auctionDetails);
   		$dataArr[$i]['auction_details'] = $auctionDetails ;
 		if($dataArr[$i]['is_paid']=='1'){
 			if($key!=2){
@@ -157,11 +160,11 @@ function print_invoice(){
 	for($i=0;$i<count($dataArr);$i++){
 		$dataArr[$i]['billing_address'] = unserialize($dataArr[$i]['billing_address']);
 		$dataArr[$i]['shipping_address'] = unserialize($dataArr[$i]['shipping_address']);
-		$dataArr[$i]['auction_details']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['auction_details'] );
+		$dataArr[$i]['auction_details']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['auction_details'] );
 		$dataArr[$i]['auction_details'] = unserialize($dataArr[$i]['auction_details']);
-		$dataArr[$i]['additional_charges']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['additional_charges'] );
+		$dataArr[$i]['additional_charges']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['additional_charges'] );
 		$dataArr[$i]['additional_charges'] = unserialize($dataArr[$i]['additional_charges']);
-		$dataArr[$i]['discounts']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['discounts'] );
+		$dataArr[$i]['discounts']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['discounts'] );
 		$dataArr[$i]['discounts'] = unserialize($dataArr[$i]['discounts']);
 		if($chk_item_type==1 || $chk_item_type==4){
 			for($k=0;$k<count($dataArr[$i]['auction_details']);$k++){
@@ -194,9 +197,9 @@ function buyer_invoice(){
 	$objInvoice->orderBy='invoice_generated_on';
 	$objInvoice->orderType='DESC';
 	$dataArr = $objInvoice->selectData(TBL_INVOICE, $data, $where,true);
-	$total = count($dataArr);
+	$total = !empty($dataArr) ? count($dataArr) : 0;
 	for($i=0; $i<$total; $i++){
-		$dataArr[$i]['auction_details']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['auction_details'] );
+		$dataArr[$i]['auction_details']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['auction_details'] );
 		$dataArr[$i]['auction_details'] = unserialize($dataArr[$i]['auction_details']);
 	}
 	
@@ -275,7 +278,7 @@ function shippingInfo()
 	
 	$row = $invoiceObj->selectData(USER_TABLE, array('*'), array('user_id' => $_SESSION['sessUserID']));
 	
-		//$dataArr[$i]['billing_address']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['billing_address'] );
+		//$dataArr[$i]['billing_address']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['billing_address'] );
 		//$dataArr[$i]['billing_address'] = unserialize($dataArr[$i]['billing_address']);
 	$dataArr[0]['billing_address'] = array('billing_firstname' => $row[0]['firstname'],
 									   'billing_lastname' => $row[0]['lastname'],
@@ -287,7 +290,7 @@ function shippingInfo()
 									   'billing_address1' => mysqli_real_escape_string($GLOBALS['db_connect'],$row[0]['address1']),
 									   'billing_address2' => mysqli_real_escape_string($GLOBALS['db_connect'],$row[0]['address2']),
 									   'billing_zipcode' => $row[0]['zipcode']);
-		//$dataArr[$i]['shipping_address']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['shipping_address'] );
+		//$dataArr[$i]['shipping_address']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['shipping_address'] );
 		//$dataArr[$i]['shipping_address'] = unserialize($dataArr[$i]['shipping_address']);
 	$dataArr[0]['shipping_address'] = array('shipping_firstname' => $row[0]['firstname'],
 										'shipping_lastname' => $row[0]['lastname'],
@@ -314,7 +317,7 @@ function shippingInfo()
 	foreach ($_POST as $key => $value){
 		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
 	}
-	if(isset($_REQUEST[invoice_key]) && $_REQUEST[invoice_key]!=''){
+	if(isset($_REQUEST['invoice_key']) && $_REQUEST['invoice_key']!=''){
 		$seller_array=explode(',', base64_decode($_REQUEST['invoice_key']));
 		$seller_arr=array();
 		for($k=0;$k<count($seller_array);$k++){
@@ -619,7 +622,7 @@ function order()
 	
 	$row = $invoiceObj->selectData(USER_TABLE, array('*'), array('user_id' => $dataArr[0]['fk_user_id']));
 	for($i=0;$i<count($dataArr);$i++){
-		//$dataArr[$i]['billing_address']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['billing_address'] );
+		//$dataArr[$i]['billing_address']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['billing_address'] );
 		//$dataArr[$i]['billing_address'] = unserialize($dataArr[$i]['billing_address']);
 		$dataArr[$i]['billing_address'] = array('billing_firstname' => $row[0]['firstname'],
 									   'billing_lastname' => $row[0]['lastname'],
@@ -631,7 +634,7 @@ function order()
 									   'billing_address1' => mysqli_real_escape_string($GLOBALS['db_connect'],$row[0]['address1']),
 									   'billing_address2' => mysqli_real_escape_string($GLOBALS['db_connect'],$row[0]['address2']),
 									   'billing_zipcode' => $row[0]['zipcode']);
-		//$dataArr[$i]['shipping_address']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['shipping_address'] );
+		//$dataArr[$i]['shipping_address']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['shipping_address'] );
 		//$dataArr[$i]['shipping_address'] = unserialize($dataArr[$i]['shipping_address']);
 		$dataArr[$i]['shipping_address'] = array('shipping_firstname' => $row[0]['firstname'],
 										'shipping_lastname' => $row[0]['lastname'],
@@ -643,11 +646,11 @@ function order()
 										'shipping_address1' => mysqli_real_escape_string($GLOBALS['db_connect'],$row[0]['shipping_address1']),
 										'shipping_address2' => mysqli_real_escape_string($GLOBALS['db_connect'],$row[0]['shipping_address2']),
 										'shipping_zipcode' => $row[0]['shipping_zipcode']);
-		$dataArr[$i]['auction_details']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['auction_details'] );
+		$dataArr[$i]['auction_details']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['auction_details'] );
 		$dataArr[$i]['auction_details'] = unserialize($dataArr[$i]['auction_details']);
-		$dataArr[$i]['additional_charges']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['additional_charges'] );
+		$dataArr[$i]['additional_charges']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['additional_charges'] );
 		$dataArr[$i]['additional_charges'] = unserialize($dataArr[$i]['additional_charges']);
-		$dataArr[$i]['discounts']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['discounts'] );
+		$dataArr[$i]['discounts']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['discounts'] );
 		$dataArr[$i]['discounts'] = unserialize($dataArr[$i]['discounts']);
 		if($chk_item_type==1 ){
 			for($k=0;$k<count($dataArr[$i]['auction_details']);$k++){
@@ -700,11 +703,11 @@ function finalorder()
 		//$dataArr[$i]['billing_address'] = unserialize($dataArr[$i]['billing_address']);
 		//$dataArr[$i]['shipping_address'] = unserialize($dataArr[$i]['shipping_address']);
 		//$dataArr[$i]['shipping_address'] = $_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info'];
-		$dataArr[$i]['auction_details']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['auction_details'] );
+		$dataArr[$i]['auction_details']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['auction_details'] );
 		$dataArr[$i]['auction_details'] = unserialize($dataArr[$i]['auction_details']);
-		$dataArr[$i]['additional_charges']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['additional_charges'] );
+		$dataArr[$i]['additional_charges']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['additional_charges'] );
 		$dataArr[$i]['additional_charges'] = unserialize($dataArr[$i]['additional_charges']);
-		$dataArr[$i]['discounts']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['discounts'] );
+		$dataArr[$i]['discounts']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['discounts'] );
 		$dataArr[$i]['discounts'] = unserialize($dataArr[$i]['discounts']);
 		if($chk_item_type==1 || $chk_item_type==4){
 			for($k=0;$k<count($dataArr[$i]['auction_details']);$k++){
@@ -746,8 +749,8 @@ function pay_now()
 	$objCommon = new DBCommon();
 
 	$invoiceData = $objCommon->selectData(TBL_INVOICE, array('total_amount'), array('invoice_id' => $invoice_id));
-	$invoiceData[0]['auction_details'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData[0]['auction_details'] );
-	$invoiceData[0]['auction_details'] = unserialize($invoiceData[0][auction_details]);
+	$invoiceData[0]['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['auction_details'] );
+	$invoiceData[0]['auction_details'] = unserialize($invoiceData[0]['auction_details']);
 	 
 	$objPaypal->amount = number_format(($invoiceData[0]['total_amount'] + $_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info']['shipping_charge']), 2, ".", "");
  	$objPaypal->firstName = $_POST['firstname'];
@@ -805,7 +808,7 @@ function pay_now()
 											'shipping_address2' => $_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info']['shipping_address2'],
 											'shipping_zipcode' => $_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info']['shipping_zipcode']));
 		
-		$row[0]['additional_charges'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $row[0]['additional_charges'] );
+		$row[0]['additional_charges'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $row[0]['additional_charges'] );
 		$additional_charges_arr = unserialize($row[0]['additional_charges']);
 		
 		$shipping_desc = strtoupper($_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info']['shipping_methods'])." - ".
@@ -884,7 +887,7 @@ function getExpressCheckoutDetails(){
 		//$dataArr[$i]['billing_address'] = unserialize($dataArr[$i]['billing_address']);
 		//$dataArr[$i]['shipping_address'] = unserialize($dataArr[$i]['shipping_address']);
 		//$dataArr[$i]['shipping_address'] = $_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info'];
-		$dataArr[$i]['auction_details'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['auction_details']);
+		$dataArr[$i]['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['auction_details']);
 		$dataArr[$i]['auction_details'] = unserialize($dataArr[$i]['auction_details']);
 		$dataArr[$i]['additional_charges'] = unserialize($dataArr[$i]['additional_charges']);
 		$dataArr[$i]['discounts'] = unserialize($dataArr[$i]['discounts']);
@@ -937,7 +940,7 @@ function combine_buyer_invoice(){
         $user_id= $invoiceData['fk_user_id'];
         $shipping_address=$invoiceData['shipping_address'];
         $billing_address=$invoiceData['billing_address'];
-        $invoiceData['auction_details'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['auction_details']);
+        $invoiceData['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['auction_details']);
         $invoiceData['auction_details'] = unserialize($invoiceData['auction_details']);
         if(!empty($invoiceData['auction_details'])){
             foreach($invoiceData['auction_details'] as $key => $value){
@@ -946,7 +949,7 @@ function combine_buyer_invoice(){
             }
         }
 
-        $invoiceData['additional_charges'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['additional_charges']);
+        $invoiceData['additional_charges'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['additional_charges']);
         $invoiceData['additional_charges'] = unserialize($invoiceData['additional_charges']);
         if(!empty($invoiceData['additional_charges'])){
             foreach($invoiceData['additional_charges'] as $key => $value){
@@ -954,7 +957,7 @@ function combine_buyer_invoice(){
                 $subTotal += $invoiceData['additional_charges'][$key]['amount'];
             }
         }
-        $invoiceData['discounts'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['discounts']);
+        $invoiceData['discounts'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['discounts']);
         $invoiceData['discounts'] = unserialize($invoiceData['discounts']);
         if(!empty($invoiceData['discounts'])){
             foreach($invoiceData['discounts'] as $key => $value){
@@ -1164,11 +1167,11 @@ function phone_order(){
 		//$dataArr[$i]['billing_address'] = unserialize($dataArr[$i]['billing_address']);
 		//$dataArr[$i]['shipping_address'] = unserialize($dataArr[$i]['shipping_address']);
 		//$dataArr[$i]['shipping_address'] = $_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info'];
-		$dataArr[$i]['auction_details']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['auction_details'] );
+		$dataArr[$i]['auction_details']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['auction_details'] );
 		$dataArr[$i]['auction_details'] = unserialize($dataArr[$i]['auction_details']);
-		$dataArr[$i]['additional_charges']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['additional_charges'] );
+		$dataArr[$i]['additional_charges']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['additional_charges'] );
 		$dataArr[$i]['additional_charges'] = unserialize($dataArr[$i]['additional_charges']);
-		$dataArr[$i]['discounts']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['discounts'] );
+		$dataArr[$i]['discounts']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['discounts'] );
 		$dataArr[$i]['discounts'] = unserialize($dataArr[$i]['discounts']);
 		if($chk_item_type==1 || $chk_item_type==4){
 		for($k=0;$k<count($dataArr[$i]['auction_details']);$k++){
@@ -1208,8 +1211,8 @@ function order_now(){
 
 	$invoiceData = $objCommon->selectData(TBL_INVOICE, array('total_amount'), array('invoice_id' => $invoice_id));
 
-	$invoiceData[0]['auction_details'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData[0]['auction_details'] );
-	$invoiceData[0]['auction_details'] = unserialize($invoiceData[0][auction_details]);	 
+	$invoiceData[0]['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['auction_details'] );
+	$invoiceData[0]['auction_details'] = unserialize($invoiceData[0]['auction_details']);	 
 	
 
 	
@@ -1238,7 +1241,7 @@ function order_now(){
 											'shipping_address2' => $_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info']['shipping_address2'],
 											'shipping_zipcode' => $_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info']['shipping_zipcode']));
 		
-		$row[0]['additional_charges'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $row[0]['additional_charges'] );
+		$row[0]['additional_charges'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $row[0]['additional_charges'] );
 		$additional_charges_arr = unserialize($row[0]['additional_charges']);
 		
 		$shipping_desc = strtoupper($_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info']['shipping_methods'])." - ".
@@ -1298,7 +1301,7 @@ function archive_invoice(){
 	}
 	
 	for($i=0;$i<$total;$i++){
-		$auctionDetails = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $dataArr[$i]['auction_details'] ); 
+		$auctionDetails = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $dataArr[$i]['auction_details'] ); 
   		$auctionDetails = unserialize($auctionDetails);  
   		$dataArr[$i]['auction_details'] = $auctionDetails ;
 		if($dataArr[$i]['is_paid']=='1'){
