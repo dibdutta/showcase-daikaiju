@@ -1,6 +1,6 @@
 <?php
-ob_start(); 
-//error_reporting(E_ALL ^ E_NOTICE);
+ob_start();
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 define ("INCLUDE_PATH", "./");
 require_once INCLUDE_PATH."lib/inc.php";
 chkLoginNow();
@@ -1045,7 +1045,7 @@ function myAyctions()
     //$posterObj->fetchPosterCategories($auctionRow);
     //$posterObj->fetchPosterImages($auctionRow);
 
-	$total_now=count($auctionRow);
+	$total_now = !empty($auctionRow) ? count($auctionRow) : 0;
     for($i=0;$i<$total_now;$i++)
     {
       
@@ -1616,7 +1616,7 @@ function  auction_images_large(){
 	 $poster_id=$_REQUEST['id'];
 	 $objposter = new Poster();
 	 $poster_arr=$objposter->selectData('TBL_POSTER_IMAGES',array('*'),array("fk_poster_id"=>$poster_id));
-	 $total_images=count($poster_arr);
+	 $total_images = !empty($poster_arr) ? count($poster_arr) : 0;
 	 $smarty->assign('total_images',$total_images);
 	 $smarty->assign('poster_arr',$poster_arr);
 	 $smarty->assign('poster_id',$poster_id);
