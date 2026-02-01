@@ -1,10 +1,12 @@
 <?php
 
-/**************************************************/
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
+
 ob_start();
 
 define ("INCLUDE_PATH", "../");
 require_once INCLUDE_PATH."lib/inc.php";
+define ("PAGE_HEADER_TEXT", "Admin Login");
 
 if(isset($_SESSION['adminLoginID']) && $_REQUEST['mode']!="adminLogout"){
 	redirect_admin("admin_main.php");

@@ -7,8 +7,8 @@
 		<meta name="author" content="Verdana Core, phpdoc.net Inc.">
 		<title>{$smarty.const.ADMIN_PAGE_TITLE}</title>
 		<link href="{$adminActualPath}/adminStyle.css" rel="stylesheet">
-		<script type="text/javascript" src="http://54.213.214.96/javascript/adminCommon.js.php"></script>
-		<script type="text/javascript" src="http://54.213.214.96/javascript/common.js.php"></script>
+		<script type="text/javascript" src="{$smarty.const.PAGE_LINK}/javascript/adminCommon.js.php"></script>
+		<script type="text/javascript" src="{$smarty.const.PAGE_LINK}/javascript/common.js.php"></script>
 	</head>
 	<body>
 		<table align="center" width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">

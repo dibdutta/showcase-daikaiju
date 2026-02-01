@@ -16,12 +16,12 @@ function dispmiddle(){
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	extract($_REQUEST);
 	$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
+	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 	/* Dash Board for Sold Items */
 	$objAuction = new Auction();
 	$totalSoldAuc=$objAuction->countJstFinishedAuction('','',$type='Home');
 	$objAuction->orderBy='invoice_generated_on';
-	$dataJstFinishedAuction=$objAuction->soldAuction(true,true,'','',$type='Home');
+	$dataJstFinishedAuction=$objAuction->soldAuction(true,true,'','',$type='Home') ?? [];
     for($i=0;$i<count($dataJstFinishedAuction);$i++){
         if (file_exists("../poster_photo/" . $dataJstFinishedAuction[$i]['poster_thumb'])){
             $dataJstFinishedAuction[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataJstFinishedAuction[$i]['poster_thumb'];
@@ -35,7 +35,7 @@ function dispmiddle(){
 	$smarty->assign('dataJstFinishedAuction', $dataJstFinishedAuction);
 	$objBid = new Bid();
     $objBid->orderType="DESC";
-	$dataBid = $objBid->fetchBidDetails('','winning');
+	$dataBid = $objBid->fetchBidDetails('','winning') ?? [];
     for($i=0;$i<count($dataBid);$i++){
         if (file_exists("../poster_photo/" . $dataBid[$i]['poster_thumb'])){
             $dataBid[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataBid[$i]['poster_thumb'];
@@ -48,7 +48,7 @@ function dispmiddle(){
 	$smarty->assign('bidDetails', $dataBid);
 	
 	$objOffer = new Offer();
-	$dataOfr = $objOffer->fetchMyWinningOffers();
+	$dataOfr = $objOffer->fetchMyWinningOffers() ?? [];
     for($i=0;$i<count($dataOfr);$i++){
         if (file_exists("../poster_photo/" . $dataOfr[$i]['poster_thumb'])){
             $dataOfr[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataOfr[$i]['poster_thumb'];

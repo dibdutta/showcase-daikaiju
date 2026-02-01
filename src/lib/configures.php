@@ -156,8 +156,13 @@ if(isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT']
 }else{
 	define ("DOMAIN_PATH_NEW", "http://".$_SERVER['HTTP_HOST']."");
 }
-define ("ADMIN_IMAGE_LINK", "http://".$_SERVER['HTTP_HOST']."/mpe/admin_images");
-define ("ADMIN_PAGE_LINK", "http://".$_SERVER['HTTP_HOST']."/mpe/admin");
+if (APP_ENV === 'production') {
+	define ("ADMIN_IMAGE_LINK", "http://".$_SERVER['HTTP_HOST']."/mpe/admin_images");
+	define ("ADMIN_PAGE_LINK", "http://".$_SERVER['HTTP_HOST']."/mpe/admin");
+} else {
+	define ("ADMIN_IMAGE_LINK", "http://".$_SERVER['HTTP_HOST']."/admin_images");
+	define ("ADMIN_PAGE_LINK", "http://".$_SERVER['HTTP_HOST']."/admin");
+}
 
 define ("FULL_PATH", "http://www.movieposterexchange.com");
 
