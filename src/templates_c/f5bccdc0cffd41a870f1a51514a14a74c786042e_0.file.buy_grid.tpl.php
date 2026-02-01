@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.47, created on 2026-01-26 13:45:49
+/* Smarty version 3.1.47, created on 2026-01-28 09:22:41
   from '/var/www/html/templates/buy_grid.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.47',
-  'unifunc' => 'content_6977b65deda8f2_04798786',
+  'unifunc' => 'content_697a1bb1470607_87724984',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:foot.tpl' => 1,
   ),
 ),false)) {
-function content_6977b65deda8f2_04798786 (Smarty_Internal_Template $_smarty_tpl) {
+function content_697a1bb1470607_87724984 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 <link href="https://d2m46dmzqzklm5.cloudfront.net/css/jquery.countdown.css" rel="stylesheet" type="text/css"/>

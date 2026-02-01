@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.47, created on 2026-01-26 13:45:50
+/* Smarty version 3.1.47, created on 2026-01-26 22:11:41
   from '/var/www/html/templates/header.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.47',
-  'unifunc' => 'content_6977b65e1c4d62_54966730',
+  'unifunc' => 'content_69782cedd66bd8_95869644',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '88dbf58bd600aa27802129682ad443d483d9dea4' => 
     array (
       0 => '/var/www/html/templates/header.tpl',
-      1 => 1769451036,
+      1 => 1769483492,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6977b65e1c4d62_54966730 (Smarty_Internal_Template $_smarty_tpl) {
+function content_69782cedd66bd8_95869644 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -621,7 +621,8 @@ search_right_crn.png" width="11" height="35" /></div>-->
                                         <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
 /my_want_list.php">My Want List&nbsp;&nbsp;(<?php echo $_smarty_tpl->tpl_vars['total_want_count']->value;?>
 )</a></li>
-                    <li><a  href="https://www.movieposterexchange.com/my_invoice.php">Invoices/Reconciliation</a></li>
+                    <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
+/my_invoice.php">Invoices/Reconciliation</a></li>
 					<li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
 /my_report.php">Reports</a></li>
 					<li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
@@ -662,11 +663,11 @@ echo count($_SESSION['cart']);
                     
                         <ul style="z-index:100000;" id="selector_box">
 						<?php
-$__section_counter_1_loop = (is_array(@$_loop=$_smarty_tpl->tpl_vars['rightPanelCatRows']->value) ? count($_loop) : max(0, (int) $_loop));
-$__section_counter_1_total = $__section_counter_1_loop;
+$__section_counter_0_loop = (is_array(@$_loop=$_smarty_tpl->tpl_vars['rightPanelCatRows']->value) ? count($_loop) : max(0, (int) $_loop));
+$__section_counter_0_total = $__section_counter_0_loop;
 $_smarty_tpl->tpl_vars['__smarty_section_counter'] = new Smarty_Variable(array());
-if ($__section_counter_1_total !== 0) {
-for ($__section_counter_1_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] = 0; $__section_counter_1_iteration <= $__section_counter_1_total; $__section_counter_1_iteration++, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']++){
+if ($__section_counter_0_total !== 0) {
+for ($__section_counter_0_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] = 0; $__section_counter_0_iteration <= $__section_counter_0_total; $__section_counter_0_iteration++, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']++){
 ?>
 						<?php if ($_smarty_tpl->tpl_vars['rightPanelCatRows']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['fk_cat_type_id'] == 2 && $_smarty_tpl->tpl_vars['rightPanelCatRows']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['is_stills'] == 0) {?>
 						<li ><a href="javascript:void(0);" onclick="refine_search('genre',<?php echo $_smarty_tpl->tpl_vars['rightPanelCatRows']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['cat_id'];?>
@@ -694,11 +695,11 @@ for ($__section_counter_1_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
                     <div>
                         <ul style="z-index:100000;" id="selector_box">
                        <?php
-$__section_counter_2_loop = (is_array(@$_loop=$_smarty_tpl->tpl_vars['rightPanelCatRows']->value) ? count($_loop) : max(0, (int) $_loop));
-$__section_counter_2_total = $__section_counter_2_loop;
+$__section_counter_1_loop = (is_array(@$_loop=$_smarty_tpl->tpl_vars['rightPanelCatRows']->value) ? count($_loop) : max(0, (int) $_loop));
+$__section_counter_1_total = $__section_counter_1_loop;
 $_smarty_tpl->tpl_vars['__smarty_section_counter'] = new Smarty_Variable(array());
-if ($__section_counter_2_total !== 0) {
-for ($__section_counter_2_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] = 0; $__section_counter_2_iteration <= $__section_counter_2_total; $__section_counter_2_iteration++, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']++){
+if ($__section_counter_1_total !== 0) {
+for ($__section_counter_1_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] = 0; $__section_counter_1_iteration <= $__section_counter_1_total; $__section_counter_1_iteration++, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']++){
 ?>
 						<?php if ($_smarty_tpl->tpl_vars['rightPanelCatRows']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['fk_cat_type_id'] == 1 && $_smarty_tpl->tpl_vars['rightPanelCatRows']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['cat_id'] != '34') {?>
 						<li ><a href="javascript:void(0);" onclick="refine_search('poster_size',<?php echo $_smarty_tpl->tpl_vars['rightPanelCatRows']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['cat_id'];?>
@@ -725,11 +726,11 @@ for ($__section_counter_2_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
                     <div>
                         <ul style="z-index:100000;" id="selector_box">
                         <?php
-$__section_counter_3_loop = (is_array(@$_loop=$_smarty_tpl->tpl_vars['rightPanelCatRows']->value) ? count($_loop) : max(0, (int) $_loop));
-$__section_counter_3_total = $__section_counter_3_loop;
+$__section_counter_2_loop = (is_array(@$_loop=$_smarty_tpl->tpl_vars['rightPanelCatRows']->value) ? count($_loop) : max(0, (int) $_loop));
+$__section_counter_2_total = $__section_counter_2_loop;
 $_smarty_tpl->tpl_vars['__smarty_section_counter'] = new Smarty_Variable(array());
-if ($__section_counter_3_total !== 0) {
-for ($__section_counter_3_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] = 0; $__section_counter_3_iteration <= $__section_counter_3_total; $__section_counter_3_iteration++, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']++){
+if ($__section_counter_2_total !== 0) {
+for ($__section_counter_2_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] = 0; $__section_counter_2_iteration <= $__section_counter_2_total; $__section_counter_2_iteration++, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']++){
 ?>
 							<?php if ($_smarty_tpl->tpl_vars['rightPanelCatRows']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['fk_cat_type_id'] == 3) {?>
 							<li ><a href="javascript:void(0);" onclick="refine_search('decade',<?php echo $_smarty_tpl->tpl_vars['rightPanelCatRows']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['cat_id'];?>
@@ -756,11 +757,11 @@ for ($__section_counter_3_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
                     <div>
                         <ul style="z-index:100000;" id="selector_box">
                         <?php
-$__section_counter_4_loop = (is_array(@$_loop=$_smarty_tpl->tpl_vars['rightPanelCatRows']->value) ? count($_loop) : max(0, (int) $_loop));
-$__section_counter_4_total = $__section_counter_4_loop;
+$__section_counter_3_loop = (is_array(@$_loop=$_smarty_tpl->tpl_vars['rightPanelCatRows']->value) ? count($_loop) : max(0, (int) $_loop));
+$__section_counter_3_total = $__section_counter_3_loop;
 $_smarty_tpl->tpl_vars['__smarty_section_counter'] = new Smarty_Variable(array());
-if ($__section_counter_4_total !== 0) {
-for ($__section_counter_4_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] = 0; $__section_counter_4_iteration <= $__section_counter_4_total; $__section_counter_4_iteration++, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']++){
+if ($__section_counter_3_total !== 0) {
+for ($__section_counter_3_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] = 0; $__section_counter_3_iteration <= $__section_counter_3_total; $__section_counter_3_iteration++, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']++){
 ?>
 						<?php if ($_smarty_tpl->tpl_vars['rightPanelCatRows']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['fk_cat_type_id'] == 4) {?>
 						<li ><a href="javascript:void(0);" onclick="refine_search('country',<?php echo $_smarty_tpl->tpl_vars['rightPanelCatRows']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['cat_id'];?>
@@ -787,11 +788,11 @@ for ($__section_counter_4_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
                     <div>
                         <ul style="z-index:100000;" id="selector_box">
 						<?php
-$__section_counter_5_loop = (is_array(@$_loop=$_smarty_tpl->tpl_vars['rightPanelCatRows']->value) ? count($_loop) : max(0, (int) $_loop));
-$__section_counter_5_total = $__section_counter_5_loop;
+$__section_counter_4_loop = (is_array(@$_loop=$_smarty_tpl->tpl_vars['rightPanelCatRows']->value) ? count($_loop) : max(0, (int) $_loop));
+$__section_counter_4_total = $__section_counter_4_loop;
 $_smarty_tpl->tpl_vars['__smarty_section_counter'] = new Smarty_Variable(array());
-if ($__section_counter_5_total !== 0) {
-for ($__section_counter_5_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] = 0; $__section_counter_5_iteration <= $__section_counter_5_total; $__section_counter_5_iteration++, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']++){
+if ($__section_counter_4_total !== 0) {
+for ($__section_counter_4_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] = 0; $__section_counter_4_iteration <= $__section_counter_4_total; $__section_counter_4_iteration++, $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']++){
 ?>
 						<?php if ($_smarty_tpl->tpl_vars['rightPanelCatRows']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['fk_cat_type_id'] == 2) {?>
 						<li ><a href="javascript:void(0);" onclick="refine_search('genre',<?php echo $_smarty_tpl->tpl_vars['rightPanelCatRows']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['cat_id'];?>
