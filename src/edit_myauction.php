@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
+
 ob_start();
 define ("INCLUDE_PATH", "./");
 require_once INCLUDE_PATH."lib/inc.php";
@@ -62,13 +64,14 @@ if(!$_POST)
 	$obj = new Category();
 	$catRows = $obj->selectDataCategory(TBL_CATEGORY, array('*'),true,true);
 	$smarty->assign('catRows', $catRows);
-	
+
+	$poster_images_arr = [];
 	foreach ($_POST as $key => $value ) {
-		$smarty->assign($key, $value); 
+		$smarty->assign($key, $value);
 		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
 		/*if($key == 'poster_images' && $value != ""){
 			$poster_images_arr = explode(',',trim($value, ','));
-			$smarty->assign("poster_images_arr", $poster_images_arr); 
+			$smarty->assign("poster_images_arr", $poster_images_arr);
 		}*/
 		///////////Added By Sourav Banerjee////////
 		if(($key =='poster_images') && ($value != "" || isset($_SESSION['img'])))
@@ -605,9 +608,10 @@ function validateWeeklyForm(){
  }
 
 function edit_fixed(){
-	
+
 	require_once INCLUDE_PATH."lib/common.php";
-	
+	$poster_images_arr = [];
+
 	$smarty->assign ("encoded_string", $_REQUEST['encoded_string']);
 	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
 	
@@ -690,6 +694,7 @@ function edit_fixed(){
 	}
 
 function edit_monthly() {
+$poster_images_arr = [];
 if(!$_POST)
 {
     if(isset($_SESSION['img']))
@@ -829,6 +834,7 @@ if(!$_POST)
 }
 
 function edit_weekly() {
+$poster_images_arr = [];
 if(!$_POST)
 {
     if(isset($_SESSION['img']))
@@ -1517,9 +1523,10 @@ function update_weekly()
 	exit();
 	}
 function edit_stills(){
-	
+
 	require_once INCLUDE_PATH."lib/common.php";
-	
+	$poster_images_arr = [];
+
 	$smarty->assign ("encoded_string", $_REQUEST['encoded_string']);
 	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
 	

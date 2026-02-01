@@ -1,11 +1,9 @@
 {include file="header.tpl"}
-<link rel="stylesheet" href="{$actualPath}/javascript/uploadify/uploadify.css" type="text/css" />
-<script type="text/javascript" src="{$actualPath}/javascript/uploadify/jquery.uploadify.js"></script>
-<script type="text/javascript" src="{$actualPath}/jquery/jquery.ui.js"></script>
-<script type="text/javascript" src="{$actualPath}/jquery/jquery.ui.resizable.js"></script>
 <script type="text/javascript" src="{$actualPath}/wymeditor/jquery.wymeditor.min.js"></script>
 <script type="text/javascript" src="{$actualPath}/wymeditor/plugins/hovertools/jquery.wymeditor.hovertools.js"></script>
-<script type="text/javascript" src="{$actualPath}/wymeditor/plugins/resizable/jquery.wymeditor.resizable.js"></script>
+<script type="text/javascript" src="{$actualPath}/javascript/plupload/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="{$actualPath}/javascript/plupload/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" href="{$actualPath}/javascript/plupload/jquery.ui.plupload.css" type="text/css" />
 {literal}
 <script type="text/javascript">
 
@@ -33,95 +31,121 @@ jQuery(function() {
 		,
         postInit: function(wym) {
 
-            wym.hovertools();
-            wym.resizable();
+            //wym.hovertools();
+            //wym.resizable();
         }
     });
 });
 
-</script><script type="text/javascript">
+</script>
+<script type="text/javascript">
+function clearAllRadios() {
+	var radList = document.getElementsByName('radioList');
+	for (var i = 0; i < radList.length; i++) {
+	if(radList[i].checked) radList[i].checked = false;
+	}
+}
+</script>
+<script type="text/javascript">
 $(document).ready(function() {
-document.getElementById("cnt").value=countImage();
-    $("#fileUpload").fileUpload({
-        'uploader': 'javascript/uploadify/uploader.swf',
-        'cancelImg': 'javascript/uploadify/cancel.png',
-        'script': 'javascript/uploadify/upload.php',
-        'folder': 'poster_photo/temp/{/literal}{$random}{literal}',
-        'fileDesc': 'Image Files',
-		'sizeLimit':'2000000',
-        'fileExt': '*.jpg;*.jpeg;*.gif;*.png',
-        'auto': true,
-		'buttonText': 'Add Photo(s)',
-        'onComplete': function(event, ID, fileObj, response, data) {
-        	$("#fileUploadQueue").show();
-            var fileLimit = parseInt({/literal}{$smarty.const.MAX_UPLOAD_POSTER}{literal});
-            var photosArr = $("#poster_images").val().split(',');
-            var flag = false;
-            var image = '{/literal}{$actualPath}/poster_photo/temp/{$random}/'+fileObj.name+'{literal}';
-            for(i=0;i<photosArr.length;i++){
-                if(photosArr[i] == fileObj.name){
-                    flag = true;
-                }
-            }
-             
-			
-            if(!flag){
-            	var cnt=document.getElementById("cnt").value;
-    			cnt=Number(cnt)+1;
-    			document.getElementById("cnt").value=cnt;
 
-    			var newDate = new Date;
-			    var randCount=newDate.getTime();
-			    
-                var html = '<div id="new_'+randCount+'" style="float:left; width:110px; padding:0px 2px 0 1px; margin:0px;"><img style="border:3px solid #474644;" src="'+image+'" height="78" width="100" /><br /><input type="radio" name="is_default" value="'+fileObj.name+'" /><br /><img src="{/literal}{$smarty.const.CLOUD_STATIC}{literal}delete-icon.png" onclick="deletePhoto(\'new_'+randCount+'\', \''+fileObj.name+'\', \'new\')" /></div>';
-                $("#new_photos").append(html);
-                $("#poster_images").val($("#poster_images").val()+fileObj.name+",");
-            }
-            
-            if(cnt==12){
-                $("#browse").hide();
-				$("#path").hide();
-            }else{
-                $("#browse").show();
-				$("#path").show();
-            }
-        }
+	var uploader = $("#uploader").plupload({
+        // General settings
+        runtimes : 'html5,flash,silverlight,html4',
+        url : "../upload.php?random={/literal}{$random}{literal}",
+
+        // Maximum file size
+        max_file_size : '10mb',
+
+        chunk_size: '1mb',
+
+        // Resize images on clientside if we can
+        resize : {
+            width : 200,
+            height : 200,
+            quality : 90,
+            crop: true // crop to exact dimensions
+        },
+
+        // Specify what files to browse for
+        filters : [
+            {title : "Image files", extensions : "jpg,gif,png"},
+            {title : "Zip files", extensions : "zip,avi"}
+        ],
+
+        // Rename files by clicking on their titles
+        rename: true,
+
+        // Sort files
+        sortable: true,
+
+        // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
+        dragdrop: true,
+
+        // Views to activate
+        views: {
+            list: true,
+            thumbs: true, // Show thumbs
+            active: 'thumbs'
+        },
+
+        // Flash settings
+        flash_swf_url : '../plupload/js/Moxie.swf',
+
+        // Silverlight settings
+        silverlight_xap_url : '../plupload/js/Moxie.xap'
     });
-    
-    $("#posterUpload").validate();
-});
-    function chkPosterSize(id){
-    	var url = "bid_popup.php";
-    	$.get(url, {mode : 'chkPosterSizeCount', id : id}, function(data){
-    	var newData = data.split("-");
-    			if( newData[0] ==1){
-    				$("#flat_rolled").show();
-    				if(newData[1]=='f'){
-    					$("#rolled").hide();
-    					$("#folded").show();
-    					$("#folded_selected")[0].checked = true;
-    				}else if(newData[1]=='r'){
-    					$("#folded").hide();
-    					$("#rolled").show();
-    					$("#rolled_selected")[0].checked = true;
-    				}
-    				
-    			}else if(newData[0]==2){
-    				$("#flat_rolled").show();
-    				$("#rolled").show();
-    				$("#folded").show();
-    			}
-    	 	});	
-    }
-	function checkMinOffer(){
+	$("#posterUpload").validate();
+	});
+
+
+function chkPosterSize(id){
+	if(id!=''){
+	var url = "bid_popup.php";
+	$.get(url, {mode : 'chkPosterSizeCount', id : id}, function(data){
+	var newData = data.split("-");
+			if( newData[0] ==1){
+				$("#flat_rolled").show();
+				if(newData[1]=='f'){
+					$("#rolled").hide();
+					$("#folded").show();
+					$("#folded_selected")[0].checked = true;
+				}else if(newData[1]=='r'){
+					$("#folded").hide();
+					$("#rolled").show();
+					$("#rolled_selected")[0].checked = true;
+				}
+
+			}else if(newData[0]==2){
+				$("#flat_rolled").show();
+				$("#rolled").show();
+				$("#folded").show();
+			}
+	 	});
+		}else{
+			$("#flat_rolled").hide();
+		}
+}
+function checkMinOffer(){
 	if ($('#is_consider').is(':checked')) {
-		//alert('checked');
+	//alert('checked');
 		$("#minOfferDiv").show();
 	} else {
 		// alert('unchecked');
 		$("#minOfferDiv").hide();
 	}
-  }	
+ }
+
+ function submitForm(){
+		var all = $(".plupload_file_name").map(function() {
+			return this.title;
+		}).get();
+		var res = all.join().split(",");
+		var unqArr = Array.from(new Set(res)).filter(function(v){return v!==''});
+		var post_img=unqArr.join();
+		$("#poster_images").val(post_img);
+		document.getElementById("posterUpload").submit();
+	}
 </script>
 
 <style>
@@ -371,7 +395,7 @@ textarea
                                         <tr>
                                         <td align="center" colspan="3" width="100%" style="text-align:center;">
                                             <div id="browse" style="text-align:center; margin:0 auto;" {if $browse_count >= $smarty.const.MAX_UPLOAD_POSTER}display:none;{/if}">
-                                                <div id="fileUpload">You have a problem with your javascript</div>
+                                                <div id="uploader"></div>
                                                 <input type="hidden" name="poster_images" id="poster_images" value="{$poster_images}" class="validate" />
                                                 <div class="disp-err">{$poster_images_err}</div>
                                                 <div class="disp-err">{$is_default_err}</div>
@@ -401,7 +425,7 @@ textarea
                                      </table>
                                      <div class="clear"></div>
                                      <div class="btn-box">     
-                                        <input type="submit" value="Submit" class="submit-btn wymupdate" />
+                                        <input type="submit" value="Submit" class="submit-btn wymupdate" onclick="submitForm()" />
                                         <input type="reset" value="Reset" class="submit-btn" />
                                         <input type="button" value="Cancel"  class="submit-btn" onclick="location.href='{$decoded_string}'"/>
                                      </div>
@@ -434,4 +458,6 @@ textarea
     <div class="clear"></div>
 </div>
 {include file="foot.tpl"}
-<script type="text/javascript" src="{$actualPath}/javascript/resize/resize.js"></script>
+
+<script type="text/javascript" src="{$actualPath}/javascript/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" src="{$actualPath}/javascript/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js"></script>
