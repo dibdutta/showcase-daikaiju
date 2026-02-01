@@ -1,6 +1,6 @@
 <?php
-ob_start(); 
-//error_reporting(E_ALL ^ E_NOTICE);
+ob_start();
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 define ("INCLUDE_PATH", "./");
 require_once INCLUDE_PATH."lib/inc.php";
 chkLoginNow();
@@ -126,7 +126,8 @@ if(!$_POST)
     $obj = new Category();
     $catRows = $obj->selectDataCategory(TBL_CATEGORY, array('*'),true,true);
     $smarty->assign('catRows', $catRows);
-    
+    $smarty->assign('poster_images_arr', array());
+
         foreach ($_POST as $key => $value ) {
         
         $smarty->assign($key, $value); 
@@ -418,8 +419,6 @@ function validateFixedForm()
 		}
 	 }
 	}
-	echo $posterimages;
-    var_dump($GLOBALS);
     if($errCounter > 0){
         return false;
     }else{
@@ -744,7 +743,6 @@ function save_fixed_auction()
     			  );
 
     $obj->updateData(TBL_AUCTION, $data);
-	exit();
 	$sqlForEmail = "SELECT u.email,u.firstname,u.lastname FROM ".USER_TABLE." u WHERE u.user_id =" . $_SESSION['sessUserID'];
 	$rsForEmail = mysqli_query($GLOBALS['db_connect'],$sqlForEmail);
 	$emailArr = mysqli_fetch_array($rsForEmail);
@@ -767,7 +765,7 @@ function save_fixed_auction()
 				
 	$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
 	$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
-	$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
+	//$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 
     if($poster_id > 0){     
         $_SESSION['Err']="Poster added successfully.";
@@ -1045,7 +1043,7 @@ function myAyctions()
     //$posterObj->fetchPosterCategories($auctionRow);
     //$posterObj->fetchPosterImages($auctionRow);
 
-	$total_now=count($auctionRow);
+	$total_now = !empty($auctionRow) ? count($auctionRow) : 0;
     for($i=0;$i<$total_now;$i++)
     {
       
@@ -1616,7 +1614,7 @@ function  auction_images_large(){
 	 $poster_id=$_REQUEST['id'];
 	 $objposter = new Poster();
 	 $poster_arr=$objposter->selectData('TBL_POSTER_IMAGES',array('*'),array("fk_poster_id"=>$poster_id));
-	 $total_images=count($poster_arr);
+	 $total_images = !empty($poster_arr) ? count($poster_arr) : 0;
 	 $smarty->assign('total_images',$total_images);
 	 $smarty->assign('poster_arr',$poster_arr);
 	 $smarty->assign('poster_id',$poster_id);

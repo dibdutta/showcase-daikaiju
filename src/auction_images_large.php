@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 ob_start();
 
 define ("INCLUDE_PATH", "./");
@@ -15,10 +16,10 @@ ob_end_flush();
 ////////////   For page content 
 function auction_images_large(){
 	 require_once INCLUDE_PATH . "lib/common.php";
-	 $poster_id = $_REQUEST['id'];
-	 $auction_id = $_REQUEST['auction_id'];
+	 $poster_id = $_REQUEST['id'] ?? null;
+	 $auction_id = $_REQUEST['auction_id'] ?? null;
 	 $objauction= new Auction();
-	 $count=$objauction->isLiveAuctionItem($auction_id);
+	 $count = $auction_id ? $objauction->isLiveAuctionItem($auction_id) : 0;
 	 
 	 if($count<1){
 	 	 $objposter = new Poster();

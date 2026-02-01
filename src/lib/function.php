@@ -837,8 +837,7 @@ function create_thumbnail($newpath,$imgpath,$fileName,$resize_width=100,$resize_
             $thumb->size_height(78);         // set width for thumbnail with 100 pixels
         }
     }
-    
-    $thumb->save($new_up_path);    // save my  thumbnail to file "huhu.jpg" in directory "/www/thumb
+    $thumb->save($new_up_path);
 }
 
 function create_thumbnail_for_buy($newpath,$imgpath,$fileName,$resize_width,$resize_height){
@@ -1033,7 +1032,7 @@ function datediff_with_presentdate($date)
 	$expired_year = $date1[1];
 	if($expired_year > $curr_year){
 		return true;
-	}elseif($expired_year == $curr_year && $expired_mnth > $curr_month){
+	}elseif($expired_year == $curr_year && $expired_mnth >= $curr_month){
 		return true;
 	}else{
 		return false;
@@ -1360,15 +1359,36 @@ function increment_amount($buy_now){
 	//require('configures.php');
  	//require('cloudfiles/cloudfiles.php');
 	//require 'AWS/aws-autoloader.php';
-	
+
 	require_once 'AWS/aws-autoloader.php';
-	
+
+	// Make paths absolute so thumbnail functions can find files
+	$docRoot = rtrim($_SERVER['DOCUMENT_ROOT'], '/').'/';
+	$src_temp = $docRoot . ltrim($src_temp, '/');
+	$dest_poster_photo = $docRoot . ltrim($dest_poster_photo, '/');
+	$destThumb = $docRoot . ltrim($destThumb, '/');
+	$destThumb_buy = $docRoot . ltrim($destThumb_buy, '/');
+	$destThumb_buy_gallery = $docRoot . ltrim($destThumb_buy_gallery, '/');
+	if(!empty($destThumb_big_slider)) $destThumb_big_slider = $docRoot . ltrim($destThumb_big_slider, '/');
+
  	//$obj = new Poster();
-	
+
+	$has_default = false;
+	if (!empty($is_default)) {
+		foreach ($posterArr as $v) {
+			if ($v == $is_default) { $has_default = true; break; }
+		}
+	}
+
 	foreach($posterArr as $key => $value){
-		
+
 		$imageExt=$fileExt = end(explode('.', $value));
-		$set_default = ($value == $is_default)? 1 : 0;
+		if ($has_default) {
+			$set_default = ($value == $is_default) ? 1 : 0;
+		} else {
+			// No valid default selected — set first image as default
+			$set_default = ($key === array_key_first($posterArr)) ? 1 : 0;
+		}
 		mysqli_query($GLOBALS['db_connect'], 'START TRANSACTION');
         //$poster_image_id=$obj->updateData(TBL_POSTER_IMAGES, array("fk_poster_id" => $poster_id, "poster_thumb" => addslashes($value),
                                                   //"poster_image" => addslashes($value), "is_default" => $set_default,"FileExtention"=>$imageExt,"original_filename"=>addslashes($value),"is_cloud"=>'1',"is_big"=>'1'));
