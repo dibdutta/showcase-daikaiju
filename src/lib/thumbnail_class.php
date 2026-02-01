@@ -30,48 +30,60 @@ class thumbnail
 {
 	var $img, $size;
 
-	function thumbnail($imgfile)
+	function __construct($imgfile)
 	{
 		//detect image format
+		$this->img = [];
 		$this->size = getimagesize($imgfile);
-		
-		if ($this->size['mime'] == 'image/jpeg') {
-			$this->img["format"] = 'jpg';
+
+		if ($this->size && isset($this->size['mime'])) {
+			if ($this->size['mime'] == 'image/jpeg') {
+				$this->img["format"] = 'JPEG';
+			}
+			elseif ($this->size['mime'] == 'image/gif') {
+				$this->img["format"] = 'GIF';
+			}
+			elseif ($this->size['mime'] == 'image/png') {
+				$this->img["format"] = 'PNG';
+			}
+			elseif ($this->size['mime'] == 'image/vnd.wap.wbmp') {
+				$this->img["format"] = 'WBMP';
+			}
 		}
-		elseif ($this->size['mime'] == 'image/gif') {
-			$this->img["format"] = 'gif';
+
+		// fallback: detect format from file extension
+		if (empty($this->img["format"])) {
+			$ext = strtolower(pathinfo($imgfile, PATHINFO_EXTENSION));
+			if ($ext == 'jpg' || $ext == 'jpeg') {
+				$this->img["format"] = 'JPEG';
+			} elseif ($ext == 'png') {
+				$this->img["format"] = 'PNG';
+			} elseif ($ext == 'gif') {
+				$this->img["format"] = 'GIF';
+			} elseif ($ext == 'wbmp') {
+				$this->img["format"] = 'WBMP';
+			}
 		}
-		elseif ($this->size['mime'] == 'image/png') {
-			$this->img["format"] = 'png';
-		}
-		elseif ($this->size['mime'] == 'image/vnd.wap.wbmp') {
-			$this->img["format"] = 'wbmp';
-		}
-		//$this->img["format"]=ereg_replace(".*\.(.*)$","\\1",$imgfile);
-		$this->img["format"]=strtoupper($this->img["format"]);
-		if ($this->img["format"]=="JPG" || $this->img["format"]=="JPEG") {
-			//JPEG
-			$this->img["format"]="JPEG";
-			$this->img["src"] = imagecreatefromjpeg ($imgfile);
+
+		if ($this->img["format"]=="JPEG") {
+			$this->img["src"] = @imagecreatefromjpeg($imgfile);
 		} elseif ($this->img["format"]=="PNG") {
-			//PNG
-			$this->img["format"]="PNG";
-			$this->img["src"] = imagecreatefrompng ($imgfile);
+			$this->img["src"] = @imagecreatefrompng($imgfile);
 		} elseif ($this->img["format"]=="GIF") {
-			//GIF
-			$this->img["format"]="GIF";
-			$this->img["src"] = imagecreatefromgif ($imgfile);
+			$this->img["src"] = @imagecreatefromgif($imgfile);
 		} elseif ($this->img["format"]=="WBMP") {
-			//WBMP
-			$this->img["format"]="WBMP";
-			$this->img["src"] = imagecreatefromwbmp ($imgfile);
+			$this->img["src"] = @imagecreatefromwbmp($imgfile);
 		} else {
 			//DEFAULT
 			echo "Not Supported File";
-			exit();
+			return;
 		}
-		@$this->img["lebar"] = imagesx($this->img["src"]);
-		@$this->img["tinggi"] = imagesy($this->img["src"]);
+		if (!$this->img["src"]) {
+			echo "Could not load image: " . $imgfile;
+			return;
+		}
+		$this->img["lebar"] = imagesx($this->img["src"]);
+		$this->img["tinggi"] = imagesy($this->img["src"]);
 		//default quality jpeg
 		$this->img["quality"]=75;
 	}
@@ -80,14 +92,14 @@ class thumbnail
 	{
 		//height
     	$this->img["tinggi_thumb"]=$size;
-    	@$this->img["lebar_thumb"] = ($this->img["tinggi_thumb"]/$this->img["tinggi"])*$this->img["lebar"];
+    	$this->img["lebar_thumb"] = !empty($this->img["tinggi"]) ? ($this->img["tinggi_thumb"]/$this->img["tinggi"])*$this->img["lebar"] : $size;
 	}
 
 	function size_width($size=100)
 	{
 		//width
 		$this->img["lebar_thumb"]=$size;
-    	@$this->img["tinggi_thumb"] = ($this->img["lebar_thumb"]/$this->img["lebar"])*$this->img["tinggi"];
+    	$this->img["tinggi_thumb"] = !empty($this->img["lebar"]) ? ($this->img["lebar_thumb"]/$this->img["lebar"])*$this->img["tinggi"] : $size;
 	}
 
 	function size_auto($size=100)
@@ -95,10 +107,10 @@ class thumbnail
 		//size
 		if ($this->img["lebar"]>=$this->img["tinggi"]) {
     		$this->img["lebar_thumb"]=$size;
-    		@$this->img["tinggi_thumb"] = ($this->img["lebar_thumb"]/$this->img["lebar"])*$this->img["tinggi"];
+    		$this->img["tinggi_thumb"] = !empty($this->img["lebar"]) ? ($this->img["lebar_thumb"]/$this->img["lebar"])*$this->img["tinggi"] : $size;
 		} else {
 	    	$this->img["tinggi_thumb"]=$size;
-    		@$this->img["lebar_thumb"] = ($this->img["tinggi_thumb"]/$this->img["tinggi"])*$this->img["lebar"];
+    		$this->img["lebar_thumb"] = !empty($this->img["tinggi"]) ? ($this->img["tinggi_thumb"]/$this->img["tinggi"])*$this->img["lebar"] : $size;
  		}
 	}
 
@@ -111,6 +123,7 @@ class thumbnail
 	function show()
 	{
 		//show thumb
+		if (empty($this->img["src"])) return;
 		@header("Content-Type: image/".$this->img["format"]);
 
 		/* change ImageCreateTrueColor to ImageCreate if your GD not supported ImageCreateTrueColor function*/
@@ -135,6 +148,7 @@ class thumbnail
 	function save($save="")
 	{
 		//save thumb
+		if (empty($this->img["src"])) return;
 		if (empty($save)) $save=strtolower("./thumb.".$this->img["format"]);
 		/* change ImageCreateTrueColor to ImageCreate if your GD not supported ImageCreateTrueColor function*/
 		$this->img["des"] = imagecreatetruecolor($this->img["lebar_thumb"],$this->img["tinggi_thumb"]);

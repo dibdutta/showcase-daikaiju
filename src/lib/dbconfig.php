@@ -13,6 +13,9 @@ define ("CUSTOM_PAGE_CREATION", false);
 
 define ("SUPER_ADMIN_CREATION", false);
 
+// Application environment: 'production' or 'local'
+define("APP_ENV", getenv('APP_ENV') ?: 'local');
+
 ////////////////////////////////////////////////////////
 
 

@@ -78,16 +78,22 @@ function auction_images_large(){
 			}
 	 }
 	 
-    if ($imgArr[0]['is_cloud'] !='1'){
-        list($width, $height, $type, $attr) = getimagesize("poster_photo/".$imgArr[0]['poster_image']);
+    if (!empty($imgArr[0]['poster_image'])) {
+        $localFile = "poster_photo/".$imgArr[0]['poster_image'];
+        if ($imgArr[0]['is_cloud'] != '1' || APP_ENV !== 'production') {
+            // Local: read dimensions from disk
+            if (file_exists($localFile)) {
+                list($width, $height, $type, $attr) = getimagesize($localFile);
+            } else {
+                $width = 800; $height = 800;
+            }
+        } else {
+            // Production cloud
+            $width = 800; $height = 800;
+        }
+        $imgArr[0]['image_path'] = CLOUD_POSTER.$imgArr[0]['poster_image'];
         $smarty->assign('width', $width);
         $smarty->assign('height', $height);
-        $imgArr[0]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/".$imgArr[0]['poster_image'];
-    }else{
-        list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$imgArr[0]['poster_image']);
-        $smarty->assign('width', $width);
-        $smarty->assign('height', $height);
-        $imgArr[0]['image_path']=CLOUD_POSTER.$imgArr[0]['poster_image'];
     }
 	if($width>1300){
 		$widthNew= 1300;

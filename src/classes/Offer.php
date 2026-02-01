@@ -186,9 +186,10 @@ class Offer extends DBCommon{
              }
          }
 
-				
+
 		$sql .= " ORDER BY ofr.post_date DESC";
-				
+
+	    $offerArr = [];
 	    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $offerArr[] = $row;
@@ -198,12 +199,12 @@ class Offer extends DBCommon{
 		for($i=0;$i<count($dataArr);$i++){
 			$flag = 0;
 			for($j=0;$j<count($offerArr);$j++){
-				if($dataArr[$i]['auction_id'] == $offerArr[$j]['offer_fk_auction_id']){					
+				if($dataArr[$i]['auction_id'] == $offerArr[$j]['offer_fk_auction_id']){
 					 $arr[$flag]['offer_id'] = $offerArr[$j]['offer_id'];
 					 $arr[$flag]['offer_is_accepted'] = $offerArr[$j]['offer_is_accepted'];
 					 $arr[$flag]['offer_amount'] = $offerArr[$j]['offer_amount'];
 					 $arr[$flag]['post_date'] = $offerArr[$j]['post_date'];
-					 
+
 					 $arr[$flag]['cntr_offer_id'] = $offerArr[$j]['cntr_offer_id'];
 					 $arr[$flag]['cntr_ofr_offer_is_accepted'] = $offerArr[$j]['cntr_ofr_offer_is_accepted'];
 					 $arr[$flag]['cntr_ofr_offer_amount'] = $offerArr[$j]['cntr_ofr_offer_amount'];
@@ -218,6 +219,7 @@ class Offer extends DBCommon{
 	}
 	function fetchTotalOffers(&$dataArr)
 	 {
+		$auctions_ids = '';
 		for($i=0;$i<count($dataArr);$i++){
 			$auctions_ids .= $dataArr[$i]['auction_id'].",";
 		}
@@ -229,11 +231,12 @@ class Offer extends DBCommon{
 				FROM ".USER_TABLE." ut,".TBL_OFFER." ofr LEFT JOIN ".TBL_OFFER." cntr_ofr ON ofr.offer_id = cntr_ofr.offer_parent_id
 				WHERE ofr.offer_fk_auction_id IN (".$auctions_ids.") AND ut.user_id=ofr.offer_fk_user_id
 				AND ofr.offer_parent_id = '0' ";
-				
-		
-				
+
+
+
 		$sql .= " ORDER BY ofr.post_date DESC";
-				
+
+	    $offerArr = [];
 	    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $offerArr[] = $row;
@@ -243,7 +246,7 @@ class Offer extends DBCommon{
 		for($i=0;$i<count($dataArr);$i++){
 			$flag = 0;
 			for($j=0;$j<count($offerArr);$j++){
-				if($dataArr[$i]['auction_id'] == $offerArr[$j]['offer_fk_auction_id']){					
+				if($dataArr[$i]['auction_id'] == $offerArr[$j]['offer_fk_auction_id']){
 					 $arr[$flag]['offer_id'] = $offerArr[$j]['offer_id'];
 					 $arr[$flag]['offer_is_accepted'] = $offerArr[$j]['offer_is_accepted'];
 					 $arr[$flag]['offer_amount'] = $offerArr[$j]['offer_amount'];
@@ -305,9 +308,10 @@ class Offer extends DBCommon{
 		if($user_id != ''){
 			$sql .= " AND ofr.offer_fk_user_id = '".$user_id."'";
 		}
-				
+
 		$sql .= " ORDER BY ofr.post_date DESC";
-				
+
+	    $offerArr = [];
 	    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $offerArr[] = $row;
@@ -317,7 +321,7 @@ class Offer extends DBCommon{
 		for($i=0;$i<count($dataArr);$i++){
 			$flag = 0;
 			for($j=0;$j<count($offerArr);$j++){
-				if($dataArr[$i]['auction_id'] == $offerArr[$j]['offer_fk_auction_id']){	
+				if($dataArr[$i]['auction_id'] == $offerArr[$j]['offer_fk_auction_id']){
 				 	 $arr[$flag]['username'] = $offerArr[$j]['firstname'].' '.$offerArr[$j]['lastname'];
 					 $arr[$flag]['offer_id'] = $offerArr[$j]['offer_id'];
 					 $arr[$flag]['offer_is_accepted'] = $offerArr[$j]['offer_is_accepted'];
