@@ -2,25 +2,26 @@
 define ("INCLUDE_PATH", "../");
 require_once INCLUDE_PATH."lib/inc.php";
 
-if($_REQUEST['mode'] == "admin_user"){
+$mode = $_REQUEST['mode'] ?? '';
+if($mode == "admin_user"){
 	change_admin_user_status();
-}elseif($_REQUEST['mode'] == "page_fixed"){
+}elseif($mode == "page_fixed"){
 	change_page_fixed_status();
-}elseif($_REQUEST['mode'] == "page_custom"){
+}elseif($mode == "page_custom"){
 	change_page_custom_status();
-}elseif($_REQUEST['mode'] == "user"){
+}elseif($mode == "user"){
 	change_user_status();
-}/*elseif($_REQUEST['mode'] == "poster"){
+}/*elseif($mode == "poster"){
 	change_poster_status();
-}*/elseif($_REQUEST['mode'] == "auction"){
+}*/elseif($mode == "auction"){
 	change_auction_status();
-}elseif($_REQUEST['mode'] == "poster_received"){
+}elseif($mode == "poster_received"){
 	change_poster_received_status();
 }
 
 function change_admin_user_status(){
 	$obj = new AdminUser;
-	$obj->adminID = $_REQUEST['id'];
+	$obj->adminID = $_REQUEST['id'] ?? '';
 	$chk = $obj->changeStatus();
 	if($chk == 0){
 		echo "none";
@@ -32,7 +33,7 @@ function change_admin_user_status(){
 
 function change_page_fixed_status(){
 	$obj = new PageContent;
-	$obj->pageID = $_REQUEST['id'];
+	$obj->pageID = $_REQUEST['id'] ?? '';
 	$chk = $obj->changeFixedPageStatus();
 	if($chk == 0){
 		echo "none";
@@ -44,7 +45,7 @@ function change_page_fixed_status(){
 
 function change_page_custom_status(){
 	$obj = new PageContent;
-	$obj->pageContentID = $_REQUEST['id'];
+	$obj->pageContentID = $_REQUEST['id'] ?? '';
 	$chk = $obj->changeCustomPageStatus();
 	if($chk == 0){
 		echo "none";
@@ -56,7 +57,7 @@ function change_page_custom_status(){
 
 function change_user_status(){
 	$obj = new User;
-	$obj->userID = $_REQUEST['id'];
+	$obj->userID = $_REQUEST['id'] ?? '';
 	$chk = $obj->changeStatus();
 	if($chk == 0){
 		echo "none";
@@ -99,7 +100,7 @@ function change_auction_status(){
 	
 	$obj = new Auction;
 	
-	$chk = $obj->updateData(TBL_AUCTION, array('auction_is_approved' => $_REQUEST['is_approved']), array('auction_id' => $_REQUEST['id']), true);
+	$chk = $obj->updateData(TBL_AUCTION, array('auction_is_approved' => $_REQUEST['is_approved'] ?? 0), array('auction_id' => $_REQUEST['id'] ?? ''), true);
 	if($chk){
 			
 	
@@ -109,12 +110,12 @@ function change_auction_status(){
 				FROM ".USER_TABLE." u, ".TBL_POSTER." p, ".TBL_AUCTION." a
 				WHERE a.fk_poster_id = p.poster_id
 				AND p.fk_user_id = u.user_id
-				AND a.auction_id = '".$_REQUEST['id']."'";
+				AND a.auction_id = '".($_REQUEST['id'] ?? '')."'";
 		$rs = mysqli_query($GLOBALS['db_connect'],$sql);
 		$row = mysqli_fetch_array($rs);
-		if($row['fk_auction_type_id'] != 3 && $_REQUEST['is_approved']==1){
+		if($row['fk_auction_type_id'] != 3 && ($_REQUEST['is_approved'] ?? 0)==1){
 			$objWantlist=new Wantlist();
-			$objWantlist->countNewAuctionWithWantlist($_REQUEST['id']);	
+			$objWantlist->countNewAuctionWithWantlist($_REQUEST['id'] ?? '');
 		}
 		if($row['fk_auction_type_id'] == '1'){
 			$sql_update = "Update tbl_poster set up_date='".date('Y-m-d H:i:s')."' where poster_id='".$row['poster_id']."'";
@@ -125,7 +126,7 @@ function change_auction_status(){
 		
 		$fromMail = ADMIN_EMAIL_ADDRESS;
 		$fromName = ADMIN_NAME;
-		if($_REQUEST['is_approved']==1){
+		if(($_REQUEST['is_approved'] ?? 0)==1){
 			$subject = "Item approved";
 			$textContent = 'Dear '.$row['firstname'].' '.$row['lastname'].',<br><br>';
 			$textContent .= 'Your poster (<strong>Poster Title:</strong> '.$row['poster_title'].', <strong>Poster SKU:</strong> '.$row['poster_sku'].') has been Approved. For more details, please <a href="http://'.HOST_NAME.'">login </a><br /><br />';
@@ -134,7 +135,7 @@ function change_auction_status(){
 			$subject = "Poster / Auction Approved";	
 			$textContent .= 'Please ship your posters to MPE for monthly auction .<br /><br />';
 			}
-		}elseif($_REQUEST['is_approved']==2){
+		}elseif(($_REQUEST['is_approved'] ?? 0)==2){
 			$subject = "Item not approved";
 			$textContent = 'Dear '.$row['firstname'].' '.$row['lastname'].',<br><br>';
 			$textContent .= 'Your item (<strong>Title:</strong> '.$row['poster_title'].', <strong>Poster SKU:</strong> '.$row['poster_sku'].') has not been approved for one or more of the following reasons:<br/> 1. Photo lacks appropriate clarity/definition.<br/> 2. Description is inaccurate or vague.<br/> 3. Item authenticity is indeterminate. <br/> 4. Inappropriate type of item(props, other non-paper related movie material). <br/>Please contact us for further information.<br /><br />';
@@ -154,20 +155,20 @@ function change_auction_status(){
 function change_poster_received_status(){
 	$obj = new Auction;
 	
-	$chk = $obj->updateData(TBL_AUCTION, array('is_approved_for_monthly_auction' => 1), array('auction_id' => $_REQUEST['id']), true);
-	if($chk){		
+	$chk = $obj->updateData(TBL_AUCTION, array('is_approved_for_monthly_auction' => 1), array('auction_id' => $_REQUEST['id'] ?? ''), true);
+	if($chk){
 		$objWantlist=new Wantlist();
-		$objWantlist->countNewAuctionWithWantlist($_REQUEST['id']);		
+		$objWantlist->countNewAuctionWithWantlist($_REQUEST['id'] ?? '');		
 		/******************************** Email Start ******************************/
 		$sql = "SELECT u.username, u.firstname, u.lastname, u.email,
 				p.poster_title, p.poster_sku, a.fk_auction_type_id 
 				FROM ".USER_TABLE." u, ".TBL_POSTER." p, ".TBL_AUCTION." a
 				WHERE a.fk_poster_id = p.poster_id
 				AND p.fk_user_id = u.user_id
-				AND a.auction_id = '".$_REQUEST['id']."'";
+				AND a.auction_id = '".($_REQUEST['id'] ?? '')."'";
 		$rs = mysqli_query($GLOBALS['db_connect'],$sql);
 		$row = mysqli_fetch_array($rs);
-		
+
 		$toMail = $row['email'];
 		$toName = $row['firstname']." ".$row['lastname'];
 		$subject = "Item Received and Approved for Monthly Auction";

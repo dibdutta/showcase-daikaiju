@@ -13,27 +13,28 @@ if(!isset($_SESSION['adminLoginID'])){
 }
 
 
-if($_REQUEST['mode'] == "create_alternate_posters"){
+$mode = $_REQUEST['mode'] ?? '';
+if($mode == "create_alternate_posters"){
 	create_alternate_posters();
-}elseif($_REQUEST['mode'] == "save_alternative_poster"){
+}elseif($mode == "save_alternative_poster"){
 	$chk = validateNewFixedForm();
 	if(!$chk){
 		create_fixed();
 	}else{
 		save_new_fixed_auction();
 	}
-}elseif($_REQUEST['mode']=="edit_alternative"){
+}elseif($mode=="edit_alternative"){
 	edit_alternative();
-}elseif($_REQUEST['mode']=="view_details_sell_status"){
+}elseif($mode=="view_details_sell_status"){
 	view_details_sell_status();
-}elseif($_REQUEST['mode']=="update_alternative"){
+}elseif($mode=="update_alternative"){
 	$chk = validateFixedForm();
 	if($chk == true){
 		update_alternative();
 	}else{
 		edit_alternative();
 	}
-}elseif($_REQUEST['mode']=="manage_invoice_alternative"){
+}elseif($mode=="manage_invoice_alternative"){
 	manage_invoice_alternative();
 }
 else{
@@ -51,40 +52,41 @@ function dispmiddle() {
 	require_once INCLUDE_PATH."lib/adminCommon.php";	
 	
 	$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
-	
+	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
+
 	/*if(isset($_REQUEST['search']) && $_REQUEST['search']!=''){
 		if($_REQUEST['search']=='all'){
 			$_REQUEST['search']='';
 		}*/
-	if($_REQUEST['start_date'] > $_REQUEST['end_date']){
+	if(($_REQUEST['start_date'] ?? '') > ($_REQUEST['end_date'] ?? '')){
 		$_SESSION['adminErr'] = "End Date must be greater than Start Date.";
 		header("location: ".PHP_SELF);
 	}else{
 		$auctionObj = new Auction();
 		$auctionObj->orderType = 'DESC';
-	if($_REQUEST['start_date']!='')
+	if(($_REQUEST['start_date'] ?? '')!='')
 	{
 		$start_date=date('Y-m-d',strtotime($_REQUEST['start_date']));
 	}else{
-		$start_date='';	
+		$start_date='';
 	}
-	if($_REQUEST['end_date']!=''){
-		$end_date=date('Y-m-d',strtotime($_REQUEST['end_date']));	
+	if(($_REQUEST['end_date'] ?? '')!=''){
+		$end_date=date('Y-m-d',strtotime($_REQUEST['end_date']));
 	}else{
 		$end_date='';	
 	}
 	
 	
-	$total = $auctionObj->countAlternativePosterStatus($_REQUEST['search'],'',$_REQUEST['search_fixed_poster'],$start_date,$end_date);
-		
+	$total = $auctionObj->countAlternativePosterStatus($_REQUEST['search'] ?? '','',$_REQUEST['search_fixed_poster'] ?? '',$start_date,$end_date);
+
 	if($total > 0 ){
-	if($_REQUEST['search']!='sold'){
-			$auctionRows = $auctionObj->fetchAlternativeByStatus($_REQUEST['search'],'',$_REQUEST['sort_type'],$_REQUEST['search_fixed_poster'],$start_date,$end_date);
+	if(($_REQUEST['search'] ?? '')!='sold'){
+			$auctionRows = $auctionObj->fetchAlternativeByStatus($_REQUEST['search'] ?? '','',$_REQUEST['sort_type'] ?? '',$_REQUEST['search_fixed_poster'] ?? '',$start_date,$end_date);
 		}else{
 			$auctionObj->orderBy='invoice_generated_on';
-			$auctionRows=$auctionObj->soldAuctionFIXED($_REQUEST['search'],'',$_REQUEST['sort_type'],$_REQUEST['search_fixed_poster'],$start_date,$end_date);
+			$auctionRows=$auctionObj->soldAuctionFIXED($_REQUEST['search'] ?? '','',$_REQUEST['sort_type'] ?? '',$_REQUEST['search_fixed_poster'] ?? '',$start_date,$end_date);
 		}
+		$auctionRows = $auctionRows ?? [];
 		$total_now=count($auctionRows);
 		
     	for($i=0;$i<$total_now;$i++)
@@ -122,13 +124,13 @@ function dispmiddle() {
 		$smarty->assign('total', 0);
 		$smarty->assign('search', $_REQUEST['search']);
 	}*/
-	if($_REQUEST['start_date']!='' && $_REQUEST['end_date']!='')
+	if(($_REQUEST['start_date'] ?? '')!='' && ($_REQUEST['end_date'] ?? '')!='')
 	 {
 		$smarty->assign('start_date_show', date('m/d/Y',strtotime($start_date)));
 		$smarty->assign('end_date_show', date('m/d/Y',strtotime($end_date)));
 	  }
 	}
-	$smarty->assign('search_fixed_poster', $_REQUEST['search_fixed_poster']);
+	$smarty->assign('search_fixed_poster', $_REQUEST['search_fixed_poster'] ?? '');
 	$smarty->display('admin_alternative_poster_manager.tpl');
 }
 
@@ -146,15 +148,15 @@ if(!$_POST)
 	define ("PAGE_HEADER_TEXT", "Admin Alternate Poster Manager");
 	
 	$smarty->assign ("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
+	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 
 	$obj = new Category();
 	$catRows = $obj->selectDataCategory(TBL_CATEGORY, array('*'),true,true);
 	$smarty->assign('catRows', $catRows);
 
 	foreach ($_POST as $key => $value) {
-		$smarty->assign($key, $value); 
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key, $value);
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 		if($key=='poster_desc'){
 			$PosterDesc=$value;
 		}
@@ -174,29 +176,31 @@ if(!$_POST)
 		{
 		$value=$imgstr;
 		}
-		
-		
+
+
 		if($value != "")
 		{
-			
-			$smarty->assign("poster_images", $value); 
-			$poster_images_arr = explode(',',trim($value, ','));
-			$smarty->assign("poster_images_arr", $poster_images_arr); 
-		}
-		}
-		}
-	
-	$smarty->assign("is_default_err", $GLOBALS['is_default_err']);
 
-	$random = ($_POST['random'] == '')? session_id().'_'.md5(date('Y-m-d H:i:s')).'_'.$_SESSION['adminLoginID'] : $_POST['random'];
+			$smarty->assign("poster_images", $value);
+			$poster_images_arr = explode(',',trim($value, ','));
+			$smarty->assign("poster_images_arr", $poster_images_arr);
+		}
+		}
+		}
+
+	$smarty->assign("is_default_err", $GLOBALS['is_default_err'] ?? '');
+
+	$random = (($_POST['random'] ?? '') == '')? session_id().'_'.md5(date('Y-m-d H:i:s')).'_'.$_SESSION['adminLoginID'] : $_POST['random'];
 	$smarty->assign("random", $random);
 	$_SESSION['random']=$random;
 	
+	$posterImageRows = $posterImageRows ?? [];
+	$poster_images_arr = $poster_images_arr ?? [];
 	for($i=0;$i<count($posterImageRows);$i++){
 		$existingImages .= $posterImageRows[$i]['poster_image'].",";
 	}
 	$existing_images_arr = explode(',',trim($existingImages, ','));
-	
+
 	$smarty->assign("existingImages", $existingImages);
 	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows)));
 	
@@ -207,7 +211,7 @@ if(!$_POST)
 	$userRow = $obj->selectData(USER_TABLE, array('user_id', 'firstname','lastname'), array('status' => 1), true);
 	$smarty->assign("userRow", $userRow);
 	
-	$smarty->assign("event_id", $_REQUEST['event_id']);
+	$smarty->assign("event_id", $_REQUEST['event_id'] ?? '');
 	ob_start();
 	$oFCKeditor = new FCKeditor('poster_desc') ;
 	$oFCKeditor->BasePath = '../FCKeditor/';
@@ -432,16 +436,16 @@ function save_new_fixed_auction(){
 		}
 		require_once INCLUDE_PATH."lib/adminCommon.php";
 	
-		$smarty->assign ("encoded_string", $_REQUEST['encoded_string']);
-		$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
-	
+		$smarty->assign ("encoded_string", $_REQUEST['encoded_string'] ?? '');
+		$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
+
 		$obj = new Category();
 		$catRows = $obj->selectDataCategory(TBL_CATEGORY, array('*'),true,true);
 		$smarty->assign('catRows', $catRows);
-	
+
 		foreach ($_POST as $key => $value ) {
-			$smarty->assign($key, $value); 
-			eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+			$smarty->assign($key, $value);
+			$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 			if(($key == 'poster_images') && ($value != "" || isset($_SESSION['img'])))
 			{
 			if(isset($_SESSION['img']))
@@ -449,7 +453,7 @@ function save_new_fixed_auction(){
 			$imgstr=implode(",",$_SESSION['img']);
 			$imgstr=$imgstr.',';
 			unset($_SESSION['img']);
-			
+
 			if($value != "")
 			{
 			$value=$value.$imgstr;
@@ -463,13 +467,13 @@ function save_new_fixed_auction(){
 			{
 			$smarty->assign("poster_images", $value);
 			$poster_images_arr = explode(',',trim($value, ','));
-			$smarty->assign("poster_images_arr", $poster_images_arr); 
+			$smarty->assign("poster_images_arr", $poster_images_arr);
 			}
 			}
-		}	
-		$smarty->assign("is_default_err", $GLOBALS['is_default_err']); 
-	
-		$random = ($_POST['random'] == '')? session_id().'_'.md5(date('Y-m-d H:i:s')).'_'.$_SESSION['adminLoginID'] : $_POST['random'];
+		}
+		$smarty->assign("is_default_err", $GLOBALS['is_default_err'] ?? '');
+
+		$random = (($_POST['random'] ?? '') == '')? session_id().'_'.md5(date('Y-m-d H:i:s')).'_'.$_SESSION['adminLoginID'] : $_POST['random'];
 		$smarty->assign("random", $random);
 		$_SESSION['random']=$random;
 		
@@ -486,6 +490,8 @@ function save_new_fixed_auction(){
 		$posterRow[0]['artist'] = strip_slashes($posterRow[0]['artist']);
 		$posterRow[0]['quantity'] = strip_slashes($posterRow[0]['quantity']);
 		$posterImageRows =  $auctionObj->selectData(TBL_POSTER_IMAGES, array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
+		$posterImageRows = $posterImageRows ?? [];
+		$poster_images_arr = $poster_images_arr ?? [];
 		for($i=0;$i<count($posterImageRows);$i++){
 			if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
 				$posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
@@ -496,7 +502,7 @@ function save_new_fixed_auction(){
 		for($i=0;$i<count($posterImageRows);$i++){
 			$existingImages .= $posterImageRows[$i]['poster_image'].",";
 		}
-	
+
 		$posterCategoryRows =  $auctionObj->selectData(TBL_POSTER_TO_CATEGORY, array('fk_cat_id'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
 		$smarty->assign("auctionRow", $auctionRow);
 		//$smarty->assign("posterRow", $posterRow);
@@ -709,11 +715,11 @@ function save_new_fixed_auction(){
 	if(empty($invoiceData)){
 	 $smarty->assign("key", 1);
 	}
-	$invoiceData['shipping_address'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['shipping_address']);
+	$invoiceData['shipping_address'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['shipping_address']);
 	$invoiceData['shipping_address'] = unserialize($invoiceData['shipping_address']);
-	$invoiceData['billing_address'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['billing_address']);
+	$invoiceData['billing_address'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['billing_address']);
 	$invoiceData['billing_address'] = unserialize($invoiceData['billing_address']);
-	$invoiceData['auction_details'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['auction_details']);
+	$invoiceData['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['auction_details']);
 	$invoiceData['auction_details'] = unserialize($invoiceData['auction_details']);
 	$invoiceData['additional_charges'] = unserialize($invoiceData['additional_charges']);
 	$invoiceData['discounts'] = unserialize($invoiceData['discounts']);

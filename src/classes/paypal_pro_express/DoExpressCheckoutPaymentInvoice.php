@@ -94,7 +94,7 @@ if($ack != 'SUCCESS' && $ack != 'SUCCESSWITHWARNING'){
 											'shipping_address2' => $_SESSION['invoice_'.$_SESSION['invoice_id']]['shipping_info']['shipping_address2'],
 											'shipping_zipcode' => $_SESSION['invoice_'.$_SESSION['invoice_id']]['shipping_info']['shipping_zipcode']));
 		
-		$row[0]['additional_charges'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $row[0]['additional_charges'] );
+		$row[0]['additional_charges'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $row[0]['additional_charges'] );
 		$additional_charges_arr = unserialize($row[0]['additional_charges']);
 		
 		$shipping_desc = strtoupper($_SESSION['invoice_'.$_SESSION['invoice_id']]['shipping_info']['shipping_methods'])." - ".

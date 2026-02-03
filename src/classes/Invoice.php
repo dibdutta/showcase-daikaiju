@@ -747,9 +747,9 @@ class Invoice extends DBCommon{
 		//$sqlSeller = "SELECT usr.email, usr.firstname, usr.lastname"
 		
 		
-				$row['billing_address'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoice['billing_address']);
+				$row['billing_address'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoice['billing_address']);
 				$row['billing_address'] = unserialize($invoice['billing_address']);
-				$row['shipping_address'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoice['shipping_address']);
+				$row['shipping_address'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoice['shipping_address']);
 				$row['shipping_address'] = unserialize($invoice['shipping_address']);
 				$row['invoice_generated_on'] = formatDateTime($invoice['invoice_generated_on']);
 				
@@ -871,11 +871,11 @@ class Invoice extends DBCommon{
 		//$sqlSeller = "SELECT usr.email, usr.firstname, usr.lastname"
 		
 		
-		$row['billing_address'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $row['billing_address']);
+		$row['billing_address'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $row['billing_address']);
 		$row['billing_address'] = unserialize($row['billing_address']);
-		$row['shipping_address'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $row['shipping_address']);
+		$row['shipping_address'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $row['shipping_address']);
 		$row['shipping_address'] = unserialize($row['shipping_address']);
-		$row['auction_details'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $row['auction_details']);
+		$row['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $row['auction_details']);
 		$row['auction_details'] = unserialize($row['auction_details']);
 		$row['additional_charges'] = unserialize($row['additional_charges']);
 		$row['discounts'] = unserialize($row['discounts']);		

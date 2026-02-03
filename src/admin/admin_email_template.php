@@ -1,8 +1,9 @@
 <?php
 define ("INCLUDE_PATH", "../");
 require_once INCLUDE_PATH."lib/inc.php";
+define ("PAGE_HEADER_TEXT", "Email Template");
 /**************************************************/
-if($_REQUEST['mode']=="view_template"){
+if(($_REQUEST['mode'] ?? '')=="view_template"){
 	view_template();
 }
 	function curl_get($url){

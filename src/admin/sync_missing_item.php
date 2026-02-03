@@ -72,7 +72,7 @@ define ("ADMIN_EMAIL_ADDRESS", $rowAdmin[CONFIG_ADMIN_EMAIL]);
 
 
 
-$sql = " SELECT auction_id FROM tbl_auction WHERE fk_auction_week_id = ".$_REQUEST['week_id']." AND auction_is_sold='1'  ";
+$sql = " SELECT auction_id FROM tbl_auction WHERE fk_auction_week_id = ".($_REQUEST['week_id'] ?? '')." AND auction_is_sold='1'  ";
 $res = mysqli_query($GLOBALS['db_connect'],$sql);
 while($row = mysqli_fetch_array($res)){
 	//$sql_archive = "SELECT count(1) as counter from tbl_bid_archive where bid_is_won='1' AND bid_fk_auction_id=".$row['auction_id'];

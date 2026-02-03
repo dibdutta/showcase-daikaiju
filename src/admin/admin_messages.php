@@ -11,43 +11,45 @@ if(!isset($_SESSION['adminLoginID'])){
 	redirect_admin("admin_login.php");
 }
 
-if($_REQUEST['mode'] == "compose"){
+$mode = $_REQUEST['mode'] ?? '';
+
+if($mode == "compose"){
 	compose();
-}elseif($_REQUEST['mode'] == "read"){
+}elseif($mode == "read"){
 	read();
-}elseif($_REQUEST['mode'] == "send_message"){
+}elseif($mode == "send_message"){
 	$chk = validateMessage();
 	if($chk == true){
 		send_message();
 	}else{
 		compose();
 	}
-}elseif($_REQUEST['mode'] == "inbox"){
+}elseif($mode == "inbox"){
 	dispmiddle();
-}elseif($_REQUEST['mode'] == "reply"){
+}elseif($mode == "reply"){
 	reply();
-}elseif($_REQUEST['mode'] == "send_reply"){
+}elseif($mode == "send_reply"){
 	$chk = validateReply();
 	if($chk == true){
 		send_reply();
 	}else{
 		reply();
 	}
-}elseif($_REQUEST['mode'] == "delete_message"){
+}elseif($mode == "delete_message"){
 	delete_message();
-}elseif($_REQUEST['mode'] == "delete_message_sent"){
+}elseif($mode == "delete_message_sent"){
 	delete_message_sent();
-}elseif($_REQUEST['mode'] == "delete_all_messages"){
+}elseif($mode == "delete_all_messages"){
 	delete_all_messages();
-}elseif($_REQUEST['mode'] == "delete_sent_message"){
+}elseif($mode == "delete_sent_message"){
 	delete_sent_message();
-}elseif($_REQUEST['mode'] == "delete_all_sent_messages"){
+}elseif($mode == "delete_all_sent_messages"){
 	delete_all_sent_messages();
-}elseif($_REQUEST['mode'] == "sent_messages"){
+}elseif($mode == "sent_messages"){
 	sent_messages();
-}elseif($_REQUEST['sent_msg'] == "sent_messages"){
+}elseif(($_REQUEST['sent_msg'] ?? '') == "sent_messages"){
 	sent_messages();
-}elseif($_REQUEST['inbox_msg'] == "inbox_msg"){
+}elseif(($_REQUEST['inbox_msg'] ?? '') == "inbox_msg"){
 	dispmiddle();
 }else{
 	dispmiddle();
@@ -64,8 +66,8 @@ function dispmiddle() {
 	
 	extract($_REQUEST);
 	$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
-	
+	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
+
 	$obj = new Message();
 	$where = array('message_to' => $_SESSION['adminLoginID'], "message_is_toadmin" => 1, "message_is_fromadmin" => 0, "message_is_deleted_to" => 0);
 	$total = $obj->countData(TBL_MESSAGE, $where);
@@ -96,7 +98,7 @@ function compose() {
 
 	extract($_REQUEST);
 	$smarty->assign ("encoded_string", $encoded_string);
-	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
+	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 
 	$obj = new User();
 	$obj->orderBy = "LOWER(firstname)";
@@ -105,13 +107,13 @@ function compose() {
 	$smarty->assign('userRow',$userRow);
 
 	foreach ($_REQUEST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 		$smarty->assign($key,$value);
 	}
-	
-	if(!is_array($_REQUEST['user_ids'])){
-		eval('$smarty->assign("user_ids_err", $GLOBALS["user_ids_err"]);');
-		$smarty->assign($user_ids,$_REQUEST['user_ids']);
+
+	if(!is_array($_REQUEST['user_ids'] ?? null)){
+		$smarty->assign('user_ids_err', $GLOBALS['user_ids_err'] ?? '');
+		$smarty->assign('user_ids', $_REQUEST['user_ids'] ?? '');
 	}
 	
 	ob_start();
@@ -159,7 +161,7 @@ function send_message(){
 	extract($_REQUEST);
 	$obj = new Message();
 	
-	foreach($_REQUEST[user_ids] as $key => $value ) {
+	foreach(($_REQUEST['user_ids'] ?? []) as $key => $value ) {
 		$data = array('message_subject' => $message_subject,
 					  'message_body' => $message_body,
 					  'message_sent_dt' => date("Y-m-d H:i:s"),
@@ -172,7 +174,7 @@ function send_message(){
 		$ids[] = $obj->updateData(TBL_MESSAGE, $data);	
 	}
 	
-	if(count($ids) > 0){
+	if(count($ids ?? []) > 0){
 		$_SESSION['adminErr'] = "Message sent successfully.";
 		header("location: ".PHP_SELF);
 	}else{
@@ -187,8 +189,8 @@ function read()
 	
 	extract($_REQUEST);
 	$smarty->assign("encoded_string", $encoded_string);
-	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
-	
+	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
+
 	$obj = new Message();
 	$where = array('message_id' => $message_id);
 	$message = $obj->readMessage($where, array('*'));
@@ -222,10 +224,10 @@ function reply() {
 	$smarty->assign('message', $message);
 
 	foreach ($_REQUEST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 		$smarty->assign($key,$value);
 	}
-	
+
 	ob_start();
 	$oFCKeditor = new FCKeditor('message_body') ;
 	$oFCKeditor->BasePath = '../FCKeditor/';
@@ -234,7 +236,7 @@ function reply() {
 	$oFCKeditor->Height = '400';
 	$oFCKeditor->Create() ;
 	$message_body = ob_get_contents();
-	ob_end_clean();	
+	ob_end_clean();
 	$smarty->assign('message_body', $message_body);
 
 	$smarty->display('admin_message_reply.tpl');
@@ -290,8 +292,8 @@ function sent_messages() {
 	
 	extract($_REQUEST);
 	$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
-	
+	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
+
 	$obj = new Message();
 	$where = array('message_from' => $_SESSION['adminLoginID'], "message_is_fromadmin" => 1, "message_is_toadmin" => 0, "message_is_deleted_from" => 0);
 	$total = $obj->countData(TBL_MESSAGE, $where);
@@ -322,12 +324,12 @@ function delete_message(){
 
 	if($chk == true){
 		$_SESSION['adminErr'] = "The Message has been deleted successfully.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}
 	else{
 		$_SESSION['adminErr'] = "Can not delete the Message. Please try again.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}
 
@@ -337,7 +339,7 @@ function delete_all_messages(){
 
 	$flag = 1;
 	$obj = new Message();
-	if(count($_REQUEST['message_ids']) >0){
+	if(isset($_REQUEST['message_ids']) && count($_REQUEST['message_ids']) >0){
 	foreach($_REQUEST['message_ids'] as $val){
 		$chk = $obj->updateData(TBL_MESSAGE, array("message_is_deleted_to" => 1), array("message_id" => $val, "message_to" => $_SESSION['adminLoginID']), true);
 		if($chk == false){
@@ -346,17 +348,17 @@ function delete_all_messages(){
 	}
 	}else{
 		$_SESSION['adminErr']="Please Select Atleast One Message to Delete.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
-		exit;	
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
+		exit;
 	}
 
 	if($flag == 1){
 		$_SESSION['adminErr']="All Messages deleted successfully.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}else{
 		$_SESSION['adminErr'] .="All Messages not deleted successfully.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}
 }
@@ -368,12 +370,12 @@ function delete_sent_message(){
 
 	if($chk == true){
 		$_SESSION['adminErr'] = "The Message has been deleted successfully.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}
 	else{
 		$_SESSION['adminErr'] = "Can not delete the Message. Please try again.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}
 
@@ -385,12 +387,12 @@ function delete_message_sent(){
 
 	if($chk == true){
 		$_SESSION['adminErr'] = "The Message has been deleted successfully.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}
 	else{
 		$_SESSION['adminErr'] = "Can not delete the Message. Please try again.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}
 
@@ -400,26 +402,26 @@ function delete_all_sent_messages(){
 
 	$flag = 1;
 	$obj = new Message();
-	if(count($_REQUEST['message_ids'])>0){
+	if(isset($_REQUEST['message_ids']) && count($_REQUEST['message_ids'])>0){
 	foreach($_REQUEST['message_ids'] as $val){
 		$chk = $obj->updateData(TBL_MESSAGE, array("message_is_deleted_from" => 1), array("message_id" => $val, "message_from" => $_SESSION['adminLoginID']), true);
 		if($chk == false){
 			$flag = 0;
 		}
-	}	
+	}
 	}else{
 	$_SESSION['adminErr'] = "Please Select Atleast One Message to Delete.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
-		exit;	
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
+		exit;
 	}
 
 	if($flag == 1){
 		$_SESSION['adminErr']="All Messages deleted successfully.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}else{
 		$_SESSION['adminErr'] .="All Messages not deleted successfully.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}
 }

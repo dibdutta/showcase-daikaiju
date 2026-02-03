@@ -14,7 +14,8 @@ if(!isset($_SESSION['adminLoginID'])){
 	redirect_admin("admin_login.php");
 }
 
-if($_REQUEST['mode']=="save_config"){
+$mode = $_REQUEST['mode'] ?? '';
+if($mode=="save_config"){
 	$chk = checkValue();
 	if($chk==true){
 		save_content();
@@ -73,22 +74,22 @@ function dispmiddle() {
 	$bannerTitle=stripslashes($row['banner_title']);
 	$short_type=$row['short_type'];
 	
-	if($_REQUEST['adminName']!=""){
+	if(($_REQUEST['adminName'] ?? '')!=""){
 		$adminName = $_REQUEST['adminName'];
 	}
-	if($_REQUEST['adminEmail']!=""){
+	if(($_REQUEST['adminEmail'] ?? '')!=""){
 		$adminEmail = $_REQUEST['adminEmail'];
 	}
-	if($_REQUEST['pageTitle']!=""){
+	if(($_REQUEST['pageTitle'] ?? '')!=""){
 		$pageTitle = $_REQUEST['pageTitle'];
 	}
-	if($_REQUEST['welcomeText']!=""){
+	if(($_REQUEST['welcomeText'] ?? '')!=""){
 		$welcomeText = $_REQUEST['welcomeText'];
 	}
-	if($_REQUEST['instruction']!=""){
+	if(($_REQUEST['instruction'] ?? '')!=""){
 		$instruction = $_REQUEST['instruction'];
 	}
-	if($_REQUEST['copyRight']!=""){
+	if(($_REQUEST['copyRight'] ?? '')!=""){
 		$copyRight = $_REQUEST['copyRight'];
 	}
 	
@@ -127,8 +128,8 @@ function dispmiddle() {
  	$smarty->assign('bannerLink', $bannerLink);
  	$smarty->assign('bannerTitle', $bannerTitle);
  	$smarty->assign('short_type', $short_type);
-	foreach ($_POST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);'); 
+	foreach ($_POST ?? [] as $key => $value ) {
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
 	
 	$smarty->display('admin_config_manager.tpl');
@@ -137,11 +138,11 @@ function dispmiddle() {
 
 function checkValue(){
 	$errCounter=0;
-	if($_POST['adminName']==""){
+	if(($_POST['adminName'] ?? '')==""){
 		$GLOBALS['adminName_err']="Please enter administrator's name.";
 		$errCounter++;
 	}
-	if($_POST['adminEmail']==""){
+	if(($_POST['adminEmail'] ?? '')==""){
 		$GLOBALS['adminEmail_err']="Please enter administrator's email.";
 		$errCounter++;
 	}else{
@@ -151,27 +152,27 @@ function checkValue(){
 			$errCounter++;
 		}
 	}
-	if($_POST['pageTitle']==""){
+	if(($_POST['pageTitle'] ?? '')==""){
 		$GLOBALS['pageTitle_err']="Please enter admin page title.";
 		$errCounter++;
 	}
-	if($_POST['welcomeText']==""){
+	if(($_POST['welcomeText'] ?? '')==""){
 		$GLOBALS['welcomeText_err']="Please enter admin header text.";
 		$errCounter++;
 	}
-	if($_POST['copyRight']==""){
+	if(($_POST['copyRight'] ?? '')==""){
 		$GLOBALS['copyRight_err']="Please enter admin copyright text.";
 		$errCounter++;
 	}
-	if($_POST['paypal_api_username']==""){
+	if(($_POST['paypal_api_username'] ?? '')==""){
 		$GLOBALS['paypal_api_username_err']="Please enter Paypal API Username.";
 		$errCounter++;
 	}
-	if($_POST['paypal_api_password']==""){
+	if(($_POST['paypal_api_password'] ?? '')==""){
 		$GLOBALS['paypal_api_password_err']="Please enter Paypal API Password.";
 		$errCounter++;
 	}
-	if($_POST['paypal_api_signature']==""){
+	if(($_POST['paypal_api_signature'] ?? '')==""){
 		$GLOBALS['paypal_api_signature_err']="Please enter Paypal API Signature.";
 		$errCounter++;
 	}
@@ -184,40 +185,40 @@ function checkValue(){
 
 function save_content() {
 
-	 $sql = "UPDATE ".CONFIG_TABLE." SET 
-			".CONFIG_ADMIN_NAME."='".$_REQUEST['adminName']."', 
-			".CONFIG_ADMIN_EMAIL."='".$_REQUEST['adminEmail']."', 
-			".CONFIG_ADMIN_PAGE_TITLE."='".$_REQUEST['pageTitle']."', 
-			".CONFIG_ADMIN_PAGE_WELCOMETEXT."='".$_REQUEST['welcomeText']."', 
-			".CONFIG_ADMIN_INSTRUCTION."='".$_REQUEST['instruction']."', 
-			".CONFIG_ADMIN_COPYRIGHT."='".$_REQUEST['copyRight']."',
-			".CONFIG_AUCTION_START_HOUR."='".$_REQUEST['auction_start_hour']."',
-			".CONFIG_AUCTION_START_MIN."='".$_REQUEST['auction_start_min']."',
-			".CONFIG_AUCTION_START_AM_PM."='".$_REQUEST['auction_start_am_pm']."',
-			".CONFIG_AUCTION_END_HOUR."='".$_REQUEST['auction_end_hour']."',
-			".CONFIG_AUCTION_END_MIN."='".$_REQUEST['auction_end_min']."',
-			".CONFIG_AUCTION_END_AM_PM."='".$_REQUEST['auction_end_am_pm']."',
-			".CONFIG_AUCTION_INCR_MIN_SPAN."='".$_REQUEST['auction_incr_min_span']."',
-			".CONFIG_AUCTION_INCR_SEC_SPAN."='".$_REQUEST['auction_incr_sec_span']."',
-			".CONFIG_AUCTION_INCR_BY_MIN."='".$_REQUEST['auction_incr_by_min']."',
-			".CONFIG_AUCTION_INCR_BY_SEC."='".$_REQUEST['auction_incr_by_sec']."',
-			".CONFIG_PAYPAL_API_USERNAME."='".$_REQUEST['paypal_api_username']."',
-			".CONFIG_PAYPAL_API_PASSWORD."='".$_REQUEST['paypal_api_password']."',
-			".CONFIG_PAYPAL_API_SIGNATURE."='".$_REQUEST['paypal_api_signature']."',
-			".CONFIG_PAYPAL_IS_TEST_MODE."='".$_REQUEST['paypal_is_test_mode']."',
-			".CONFIG_SALE_TAX_GA."='".$_REQUEST['sale_tax_ga']."',
-			".CONFIG_SALE_TAX_NC."='".$_REQUEST['sale_tax_nc']."',
-			".MARCHANT_FEE."='".$_REQUEST['marchant_fee']."',
-			".MPE_CHARGE."='".$_REQUEST['mpe_charge']."',
-			".MPE_CHARGE_WEEKLY."='".$_REQUEST['mpe_charge_weekly']."',
-			".SITE_GLOBAL_DESCRIPTION."='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['metaKeywords'])."',
-   			".SITE_GLOBAL_KEYWORDS."='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['metaDescription'])."',
-   			".SITE_GLOBAL_METATAGS."='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['metaTags'])."',
-   			 peter_email_id='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['peterEmail'])."',
-   			 sean_email_id='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['seanEmail'])."',
-   			 banner_title = '".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['bannerTitle'])."',
-			 banner_link = '".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['bannerLink'])."',
-			 short_type = '".$_REQUEST['shortType']."',
+	 $sql = "UPDATE ".CONFIG_TABLE." SET
+			".CONFIG_ADMIN_NAME."='".($_REQUEST['adminName'] ?? '')."',
+			".CONFIG_ADMIN_EMAIL."='".($_REQUEST['adminEmail'] ?? '')."',
+			".CONFIG_ADMIN_PAGE_TITLE."='".($_REQUEST['pageTitle'] ?? '')."',
+			".CONFIG_ADMIN_PAGE_WELCOMETEXT."='".($_REQUEST['welcomeText'] ?? '')."',
+			".CONFIG_ADMIN_INSTRUCTION."='".($_REQUEST['instruction'] ?? '')."',
+			".CONFIG_ADMIN_COPYRIGHT."='".($_REQUEST['copyRight'] ?? '')."',
+			".CONFIG_AUCTION_START_HOUR."='".($_REQUEST['auction_start_hour'] ?? '')."',
+			".CONFIG_AUCTION_START_MIN."='".($_REQUEST['auction_start_min'] ?? '')."',
+			".CONFIG_AUCTION_START_AM_PM."='".($_REQUEST['auction_start_am_pm'] ?? '')."',
+			".CONFIG_AUCTION_END_HOUR."='".($_REQUEST['auction_end_hour'] ?? '')."',
+			".CONFIG_AUCTION_END_MIN."='".($_REQUEST['auction_end_min'] ?? '')."',
+			".CONFIG_AUCTION_END_AM_PM."='".($_REQUEST['auction_end_am_pm'] ?? '')."',
+			".CONFIG_AUCTION_INCR_MIN_SPAN."='".($_REQUEST['auction_incr_min_span'] ?? '')."',
+			".CONFIG_AUCTION_INCR_SEC_SPAN."='".($_REQUEST['auction_incr_sec_span'] ?? '')."',
+			".CONFIG_AUCTION_INCR_BY_MIN."='".($_REQUEST['auction_incr_by_min'] ?? '')."',
+			".CONFIG_AUCTION_INCR_BY_SEC."='".($_REQUEST['auction_incr_by_sec'] ?? '')."',
+			".CONFIG_PAYPAL_API_USERNAME."='".($_REQUEST['paypal_api_username'] ?? '')."',
+			".CONFIG_PAYPAL_API_PASSWORD."='".($_REQUEST['paypal_api_password'] ?? '')."',
+			".CONFIG_PAYPAL_API_SIGNATURE."='".($_REQUEST['paypal_api_signature'] ?? '')."',
+			".CONFIG_PAYPAL_IS_TEST_MODE."='".($_REQUEST['paypal_is_test_mode'] ?? '')."',
+			".CONFIG_SALE_TAX_GA."='".($_REQUEST['sale_tax_ga'] ?? '')."',
+			".CONFIG_SALE_TAX_NC."='".($_REQUEST['sale_tax_nc'] ?? '')."',
+			".MARCHANT_FEE."='".($_REQUEST['marchant_fee'] ?? '')."',
+			".MPE_CHARGE."='".($_REQUEST['mpe_charge'] ?? '')."',
+			".MPE_CHARGE_WEEKLY."='".($_REQUEST['mpe_charge_weekly'] ?? '')."',
+			".SITE_GLOBAL_DESCRIPTION."='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['metaKeywords'] ?? '')."',
+   			".SITE_GLOBAL_KEYWORDS."='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['metaDescription'] ?? '')."',
+   			".SITE_GLOBAL_METATAGS."='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['metaTags'] ?? '')."',
+   			 peter_email_id='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['peterEmail'] ?? '')."',
+   			 sean_email_id='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['seanEmail'] ?? '')."',
+   			 banner_title = '".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['bannerTitle'] ?? '')."',
+			 banner_link = '".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['bannerLink'] ?? '')."',
+			 short_type = '".($_REQUEST['shortType'] ?? '')."',
 			".STATUS."='1', 
 			".UPDATE_DATE."=now(), 
 			".POST_IP."='".$_SERVER['REMOTE_ADDR']."'";
@@ -235,16 +236,16 @@ function save_content() {
 
 function updatePendingAuctionsTime()
 {
-	if($_REQUEST['auction_start_am_pm'] == 'pm'){
-		$start_time = ($_REQUEST['auction_start_hour']+12).":".$_REQUEST['auction_start_min'].":00";
+	if(($_REQUEST['auction_start_am_pm'] ?? '') == 'pm'){
+		$start_time = (($_REQUEST['auction_start_hour'] ?? 0)+12).":".($_REQUEST['auction_start_min'] ?? '00').":00";
 	}else{
-		$start_time = ($_REQUEST['auction_start_hour']).":".$_REQUEST['auction_start_min'].":00";
+		$start_time = ($_REQUEST['auction_start_hour'] ?? '00').":".($_REQUEST['auction_start_min'] ?? '00').":00";
 	}
-	
-	if($_REQUEST['auction_end_am_pm'] == 'pm'){
-		$end_time = ($_REQUEST['auction_end_hour']+12).":".$_REQUEST['auction_end_min'].":00";
+
+	if(($_REQUEST['auction_end_am_pm'] ?? '') == 'pm'){
+		$end_time = (($_REQUEST['auction_end_hour'] ?? 0)+12).":".($_REQUEST['auction_end_min'] ?? '00').":00";
 	}else{
-		$end_time = ($_REQUEST['auction_end_hour']).":".$_REQUEST['auction_end_min'].":00";
+		$end_time = ($_REQUEST['auction_end_hour'] ?? '00').":".($_REQUEST['auction_end_min'] ?? '00').":00";
 	}	
 
 	$sql = "SELECT auction_id, auction_actual_start_datetime, auction_actual_end_datetime FROM ".TBL_AUCTION."

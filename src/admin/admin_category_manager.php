@@ -11,22 +11,23 @@ if(!isset($_SESSION['adminLoginID'])){
 	redirect_admin("admin_login.php");
 }
 
-if($_REQUEST['mode'] == "add_category"){
+$mode = $_REQUEST['mode'] ?? '';
+if($mode == "add_category"){
 	add_category();
-}elseif($_REQUEST['mode'] == "save_category"){
+}elseif($mode == "save_category"){
 	$chk = checkCategory();
 	if($chk == true){
 		save_category();
 	}else{
 		add_category();
 	}
-}elseif($_REQUEST['mode'] == "edit_category"){
+}elseif($mode == "edit_category"){
 	edit_category();
-}elseif($_REQUEST['mode'] == "delete"){
+}elseif($mode == "delete"){
 	del_category();
-}elseif($_REQUEST['mode'] == "add_condition"){
+}elseif($mode == "add_condition"){
 	add_condition();
-}elseif($_REQUEST['mode'] == "update_category"){
+}elseif($mode == "update_category"){
 	$chk = checkUpdateCategory();
 	if($chk == true){
 		update_category();
@@ -47,10 +48,10 @@ function dispmiddle() {
 	
 	extract($_REQUEST);
 	$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
-	$smarty->assign(array('cat_type_id' => $cat_type_id));
-	$obj = new Category();	
-	$total = $obj->countData(TBL_CATEGORY, array('fk_cat_type_id' => $cat_type_id));
+	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
+	$smarty->assign(array('cat_type_id' => $cat_type_id ?? ''));
+	$obj = new Category();
+	$total = $obj->countData(TBL_CATEGORY, array('fk_cat_type_id' => $cat_type_id ?? ''));
 	if($total>0){
 		if($cat_type_id==1){
 			$obj->orderBy="fk_size_weight_cost_id";
@@ -80,15 +81,15 @@ function add_category() {
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 
 	$smarty->assign ("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
-	
+	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
+
 	$obj = new Category;
-	
+
 	$commonSizeTypes = $obj->selectData(TBL_SIZE_WEIGHT_COST_MASTER,array("name,size_weight_cost_id"));
 	$smarty->assign('commonSizeTypes', $commonSizeTypes);
-	
+
 	foreach ($_REQUEST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 		$smarty->assign($key,$value);
 	}
 
@@ -99,11 +100,11 @@ function add_condition()
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 
 	$smarty->assign ("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
+	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 	$obj = new Category;
 
 	foreach ($_REQUEST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 		$smarty->assign($key,$value);
 	}
 
@@ -114,7 +115,7 @@ function del_category()
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	
 	$smarty->assign ("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
+	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 
 	extract($_REQUEST);
 	$sql = "SELECT count(*) as total FROM ".TBL_POSTER_TO_CATEGORY." tpc,".TBL_AUCTION." a WHERE 
@@ -156,21 +157,21 @@ function del_category()
 
 function edit_category() {
 	require_once INCLUDE_PATH."lib/adminCommon.php";
-	$smarty->assign ("encoded_string", $_REQUEST['encoded_string']);
-	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
+	$smarty->assign ("encoded_string", $_REQUEST['encoded_string'] ?? '');
+	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 
 	$obj = new Category();
 	$commonSizeTypes = $obj->selectData(TBL_SIZE_WEIGHT_COST_MASTER,array("name,size_weight_cost_id"));
 	$smarty->assign('commonSizeTypes', $commonSizeTypes);
 
 	extract($_REQUEST);
-	$smarty->assign(array('cat_type_id' => $cat_type_id));
-	$row = $obj->selectData(TBL_CATEGORY, array('cat_value','fk_size_weight_cost_id','is_stills'), array('cat_id' => $cat_id));
-	$smarty->assign('cat_id', $cat_id);
+	$smarty->assign(array('cat_type_id' => $cat_type_id ?? ''));
+	$row = $obj->selectData(TBL_CATEGORY, array('cat_value','fk_size_weight_cost_id','is_stills'), array('cat_id' => $cat_id ?? ''));
+	$smarty->assign('cat_id', $cat_id ?? '');
 	$smarty->assign('category', $row);
-	
+
 	foreach ($_POST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);'); 
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
 	
 	$smarty->display('admin_edit_category_manager.tpl');
@@ -236,7 +237,7 @@ function save_category(){
 	if($fk_cat_type_id=='1'){
 		$data = array('fk_cat_type_id' => $fk_cat_type_id, 'cat_value' => $cat_value,'fk_size_weight_cost_id'=>$packaging_type);
 	}elseif($fk_cat_type_id=='2'){
-		if($_REQUEST['is_stills']==''){
+		if(($_REQUEST['is_stills'] ?? '')==''){
 			$_REQUEST['is_stills'] = 0;
 		}
 		$data = array('fk_cat_type_id' => $fk_cat_type_id, 'cat_value' => $cat_value,'is_stills' => $_REQUEST['is_stills']);
@@ -246,11 +247,11 @@ function save_category(){
 	$chk = $obj->updateData(TBL_CATEGORY, $data);
 	if($chk){
 		$_SESSION['adminErr'] = "One category has been created successfully.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}else{
 		$_SESSION['adminErr'] = "No category has not been created successfully.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}
 }
@@ -261,7 +262,7 @@ function update_category(){
 	if($cat_type_id=='1'){
 		$chk = $obj->updateData(TBL_CATEGORY, array('cat_value' => $cat_value,'fk_size_weight_cost_id' => $packaging_type), array('cat_id' => $cat_id), true);
 	}elseif($cat_type_id=='2'){
-		if($_REQUEST['is_stills']==''){
+		if(($_REQUEST['is_stills'] ?? '')==''){
 			$_REQUEST['is_stills'] = 0;
 		}
 		$chk = $obj->updateData(TBL_CATEGORY, array('cat_value' => $cat_value,'fk_size_weight_cost_id' => $packaging_type,'is_stills' => $_REQUEST['is_stills']), array('cat_id' => $cat_id), true);
@@ -270,11 +271,11 @@ function update_category(){
 	}
 	if($chk == true){
 		$_SESSION['adminErr'] = "One category has been updated successfully.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}else{
 		$_SESSION['adminErr'] = "No category has not been updated successfully.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**************************************************/
-//define ("PAGE_HEADER_TEXT", "Admin Auction Week Manager");
+define ("PAGE_HEADER_TEXT", "Admin Auction Week Manager");
 
 ob_start();
 
@@ -11,54 +11,55 @@ if(!isset($_SESSION['adminLoginID'])){
 	redirect_admin("admin_login.php");
 }
 
-if($_REQUEST['mode'] == "add_auction_week"){
+$mode = $_REQUEST['mode'] ?? '';
+if($mode == "add_auction_week"){
 	add_auction_week();
-}elseif($_REQUEST['mode'] == "save_auction_week"){
+}elseif($mode == "save_auction_week"){
 	$chk = checkAuctionWeek();
 	if($chk == true){
 		save_auction_week();
 	}else{
 		add_auction_week();
 	}
-}elseif($_REQUEST['mode'] == "update_auction_week"){
+}elseif($mode == "update_auction_week"){
 	$chk = checkEditEvent();
 	if($chk == true){
 		update_auction_week();
 	}else{
 		edit_auction_week();
 	}
-}elseif($_REQUEST['mode'] == "edit_auction_week"){
+}elseif($mode == "edit_auction_week"){
 	edit_auction_week();
-}elseif($_REQUEST['mode'] == "delete_auction_week"){
+}elseif($mode == "delete_auction_week"){
 	delete_auction_week();
-}elseif($_REQUEST['mode'] == "show_all_auction_week"){
+}elseif($mode == "show_all_auction_week"){
 	show_all_auction_week();
-}elseif($_REQUEST['mode'] == "manage_weekly_auction"){
+}elseif($mode == "manage_weekly_auction"){
 	manage_weekly_auction();
-}elseif($_REQUEST['mode'] == "create_new_weekly_auction"){
+}elseif($mode == "create_new_weekly_auction"){
 	create_new_weekly_auction();
-}elseif($_REQUEST['mode'] == "manage_weekly_auction_for_seller"){
+}elseif($mode == "manage_weekly_auction_for_seller"){
     manage_weekly_auction_for_seller();
-}elseif($_REQUEST['mode'] == "save_weekly_auction"){
+}elseif($mode == "save_weekly_auction"){
 	$chk = validateNewWeeklyForm();
 	if($chk){
 		save_new_weekly_auction();
 	}else{
 		create_new_weekly_auction();
 	}
-}elseif($_REQUEST['mode'] == "combine_buyer_invoice"){
+}elseif($mode == "combine_buyer_invoice"){
     combine_buyer_invoice();
-}elseif($_REQUEST['mode'] == "combine_seller_invoice"){
+}elseif($mode == "combine_seller_invoice"){
     combine_seller_invoice();
-}elseif($_REQUEST['mode'] == "mark_paid_seller_invoice"){
+}elseif($mode == "mark_paid_seller_invoice"){
     mark_paid_seller_invoice();
-}elseif($_REQUEST['mode'] == "mark_shipped_buyer_invoice"){
+}elseif($mode == "mark_shipped_buyer_invoice"){
     mark_shipped_buyer_invoice();
-}elseif($_REQUEST['mode'] == "update_auction_status"){
+}elseif($mode == "update_auction_status"){
     update_auction_status();
-}elseif($_REQUEST['mode'] == "sync_auction_bid"){
+}elseif($mode == "sync_auction_bid"){
     sync_auctiocn_bid_fun();
-}elseif($_REQUEST['mode'] == "view_snipes"){
+}elseif($mode == "view_snipes"){
     view_snipes();
 }else{
 	show_all_auction_week();
@@ -110,7 +111,7 @@ function add_auction_week() {
 	
 	foreach ($_POST as $key => $value ) {
 		$smarty->assign($key, $value); 
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
 	
 	$smarty->display('admin_add_auction_week.tpl');
@@ -182,7 +183,7 @@ function edit_auction_week() {
 	$smarty->assign('auction_week_id', $auction_week_id);
 	foreach ($_POST as $key => $value ) {
 		$smarty->assign($key, $value); 
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
 	
 	$smarty->display('admin_edit_auction_week.tpl');
@@ -540,7 +541,7 @@ function update_auction_week()
 
 	foreach ($_POST as $key => $value) {
 		$smarty->assign($key, $value); 
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 		if($key=='poster_desc'){
 			$PosterDesc=$value;
 		}
@@ -853,7 +854,7 @@ function combine_buyer_invoice(){
         $user_id= $invoiceData['fk_user_id'];
         $shipping_address=$invoiceData['shipping_address'];
         $billing_address=$invoiceData['billing_address'];
-        $invoiceData['auction_details'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['auction_details']);
+        $invoiceData['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['auction_details']);
         $invoiceData['auction_details'] = unserialize($invoiceData['auction_details']);
         if(!empty($invoiceData['auction_details'])){
             foreach($invoiceData['auction_details'] as $key => $value){
@@ -861,7 +862,7 @@ function combine_buyer_invoice(){
                 $subTotal += $invoiceData['auction_details'][$key]['amount'];
             }
         }
-        $invoiceData['additional_charges'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['additional_charges']);
+        $invoiceData['additional_charges'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['additional_charges']);
         $invoiceData['additional_charges'] = unserialize($invoiceData['additional_charges']);
         if(!empty($invoiceData['additional_charges'])){
             foreach($invoiceData['additional_charges'] as $key => $value){
@@ -869,7 +870,7 @@ function combine_buyer_invoice(){
                 $subTotal += $invoiceData['additional_charges'][$key]['amount'];
             }
         }
-        $invoiceData['discounts'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['discounts']);
+        $invoiceData['discounts'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['discounts']);
         $invoiceData['discounts'] = unserialize($invoiceData['discounts']);
         if(!empty($invoiceData['discounts'])){
             foreach($invoiceData['discounts'] as $key => $value){
@@ -974,7 +975,7 @@ function combine_seller_invoice(){
         $user_id= $invoiceData['fk_user_id'];
         //$shipping_address=$invoiceData['shipping_address'];
         $billing_address=$invoiceData['billing_address'];
-        $invoiceData['auction_details'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['auction_details']);
+        $invoiceData['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['auction_details']);
         $invoiceData['auction_details'] = unserialize($invoiceData['auction_details']);
         if(!empty($invoiceData['auction_details'])){
             foreach($invoiceData['auction_details'] as $key => $value){
@@ -991,7 +992,7 @@ function combine_seller_invoice(){
 				}
             }
         }
-        $invoiceData['additional_charges'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['additional_charges']);
+        $invoiceData['additional_charges'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['additional_charges']);
         $invoiceData['additional_charges'] = unserialize($invoiceData['additional_charges']);
         if(!empty($invoiceData['additional_charges'])){
             foreach($invoiceData['additional_charges'] as $key => $value){
@@ -999,7 +1000,7 @@ function combine_seller_invoice(){
                 $subTotal += $invoiceData['additional_charges'][$key]['amount'];
             }
         }
-        $invoiceData['discounts'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['discounts']);
+        $invoiceData['discounts'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['discounts']);
         $invoiceData['discounts'] = unserialize($invoiceData['discounts']);
         if(!empty($invoiceData['discounts'])){
             foreach($invoiceData['discounts'] as $key => $value){

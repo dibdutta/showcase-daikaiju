@@ -277,7 +277,6 @@ class AdminUser{
 			$res = mysqli_query($GLOBALS['db_connect'],$sql);
 			
 			if($row[ADMIN_SUPER_ADMIN] == 1 && MULTIUSER_ADMIN == true){
-				session_register("superAdmin");
 				$_SESSION['superAdmin'] = 1;
 				
 				$sqlAccess = " SELECT apt.".ADMIN_SECTION_NAME." 
@@ -351,13 +350,7 @@ class AdminUser{
 		unset($_SESSION['administratorName']);
 		unset($_SESSION['accessPages']);
 		unset($_SESSION['superAdmin']);
-		
-		session_register("accessPages");
-		session_register("administratorName");
-		session_unregister("adminLoginID");
-		session_unregister("adminLastLoginDate");
-		session_register("superAdmin");
-		
+
 		session_destroy();
 	}
 

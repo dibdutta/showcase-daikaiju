@@ -6020,10 +6020,10 @@ function soldAuctionSTILLS($auctionStatus = '', $user_id = '',$sort_type='',$sea
 						 AND tia.fk_auction_id='".$dataArr[$i]['auction_id']."'";
 		$resSql= mysqli_query($GLOBALS['db_connect'],$sql);
 		while($row=mysqli_fetch_assoc($resSql)){
-			$row['additional_charges']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $row['additional_charges'] );
+			$row['additional_charges']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $row['additional_charges'] );
 			$dataArr[$i]['additional_charges'] = unserialize($row['additional_charges']);
 			
-			$row['discounts']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $row['discounts'] );
+			$row['discounts']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $row['discounts'] );
 			$dataArr[$i]['discounts'] = unserialize($row['discounts']);
 			$dataArr[$i]['invoice_id'] = $row['invoice_id'];
 		}

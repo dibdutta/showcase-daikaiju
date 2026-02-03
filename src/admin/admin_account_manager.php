@@ -1,5 +1,6 @@
 <?php
 /**************************************************/
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 ob_start();
 
 define ("PAGE_HEADER_TEXT", "Admin Manager Section");
@@ -11,10 +12,12 @@ if(!isset($_SESSION['adminLoginID'])){
 }
 
 
-if($_REQUEST['mode']=="change_password"){
+$mode = $_REQUEST['mode'] ?? '';
+
+if($mode=="change_password"){
 	change_password();
 }
-elseif($_POST['mode'] == "save_password"){
+elseif($mode == "save_password"){
 	$chk = check_admin_password();
 	if($chk == true){
 		update_password();
@@ -24,7 +27,7 @@ elseif($_POST['mode'] == "save_password"){
 	}
 }
 
-elseif($_POST['mode'] == "save_change_profile"){
+elseif($mode == "save_change_profile"){
 	$chk = checkProfileValue();
 	if($chk == true){
 		update_profile();
@@ -33,10 +36,10 @@ elseif($_POST['mode'] == "save_change_profile"){
 		dispmiddle();
 	}
 }
-elseif($_REQUEST['mode']=="createUser"){
+elseif($mode=="createUser"){
 	createUser();
 }
-elseif($_REQUEST['mode']=="createNewUser"){
+elseif($mode=="createNewUser"){
 	$chk=checkUser();
 	if($chk==true){
 		createNewUser();
@@ -44,33 +47,33 @@ elseif($_REQUEST['mode']=="createNewUser"){
 	else{
 		createUser();
 	}
-}elseif($_REQUEST['mode']=="email_template"){
+}elseif($mode=="email_template"){
 	email_template();
-}elseif($_REQUEST['mode']=="email_template_item_specific"){
+}elseif($mode=="email_template_item_specific"){
 	email_template_item_specific();
-}elseif($_REQUEST['mode']=="save_email_template_item_specific"){
+}elseif($mode=="save_email_template_item_specific"){
 	email_template_item_specific();
-}elseif($_REQUEST['mode']=="save_email_template"){
+}elseif($mode=="save_email_template"){
 	email_template();
-}elseif($_REQUEST['mode']=="view_template_item_specific"){
+}elseif($mode=="view_template_item_specific"){
 	view_template_item_specific();
-}elseif($_REQUEST['mode']=="view_template"){
+}elseif($mode=="view_template"){
 	view_template();
-}elseif($_REQUEST['mode']=="home_template"){
+}elseif($mode=="home_template"){
 	home_template();
-}elseif($_REQUEST['mode']=="save_home_template"){
+}elseif($mode=="save_home_template"){
 	home_template();
-}elseif($_REQUEST['mode']=="save_calender_template"){
+}elseif($mode=="save_calender_template"){
 	save_calender_template();
-}elseif($_REQUEST['mode']=="calender_template"){
+}elseif($mode=="calender_template"){
 	calender_template();
-}elseif($_REQUEST['mode']=="blacklist"){
+}elseif($mode=="blacklist"){
 	blacklist();
-}elseif($_REQUEST['mode']=="save_blacklist"){
+}elseif($mode=="save_blacklist"){
 	save_blacklist();
-}elseif($_REQUEST['mode']=="viewBlacklistHistory"){
+}elseif($mode=="viewBlacklistHistory"){
 	viewBlacklistHistory();
-}elseif($_REQUEST['mode']=="shipping"){
+}elseif($mode=="shipping"){
 	shippingCollection();
 }
 else{
@@ -86,18 +89,18 @@ function dispmiddle() {
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	
 	$obj = new AdminUser;
-	$obj->adminID = $_SESSION['adminLoginID'];
+	$obj->adminID = $_SESSION['adminLoginID'] ?? '';
 	$row = $obj->fetchAdminDetails();
 
-	$smarty->assign('first_name', trim($_POST['first_name'])!=""?escape($_POST['first_name']):$row[ADMIN_FIRST_NAME]);
-	$smarty->assign('middle_name', trim($_POST['middle_name'])!=""?escape($_POST['middle_name']):$row[ADMIN_MIDDLE_NAME]);
-	$smarty->assign('last_name', trim($_POST['last_name'])!=""?escape($_POST['last_name']):$row[ADMIN_LAST_NAME]);
-	$smarty->assign('email', trim($_POST['email'])!=""?escape($_POST['email']):$row[ADMIN_EMAIL]);
-	$smarty->assign('cemail', trim($_POST['cemail'])!=""?escape($_POST['cemail']):$row[ADMIN_EMAIL]);
-	
-	
+	$smarty->assign('first_name', trim($_POST['first_name'] ?? '')!=""?escape($_POST['first_name']):$row[ADMIN_FIRST_NAME]);
+	$smarty->assign('middle_name', trim($_POST['middle_name'] ?? '')!=""?escape($_POST['middle_name']):$row[ADMIN_MIDDLE_NAME]);
+	$smarty->assign('last_name', trim($_POST['last_name'] ?? '')!=""?escape($_POST['last_name']):$row[ADMIN_LAST_NAME]);
+	$smarty->assign('email', trim($_POST['email'] ?? '')!=""?escape($_POST['email']):$row[ADMIN_EMAIL]);
+	$smarty->assign('cemail', trim($_POST['cemail'] ?? '')!=""?escape($_POST['cemail']):$row[ADMIN_EMAIL]);
+
+
 	foreach ($_POST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);'); 
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
 	
 	$smarty->display("admin_profile_manager.tpl");
@@ -107,16 +110,16 @@ function dispmiddle() {
 
 function checkProfileValue(){
 	$errCounter=0;
-	
-	if(trim($_POST['first_name'])==""){
+
+	if(trim($_POST['first_name'] ?? '')==""){
 		$errCounter++;
 		$GLOBALS['first_name_err'] = "Please enter your first name.";
 	}
-	if(trim($_POST['last_name'])==""){
+	if(trim($_POST['last_name'] ?? '')==""){
 		$errCounter++;
 		$GLOBALS['last_name_err'] = "Please enter your last name.";
 	}
-	if(trim($_POST['email'])==""){
+	if(trim($_POST['email'] ?? '')==""){
 		$errCounter++;
 		$GLOBALS['email_err'] = "Please enter your email.";
 	}
@@ -127,7 +130,7 @@ function checkProfileValue(){
 			$errCounter++;
 		}
 	}
-	if(trim($_POST['cemail'])==""){
+	if(trim($_POST['cemail'] ?? '')==""){
 		$errCounter++;
 		$GLOBALS['cemail_err'] = "Please enter your email address in confirm box.";
 	}
@@ -138,14 +141,14 @@ function checkProfileValue(){
 			$errCounter++;
 		}
 	}
-	if(trim($_POST['cemail'])!=trim($_POST['email'])){
+	if(trim($_POST['cemail'] ?? '')!=trim($_POST['email'] ?? '')){
 		$errCounter++;
 		$GLOBALS['cemail_err'] = "Please enter same email address in confirm box.";
 	}
 	else{
 		$obj = new AdminUser;
-		$obj->adminID = $_SESSION['adminLoginID'];
-		$obj->adminEmail = $_POST['email'];
+		$obj->adminID = $_SESSION['adminLoginID'] ?? '';
+		$obj->adminEmail = $_POST['email'] ?? '';
 		$chk = $obj->checkAdminEmail();
 		if($chk == true){
 			$errCounter++;
@@ -165,12 +168,12 @@ function checkProfileValue(){
 
 function update_profile(){
 	$obj = new AdminUser;
-	$obj->adminID = $_SESSION['adminLoginID'];
-	$obj->adminFirstName = trim($_POST['first_name']);
-	$obj->adminMiddleName = trim($_POST['middle_name']);
-	$obj->adminLastName = trim($_POST['last_name']);
-	$obj->adminEmail = trim($_POST['email']);
-	$_SESSION['administratorNames']=$_POST['first_name']." ".$_POST['middle_name']." ".$_POST['last_name'];
+	$obj->adminID = $_SESSION['adminLoginID'] ?? '';
+	$obj->adminFirstName = trim($_POST['first_name'] ?? '');
+	$obj->adminMiddleName = trim($_POST['middle_name'] ?? '');
+	$obj->adminLastName = trim($_POST['last_name'] ?? '');
+	$obj->adminEmail = trim($_POST['email'] ?? '');
+	$_SESSION['administratorNames']=($_POST['first_name'] ?? '')." ".($_POST['middle_name'] ?? '')." ".($_POST['last_name'] ?? '');
 	$chk = $obj->updateAdminProfile();
 	if($chk == true){
 		//echo "1";
@@ -193,39 +196,39 @@ function change_password(){
 	}
 	
 	foreach ($_POST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);'); 
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
-	
+
 	$smarty->display("admin_change_password_manager.tpl");
 }
 
 
 function check_admin_password(){
 	$errCounter=0;
-	
-	if(trim($_POST['oldpassword'])==""){
+
+	if(trim($_POST['oldpassword'] ?? '')==""){
 		$errCounter++;
 		$GLOBALS['oldpassword_err'] = "Please enter your old password.";
 	}
 	else{
 		$obj = new AdminUser;
-		$obj->adminID = $_SESSION['adminLoginID'];
-		$obj->adminPassword = $_POST['oldpassword'];
+		$obj->adminID = $_SESSION['adminLoginID'] ?? '';
+		$obj->adminPassword = $_POST['oldpassword'] ?? '';
 		$chk = $obj->checkAdminPassword();
 		if($chk == false){
 			$errCounter++;
 			$GLOBALS['oldpassword_err'] = "Sorry! You have entered wrong password.";
 		}
 	}
-	if(trim($_POST['newpassword'])==""){
+	if(trim($_POST['newpassword'] ?? '')==""){
 		$errCounter++;
 		$GLOBALS['newpassword_err'] = "Please enter your new password.";
 	}
-	if(trim($_POST['cnewpassword'])==""){
+	if(trim($_POST['cnewpassword'] ?? '')==""){
 		$errCounter++;
 		$GLOBALS['cnewpassword_err'] = "Please enter your new password in confirm box.";
 	}
-	if(trim($_POST['cnewpassword'])!=trim($_POST['newpassword'])){
+	if(trim($_POST['cnewpassword'] ?? '')!=trim($_POST['newpassword'] ?? '')){
 		$errCounter++;
 		$GLOBALS['cnewpassword_err'] = "Please enter same password in confirm box.";
 	}
@@ -242,8 +245,8 @@ function check_admin_password(){
 
 function update_password(){
 	$obj = new AdminUser;
-	$obj->adminID = $_SESSION['adminLoginID'];
-	$obj->adminPassword = trim($_POST['newpassword']);
+	$obj->adminID = $_SESSION['adminLoginID'] ?? '';
+	$obj->adminPassword = trim($_POST['newpassword'] ?? '');
 	
 	$chk = $obj->updateAdminPassword();
 	if($chk == true){
@@ -262,7 +265,7 @@ function update_password(){
 function createUser() {
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	
-	$smarty->assign('new_login', htmlentities(trim(stripslashes($_POST['new_login']))));
+	$smarty->assign('new_login', htmlentities(trim(stripslashes($_POST['new_login'] ?? ''))));
 	
 	$smarty->display("admin_create_manager.tpl");
 }
@@ -271,9 +274,9 @@ function createUser() {
 
 
 function changePassword(){
-	$oldpassword=$_POST['oldpassword'];
-	$newpassword=$_POST['newpassword'];
-	$cnewpassword=$_POST['cnewpassword'];
+	$oldpassword=$_POST['oldpassword'] ?? '';
+	$newpassword=$_POST['newpassword'] ?? '';
+	$cnewpassword=$_POST['cnewpassword'] ?? '';
 	
 	if($newpassword!=$cnewpassword){
 		$_SESSION['adminErr']="You have to enter same password in confirm password field.";
@@ -300,23 +303,23 @@ function changePassword(){
 function checkUser(){
 	$errCounter=0;
 	
-	if($_POST['new_login']==""){
+	if(($_POST['new_login'] ?? '')==""){
 		$errCounter++;
 		$_SESSION['adminErr']="Please enter user ID.";
 	}
-	if($_POST['new_password']==""){
+	if(($_POST['new_password'] ?? '')==""){
 		$errCounter++;
 		$_SESSION['adminErr']="Please enter password.";
 	}
-	if($_POST['cnew_password']==""){
+	if(($_POST['cnew_password'] ?? '')==""){
 		$errCounter++;
 		$_SESSION['adminErr']="Please enter confirm password.";
 	}
-	if($_POST['cnew_password']!=$_POST['new_password']){
+	if(($_POST['cnew_password'] ?? '')!=($_POST['new_password'] ?? '')){
 		$errCounter++;
 		$_SESSION['adminErr']="Please enter same password in confirm password.";
 	}
-	if($_POST['new_login']!=""){
+	if(($_POST['new_login'] ?? '')!=""){
 		$checkUser=new AdminUser();
 		$chkUser=$checkUser->checkUser($_POST['new_login']);
 		if($chkUser==true){
@@ -335,9 +338,9 @@ function checkUser(){
 
 
 function createNewUser(){
-	$new_login=$_POST['new_login'];
-	$newpassword=$_POST['new_password'];
-	$cnewpassword=$_POST['cnew_password'];
+	$new_login=$_POST['new_login'] ?? '';
+	$newpassword=$_POST['new_password'] ?? '';
+	$cnewpassword=$_POST['cnew_password'] ?? '';
 	
 	$createUser=new AdminUser();
 	$chkUser=$createUser->checkUser($new_login);
@@ -479,10 +482,10 @@ function email_template(){
 	function save_calender_template(){
 		require_once INCLUDE_PATH."lib/adminCommon.php";
 		
-		 	$sql= "UPDATE  tbl_auction_calender SET auction_1='".$_REQUEST['upcoming_1']."',auction_2='".$_REQUEST['upcoming_2']."',
-					auction_3='".$_REQUEST['upcoming_3']."',auction_4= '".$_REQUEST['upcoming_4']."',auction_5= '".$_REQUEST['upcoming_5']."',
-					auction_1_link='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_1'])."',auction_2_link='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_2'])."',
-					auction_3_link='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_3'])."',auction_4_link= '".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_4'])."',auction_4_link= '".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_5'])."'
+		 	$sql= "UPDATE  tbl_auction_calender SET auction_1='".($_REQUEST['upcoming_1'] ?? '')."',auction_2='".($_REQUEST['upcoming_2'] ?? '')."',
+					auction_3='".($_REQUEST['upcoming_3'] ?? '')."',auction_4= '".($_REQUEST['upcoming_4'] ?? '')."',auction_5= '".($_REQUEST['upcoming_5'] ?? '')."',
+					auction_1_link='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_1'] ?? '')."',auction_2_link='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_2'] ?? '')."',
+					auction_3_link='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_3'] ?? '')."',auction_4_link= '".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_4'] ?? '')."',auction_4_link= '".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_5'] ?? '')."'
 					WHERE id=1 ";
 			//echo $sql;
 			//exit();
@@ -532,7 +535,7 @@ function email_template(){
 		 	/*$sql= "UPDATE  tbl_blacklist SET domain='".$_REQUEST['domain']."',firstname='".$_REQUEST['firstname']."',lastname='".$_REQUEST['lastname']."',email= '".$_REQUEST['email']."'  WHERE idtbl_blacklist=1 ";
 		 	$resSql= mysqli_query($GLOBALS['db_connect'],$sql);*/
 			
-			$sql= "Insert into tbl_blacklist (idtbl_blacklist,domain,firstname,lastname,email) values (".$maxID.",'".$_REQUEST['domain']."','".$_REQUEST['firstname']."','".$_REQUEST['lastname']."','".$_REQUEST['email']."')";
+			$sql= "Insert into tbl_blacklist (idtbl_blacklist,domain,firstname,lastname,email) values (".$maxID.",'".($_REQUEST['domain'] ?? '')."','".($_REQUEST['firstname'] ?? '')."','".($_REQUEST['lastname'] ?? '')."','".($_REQUEST['email'] ?? '')."')";
 			$resSql= mysqli_query($GLOBALS['db_connect'],$sql);
 		 
 		$sqlTemp = "Select * from tbl_blacklist WHERE idtbl_blacklist= ".$maxID;
@@ -567,7 +570,7 @@ function email_template(){
 			if($rs = mysqli_query($GLOBALS['db_connect'],$sqlInv)){
 				while($invoiceData = mysqli_fetch_assoc($rs)){
 					
-					$charges = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData['additional_charges']);
+					$charges = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['additional_charges']);
 					$charges = unserialize($charges);
 					if(!empty($charges)){
 						foreach($charges as $key => $value){

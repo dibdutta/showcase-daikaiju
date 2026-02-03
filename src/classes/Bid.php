@@ -71,6 +71,10 @@ class Bid extends DBCommon{
 		
 	function fetchMyBidByType(&$dataArr, $user_id='',$type='')
 		{
+			if(empty($dataArr)){
+				return true;
+			}
+			$auctions_ids = '';
 			for($i=0;$i<count($dataArr);$i++){
 				$auctions_ids .= $dataArr[$i]['auction_id'].",";
 			}
@@ -86,27 +90,28 @@ class Bid extends DBCommon{
 					$sql.=" and b.bid_is_won='1'";	
 				}
 				$sql.=" ORDER BY b.post_date DESC";
+		$bidsArr = [];
 		    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 			   while($row = mysqli_fetch_assoc($rs)){
 				   $bidsArr[] = $row;
 			   }
 		    }
-			
+
 			for($i=0;$i<count($dataArr);$i++){
 				$flag = 0;
 				for($j=0;$j<count($bidsArr);$j++){
-					if($dataArr[$i]['auction_id'] == $bidsArr[$j]['bid_fk_auction_id']){					
+					if($dataArr[$i]['auction_id'] == $bidsArr[$j]['bid_fk_auction_id']){
 						 $arr[$flag]['post_date'] = formatDateTime($bidsArr[$j]['post_date']);
 						 $arr[$flag]['bid_is_won'] = $bidsArr[$j]['bid_is_won'];
 						 $arr[$flag]['bid_amount'] = $bidsArr[$j]['bid_amount'];
 						 $arr[$flag]['bid_time'] = $bidsArr[$j]['post_date'];
 						 $flag++;
-					}				
+					}
 				}
-				$dataArr[$i]['bids'] = $arr;
-				
+				$dataArr[$i]['bids'] = $arr ?? [];
+
 				unset($arr);
-			}		
+			}
 		   return true;
 		}
 	/**
@@ -323,8 +328,12 @@ class Bid extends DBCommon{
 	 * @param $user_id=>This paramter defines the user id,means whoose bid details to be fetched. 
 	 */
 	
-	function fetchMyBids(&$dataArr, $user_id)
+	function fetchMyBids(&$dataArr, $user_id, $type='')
 	{
+		if(empty($dataArr)){
+			return true;
+		}
+		$auctions_ids = '';
 		for($i=0;$i<count($dataArr);$i++){
 			$auctions_ids .= $dataArr[$i]['auction_id'].",";
 		}
@@ -337,27 +346,28 @@ class Bid extends DBCommon{
 				$sql.=" and b.bid_is_won='1'";	
 			}
 			$sql.=" ORDER BY b.post_date DESC";
+	    $bidsArr = [];
 	    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $bidsArr[] = $row;
 		   }
 	    }
-		
+
 		for($i=0;$i<count($dataArr);$i++){
 			$flag = 0;
 			for($j=0;$j<count($bidsArr);$j++){
-				if($dataArr[$i]['auction_id'] == $bidsArr[$j]['bid_fk_auction_id']){					
+				if($dataArr[$i]['auction_id'] == $bidsArr[$j]['bid_fk_auction_id']){
 					 $arr[$flag]['post_date'] = formatDateTime($bidsArr[$j]['post_date']);
 					 $arr[$flag]['bid_is_won'] = $bidsArr[$j]['bid_is_won'];
 					 $arr[$flag]['bid_amount'] = $bidsArr[$j]['bid_amount'];
 					 $arr[$flag]['bid_time'] = $bidsArr[$j]['post_date'];
 					 $flag++;
-				}				
+				}
 			}
-			$dataArr[$i]['bids'] = $arr;
-			
+			$dataArr[$i]['bids'] = $arr ?? [];
+
 			unset($arr);
-		}		
+		}
 	   return true;
 	}
 	
@@ -370,6 +380,9 @@ class Bid extends DBCommon{
 	 */
 	function fetchMyBidByTypeNew(&$dataArr, $user_id='',$type='',$status='')
 	{
+		if(empty($dataArr)){
+			return true;
+		}
 		$auctions_ids='';
 		for($i=0;$i<count($dataArr);$i++){
 			$auctions_ids .= $dataArr[$i]['auction_id'].",";
@@ -398,40 +411,45 @@ class Bid extends DBCommon{
 		}	
 			$sql.=" GROUP BY b.bid_fk_auction_id ";
 			//echo $sql;
+	    $bidsArr = [];
 	    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $bidsArr[] = $row;
 		   }
 	    }
-		
+
 		for($i=0;$i<count($dataArr);$i++){
 			$flag = 0;
 			for($j=0;$j<count($bidsArr);$j++){
-				if($dataArr[$i]['auction_id'] == $bidsArr[$j]['bid_fk_auction_id']){					
+				if($dataArr[$i]['auction_id'] == $bidsArr[$j]['bid_fk_auction_id']){
 					 $arr[$flag]['post_date'] = formatDateTime($bidsArr[$j]['post_date']);
 					 $arr[$flag]['bid_is_won'] = $bidsArr[$j]['bid_is_won'];
 					 $arr[$flag]['bid_amount'] = $bidsArr[$j]['bid_amount'];
 					 $arr[$flag]['is_proxy'] = $bidsArr[$j]['is_proxy'];
 					 $arr[$flag]['bid_time'] = $bidsArr[$j]['post_date'];
 					 $flag++;
-				}				
+				}
 			}
-			$dataArr[$i]['bids'] = $arr;
-			
+			$dataArr[$i]['bids'] = $arr ?? [];
+
 			unset($arr);
-		}		
+		}
 	   return true;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * This function fetches bid details by user id and auction id and type.
 	 * @param $dataArr=>This parameter contains the array of auction details from which we will get the auction id.
-	 * @param $user_id=>This paramter defines the user id,means whoose bid details to be fetched. 
+	 * @param $user_id=>This paramter defines the user id,means whoose bid details to be fetched.
 	 * @param $type=>This parameter defines the type of bids(winning or loosing).
 	 */
 	function fetchMyBidByTypeArchive(&$dataArr, $user_id='',$type='',$status='')
 	{
+		if(empty($dataArr)){
+			return true;
+		}
+		$auctions_ids = '';
 		for($i=0;$i<count($dataArr);$i++){
 			$auctions_ids .= $dataArr[$i]['auction_id'].",";
 		}
@@ -459,32 +477,36 @@ class Bid extends DBCommon{
 		}	
 			$sql.=" GROUP BY b.bid_fk_auction_id ";
 			//echo $sql;
+	    $bidsArr = [];
 	    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $bidsArr[] = $row;
 		   }
 	    }
-		
+
 		for($i=0;$i<count($dataArr);$i++){
 			$flag = 0;
 			for($j=0;$j<count($bidsArr);$j++){
-				if($dataArr[$i]['auction_id'] == $bidsArr[$j]['bid_fk_auction_id']){					
+				if($dataArr[$i]['auction_id'] == $bidsArr[$j]['bid_fk_auction_id']){
 					 $arr[$flag]['post_date'] = formatDateTime($bidsArr[$j]['post_date']);
 					 $arr[$flag]['bid_is_won'] = $bidsArr[$j]['bid_is_won'];
 					 $arr[$flag]['bid_amount'] = $bidsArr[$j]['bid_amount'];
 					 $arr[$flag]['is_proxy'] = $bidsArr[$j]['is_proxy'];
 					 $arr[$flag]['bid_time'] = $bidsArr[$j]['post_date'];
 					 $flag++;
-				}				
+				}
 			}
-			$dataArr[$i]['bids'] = $arr;
-			
+			$dataArr[$i]['bids'] = $arr ?? [];
+
 			unset($arr);
-		}		
+		}
 	   return true;
 	}
 	function fetchBidsByIdNew(&$dataArr)
 	{
+		if(empty($dataArr)){
+			return $dataArr;
+		}
 		$auctions_ids='';
 		for($i=0;$i<count($dataArr);$i++){
 			$auctions_ids .= $dataArr[$i]['auction_id'].",";
@@ -492,13 +514,14 @@ class Bid extends DBCommon{
 		$auctions_ids = trim($auctions_ids, ',');
 		 $sql = "SELECT ut.firstname,ut.username,ut.lastname,b.bid_fk_auction_id,b.post_date,b.is_proxy, b.bid_is_won, b.bid_amount FROM ".TBL_BID." b,".USER_TABLE." ut
 				WHERE b.bid_fk_auction_id IN (".$auctions_ids.") and ut.user_id=b.bid_fk_user_id and b.bid_amount!=0  ORDER BY b.bid_amount  DESC ";
-				
+
+	    $bidsArr = [];
 	    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $bidsArr[] = $row;
 		   }
 	    }
-			
+
 		for($i=0;$i<count($dataArr);$i++){
 			$flag = 0;
 			for($j=0;$j<count($bidsArr);$j++){
@@ -512,29 +535,34 @@ class Bid extends DBCommon{
 					 $arr[$flag]['is_proxy'] = $bidsArr[$j]['is_proxy'];
 					 $flag++;
 				}
-								
+
 			}
-			$dataArr[$i]['bid_popup'] = $arr;
+			$dataArr[$i]['bid_popup'] = $arr ?? [];
 			unset($arr);
 		}
-		return $dataArr;		
+		return $dataArr;
 	   return true;
 	}
 	function fetchBidsByIdArchive(&$dataArr)
 	{
+		if(empty($dataArr)){
+			return $dataArr;
+		}
+		$auctions_ids = '';
 		for($i=0;$i<count($dataArr);$i++){
 			$auctions_ids .= $dataArr[$i]['auction_id'].",";
 		}
 		$auctions_ids = trim($auctions_ids, ',');
 		 $sql = "SELECT ut.firstname,ut.username,ut.lastname,b.bid_fk_auction_id,b.post_date,b.is_proxy, b.bid_is_won, b.bid_amount FROM tbl_bid_archive b,".USER_TABLE." ut
 				WHERE b.bid_fk_auction_id IN (".$auctions_ids.") and ut.user_id=b.bid_fk_user_id and b.bid_amount!=0  ORDER BY b.bid_amount  DESC ";
-				
+
+	    $bidsArr = [];
 	    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $bidsArr[] = $row;
 		   }
 	    }
-			
+
 		for($i=0;$i<count($dataArr);$i++){
 			$flag = 0;
 			for($j=0;$j<count($bidsArr);$j++){
@@ -548,30 +576,35 @@ class Bid extends DBCommon{
 					 $arr[$flag]['is_proxy'] = $bidsArr[$j]['is_proxy'];
 					 $flag++;
 				}
-								
+
 			}
-			$dataArr[$i]['bid_popup'] = $arr;
+			$dataArr[$i]['bid_popup'] = $arr ?? [];
 			unset($arr);
 		}
-		return $dataArr;		
+		return $dataArr;
 	   return true;
 	}
-	
+
 	function fetchBidsByIdArchiveS(&$dataArr)
 	{
+		if(empty($dataArr)){
+			return $dataArr;
+		}
+		$auctions_ids = '';
 		for($i=0;$i<count($dataArr);$i++){
 			$auctions_ids .= $dataArr[$i]['auction_id'].",";
 		}
 		$auctions_ids = trim($auctions_ids, ',');
 		 $sql = "SELECT ut.firstname,ut.username,ut.lastname,b.bid_fk_auction_id,b.post_date,b.is_proxy, b.bid_is_won, b.bid_amount FROM tbl_bid_archive b,".USER_TABLE." ut
 				WHERE b.bid_fk_auction_id IN (".$auctions_ids.") and ut.user_id=b.bid_fk_user_id and b.bid_amount!=0  ORDER BY b.bid_amount  DESC ";
-				
+
+	    $bidsArr = [];
 	    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $bidsArr[] = $row;
 		   }
 	    }
-			
+
 		for($i=0;$i<count($dataArr);$i++){
 			$flag = 0;
 			for($j=0;$j<count($bidsArr);$j++){
@@ -585,34 +618,39 @@ class Bid extends DBCommon{
 					 $arr[$flag]['is_proxy'] = $bidsArr[$j]['is_proxy'];
 					 $flag++;
 				}
-								
+
 			}
-			$dataArr[$i]['bids'] = $arr;
+			$dataArr[$i]['bids'] = $arr ?? [];
 			unset($arr);
 		}
-		return $dataArr;		
+		return $dataArr;
 	   return true;
 	}
 	/**
-	 * 
+	 *
 	 * This function fetches bid details by bid id.
 	 * @param $dataArr=>This parameter contains the array of auction details from which we will get the auction id.
 	 */
 	function fetchBidsById(&$dataArr)
 	 {
+		if(empty($dataArr)){
+			return true;
+		}
+		$auctions_ids = '';
 		for($i=0;$i<count($dataArr);$i++){
 			$auctions_ids .= $dataArr[$i]['auction_id'].",";
 		}
 		$auctions_ids = trim($auctions_ids, ',');
 		 $sql = "SELECT ut.firstname,ut.lastname,b.bid_fk_auction_id,b.post_date,b.is_proxy, b.bid_is_won, b.bid_amount FROM ".TBL_BID." b,".USER_TABLE." ut
 				WHERE b.bid_fk_auction_id IN (".$auctions_ids.") and ut.user_id=b.bid_fk_user_id and b.bid_amount!=0  ORDER BY b.bid_amount DESC";
-				
+
+	    $bidsArr = [];
 	    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $bidsArr[] = $row;
 		   }
 	    }
-		
+
 		for($i=0;$i<count($dataArr);$i++){
 			$flag = 0;
 			for($j=0;$j<count($bidsArr);$j++){
@@ -624,21 +662,24 @@ class Bid extends DBCommon{
 					 $arr[$flag]['bid_time'] = $bidsArr[$j]['post_date'];
 					 $arr[$flag]['is_proxy'] = $bidsArr[$j]['is_proxy'];
 					 $flag++;
-				}				
+				}
 			}
-			$dataArr[$i]['bids'] = $arr;
+			$dataArr[$i]['bids'] = $arr ?? [];
 			return $dataArr;
 			unset($arr);
-		}		
+		}
 	   return true;
 	}
 	/**
-	 * 
+	 *
 	 * This function fetches the no of bids correspondent to an auction and also the highest bid.
 	 * @param $dataArr=>This parameter contains the array of auction details from which we will get the auction id.
 	 */
 	function fetch_BidCount_MaxBid(&$dataArr)
 	{
+		if(empty($dataArr)){
+			return true;
+		}
 		$auction_ids='';
 		for($i=0;$i<count($dataArr);$i++){
 			$auction_ids .= $dataArr[$i]['auction_id'].",";
@@ -677,6 +718,10 @@ class Bid extends DBCommon{
 	 */
 	function fetch_BidCount_MaxBidArchive(&$dataArr)
 	{
+		if(empty($dataArr)){
+			return true;
+		}
+		$auction_ids = '';
 		for($i=0;$i<count($dataArr);$i++){
 			$auction_ids .= $dataArr[$i]['auction_id'].",";
 		}
@@ -708,8 +753,9 @@ class Bid extends DBCommon{
 		return true;
 	}
 	
-	function fetchWinningBidByAuctionID($auctionRow)
+	function fetchWinningBidByAuctionID(&$auctionRow)
 	{
+		$auction_id = $auctionRow['auction_id'] ?? '';
 		$sql = "SELECT * FROM ".TBL_BID." WHERE bid_fk_auction_id = '".$auction_id."'";
 		$rs = mysqli_query($GLOBALS['db_connect'],$sql);
 		$row = mysqli_fetch_array($rs);
@@ -718,7 +764,7 @@ class Bid extends DBCommon{
 function fetchProxyBids(&$dataArr){
 		for($i=0;$i<count($dataArr);$i++){
 			$sql = "SELECT amount
-				FROM `tbl_proxy_bid` WHERE fk_auction_id = '".$dataArr[$i]['auction_id']."' and fk_user_id='".$_SESSION['sessUserID']."'";
+				FROM `tbl_proxy_bid` WHERE fk_auction_id = '".$dataArr[$i]['auction_id']."' and fk_user_id='".($_SESSION['sessUserID'] ?? '')."'";
 				$rs = mysqli_query($GLOBALS['db_connect'],$sql);
 				$row = mysqli_fetch_assoc($rs);
 				$counter=$row['amount'];
@@ -731,7 +777,7 @@ function fetchProxyBids(&$dataArr){
 	   return true;
 	}
 	function fetchProxyBidsInAdmin($auction_id){
-	  if($_REQUEST['type']=='sold'){
+	  if(($_REQUEST['type'] ?? '')=='sold'){
 	  		$sql = "SELECT
 					  u.firstname,
 					  u.lastname,

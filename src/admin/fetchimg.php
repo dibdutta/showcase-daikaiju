@@ -25,8 +25,8 @@ ob_start();
 session_start();
 ob_end_clean();
 //$url = 'http://www.movieposterexchange.com/poster_photo/thumb_buy/1074.jpg';
-$url=$_REQUEST['imgurl'];
-$urlarr=explode(".",$_REQUEST['imgurl']);
+$url=$_REQUEST['imgurl'] ?? '';
+$urlarr=explode(".",$_REQUEST['imgurl'] ?? '');
 $urlarr=array_reverse($urlarr);
 $ext=$urlarr[0];
 $ext=strtolower($ext);
@@ -59,7 +59,7 @@ if($i<13)
 {
 ?>
 
-<div style="float:left; width: 110px; padding: 0px 2px 0pt 1px; margin: 0px;" id="photou_<?php echo $Uniquekey;?>"><img height="78" width="100" src="../poster_photo/temp/<?php echo $_SESSION['random'];?>/<?php echo $imgnm;?>" style="border: 3px solid rgb(71, 70, 68);"><input type="radio" <?php if($_REQUEST['mode']!='edit'){?> checked="checked" <?php } ?> value="<?php echo $imgnm;?>" name="is_default"><br><img onClick="deletePhoto('photou_<?php echo $Uniquekey;?>', '<?php echo $imgnm;?>', 'new','<?php echo $k;?>')" src="<?php echo CLOUD_STATIC; ?>delete-icon.png"></div>
+<div style="float:left; width: 110px; padding: 0px 2px 0pt 1px; margin: 0px;" id="photou_<?php echo $Uniquekey;?>"><img height="78" width="100" src="../poster_photo/temp/<?php echo $_SESSION['random'];?>/<?php echo $imgnm;?>" style="border: 3px solid rgb(71, 70, 68);"><input type="radio" <?php if(($_REQUEST['mode'] ?? '')!='edit'){?> checked="checked" <?php } ?> value="<?php echo $imgnm;?>" name="is_default"><br><img onClick="deletePhoto('photou_<?php echo $Uniquekey;?>', '<?php echo $imgnm;?>', 'new','<?php echo $k;?>')" src="<?php echo CLOUD_STATIC; ?>delete-icon.png"></div>
 
 <?php
 }

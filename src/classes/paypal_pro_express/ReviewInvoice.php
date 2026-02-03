@@ -63,11 +63,11 @@ if(!isset($token)) {
 	$_SESSION['invoice_id']=$invoice_id;
 	//$objCommon = new Invoice();
 	$invoiceData = $objCommon->selectData(TBL_INVOICE, array('*'), array('invoice_id' => $invoice_id));
-	$invoiceData[0]['auction_details'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData[0]['auction_details'] );
+	$invoiceData[0]['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['auction_details'] );
 	$invoiceData[0]['auction_details'] = unserialize($invoiceData[0][auction_details]);
-	$invoiceData[0]['discounts'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData[0]['discounts'] );
+	$invoiceData[0]['discounts'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['discounts'] );
 	$invoiceData[0]['discounts'] = unserialize($invoiceData[0]['discounts']);
-	$invoiceData[0]['additional_charges'] = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $invoiceData[0]['additional_charges'] );
+	$invoiceData[0]['additional_charges'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['additional_charges'] );
 	$invoiceData[0]['additional_charges'] = unserialize($invoiceData[0]['additional_charges']);
 	
 	$cartSubTotal = 0;

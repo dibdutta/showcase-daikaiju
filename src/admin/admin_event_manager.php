@@ -11,38 +11,39 @@ if(!isset($_SESSION['adminLoginID'])){
 	redirect_admin("admin_login.php");
 }
 
-if($_REQUEST['mode'] == "add_event"){
+$mode = $_REQUEST['mode'] ?? '';
+if($mode == "add_event"){
 	add_event();
-}elseif($_REQUEST['mode'] == "save_event"){
+}elseif($mode == "save_event"){
 	$chk = checkEvent();
 	if($chk == true){
 		save_event();
 	}else{
 		add_event();
 	}
-}elseif($_REQUEST['mode'] == "update_event"){
+}elseif($mode == "update_event"){
 	$chk = checkEditEvent();
 	if($chk == true){
 		update_event();
 	}else{
 		edit_event();
 	}
-}elseif($_REQUEST['mode'] == "edit_event"){
+}elseif($mode == "edit_event"){
 	edit_event();
-}elseif($_REQUEST['mode'] == "delete_event"){
+}elseif($mode == "delete_event"){
 	del_event();
-}elseif($_REQUEST['mode'] == "manage_monthly_auction"){
+}elseif($mode == "manage_monthly_auction"){
 	manage_monthly_auction();
-}elseif($_REQUEST['mode'] == "create_monthly_auction"){
+}elseif($mode == "create_monthly_auction"){
 	create_monthly_auction();
-}elseif($_REQUEST['mode'] == "save_monthly_auction"){
+}elseif($mode == "save_monthly_auction"){
 	$chk = validateMonthlyForm();
 	if(!$chk){
 		create_monthly_auction();
 	}else{
 		save_monthly_auction();
 	}
-}elseif($_REQUEST['mode'] == "show_all_event"){
+}elseif($mode == "show_all_event"){
 	show_all_event();
 }else{
 	show_all_event();
@@ -58,8 +59,8 @@ function show_all_event() {
 	
 	extract($_REQUEST);
 	$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
-	$smarty->assign(array('cat_type_id' => $cat_type_id));
+	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
+	$smarty->assign(array('cat_type_id' => $cat_type_id ?? ''));
 	
 	$total_array=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],"Select count(*) total from tbl_event"));
 	$total=$total_array['total'];
@@ -89,20 +90,20 @@ function add_event() {
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 
 	$smarty->assign ("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));	
-	
+	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
+
 	foreach ($_POST as $key => $value ) {
-		$smarty->assign($key, $value); 
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key, $value);
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
-	
+
 	$smarty->display('admin_add_event.tpl');
 }
 function del_event()
 {
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	$smarty->assign ("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
+	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 	extract($_REQUEST);
 	$obj = new Event();
 	$obj->primaryKey = 'fk_event_id';
@@ -125,12 +126,12 @@ function del_event()
 function edit_event() {
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	
-	$smarty->assign ("encoded_string", $_REQUEST['encoded_string']);
-	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
+	$smarty->assign ("encoded_string", $_REQUEST['encoded_string'] ?? '');
+	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 
 	$obj = new Category();
 	extract($_REQUEST);
-	$smarty->assign(array('event_id' => $event_id));
+	$smarty->assign(array('event_id' => $event_id ?? ''));
 	$row = $obj->selectData(TBL_EVENT, array('*'), array('event_id' => $event_id));
 	$row[0]['start_date']=date('m/d/Y',strtotime($row[0]['event_start_date']));
 	$row[0]['end_date']=date('m/d/Y',strtotime($row[0]['event_end_date']));
@@ -160,12 +161,12 @@ function edit_event() {
 	$row[0]['auction_end_min'] = $m;
 	
 	$smarty->assign('event', $row);
-	$smarty->assign('event_id', $event_id);
+	$smarty->assign('event_id', $event_id ?? '');
 	foreach ($_POST as $key => $value ) {
-		$smarty->assign($key, $value); 
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key, $value);
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
-	
+
 	$smarty->display('admin_edit_event.tpl');
 }
 
@@ -254,7 +255,7 @@ function save_event(){
 		exit;
 	}else{
 		$_SESSION['adminErr'] = "No event has not been created successfully.";
-		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+		header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 		exit;
 	}
 }
@@ -361,7 +362,7 @@ function update_event()
 			exit;
 		}else{
 			$_SESSION['adminErr'] = "Event has not been Updated successfully.";
-			header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'])."");
+			header("location: ".DOMAIN_PATH."".easy_decrypt($_REQUEST['encoded_string'] ?? '')."");
 			exit;
 		}
 	}
@@ -370,25 +371,25 @@ function update_event()
 function manage_monthly_auction()
 {
 	require_once INCLUDE_PATH."lib/adminCommon.php";
-	define ("PAGE_HEADER_TEXT", "Admin Monthly Auction Manager");
-	
+	if (!defined('PAGE_HEADER_TEXT')) { define ("PAGE_HEADER_TEXT", "Admin Monthly Auction Manager"); }
+
 	$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
-	
+	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
+
 	$auctionObj = new Auction();
 	$auctionObj->orderType = 'DESC';
-	$total = $auctionObj->countMonthlyAuctionByEvent($_REQUEST['event_id']);
-	
+	$total = $auctionObj->countMonthlyAuctionByEvent($_REQUEST['event_id'] ?? '');
+
 	if($total>0){
-		$auctionRows = $auctionObj->fetchMonthlyAuctionByEvent($_REQUEST['event_id']);
+		$auctionRows = $auctionObj->fetchMonthlyAuctionByEvent($_REQUEST['event_id'] ?? '');
 		$smarty->assign('auctionRows', $auctionRows);			
 		$smarty->assign('displayCounterTXT', displayCounter($total, $GLOBALS['offset'], $GLOBALS['toshow'], "headertext", $message="", $start=5, $end=100, $step=5, $use=1));			
 		$smarty->assign('pageCounterTXT', pageCounter($total, $GLOBALS['offset'], $GLOBALS['toshow'], "headertext", $groupby=10, $showcounter=1, $linkStyle='view_link', $redText='headertext'));
 	}
 	
 	$smarty->assign('total', $total);
-	$smarty->assign('event_id', $_REQUEST['event_id']);
-	
+	$smarty->assign('event_id', $_REQUEST['event_id'] ?? '');
+
 	$smarty->display('admin_event_wise_monthly_auction_manager.tpl');
 }
 
@@ -402,23 +403,26 @@ if(!$_POST)
     }
 }
 	require_once INCLUDE_PATH."lib/adminCommon.php";
-	define ("PAGE_HEADER_TEXT", "Admin Monthly Auction Manager");
-	
+	if (!defined('PAGE_HEADER_TEXT')) { define ("PAGE_HEADER_TEXT", "Admin Monthly Auction Manager"); }
+
 	$smarty->assign ("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
+	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 
 	$obj = new Category();
 	$catRows = $obj->selectDataCategory(TBL_CATEGORY, array('*'),true,true);
 	$smarty->assign('catRows', $catRows);
 
+	$poster_images_arr = array();
+	$PosterDesc = '';
 	foreach ($_POST as $key => $value) {
-		$smarty->assign($key, $value); 
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key, $value);
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 		if($key=='poster_desc'){
 			$PosterDesc=$value;
 		}
 		if(($key == 'poster_images') && ($value != "" || isset($_SESSION['img'])) )
 		{
+		$imgstr = '';
 		if(isset($_SESSION['img']))
 		{
 		$imgstr=implode(",",$_SESSION['img']);
@@ -433,28 +437,30 @@ if(!$_POST)
 		{
 		$value=$imgstr;
 		}
-		
-		
+
+
 		if($value != "")
 		{
-			
-			$smarty->assign("poster_images", $value); 
-			$poster_images_arr = explode(',',trim($value, ','));
-			$smarty->assign("poster_images_arr", $poster_images_arr); 
-		}
-		}
-		}
-	$smarty->assign("is_default_err", $GLOBALS['is_default_err']);
 
-	$random = ($_POST['random'] == '')? session_id().'_'.md5(date('Y-m-d H:i:s')).'_'.$_SESSION['adminLoginID'] : $_POST['random'];
+			$smarty->assign("poster_images", $value);
+			$poster_images_arr = explode(',',trim($value, ','));
+			$smarty->assign("poster_images_arr", $poster_images_arr);
+		}
+		}
+		}
+	$smarty->assign("is_default_err", $GLOBALS['is_default_err'] ?? '');
+
+	$random = (($_POST['random'] ?? '') == '')? session_id().'_'.md5(date('Y-m-d H:i:s')).'_'.$_SESSION['adminLoginID'] : $_POST['random'];
 	$smarty->assign("random", $random);
 	$_SESSION['random']=$random;
-	
+
+	$existingImages = '';
+	$posterImageRows = $posterImageRows ?? array();
 	for($i=0;$i<count($posterImageRows);$i++){
 		$existingImages .= $posterImageRows[$i]['poster_image'].",";
 	}
 	$existing_images_arr = explode(',',trim($existingImages, ','));
-	
+
 	$smarty->assign("existingImages", $existingImages);
 	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows)));
 	
@@ -465,8 +471,8 @@ if(!$_POST)
 	$userRow = $obj->selectData(USER_TABLE, array('user_id', 'firstname','lastname'), array('status' => 1), true);
 	$smarty->assign("userRow", $userRow);
 	
-	$smarty->assign("event_id", $_REQUEST['event_id']);
-	
+	$smarty->assign("event_id", $_REQUEST['event_id'] ?? '');
+
 	ob_start();
 	$oFCKeditor = new FCKeditor('poster_desc') ;
 	$oFCKeditor->BasePath = '../FCKeditor/';
@@ -485,10 +491,12 @@ if(!$_POST)
 function validateMonthlyForm(){
 
 	$errCounter = 0;
-	$random = $_REQUEST['random'];
-	if($_POST['user_id'] == ""){
+	$asked_price_err = 0;
+	$reserve_price_err = 0;
+	$random = $_REQUEST['random'] ?? '';
+	if(($_POST['user_id'] ?? '') == ""){
 		$GLOBALS['user_id_err'] = "Please select an User.";
-		$errCounter++;	
+		$errCounter++;
 	}else{
 		$user_name=$_POST['user_id'];
 		if($user_name==''){
@@ -505,75 +513,75 @@ function validateMonthlyForm(){
 		}
 	}
 
-	if($_POST['poster_title'] == ""){
+	if(($_POST['poster_title'] ?? '') == ""){
 		$GLOBALS['poster_title_err'] = "Please enter Poster Title.";
-		$errCounter++;	
+		$errCounter++;
 	}
 
-	if($_POST['poster_size'] == ""){
+	if(($_POST['poster_size'] ?? '') == ""){
 		$GLOBALS['poster_size_err'] = "Please select a Size.";
 		$errCounter++;
 	}
-	if($_POST['genre'] == ""){
+	if(($_POST['genre'] ?? '') == ""){
 		$GLOBALS['genre_err'] = "Please select Genre.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['dacade'] == ""){
+	if(($_POST['dacade'] ?? '') == ""){
 		$GLOBALS['dacade_err'] = "Please select Decade.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['country'] == ""){
+	if(($_POST['country'] ?? '') == ""){
 		$GLOBALS['country_err'] = "Please select Country.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['condition'] == ""){
+	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select Condition.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['poster_desc'] == ""){
+	if(($_POST['poster_desc'] ?? '') == ""){
 
 		$GLOBALS['poster_desc_err'] = "Please enter Poster Description.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['is_default'] == ""){
+	if(($_POST['is_default'] ?? '') == ""){
 		$GLOBALS['is_default_err'] = "Please select one image as default.";
-		$errCounter++;	
+		$errCounter++;
 	}
 
-	if($_POST['asked_price'] == ""){
+	if(($_POST['asked_price'] ?? '') == ""){
 		$GLOBALS['asked_price_err'] = "Please enter Starting Price.";
 		$errCounter++;
 		$asked_price_err = 1;
-	}if($_POST['asked_price'] < 1){
+	}if(($_POST['asked_price'] ?? 0) < 1){
 		$GLOBALS['asked_price_err'] = "Please enter proper Starting Price.";
 		$errCounter++;
 		$asked_price_err = 1;
-		
-	}elseif(check_int($_POST['asked_price']) == 0){
+
+	}elseif(check_int($_POST['asked_price'] ?? '') == 0){
 		$GLOBALS['asked_price_err'] = "Please enter integer values only.";
 		$errCounter++;
 		$asked_price_err = 1;
 	}
-	
-	if($_POST['reserve_price'] != "" && check_int($_POST['reserve_price']) == 0){
+
+	if(($_POST['reserve_price'] ?? '') != "" && check_int($_POST['reserve_price']) == 0){
 		$GLOBALS['reserve_price_err'] = "Please enter integer values only.";
 		$errCounter++;
 		$reserve_price_err = 1;
 	}
-	
-	if($_POST['reserve_price'] != "" && ($asked_price_err != 1 && $reserve_price_err != 1) && ($_POST['reserve_price'] <= $_POST['asked_price'])){
+
+	if(($_POST['reserve_price'] ?? '') != "" && ($asked_price_err != 1 && $reserve_price_err != 1) && ($_POST['reserve_price'] <= $_POST['asked_price'])){
 		$GLOBALS['reserve_price_err'] = "Reserved price must be grater than starting price.";
 		$errCounter++;
 	}
-	
-	if($_POST['poster_images'] == "" && !isset($_SESSION['img'])   && $_POST['existing_images'] == ""){
+
+	if(($_POST['poster_images'] ?? '') == "" && !isset($_SESSION['img'])   && ($_POST['existing_images'] ?? '') == ""){
         $GLOBALS['poster_images_err'] = "Please select Photos.";
         $errCounter++;  
-    }else if($_POST['is_default'] == ""){
+    }else if(($_POST['is_default'] ?? '') == ""){
         $GLOBALS['poster_images_err'] = "Please select one image as default.";
-        $errCounter++;  
+        $errCounter++;
     }else{
-	$posterimages=$_POST['poster_images'];
+	$posterimages=$_POST['poster_images'] ?? '';
 	if(isset($_SESSION['img']))
 	{
 	$imgstr=implode(",",$_SESSION['img']);
@@ -602,7 +610,7 @@ function validateMonthlyForm(){
 	}		
 
 	$eventObj = new Event();
-	$counter = $eventObj->countData(TBL_EVENT, array("event_id" => $_POST['event_id']));
+	$counter = $eventObj->countData(TBL_EVENT, array("event_id" => $_POST['event_id'] ?? ''));
 
 	if($counter == 0){
 		$GLOBALS['event_id_err'] = "Invalid event!";

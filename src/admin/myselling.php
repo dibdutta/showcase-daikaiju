@@ -10,53 +10,54 @@ if(!isset($_SESSION['sessUserID'])){
 	exit;
 }
 
-if($_REQUEST['mode'] == "bulkupload"){
+$mode = $_REQUEST['mode'] ?? '';
+if($mode == "bulkupload"){
 	bulkupload();
-}elseif($_REQUEST['mode'] == "save_bulkupload"){
+}elseif($mode == "save_bulkupload"){
 	$chk = validateBulkupload();
 	if($chk == true){
 		save_bulkupload();
 	}else{
 		bulkupload();
 	}
-}elseif($_REQUEST['mode'] == "manualupload"){
+}elseif($mode == "manualupload"){
 	manualupload();
-}elseif($_REQUEST['mode'] == "fixed_upload"){
+}elseif($mode == "fixed_upload"){
 	$chk = validateFixedForm();
 	if($chk == true){
 		save_fixed_auction();
 	}else{
 		fixed();
-	}	
-}elseif($_REQUEST['mode'] == "monthly_upload"){
+	}
+}elseif($mode == "monthly_upload"){
 	$chk = validateMonthlyForm();
 	if($chk == true){
 		save_monthly_auction();
 	}else{
 		monthly();
-	}	
-}elseif($_REQUEST['mode'] == "weekly_upload"){
+	}
+}elseif($mode == "weekly_upload"){
 	$chk = validateWeeklyForm();
 	if($chk == true){
 		save_weekly_auction();
 	}else{
 		weekly();
-	}	
-}elseif($_REQUEST['mode'] == "selling"){
+	}
+}elseif($mode == "selling"){
 	myAyctions();
-}elseif($_REQUEST['mode'] == "pending"){
+}elseif($mode == "pending"){
 	myAyctions();
-}elseif($_REQUEST['mode'] == "unsold"){
+}elseif($mode == "unsold"){
 	myAyctions();
-}elseif($_REQUEST['mode'] == "sold"){
+}elseif($mode == "sold"){
 	myAyctions();
-}elseif($_REQUEST['mode'] == "upcoming"){
+}elseif($mode == "upcoming"){
 	myAyctions();
-}elseif($_REQUEST['mode'] == "fixed"){
+}elseif($mode == "fixed"){
 	fixed();
-}elseif($_REQUEST['mode'] == "weekly"){
+}elseif($mode == "weekly"){
 	weekly();
-}elseif($_REQUEST['mode'] == "monthly"){
+}elseif($mode == "monthly"){
 	monthly();
 }else{
 	dispmiddle();
@@ -91,7 +92,7 @@ function fixed()
 
 	foreach ($_POST as $key => $value ) {
 		$smarty->assign($key, $value); 
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 		
 		if($key == 'poster_images' && $value != ""){
 			$poster_images_arr = explode(',',trim($value, ','));
@@ -100,7 +101,7 @@ function fixed()
 		
 	}
 
-	$random = ($_POST['random'] == '')? rand(999, 999999) : $_POST['random'];
+	$random = (($_POST['random'] ?? '') == '')? rand(999, 999999) : $_POST['random'];
 	$smarty->assign("random", $random);
 	
 	$smarty->display("fixed.tpl");
@@ -120,11 +121,11 @@ function monthly()
 				   $eventRows[] = $row;
 			   }
 	 }
-	$smarty->assign('eventRows', $eventRows);
+	$smarty->assign('eventRows', $eventRows ?? []);
 
 	foreach ($_POST as $key => $value ) {
 		$smarty->assign($key, $value); 
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 		
 		if($key == 'poster_images' && $value != ""){
 			$poster_images_arr = explode(',',trim($value, ','));
@@ -132,7 +133,7 @@ function monthly()
 		}
 	}
 
-	$random = ($_POST['random'] == '')? rand(999, 999999) : $_POST['random'];
+	$random = (($_POST['random'] ?? '') == '')? rand(999, 999999) : $_POST['random'];
 	$smarty->assign("random", $random);
 	
 	$smarty->display("monthly.tpl");
@@ -148,7 +149,7 @@ function weekly()
 
 	foreach ($_POST as $key => $value ) {
 		$smarty->assign($key, $value); 
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 /*if($key == "is_default"){
 	echo $value;exit;	
 }*/
@@ -158,7 +159,7 @@ function weekly()
 		}
 	}
 
-	$random = ($_POST['random'] == '')? rand(999, 999999) : $_POST['random'];
+	$random = (($_POST['random'] ?? '') == '')? rand(999, 999999) : $_POST['random'];
 	$smarty->assign("random", $random);
 	
 	$smarty->display("weekly.tpl");
@@ -168,65 +169,65 @@ function validateFixedForm()
 {
 	$errCounter = 0;
 
-	if($_POST['poster_title'] == ""){
+	if(($_POST['poster_title'] ?? '') == ""){
 		$GLOBALS['poster_title_err'] = "Please enter Poster Title.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['genre'] == ""){
+	if(($_POST['genre'] ?? '') == ""){
 		$GLOBALS['genre_err'] = "Please select Grene.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['condition'] == ""){
+	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select Description.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['poster_desc'] == ""){
+	if(($_POST['poster_desc'] ?? '') == ""){
 		$GLOBALS['poster_desc_err'] = "Please enter Description.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['asked_price'] == ""){
+	if(($_POST['asked_price'] ?? '') == ""){
 		$GLOBALS['asked_price_err'] = "Please enter Asked Price.";
 		$errCounter++;
 		$asked_price_err = 1;
-		
-	}elseif(!is_numeric($_POST['asked_price'])){
+
+	}elseif(!is_numeric($_POST['asked_price'] ?? '')){
 		$GLOBALS['asked_price_err'] = "Please enter numeric values only.";
 		$errCounter++;
 		$asked_price_err = 1;
 	}
-	
-	if($_POST['offer_price'] == ""){
+
+	if(($_POST['offer_price'] ?? '') == ""){
 		$GLOBALS['offer_price_err'] = "Please enter Offer Price.";
 		$errCounter++;
 		$offer_price_err = 1;
-	}elseif(!is_numeric($_POST['offer_price'])){
+	}elseif(!is_numeric($_POST['offer_price'] ?? '')){
 		$GLOBALS['offer_price_err'] = "Please enter numeric values only.";
 		$errCounter++;
-		$offer_price_err = 1;	
+		$offer_price_err = 1;
 	}
-	
-	if($asked_price_err == '' && $offer_price_err == ''){
-		if($_POST['is_percentage'] == 1){
-			if($_POST['asked_price'] <= ($_POST['asked_price']*$_POST['offer_price']/100)){
+
+	if(($asked_price_err ?? '') == '' && ($offer_price_err ?? '') == ''){
+		if(($_POST['is_percentage'] ?? '') == 1){
+			if(($_POST['asked_price'] ?? 0) <= (($_POST['asked_price'] ?? 0)*($_POST['offer_price'] ?? 0)/100)){
 				$GLOBALS['offer_price_err'] = "Offer price must be less than asked price.";
 				$errCounter++;	
 			}
 		}else{
-			if($_POST['asked_price'] <= $_POST['offer_price']){
+			if(($_POST['asked_price'] ?? 0) <= ($_POST['offer_price'] ?? 0)){
 				$GLOBALS['offer_price_err'] = "Offer price must be less than asked price.";
 				$errCounter++;	
 			}
 		}
 	}
 	
-	if($_POST['poster_images'] == ""){
+	if(($_POST['poster_images'] ?? '') == ""){
 		$GLOBALS['poster_images_err'] = "Please select Photos.";
-		$errCounter++;	
-	}else if($_POST['is_default'] == ""){
+		$errCounter++;
+	}else if(($_POST['is_default'] ?? '') == ""){
 		$GLOBALS['poster_images_err'] = "Please select one image as default.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	
+
 	if($errCounter > 0){
 		return false;
 	}else{
@@ -237,64 +238,64 @@ function validateFixedForm()
 function validateMonthlyForm()
 {
 	$errCounter = 0;
-	if($_POST['poster_title'] == ""){
+	if(($_POST['poster_title'] ?? '') == ""){
 		$GLOBALS['poster_title_err'] = "Please select Poster Title.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['poster_size'] == ""){
+	if(($_POST['poster_size'] ?? '') == ""){
 		$GLOBALS['poster_size_err'] = "Please select a Size.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['genre'] == ""){
+	if(($_POST['genre'] ?? '') == ""){
 		$GLOBALS['genre_err'] = "Please select Grene.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['decade'] == ""){
+	if(($_POST['decade'] ?? '') == ""){
 		$GLOBALS['decade_err'] = "Please select a Decade.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['country'] == ""){
+	if(($_POST['country'] ?? '') == ""){
 		$GLOBALS['country_err'] = "Please select Country.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['condition'] == ""){
+	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select Description.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['poster_desc'] == ""){
+	if(($_POST['poster_desc'] ?? '') == ""){
 		$GLOBALS['poster_desc_err'] = "Please select Grene.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['event_month'] == ""){
+	if(($_POST['event_month'] ?? '') == ""){
 		$GLOBALS['event_month_err'] = "Please select a Event Month.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	if($_POST['asked_price'] == ""){
+	if(($_POST['asked_price'] ?? '') == ""){
 		$GLOBALS['asked_price_err'] = "Please enter Starting Price.";
 		$errCounter++;
 		$asked_price_err = 1;
-	}elseif(!is_numeric($_POST['asked_price'])){
+	}elseif(!is_numeric($_POST['asked_price'] ?? '')){
 		$GLOBALS['asked_price_err'] = "Please enter numeric values only.";
 		$errCounter++;
 		$asked_price_err = 1;
 	}
-	
-	if($_POST['reserve_price'] != '' && !is_numeric($_POST['reserve_price'])){
+
+	if(($_POST['reserve_price'] ?? '') != '' && !is_numeric($_POST['reserve_price'] ?? '')){
 		$GLOBALS['reserve_price_err'] = "Please enter numeric values only.";
 		$errCounter++;
-	}elseif($_POST['reserve_price'] != '' && $asked_price_err == ''){
-		if($_POST['reserve_price'] <= $_POST['asked_price']){
+	}elseif(($_POST['reserve_price'] ?? '') != '' && ($asked_price_err ?? '') == ''){
+		if(($_POST['reserve_price'] ?? 0) <= ($_POST['asked_price'] ?? 0)){
 			$GLOBALS['reserve_price_err'] = "Reserved price must be grater than starting price.";
 			$errCounter++;
 		}
 	}
 	
-	if($_POST['poster_images'] == ""){
+	if(($_POST['poster_images'] ?? '') == ""){
 		$GLOBALS['poster_images_err'] = "Please select Photos.";
-		$errCounter++;	
-	}else if($_POST['is_default'] == ""){
+		$errCounter++;
+	}else if(($_POST['is_default'] ?? '') == ""){
 		$GLOBALS['poster_images_err'] = "Please select one image as default.";
-		$errCounter++;	
+		$errCounter++;
 	}
 	if($errCounter > 0){
 		return false;
@@ -307,44 +308,44 @@ function validateWeeklyForm()
 {
 	$errCounter = 0;
 
-	if($_POST['poster_title'] == ""){
+	if(($_POST['poster_title'] ?? '') == ""){
 		$GLOBALS['poster_title_err'] = "Please enter Poster Title.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	
-	if($_POST['poster_size'] == ""){
+
+	if(($_POST['poster_size'] ?? '') == ""){
 		$GLOBALS['poster_size_err'] = "Please select a Size.";
 		$errCounter++;
 	}
-	
-	if($_POST['genre'] == ""){
+
+	if(($_POST['genre'] ?? '') == ""){
 		$GLOBALS['genre_err'] = "Please select Grene.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	
-	if($_POST['decade'] == ""){
+
+	if(($_POST['decade'] ?? '') == ""){
 		$GLOBALS['decade_err'] = "Please select a Decade.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	
-	if($_POST['country'] == ""){
+
+	if(($_POST['country'] ?? '') == ""){
 		$GLOBALS['country_err'] = "Please select Country.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	
-	if($_POST['condition'] == ""){
+
+	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select Description.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	
-	if($_POST['poster_desc'] == ""){
+
+	if(($_POST['poster_desc'] ?? '') == ""){
 		$GLOBALS['poster_desc_err'] = "Please enter Poster Description.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	
-	if($_POST['start_date'] == ""){
+
+	if(($_POST['start_date'] ?? '') == ""){
 		$GLOBALS['start_date_err'] = "Please enter Start Date.";
-		$errCounter++;	
+		$errCounter++;
 	}
 	/* For testing purpost this validation has been set off */
 	
@@ -355,40 +356,40 @@ function validateWeeklyForm()
 	
 	/* For testing purpost this validation has been set off */
 
-	if($_POST['end_date'] == ""){
+	if(($_POST['end_date'] ?? '') == ""){
 		$GLOBALS['end_date_err'] = "Please enter End Date.";
-		$errCounter++;	
-	}elseif($_POST['end_date'] <= $_POST['start_date']){
+		$errCounter++;
+	}elseif(($_POST['end_date'] ?? '') <= ($_POST['start_date'] ?? '')){
 		$GLOBALS['end_date_err'] = "End Date must be greater than Start Date.";
 		$errCounter++;	
 	}
 	
-	if($_POST['asked_price'] == ""){
+	if(($_POST['asked_price'] ?? '') == ""){
 		$GLOBALS['asked_price_err'] = "Please enter Starting Price.";
 		$errCounter++;
 		$asked_price_err = 1;
-	}elseif(!is_numeric($_POST['asked_price'])){
+	}elseif(!is_numeric($_POST['asked_price'] ?? '')){
 		$GLOBALS['asked_price_err'] = "Please enter numeric values only.";
 		$errCounter++;
 		$asked_price_err = 1;
 	}
-	
-	if($_POST['buynow_price'] != "" && !is_numeric($_POST['buynow_price'])){
+
+	if(($_POST['buynow_price'] ?? '') != "" && !is_numeric($_POST['buynow_price'] ?? '')){
 		$GLOBALS['buynow_price_err'] = "Please enter numeric values only.";
 		$errCounter++;
-	}elseif($_POST['buynow_price'] != "" && $asked_price_err == ''){
-		if($_POST['buynow_price'] <= $_POST['asked_price']){
+	}elseif(($_POST['buynow_price'] ?? '') != "" && ($asked_price_err ?? '') == ''){
+		if(($_POST['buynow_price'] ?? 0) <= ($_POST['asked_price'] ?? 0)){
 			$GLOBALS['buynow_price_err'] = "Buynow price must be grater than starting price.";
 			$errCounter++;
 		}
 	}
 	
-	if($_POST['poster_images'] == ""){
+	if(($_POST['poster_images'] ?? '') == ""){
 		$GLOBALS['poster_images_err'] = "Please select Photos.";
-		$errCounter++;	
-	}else if($_POST['is_default'] == ""){
+		$errCounter++;
+	}else if(($_POST['is_default'] ?? '') == ""){
 		$GLOBALS['poster_images_err'] = "Please select one image as default.";
-		$errCounter++;	
+		$errCounter++;
 	}
 
 	if($errCounter > 0){
@@ -644,7 +645,7 @@ function myAyctions()
 {
 	require_once INCLUDE_PATH."lib/common.php";
 	
-	$status = $_REQUEST['mode'];
+	$status = $_REQUEST['mode'] ?? '';
 	$objAuction = new Auction();
 	$total = $objAuction->countAuctionsByStatus($_SESSION['sessUserID'], $status);
 	$auctionRow = $objAuction->fetchAuctionsByStatus($_SESSION['sessUserID'], $status);
@@ -654,7 +655,7 @@ function myAyctions()
 	$posterObj->fetchPosterImages($auctionRow);
 
 	$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
+	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 	
 	$smarty->assign('status', $status);
 	$smarty->assign('total', $total);
@@ -672,7 +673,7 @@ function bulkupload()
 	require_once INCLUDE_PATH."lib/common.php";
 	
 	foreach ($_FILES as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);'); 
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? ''); 
 	}
 
 	$smarty->display("bulkupload.tpl");
@@ -790,8 +791,8 @@ function parseCSVFile($pathOfCsvFile) {
             fclose($handle);
         }
     $newData =array();
-    $totalItemInArray = count($data2DArray); //excluding the headers
-    $countInnerArray = count($data2DArray[0]);
+    $totalItemInArray = count($data2DArray ?? []); //excluding the headers
+    $countInnerArray = count($data2DArray[0] ?? []);
     //echo '<pre>';print_r($data2DArray[0]);echo '</pre>';
 
     /*

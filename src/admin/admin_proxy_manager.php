@@ -59,9 +59,9 @@ ob_end_flush();
 function dispmiddle() {
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string']));
+	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 	$bidObj = new Bid();
-	$auction_id=$_REQUEST['auction_id'];
+	$auction_id=$_REQUEST['auction_id'] ?? '';
 	$bidData=$bidObj->fetchProxyBidsInAdmin($auction_id);
 	//print_r($bidData);
 	$total=count($bidData);

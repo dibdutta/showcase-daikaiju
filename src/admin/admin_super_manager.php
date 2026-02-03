@@ -12,18 +12,18 @@ if(!isset($_SESSION['adminLoginID'])){
 }
 redirect_admin("admin_account_manager.php");
 
-if($_REQUEST["order_by"]!="") {
+if(($_REQUEST["order_by"] ?? '')!="") {
 	$GLOBALS["order_by"] = $_REQUEST["order_by"];
 }
 else {
 	$GLOBALS["order_by"] = STATUS;
 }
 
-
-if($_REQUEST['mode']=="change_password"){
+$mode = $_REQUEST['mode'] ?? '';
+if($mode=="change_password"){
 	change_password();
 }
-elseif($_POST['mode'] == "save_password"){
+elseif(($_POST['mode'] ?? '') == "save_password"){
 	$chk = check_admin_password();
 	if($chk == true){
 		update_password();
@@ -31,44 +31,44 @@ elseif($_POST['mode'] == "save_password"){
 	else{
 		change_password();
 	}
-}elseif($_REQUEST['mode'] == "change_profile"){
+}elseif($mode == "change_profile"){
 	change_profile();
-}elseif($_POST['mode'] == "save_change_profile"){
+}elseif(($_POST['mode'] ?? '') == "save_change_profile"){
 	$chk = checkProfileValue();
 	if($chk == true){
 		update_profile();
 	}else{
 		change_profile();
 	}
-}elseif($_REQUEST['mode']=="create_user"){
+}elseif($mode=="create_user"){
 	create_user();
-}elseif($_REQUEST['mode']=="createNewUser"){
+}elseif($mode=="createNewUser"){
 	$chk=checkUser();
 	if($chk==true){
 		createNewUser();
 	}else{
 		create_user();
 	}
-}elseif($_REQUEST['mode']=="edit_user"){
+}elseif($mode=="edit_user"){
 	edit_user();
-}elseif($_REQUEST['mode']=="updateUser"){
+}elseif($mode=="updateUser"){
 	$chk=checkUpdateUser();
 	if($chk==true){
 		updateUser();
 	}else{
 		edit_user();
 	}
-}elseif($_REQUEST['mode']=="delete_user"){
+}elseif($mode=="delete_user"){
 	delete_user();
-}elseif($_REQUEST['mode']=="change_access"){
+}elseif($mode=="change_access"){
 	change_access();
-}elseif($_REQUEST['mode']=="saveChangeAccess"){
+}elseif($mode=="saveChangeAccess"){
 	saveChangeAccess();
-}elseif($_REQUEST['mode']=="set_active_all"){
+}elseif($mode=="set_active_all"){
 	set_active_all();
-}elseif($_REQUEST['mode']=="set_inactive_all"){
+}elseif($mode=="set_inactive_all"){
 	set_inactive_all();
-}elseif($_REQUEST['mode']=="delete_all"){
+}elseif($mode=="delete_all"){
 	delete_all();
 }else{
 	dispmiddle();
@@ -93,6 +93,7 @@ function dispmiddle(){
 		
 		$smarty->assign('startIndex', $GLOBALS['offset']+1);
 		$row = $obj->fetchAllAdministrator();
+		$row = $row ?? [];
 		for($n=0; $n<count($row); $n++){
 			$userID[] = $row[$n][ADMIN_ID];
 			$obj->adminID = $row[$n][ADMIN_ID];
@@ -130,14 +131,15 @@ function change_access(){
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	
 	$obj = new AdminUser;
-	$obj->adminID = $_REQUEST['admin_id'];
+	$obj->adminID = $_REQUEST['admin_id'] ?? '';
 	//$obj->createPageList();
-	
+
 	$rowUser = $obj->fetchAdminDetails();
 	$userEmail = $rowUser[ADMIN_EMAIL];
 	$userName = $rowUser[ADMIN_FIRST_NAME].' '.$rowUser[ADMIN_MIDDLE_NAME].' '.$rowUser[ADMIN_LAST_NAME];
 	
 	$rowSection = $obj->fetchAdminSection();
+	$rowSection = $rowSection ?? [];
 	for($n=0; $n<count($rowSection); $n++){
 		$sectionID[] = $rowSection[$n][ADMIN_SECTION_ID];
 		$sectionName[] = $rowSection[$n][ADMIN_SECTION_NAME];
@@ -147,6 +149,7 @@ function change_access(){
 	$obj->superAdmin = 1;
 	$chkSuperAdmin = $obj->checkSuperAdmin();
 	$rowAccesss = $obj->fetchAccessedSection();
+	$rowAccesss = $rowAccesss ?? [];
 	if($chkSuperAdmin == 1 && SUPER_ADMIN_CREATION == true && count($rowAccesss) == 0){
 		for($n=0; $n<count($sectionID); $n++){
 			$selectedSection[] = $sectionID[$n];
@@ -159,8 +162,8 @@ function change_access(){
 		}
 	}
 	
-	$smarty->assign('admin_id', $_REQUEST['admin_id']);
-	
+	$smarty->assign('admin_id', $_REQUEST['admin_id'] ?? '');
+
 	$smarty->assign('sectionID', $sectionID);
 	$smarty->assign('sectionName', $sectionName);
 	$smarty->assign('sectionDesc', $sectionDesc);
@@ -198,7 +201,7 @@ function create_user(){
 	}
 	
 	foreach ($_POST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);'); 
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
 	
 	$smarty->display("admin_create_user_manager.tpl");
@@ -320,10 +323,10 @@ function createNewUser(){
 function edit_user(){
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	
-	$smarty->assign('admin_id', $_REQUEST['admin_id']); 
-	
+	$smarty->assign('admin_id', $_REQUEST['admin_id'] ?? '');
+
 	$obj = new AdminUser();
-	$obj->adminID = $_REQUEST['admin_id'];
+	$obj->adminID = $_REQUEST['admin_id'] ?? '';
 	$row = $obj->fetchAdminDetails();
 	
 	$smarty->assign('user_name', trim($_POST['user_name'])!=""?escape($_POST['user_name']):$row[ADMIN_LOGIN_NAME]);
@@ -335,7 +338,7 @@ function edit_user(){
 	
 	
 	foreach ($_POST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);'); 
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
 	
 	$smarty->display("admin_update_user_manager.tpl");
@@ -442,7 +445,7 @@ function change_profile() {
 	
 	
 	foreach ($_POST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);'); 
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
 	
 	$smarty->display("admin_profile_manager.tpl");
@@ -531,7 +534,7 @@ function update_profile(){
 function change_password(){
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 
-	if($_REQUEST['admin_id']!=""){
+	if(($_REQUEST['admin_id'] ?? '')!=""){
 		$smarty->assign('admin_id', $_REQUEST['admin_id']);
 	}
 	
@@ -540,7 +543,7 @@ function change_password(){
 	}
 	
 	foreach ($_POST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);'); 
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
 	
 	$smarty->display("admin_change_password_manager.tpl");
@@ -617,8 +620,8 @@ function update_password(){
 
 function delete_user(){
 	$obj = new AdminUser;
-	$obj->adminID = $_REQUEST['admin_id'];
-	
+	$obj->adminID = $_REQUEST['admin_id'] ?? '';
+
 	$chk = $obj->deleteAdministrator();
 	
 	if($chk == true){

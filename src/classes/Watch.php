@@ -26,7 +26,7 @@ class Watch extends DBCommon{
 		
 		for($i=0;$i<count($dataArr);$i++){
 			$sql = "SELECT count(watching_id) AS counter
-				FROM ".TBL_WATCHING." WHERE auction_id = '".$dataArr[$i]['auction_id']."' and user_id='".$_SESSION['sessUserID']."'";
+				FROM ".TBL_WATCHING." WHERE auction_id = '".$dataArr[$i]['auction_id']."' and user_id='".($_SESSION['sessUserID'] ?? '')."'";
 				$rs = mysqli_query($GLOBALS['db_connect'],$sql);
 				$row = mysqli_fetch_assoc($rs);
 				$counter=$row['counter'];

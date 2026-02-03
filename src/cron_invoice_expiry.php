@@ -184,7 +184,7 @@ function checkExpiredInvoice(){
                               tia.fk_auction_id= '".$auction_id."' ";
         $auction=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],$sql));
 
-         $auction['auction_details']=preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $auction['auction_details']);
+         $auction['auction_details']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $auction['auction_details']);
          $auction_details=unserialize($auction['auction_details']);
 
          $total_amnt=$auction['total_amount'];

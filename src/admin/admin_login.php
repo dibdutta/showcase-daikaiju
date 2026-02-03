@@ -8,11 +8,12 @@ define ("INCLUDE_PATH", "../");
 require_once INCLUDE_PATH."lib/inc.php";
 define ("PAGE_HEADER_TEXT", "Admin Login");
 
-if(isset($_SESSION['adminLoginID']) && $_REQUEST['mode']!="adminLogout"){
+if(isset($_SESSION['adminLoginID']) && ($_REQUEST['mode'] ?? '') !="adminLogout"){
 	redirect_admin("admin_main.php");
 }
 
-if(isset($_REQUEST['mode']) && $_REQUEST['mode']=="checkLogin"){
+$mode = $_REQUEST['mode'] ?? '';
+if($mode=="checkLogin"){
 	$chk = checkLogin();
 	if($chk == true){
 		admin_login();
@@ -21,14 +22,14 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=="checkLogin"){
 		dispmiddle();
 	}
 }
-elseif(isset($_REQUEST['mode']) && $_REQUEST['mode'] == "forgotpassword"){
+elseif($mode == "forgotpassword"){
 	forgotpassword();
-}elseif(isset($_REQUEST['mode']) && $_REQUEST['mode'] == "retrieve_pass"){
+}elseif($mode == "retrieve_pass"){
 	retrieve_pass();
-}elseif(isset($_REQUEST['mode']) && $_REQUEST['mode'] == "reset_password"){
+}elseif($mode == "reset_password"){
 	reset_password();
 }
-elseif(isset($_REQUEST['mode']) && $_REQUEST['mode']=="send_password"){
+elseif($mode=="send_password"){
 	$chk = checkAdminEmail();
 	if($chk == true){
 		send_password();
@@ -37,7 +38,7 @@ elseif(isset($_REQUEST['mode']) && $_REQUEST['mode']=="send_password"){
 		forgotpassword();
 	}
 }
-elseif(isset($_REQUEST['mode']) && $_REQUEST['mode']=="adminLogout"){
+elseif($mode=="adminLogout"){
 	adminLogout();
 }
 else{
@@ -54,7 +55,7 @@ function dispmiddle(){
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	
 	foreach ($_POST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);'); 
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
 	
 	$smarty->display("admin_login.tpl");
@@ -66,11 +67,11 @@ function dispmiddle(){
 function checkLogin(){
 	$errCounter=0;
 	
-	if(trim($_POST['user_name'])==""){
+	if(trim($_POST['user_name'] ?? '')==""){
 		$errCounter++;
 		$GLOBALS['user_name_err'] = "Please enter your username.";
 	}
-	if(trim($_POST['password'])==""){
+	if(trim($_POST['password'] ?? '')==""){
 		$errCounter++;
 		$GLOBALS['password_err'] = "Please enter your password.";
 	}
@@ -87,8 +88,8 @@ function checkLogin(){
 
 function admin_login(){
 	$obj = new AdminUser;
-	$obj->adminLoginName = $_POST['user_name'];
-	$obj->adminPassword = $_POST['password'];
+	$obj->adminLoginName = $_POST['user_name'] ?? '';
+	$obj->adminPassword = $_POST['password'] ?? '';
 	
 	$chkUserName = $obj->checkAdminUserName();
 	if($chkUserName == true){
@@ -132,7 +133,7 @@ function forgotpassword(){
 	}
 	
 	foreach ($_POST as $key => $value ) {
-		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);'); 
+		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
 	
 	$smarty->display("admin_forgot_password.tpl");
@@ -142,7 +143,7 @@ function forgotpassword(){
 function checkAdminEmail(){
 	$errCounter=0;
 	
-	if(trim($_POST['email'])==""){
+	if(trim($_POST['email'] ?? '')==""){
 		$errCounter++;
 		$GLOBALS['email_err'] = "Please enter your email address or username.";
 	}
@@ -159,8 +160,8 @@ function checkAdminEmail(){
 
 function send_password(){
 	$obj = new AdminUser;
-	$obj->adminEmail = $_POST['email'];
-	$obj->adminLoginName = $_REQUEST['email'];
+	$obj->adminEmail = $_POST['email'] ?? '';
+	$obj->adminLoginName = $_REQUEST['email'] ?? '';
 	$chkUserEmail = $obj->checkAdminEmail();
 	if($chkUserEmail == true){
 		$chk = $obj->adminResetPassword();
@@ -190,7 +191,7 @@ function adminLogout(){
 /****************   Admin Logout Function END  ********************************************/
 function retrieve_pass(){
 	require_once INCLUDE_PATH."lib/adminCommon.php";
-	$verify_id=$_REQUEST['verify_id'];
+	$verify_id=$_REQUEST['verify_id'] ?? '';
 	$smarty->assign('verify_id', $verify_id); 
 	$smarty->display("admin_set_pass.tpl");
 }
@@ -198,23 +199,23 @@ function reset_password(){
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	$objAdmin = new DBCommon();
 	$objAdmin->primaryKey="admin_id";
-	$verify_code=$_REQUEST['verify_id'];
-	$verify_id=md5($_REQUEST['verify_id']);
+	$verify_code=$_REQUEST['verify_id'] ?? '';
+	$verify_id=md5($_REQUEST['verify_id'] ?? '');
 	
-	if($_POST['password']==""){
+	if(($_POST['password'] ?? '')==""){
 		
 		$_SESSION['adminErr'] = "Please enter your password";
 		redirect_admin("admin_login.php?mode=retrieve_pass&verify_id=".$verify_code);
-	}elseif($_POST['confirm_password']==""){
+	}elseif(($_POST['confirm_password'] ?? '')==""){
 		
 		$_SESSION['adminErr'] = "Please enter your confirm password";
 		redirect_admin("admin_login.php?mode=retrieve_pass&verify_id=".$verify_code);
-	}elseif($_POST['password']!=$_POST['confirm_password']){
+	}elseif(($_POST['password'] ?? '')!=($_POST['confirm_password'] ?? '')){
 		
 		$_SESSION['adminErr'] = "You password and confirm password is not same.";
 		redirect_admin("admin_login.php?mode=retrieve_pass&verify_id=".$verify_code);
 	}else{
-		$pass=md5($_POST['password']);
+		$pass=md5($_POST['password'] ?? '');
 		$chk=$objAdmin->updateData(ADMIN_TABLE,array("admin_pwd"=>$pass),array("admin_set_password"=>$verify_id),true);
 		$chkAdmin=$objAdmin->updateData(ADMIN_TABLE,array("admin_set_password"=>''),array("admin_set_password"=>$verify_id),true);
 		$_SESSION['adminErr'] = "You password is updated successfully.";

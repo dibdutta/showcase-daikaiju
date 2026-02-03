@@ -11,7 +11,7 @@ $link=mysqli_select_db($connect, DB_NAME) or die("Cannot find database!");
 
 $total=0;
 
-$sql = " SELECT a.auction_id,a.max_bid_amount,p.poster_title FROM tbl_auction a,tbl_poster p WHERE a.fk_auction_week_id = ".$_REQUEST['week_id']." AND a.auction_is_sold='1' AND 
+$sql = " SELECT a.auction_id,a.max_bid_amount,p.poster_title FROM tbl_auction a,tbl_poster p WHERE a.fk_auction_week_id = ".($_REQUEST['week_id'] ?? '')." AND a.auction_is_sold='1' AND
 a.fk_poster_id=p.poster_id ";
 $res = mysqli_query($GLOBALS['db_connect'],$sql);
 while($row = mysqli_fetch_array($res)){
