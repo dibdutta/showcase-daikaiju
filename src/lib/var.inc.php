@@ -171,6 +171,7 @@ define ("STATE", "state");
 define ("ADDRESS1", "address1");
 define ("ADDRESS2", "address2");
 define ("ZIPCODE", "zipcode");
+define ("PROMOTION_CODE", "promotion_code");
 
 define ("SHIPPING_FIRSTNAME", "shipping_firstname");
 define ("SHIPPING_LASTNAME", "shipping_lastname");

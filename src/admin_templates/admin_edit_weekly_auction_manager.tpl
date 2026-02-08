@@ -344,12 +344,12 @@ $(document).ready(function() {
                                                 	<select name="auction_week" class="look required">
                                                         <option value="" selected="selected">Select</option>
                                                         {section name=counter loop=$aucetionWeeks}
-                                                            <option value="{$aucetionWeeks[counter].auction_week_id}" {if $auctionRow[0].fk_auction_week_id == $aucetionWeeks[counter].auction_week_id} selected {/if}>{$aucetionWeeks[counter].auction_week_title}&nbsp;({$aucetionWeeks[counter].auction_week_start_date|date_format '%D'}&nbsp;({$aucetionWeeks[counter].auction_week_start_date|date_format:"%H:%M:%S"}) - {$aucetionWeeks[counter].auction_week_end_date|date_format '%D'}&nbsp;({$aucetionWeeks[counter].auction_week_end_date|date_format:"%H:%M:%S"}))</option>
+                                                            <option value="{$aucetionWeeks[counter].auction_week_id}" {if $auctionRow[0].fk_auction_week_id == $aucetionWeeks[counter].auction_week_id} selected {/if}>{$aucetionWeeks[counter].auction_week_title}&nbsp;({$aucetionWeeks[counter].auction_week_start_date|date_format:"%D"}&nbsp;({$aucetionWeeks[counter].auction_week_start_date|date_format:"%H:%M:%S"}) - {$aucetionWeeks[counter].auction_week_end_date|date_format:"%D"}&nbsp;({$aucetionWeeks[counter].auction_week_end_date|date_format:"%H:%M:%S"}))</option>
                                                         {/section}
                                                     </select><br /><span class="err">{$auction_week_err}</span>
                                                 {else}
                                                 <input type="hidden" name="auction_week" value="{$auctionRow[0].fk_auction_week_id}" />
-                                                {$auctionRow[0].auction_week_title}&nbsp;({$auctionRow[0].auction_week_start_date|date_format '%D'}&nbsp;({$auctionRow[0].auction_week_start_date|date_format:"%H:%M:%S"}) - {$auctionRow[0].auction_week_end_date|date_format '%D'}&nbsp;({$auctionRow[0].auction_week_end_date|date_format:"%H:%M:%S"}))
+                                                {$auctionRow[0].auction_week_title}&nbsp;({$auctionRow[0].auction_week_start_date|date_format:"%D"}&nbsp;({$auctionRow[0].auction_week_start_date|date_format:"%H:%M:%S"}) - {$auctionRow[0].auction_week_end_date|date_format:"%D"}&nbsp;({$auctionRow[0].auction_week_end_date|date_format:"%H:%M:%S"}))
 												{/if}
                                                 </td>
 											</tr>

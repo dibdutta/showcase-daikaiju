@@ -86,6 +86,9 @@ margin:0px;
                                             </tr>
                                             <tr><td colspan="3">&nbsp;</td></tr>
 											{assign var="seller_username" value= '' }
+											{assign var="subTotal" value=0}
+											{assign var="ship_new_chrg" value=0}
+											{assign var="auction_wise_total" value=0}
                                             {section name=counter loop=$invoiceData.auction_details}
 											{if $chk_item_type=='1' }									
 												{if $seller_username !=$invoiceData.auction_details[counter].seller_username}
@@ -156,7 +159,7 @@ margin:0px;
                                             </tr>
                                            {section name=counter loop=$invoiceData.additional_charges}
                                             <tr class="printer">
-                                             	<td align="right" >{if $invoiceData.is_approved == '0' && $invoiceData.is_cancelled == '0' && $invoiceData.is_paid == '0'}
+                                             	<td align="right" >{if $invoiceData[0].is_approved == '0' && $invoiceData[0].is_cancelled == '0' && $invoiceData[0].is_paid == '0'}
                                              	<img src='.{$smarty.const.CLOUD_STATIC_ADMIN}delete_charge.jpg' id='del_charge_{$smarty.section.counter.index}' title='Delete' style="border:1px solid #cccccc;">{else}&nbsp;{/if}</td>
                                                 <td align="right" >
                                                 (+)&nbsp;{$invoiceData.additional_charges[counter].description}</td>
@@ -167,7 +170,7 @@ margin:0px;
                                             {/section}
                                             {section name=counter loop=$invoiceData.discounts}
                                             <tr class="printer" >
-                                            <td align="right">{if $invoiceData.is_approved == '0' && $invoiceData.is_cancelled == '0' && $invoiceData.is_paid == '0'}
+                                            <td align="right">{if $invoiceData[0].is_approved == '0' && $invoiceData[0].is_cancelled == '0' && $invoiceData[0].is_paid == '0'}
                                             <img  src='{$smarty.const.CLOUD_STATIC_ADMIN}delete_charge.jpg' id='del_amnt_{$smarty.section.counter.index}' title='Delete' onclick='del_discount(this.id)'>{else}&nbsp;{/if}</td>
                                                 <td align="right" >
                                                 <input type='hidden' name='desc_del_amnt_{$smarty.section.counter.index}' id='desc_del_amnt_{$smarty.section.counter.index}' value='{$invoiceData.discounts[counter].description}' />
@@ -185,7 +188,7 @@ margin:0px;
                                             <tr class="printer" >
                                             	<td align="right" colspan="2" ><b>Total</b></td>
                                                 <td align="left" id="new_total_amnt" >${$subTotal|number_format:2}</td>
-                                                <input type="hidden" id="total_cost_amnt" value="{$invoiceData.total_amount}"/>
+                                                <input type="hidden" id="total_cost_amnt" value="{$invoiceData[0].total_amount|default:''}"/>
                                             </tr>
                                             <tr>
                                             <td colspan="3" align="center"><input type="button" value="Print" onclick="window.print();" /></td>

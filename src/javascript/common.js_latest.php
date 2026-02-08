@@ -1,9 +1,11 @@
 <?php
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 session_start();
 header('content-type: application/x-javascript;');
-$phpPage = reset(explode("?", basename($_SERVER['HTTP_REFERER'])));
-$random = ($_POST['random'] == '')? rand(999, 999999) : $_POST['random'];
+$referer = basename($_SERVER['HTTP_REFERER'] ?? '');
+$refererParts = explode("?", $referer);
+$phpPage = reset($refererParts);
+$random = (empty($_POST['random']))? rand(999, 999999) : $_POST['random'];
 ?>
 
 function popupWindow(path, where, hite, wide){

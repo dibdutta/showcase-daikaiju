@@ -1,5 +1,6 @@
 <?php
 /**************************************************/
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 ob_start();
 
 define ("INCLUDE_PATH", "../");
@@ -22,8 +23,8 @@ if($mode == "buyer"){
 }
     function access_buyer_info(){
 
-        require_once INCLUDE_PATH."lib/adminCommon.php";
         define ("PAGE_HEADER_TEXT", "Admin Fixed Price Sale Manager");
+        require_once INCLUDE_PATH."lib/adminCommon.php";
 
         $smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
         $smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
@@ -112,8 +113,8 @@ if($mode == "buyer"){
 
 	function access_seller_info(){
 
-        require_once INCLUDE_PATH."lib/adminCommon.php";
         define ("PAGE_HEADER_TEXT", "Admin Access Customer Information");
+        require_once INCLUDE_PATH."lib/adminCommon.php";
 
 		if(isset($_REQUEST['start_date']) && isset($_REQUEST['end_date']) && compareDates($_REQUEST['end_date'],$_REQUEST['start_date']) ){
 			$_SESSION['adminErr'] = "End Date must be greater than Start Date.";
@@ -180,8 +181,8 @@ if($mode == "buyer"){
     }
 
 	function fetch_invoice(){
-	    require_once INCLUDE_PATH."lib/adminCommon.php";
         define ("PAGE_HEADER_TEXT", "Admin Access Customer Information");
+	    require_once INCLUDE_PATH."lib/adminCommon.php";
 
 
 		$invoiceObj = new Invoice();

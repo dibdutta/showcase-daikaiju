@@ -417,7 +417,8 @@ function save_fixed_auction()
 	$posterArr = explode(',', trim($poster_images, ','));
 	foreach($posterArr as $key => $value){
 		$src = "poster_photo/temp/$random/$value";
-		$fileExt = end(explode('.', $value));
+		$extParts = explode('.', $value);
+		$fileExt = end($extParts);
 		$fileName = rand(1000, 9999).'.'.$fileExt;
 		$dest = "poster_photo/$fileName";
 		//$thumbnail_path="thumbnail/";
@@ -487,7 +488,8 @@ function save_monthly_auction()
 	$posterArr = explode(',', trim($poster_images, ','));
 	foreach($posterArr as $key => $value){
 		$src = "poster_photo/temp/$random/$value";
-		$fileExt = end(explode('.', $value));
+		$extParts = explode('.', $value);
+		$fileExt = end($extParts);
 		$fileName = rand(1000, 9999).'.'.$fileExt;
 		$dest = "poster_photo/$fileName";
 		$destThumb = "poster_photo/thumbnail";
@@ -574,7 +576,8 @@ function save_weekly_auction()
 	$posterArr = explode(',', trim($poster_images, ','));
 	foreach($posterArr as $key => $value){
 		$src = "poster_photo/temp/$random/$value";
-		$fileExt = end(explode('.', $value));
+		$extParts = explode('.', $value);
+		$fileExt = end($extParts);
 		$fileName = rand(1000, 9999).'.'.$fileExt;
 		$dest = "poster_photo/$fileName";
 		$destThumb = "poster_photo/thumbnail";
@@ -683,7 +686,8 @@ function bulkupload()
 function validateBulkupload()
 {
 	$errCounter = 0;
-	$fileExt = end(explode('.', $_FILES['bulkupload']['name']));
+	$extParts = explode('.', $_FILES['bulkupload']['name']);
+	$fileExt = end($extParts);
 	if(is_uploaded_file($_FILES['bulkupload']['tmp_name']) && $fileExt != 'zip') {
 		 $type = $_FILES['bulkupload']['type']; 
 		/*if($type!="application/zip" || $type!="application/octet-stream") {

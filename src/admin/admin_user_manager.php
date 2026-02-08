@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 ob_start();
 define ("PAGE_HEADER_TEXT", "User Manager Section");
 
@@ -151,7 +151,7 @@ function edit_user() {
 	$address1				= $row[ADDRESS1];
 	$address2				= $row[ADDRESS2];
 	$zipcode				= $row[ZIPCODE];
-	$promotion_code			= $row[PROMOTION_CODE];
+	$promotion_code			= $row[PROMOTION_CODE] ?? '';
 	$shipping_firstname		= $row['shipping_firstname'];
 	$shipping_lastname		= $row['shipping_lastname'];
 	$shipping_country_id	= $row['shipping_country_id'];

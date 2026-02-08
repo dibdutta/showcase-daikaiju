@@ -468,7 +468,8 @@ function moveUploadedFile($fieldName, $path, $fileName = '')
         if($fileName == ''){
             $fileName = $_FILES[$fieldName]['name'];
         }
-        $ext = strtolower(end(explode('.', $_FILES[$fieldName]['name'])));
+        $extParts = explode('.', $_FILES[$fieldName]['name']);
+        $ext = strtolower(end($extParts));
         $fileName = $fileName.'.'.$ext;
         @chmod($path, 0777);
         $newpath = $path."/".$fileName;
@@ -500,7 +501,8 @@ function moveUploadedFile1($fieldName, $path, $fileName = '', $is_array = false,
         if($fileName == ''){
             $fileName = $name;
         }
-        $ext = strtolower(end(explode('.', $name)));
+        $extParts = explode('.', $name);
+        $ext = strtolower(end($extParts));
 
         $fileName = $fileName.'.'.$ext;
         @chmod($path, 0777);
@@ -1324,8 +1326,9 @@ function increment_amount($buy_now){
  	require('cloudfiles/cloudfiles.php');
  	$obj = new Poster();
 	foreach($posterArr as $key => $value){
-		
-		$imageExt=$fileExt = end(explode('.', $value));
+
+		$extParts = explode('.', $value);
+		$imageExt = $fileExt = end($extParts);
 		$set_default = ($value == $is_default)? 1 : 0;
 		mysqli_query($GLOBALS['db_connect'],'START TRANSACTION');
         $poster_image_id=$obj->updateData(TBL_POSTER_IMAGES, array("fk_poster_id" => $poster_id, "poster_thumb" => addslashes($value),

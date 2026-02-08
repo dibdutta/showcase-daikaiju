@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 /**************************************************/
 ob_start();
 
@@ -9,7 +10,7 @@ if(!isset($_SESSION['adminLoginID'])){
 	redirect_admin("admin_login.php");
 }
 
-$mode = $mode ?? '';
+$mode = $_REQUEST['mode'] ?? '';
 if($mode == "edit_fixed"){
 	edit_fixed();
 }elseif($mode == "update_fixed"){
@@ -196,50 +197,57 @@ ob_end_flush();
 function fixedPriceSale() {
 	define ("PAGE_HEADER_TEXT", "Admin Fixed Price Sale Manager");
 	require_once INCLUDE_PATH."lib/adminCommon.php";
-	
+
 	$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
 	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
-	if(isset($_REQUEST['search']) && $_REQUEST['search']!=''){
-		if($_REQUEST['search']=='all'){
-			$_REQUEST['search']='';
+
+	$search = $_REQUEST['search'] ?? '';
+	$start_date_req = $_REQUEST['start_date'] ?? '';
+	$end_date_req = $_REQUEST['end_date'] ?? '';
+	$sort_type = $_REQUEST['sort_type'] ?? '';
+	$search_fixed_poster = $_REQUEST['search_fixed_poster'] ?? '';
+
+	if($search != ''){
+		if($search == 'all'){
+			$search = '';
 		}
-	if(($_REQUEST['start_date'] ?? '') > ($_REQUEST['end_date'] ?? '')){
+	if($start_date_req != '' && $end_date_req != '' && $start_date_req > $end_date_req){
 		$_SESSION['adminErr'] = "End Date must be greater than Start Date.";
-		header("location: ".PHP_SELF."?mode=fixed&search=".($_REQUEST['search'] ?? ''));
+		header("location: ".PHP_SELF."?mode=fixed&search=".$search);
 	}else{
 		$auctionObj = new Auction();
 		$auctionObj->orderType = 'DESC';
-	if(($_REQUEST['start_date'] ?? '')!='')
+	if($start_date_req != '')
 	{
-		$start_date=date('Y-m-d',strtotime($_REQUEST['start_date'] ?? ''));
+		$start_date=date('Y-m-d',strtotime($start_date_req));
 	}else{
 		$start_date='';
 	}
-	if(($_REQUEST['end_date'] ?? '')!=''){
-		$end_date=date('Y-m-d',strtotime($_REQUEST['end_date'] ?? ''));
+	if($end_date_req != ''){
+		$end_date=date('Y-m-d',strtotime($end_date_req));
 	}else{
 		$end_date='';
 	}
-	if(($_REQUEST['search'] ?? '')!='sold'){
-			$total = $auctionObj->countFixedPriceSaleByStatus($_REQUEST['search'] ?? '','',$_REQUEST['search_fixed_poster'] ?? '',$start_date,$end_date);
+	if($search != 'sold'){
+			$total = $auctionObj->countFixedPriceSaleByStatus($search,'',$search_fixed_poster,$start_date,$end_date);
 		}else{
-			$total = $auctionObj->soldAuctionCOUNTFIXED($_REQUEST['search'] ?? '','',$_REQUEST['search_fixed_poster'] ?? '',$start_date,$end_date);
+			$total = $auctionObj->soldAuctionCOUNTFIXED($search,'',$search_fixed_poster,$start_date,$end_date);
 		}
 	if($total > 0 ){
-	if(($_REQUEST['search'] ?? '')!='sold'){
-			$auctionRows = $auctionObj->fetchFixedPriceSaleByStatus($_REQUEST['search'] ?? '','',$_REQUEST['sort_type'] ?? '',$_REQUEST['search_fixed_poster'] ?? '',$start_date,$end_date);
+	if($search != 'sold'){
+			$auctionRows = $auctionObj->fetchFixedPriceSaleByStatus($search,'',$sort_type,$search_fixed_poster,$start_date,$end_date);
 		}else{
 			$auctionObj->orderBy='invoice_generated_on';
-			$auctionRows=$auctionObj->soldAuctionFIXED($_REQUEST['search'] ?? '','',$_REQUEST['sort_type'] ?? '',$_REQUEST['search_fixed_poster'] ?? '',$start_date,$end_date);
+			$auctionRows=$auctionObj->soldAuctionFIXED($search,'',$sort_type,$search_fixed_poster,$start_date,$end_date);
 		}
 		$auctionRows = $auctionRows ?? [];
 		$total_now=count($auctionRows);
     	for($i=0;$i<$total_now;$i++)
     	{
-            if ($auctionRows[$i]['is_cloud'] !='1'){
-                list($width, $height, $type, $attr) = getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
-                $auctionRows[$i]['img_width']=$width;
-                $auctionRows[$i]['img_height']=$height;
+            if (($auctionRows[$i]['is_cloud'] ?? '') !='1'){
+                list($width, $height, $type, $attr) = @getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
+                $auctionRows[$i]['img_width']=$width ?? 800;
+                $auctionRows[$i]['img_height']=$height ?? 600;
                 $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_image'];
             }else{
                 //list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$auctionRows[$i]['poster_image']);
@@ -249,21 +257,21 @@ function fixedPriceSale() {
             }
 
 
-    	}		
+    	}
 
-    			$smarty->assign('auctionRows', $auctionRows);			
-				$smarty->assign('displayCounterTXT', displayCounter($total, $GLOBALS['offset'], $GLOBALS['toshow'], "headertext", $message="", $start=5, $end=100, $step=5, $use=1));			
-				$smarty->assign('pageCounterTXT', pageCounter($total, $GLOBALS['offset'], $GLOBALS['toshow'], "headertext", $groupby=10, $showcounter=1, $linkStyle='view_link', $redText='headertext'));
-    	
+    			$smarty->assign('auctionRows', $auctionRows);
+				$smarty->assign('displayCounterTXT', displayCounter($total, $GLOBALS['offset'] ?? 0, $GLOBALS['toshow'] ?? 10, "headertext", $message="", $start=5, $end=100, $step=5, $use=1));
+				$smarty->assign('pageCounterTXT', pageCounter($total, $GLOBALS['offset'] ?? 0, $GLOBALS['toshow'] ?? 10, "headertext", $groupby=10, $showcounter=1, $linkStyle='view_link', $redText='headertext'));
+
      }
-	if($_REQUEST['search']==''){
-			$_REQUEST['search']='all';
+	if($search == ''){
+			$search = 'all';
 		}
-	$smarty->assign('total', $total);
-	$smarty->assign('search', $_REQUEST['search']);
-	$smarty->assign('sort_type', $_REQUEST['sort_type']);
-	$smarty->assign('search_fixed_poster', $_REQUEST['search_fixed_poster']);
-	if($_REQUEST['start_date']!='' && $_REQUEST['end_date']!='')
+	$smarty->assign('total', $total ?? 0);
+	$smarty->assign('search', $search);
+	$smarty->assign('sort_type', $sort_type);
+	$smarty->assign('search_fixed_poster', $search_fixed_poster);
+	if($start_date_req != '' && $end_date_req != '')
 	 {
 		$smarty->assign('start_date_show', date('m/d/Y',strtotime($start_date)));
 		$smarty->assign('end_date_show', date('m/d/Y',strtotime($end_date)));
@@ -271,7 +279,7 @@ function fixedPriceSale() {
 	}
 	}else{
 		$smarty->assign('total', 0);
-		$smarty->assign('search', $_REQUEST['search']);
+		$smarty->assign('search', $search);
 	}
 	$smarty->display('admin_fixed_auction_manager.tpl');
 }
@@ -354,64 +362,71 @@ function weeklyAuction() {
 function monthlyAuction() {
 	define ("PAGE_HEADER_TEXT", "Admin Monthly Auction Manager");
 	require_once INCLUDE_PATH."lib/adminCommon.php";
-	
+
 	$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
 	$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
-	if($_REQUEST['start_date'] > $_REQUEST['end_date']){
+
+	$start_date_req = $_REQUEST['start_date'] ?? '';
+	$end_date_req = $_REQUEST['end_date'] ?? '';
+	$search = $_REQUEST['search'] ?? '';
+	$sort_type = $_REQUEST['sort_type'] ?? '';
+	$search_fixed_poster = $_REQUEST['search_fixed_poster'] ?? '';
+
+	if($start_date_req != '' && $end_date_req != '' && $start_date_req > $end_date_req){
 		$_SESSION['adminErr'] = "End Date must be greater than Start Date.";
-		header("location: ".PHP_SELF."?mode=monthly&search=".$_REQUEST['search']);
+		header("location: ".PHP_SELF."?mode=monthly&search=".$search);
 	}else{
 	$auctionObj = new Auction();
 	$auctionObj->orderType = 'DESC';
-	if($_REQUEST['start_date']!='')
+	if($start_date_req != '')
 	{
-		$start_date=date('Y-m-d',strtotime($_REQUEST['start_date']));
+		$start_date=date('Y-m-d',strtotime($start_date_req));
 	}else{
-		$start_date='';	
+		$start_date='';
 	}
-	if($_REQUEST['end_date']!=''){
-		$end_date=date('Y-m-d',strtotime($_REQUEST['end_date']));	
+	if($end_date_req != ''){
+		$end_date=date('Y-m-d',strtotime($end_date_req));
 	}else{
-		$end_date='';	
+		$end_date='';
 	}
-	if($_REQUEST['search']!='sold'){
-			$total = $auctionObj->countMonthlyAuctionByStatus($_REQUEST['search'],'',$_REQUEST['search_fixed_poster'],$start_date,$end_date);
+	if($search != 'sold'){
+			$total = $auctionObj->countMonthlyAuctionByStatus($search,'',$search_fixed_poster,$start_date,$end_date);
 		}else{
-			$total = $auctionObj->soldAuctionCOUNTMONTHLY($_REQUEST['search'],'',$_REQUEST['search_fixed_poster'],$start_date,$end_date);
+			$total = $auctionObj->soldAuctionCOUNTMONTHLY($search,'',$search_fixed_poster,$start_date,$end_date);
 		}
-	
+
 	if($total>0){
-	if($_REQUEST['search']!='sold'){
-		$auctionRows = $auctionObj->fetchMonthlyAuctionByStatus($_REQUEST['search'],'',$_REQUEST['sort_type'],$_REQUEST['search_fixed_poster'],$start_date,$end_date);
+	if($search != 'sold'){
+		$auctionRows = $auctionObj->fetchMonthlyAuctionByStatus($search,'',$sort_type,$search_fixed_poster,$start_date,$end_date);
 		}else{
 			$auctionObj->orderBy='invoice_generated_on';
-			$auctionRows=$auctionObj->soldAuctionMONTHLY($_REQUEST['search'],'',$_REQUEST['sort_type'],$_REQUEST['search_fixed_poster'],$start_date,$end_date);
+			$auctionRows=$auctionObj->soldAuctionMONTHLY($search,'',$sort_type,$search_fixed_poster,$start_date,$end_date);
 		}
-		$total_now=count($auctionRows);
+		$total_now=count($auctionRows ?? []);
     	for($i=0;$i<$total_now;$i++)
     	{
-            if (file_exists("../poster_photo/" . $auctionRows[$i]['poster_image'])){
-                list($width, $height, $type, $attr) = getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
-                $auctionRows[$i]['img_width']=$width;
-                $auctionRows[$i]['img_height']=$height;
+            if (file_exists("../poster_photo/" . ($auctionRows[$i]['poster_image'] ?? ''))){
+                list($width, $height, $type, $attr) = @getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
+                $auctionRows[$i]['img_width']=$width ?? 800;
+                $auctionRows[$i]['img_height']=$height ?? 600;
                 $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_image'];
             }else{
-                list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$auctionRows[$i]['poster_image']);
-                $auctionRows[$i]['img_width']=$width;
-                $auctionRows[$i]['img_height']=$height;
-                $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_image'];
+                list($width, $height, $type, $attr) = @getimagesize(CLOUD_POSTER.($auctionRows[$i]['poster_image'] ?? ''));
+                $auctionRows[$i]['img_width']=$width ?? 800;
+                $auctionRows[$i]['img_height']=$height ?? 600;
+                $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.($auctionRows[$i]['poster_image'] ?? '');
             }
     	}
-		$smarty->assign('auctionRows', $auctionRows);			
-		$smarty->assign('displayCounterTXT', displayCounter($total, $GLOBALS['offset'], $GLOBALS['toshow'], "headertext", $message="", $start=5, $end=100, $step=5, $use=1));			
-		$smarty->assign('pageCounterTXT', pageCounter($total, $GLOBALS['offset'], $GLOBALS['toshow'], "headertext", $groupby=10, $showcounter=1, $linkStyle='view_link', $redText='headertext'));
+		$smarty->assign('auctionRows', $auctionRows);
+		$smarty->assign('displayCounterTXT', displayCounter($total, $GLOBALS['offset'] ?? 0, $GLOBALS['toshow'] ?? 10, "headertext", $message="", $start=5, $end=100, $step=5, $use=1));
+		$smarty->assign('pageCounterTXT', pageCounter($total, $GLOBALS['offset'] ?? 0, $GLOBALS['toshow'] ?? 10, "headertext", $groupby=10, $showcounter=1, $linkStyle='view_link', $redText='headertext'));
 	}
-	
-	$smarty->assign('total', $total);
-	$smarty->assign('search', $_REQUEST['search']);
-	$smarty->assign('sort_type', $_REQUEST['sort_type']);
-	$smarty->assign('search_fixed_poster', $_REQUEST['search_fixed_poster']);
-	if($_REQUEST['start_date']!='' && $_REQUEST['end_date']!='')
+
+	$smarty->assign('total', $total ?? 0);
+	$smarty->assign('search', $search);
+	$smarty->assign('sort_type', $sort_type);
+	$smarty->assign('search_fixed_poster', $search_fixed_poster);
+	if($start_date_req != '' && $end_date_req != '')
 	 {
 		$smarty->assign('start_date_show', date('m/d/Y',strtotime($start_date)));
 		$smarty->assign('end_date_show', date('m/d/Y',strtotime($end_date)));
@@ -505,7 +520,7 @@ if(!$_POST)
 	$smarty->assign("posterCategoryRows", $posterCategoryRows);
 	$smarty->assign("posterImageRows", $posterImageRows);
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	//$smarty->assign("offer_count", $offerCount);
 	ob_start();
 	$oFCKeditor = new FCKeditor('poster_desc') ;
@@ -570,7 +585,7 @@ function view_fixed() {
 	$smarty->assign("posterCategoryRows", $posterCategoryRows);
 	$smarty->assign("posterImageRows", $posterImageRows);
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	$smarty->display('admin_view_fixed_auction_manager.tpl');
 }
 
@@ -920,7 +935,7 @@ if(!$_POST)
 	$smarty->assign("posterCategoryRows", $posterCategoryRows);
 	$smarty->assign("posterImageRows", $posterImageRows);
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	//$smarty->assign("bid_count", $bidCount);
 ob_start();
 	$oFCKeditor = new FCKeditor('poster_desc') ;
@@ -1039,7 +1054,7 @@ function view_weekly()
 	$smarty->assign("posterCategoryRows", $posterCategoryRows);
 	$smarty->assign("posterImageRows", $posterImageRows);
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 
 	$smarty->display('admin_view_weekly_auction_manager.tpl');
 
@@ -1359,7 +1374,7 @@ if(!$_POST)
 	$smarty->assign("posterCategoryRows", $posterCategoryRows);
 	$smarty->assign("posterImageRows", $posterImageRows);
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	
 	ob_start();
 	$oFCKeditor = new FCKeditor('poster_desc') ;
@@ -1438,7 +1453,7 @@ function view_monthly()
 	$smarty->assign("posterCategoryRows", $posterCategoryRows);
 	$smarty->assign("posterImageRows", $posterImageRows);
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	
 	$smarty->display('admin_view_monthly_auction_manager.tpl');
 }
@@ -1827,6 +1842,7 @@ function manage_invoice_seller()
 	$smarty->display('admin_manage_invoice_seller.tpl');
 }
 function manage_invoice_seller_print(){
+	define ("PAGE_HEADER_TEXT", "Admin Invoice Manager");
 	error_reporting(E_ERROR | E_WARNING | E_PARSE);
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	$invoiceObj = new Invoice();
@@ -1894,7 +1910,7 @@ function manage_invoice_seller_print(){
 		$smarty->assign('chk_item_type', 2);
 		$smarty->assign("invoiceData", $invoiceData);
 	}
-	if($invoiceData[0].is_buyers_copy=='1'){
+	if(($invoiceData[0]['is_buyers_copy'] ?? '')=='1'){
 		$smarty->display('admin_manage_invoice_buyer_print.tpl');
 	}else{
 		$smarty->display('admin_manage_invoice_seller_print.tpl');
@@ -1903,6 +1919,7 @@ function manage_invoice_seller_print(){
 }
 
 function update_invoice_charge(){
+	define ("PAGE_HEADER_TEXT", "Admin Invoice Manager");
     $desc=$_REQUEST['charge_desc'];
     $amnt= number_format($_REQUEST['charge_amnt'],2,'.','');
 //	echo $_REQUEST['invoice_id'];
@@ -1935,6 +1952,7 @@ function update_invoice_charge(){
 	echo $new_cost;
 }
 function delete_invoice_charge(){
+	define ("PAGE_HEADER_TEXT", "Admin Invoice Manager");
 	$desc=$_REQUEST['charge_desc'];
     $amnt= $_REQUEST['charge_amnt'];
 	require_once INCLUDE_PATH."lib/adminCommon.php";
@@ -1960,6 +1978,7 @@ function delete_invoice_charge(){
  $update=$dbCommonObj->updateData(TBL_INVOICE,array('additional_charges'=>mysqli_real_escape_string($GLOBALS['db_connect'],$charges),'total_amount'=>$total_amnt),array('invoice_id'=>$_REQUEST['invoice_id']),true);
 }
  function update_invoice_discount(){
+	define ("PAGE_HEADER_TEXT", "Admin Invoice Manager");
  	$desc=$_REQUEST['discount_desc'];
     $amnt= number_format($_REQUEST['discount_amnt'],2,'.','');
 	require_once INCLUDE_PATH."lib/adminCommon.php";
@@ -1993,6 +2012,7 @@ function delete_invoice_charge(){
 	echo $new_cost;
  }
  function delete_invoice_discount(){
+	define ("PAGE_HEADER_TEXT", "Admin Invoice Manager");
  	 $desc=$_REQUEST['discount_desc'];
      $amnt= $_REQUEST['discount_amnt'];
 	require_once INCLUDE_PATH."lib/adminCommon.php";
@@ -2021,6 +2041,7 @@ function delete_invoice_charge(){
  
  }
  function approve_invoice(){
+	define ("PAGE_HEADER_TEXT", "Admin Invoice Manager");
  	require_once INCLUDE_PATH."lib/adminCommon.php";
  	$dbCommonObj = new DBCommon();
  	$update=$dbCommonObj->updateData(TBL_INVOICE,array('approved_on'=>date('Y-m-d :H:i:s'),'is_approved'=>'1'),array('invoice_id'=>$_REQUEST['invoice_id']),true);
@@ -2068,6 +2089,7 @@ function delete_invoice_charge(){
      }
  }
  function notify_buyer(){
+		define ("PAGE_HEADER_TEXT", "Admin Invoice Manager");
         require_once INCLUDE_PATH."lib/adminCommon.php";
         $obj=new Invoice();
         if($obj->mailInvoice($_REQUEST['invoice_id'],'buyer_notify')){
@@ -2075,6 +2097,7 @@ function delete_invoice_charge(){
         }
     }
  function cancel_invoice(){
+	define ("PAGE_HEADER_TEXT", "Admin Invoice Manager");
  	require_once INCLUDE_PATH."lib/adminCommon.php";
  	$dbCommonObj = new DBCommon();
  	$update=$dbCommonObj->updateData(TBL_INVOICE,array('cancelled_on'=>date('Y-m-d :H:i:s'),'is_cancelled'=>'1'),array('invoice_id'=>$_REQUEST['invoice_id']),true);
@@ -2131,7 +2154,7 @@ function delete_invoice_charge(){
 	$smarty->assign("posterCategoryRows", $posterCategoryRows);
 	$smarty->assign("posterImageRows", $posterImageRows);
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	$smarty->display('admin_reopen_fixed_auction_manager.tpl');
  }
  function reopen_fixed_auction(){
@@ -2227,7 +2250,7 @@ function delete_invoice_charge(){
      $smarty->assign("posterCategoryRows", $posterCategoryRows);
      $smarty->assign("posterImageRows", $posterImageRows);
      $smarty->assign("existingImages", $existingImages);
-     $smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+     $smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 
      $auctionWeekObj = new AuctionWeek();
      $aucetionWeeks = $auctionWeekObj->fetchActiveWeeks();
@@ -2437,7 +2460,7 @@ function delete_invoice_charge(){
 	$smarty->assign("posterCategoryRows", $posterCategoryRows);
 	$smarty->assign("posterImageRows", $posterImageRows);
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	
 	$smarty->display('admin_reopen_monthly_auction_manager.tpl');
  }
@@ -2468,6 +2491,7 @@ function delete_invoice_charge(){
  
 function delete_auction()
 {
+	define ("PAGE_HEADER_TEXT", "Admin Auction Manager");
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 
 	$smarty->assign ("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
@@ -2632,7 +2656,7 @@ if(!$_POST)
 	$existing_images_arr = explode(',',trim($existingImages, ','));
 	
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	
 	$obj->orderBy = FIRSTNAME;
 	$obj->orderType = ASC;
@@ -2808,6 +2832,7 @@ if(!$_POST)
 	}
 }
 	function save_new_fixed_auction(){
+	define ("PAGE_HEADER_TEXT", "Admin Auction Manager");
 	require_once INCLUDE_PATH."lib/adminCommon.php";
     extract($_POST);
     $obj = new Poster();
@@ -2934,7 +2959,8 @@ function bulkupload()
 function validateBulkupload()
 {
     $errCounter = 0;
-    $fileExt = end(explode('.', $_FILES['bulkupload']['name']));
+    $extParts = explode('.', $_FILES['bulkupload']['name']);
+    $fileExt = end($extParts);
 	$size = $_FILES['bulkupload']['size']/ 1000000;
     if(is_uploaded_file($_FILES['bulkupload']['tmp_name']) && $fileExt != 'zip') {
          $type = $_FILES['bulkupload']['type']; 
@@ -3013,6 +3039,7 @@ function save_bulkupload()
 }
 
 function parseCSVFile($pathOfCsvFile,$path,$fileName) {
+	define ("PAGE_HEADER_TEXT", "Admin Bulk Upload");
 	require_once INCLUDE_PATH."lib/adminCommon.php";	
 	$error_ind=0;
     $genericErrorMessage = '';
@@ -3155,7 +3182,7 @@ function parseCSVFile($pathOfCsvFile,$path,$fileName) {
 				$objUser = new User();
 				$arrUser= $objUser->selectData(USER_TABLE,array("user_id"),array("username"=>$data2DArray[$c][1]));
 				$user_new_id=$arrUser[0]['user_id'];
-				$auctionID = insertRecord($data2DArray[$c], array($conditionId, $sizeId, $genreId, $decadeId, $countryId),$data2DArray[$c][$innerElement] ,$pathOfCsvFile, $auctionWeekId, $auctionWeekStartDate, $auctionWeekEndDate, $eventId, $eventStartDate, $eventEndDate,$user_new_id );
+				$auctionID = insertRecord($data2DArray[$c], array($conditionId, $sizeId, $genreId, $decadeId, $countryId),$data2DArray[$c][$innerElement] ,$pathOfCsvFile, $user_new_id, $auctionWeekId, $auctionWeekStartDate, $auctionWeekEndDate, $eventId, $eventStartDate, $eventEndDate);
 				
 				if($auctionID > 0){
 					$successCounter++;
@@ -3195,7 +3222,7 @@ function fetchCategoryId($catNameValue,$key) {
     return $returnCatid;
 }
 
-function insertRecord($csvDataArray, $categoryIdArray, $auctionType, $pathOfCsvFile, $auctionWeekId='', $auctionWeekStartDate='', $auctionWeekEndDate='', $eventId='', $eventStartDate='', $eventEndDate='',$user_new_id){
+function insertRecord($csvDataArray, $categoryIdArray, $auctionType, $pathOfCsvFile, $user_new_id='', $auctionWeekId='', $auctionWeekStartDate='', $auctionWeekEndDate='', $eventId='', $eventStartDate='', $eventEndDate=''){
 
 	require_once INCLUDE_PATH . "lib/common.php";
 	
@@ -3458,6 +3485,7 @@ function bulkupload_pending(){
 	exit();
 	}
 	function delete_bulk(){
+		define ("PAGE_HEADER_TEXT", "Admin Bulk Upload");
 		require_once INCLUDE_PATH."lib/adminCommon.php";
 		//$auctionObj = new Auction();
 		//$auctionData = $auctionObj->selectData(TBL_PENDING_BULKUPLOADS, array('file_name'), array('bulkupload_id' => $_REQUEST['bulkupload_id']));
@@ -3505,6 +3533,7 @@ function bulkupload_pending(){
 	  echo "1";
     }
     function mark_as_paid_invoice(){
+		define ("PAGE_HEADER_TEXT", "Admin Invoice Manager");
         require_once INCLUDE_PATH."lib/adminCommon.php";
         $dbCommonObj = new Invoice();
         $update=$dbCommonObj->updateData(TBL_INVOICE,array('paid_on'=>date('Y-m-d :H:i:s'),'is_paid'=>'1','is_ordered' =>'0'),array('invoice_id'=>$_REQUEST['invoice_id']),true);
@@ -3720,7 +3749,7 @@ if(!$_POST)
 	$existing_images_arr = explode(',',trim($existingImages, ','));
 	
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	
 	$obj->orderBy = FIRSTNAME;
 	$obj->orderType = ASC;
@@ -3895,6 +3924,7 @@ if(!$_POST)
 	}
 }
 function save_new_stills(){
+	define ("PAGE_HEADER_TEXT", "Admin Stills/Photos Manager");
 	require_once INCLUDE_PATH."lib/adminCommon.php";
     extract($_POST);
     $obj = new Poster();
@@ -4077,7 +4107,7 @@ if(!$_POST)
 	$smarty->assign("posterCategoryRows", $posterCategoryRows);
 	$smarty->assign("posterImageRows", $posterImageRows);
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	//$smarty->assign("offer_count", $offerCount);
 	ob_start();
 	$oFCKeditor = new FCKeditor('poster_desc') ;
@@ -4171,6 +4201,7 @@ if(!$_POST)
 	}*/
 }
  function weekly_relist(){
+		define ("PAGE_HEADER_TEXT", "Admin Weekly Auction Manager");
 		require_once INCLUDE_PATH."lib/adminCommon.php";
 		
 		extract($_REQUEST);
@@ -4372,7 +4403,7 @@ if(!$_POST)
 	$existing_images_arr = explode(',',trim($existingImages, ','));
 	
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	
 	$obj->orderBy = FIRSTNAME;
 	$obj->orderType = ASC;
@@ -4398,6 +4429,7 @@ if(!$_POST)
 	}
 	
 	function save_new_stills_auction(){
+	define ("PAGE_HEADER_TEXT", "Admin Stills/Photos Auction Manager");
 	require_once INCLUDE_PATH."lib/adminCommon.php";
     extract($_REQUEST);
     $obj = new Poster();
@@ -4720,7 +4752,7 @@ if(!$_POST)
 	$smarty->assign("posterCategoryRows", $posterCategoryRows);
 	$smarty->assign("posterImageRows", $posterImageRows);
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	//$smarty->assign("bid_count", $bidCount);
 ob_start();
 	$oFCKeditor = new FCKeditor('poster_desc') ;
@@ -4927,7 +4959,7 @@ function view_stills() {
 	$smarty->assign("posterCategoryRows", $posterCategoryRows);
 	$smarty->assign("posterImageRows", $posterImageRows);
 	$smarty->assign("existingImages", $existingImages);
-	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+	$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 	$smarty->display('admin_view_still_auction_manager.tpl');
 }
 function reopen_stills(){
@@ -4999,7 +5031,7 @@ function reopen_stills(){
      $smarty->assign("posterCategoryRows", $posterCategoryRows);
      $smarty->assign("posterImageRows", $posterImageRows);
      $smarty->assign("existingImages", $existingImages);
-     $smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows ?? [])));
+     $smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows ?? [])));
 
      $auctionWeekObj = new AuctionWeek();
      $aucetionWeeks = $auctionWeekObj->fetchActiveWeeksForStills();
@@ -5091,7 +5123,7 @@ function reopen_stills(){
 }
 
 function add_note(){
-	
+	define ("PAGE_HEADER_TEXT", "Admin Invoice Manager");
         require_once INCLUDE_PATH."lib/adminCommon.php";
         $dbCommonObj = new Invoice();
         if($dbCommonObj->updateData(TBL_INVOICE,array('note'=>addslashes($_REQUEST['note'])),array('invoice_id'=>$_REQUEST['invoice_id']),true)){
@@ -5102,6 +5134,7 @@ function add_note(){
 		    
 }
 function manage_invoice_seller_print_bulk(){
+	define ("PAGE_HEADER_TEXT", "Admin Invoice Manager");
 	error_reporting(E_ERROR | E_WARNING | E_PARSE);
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 	$invoiceObj = new Invoice();

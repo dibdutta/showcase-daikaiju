@@ -1,8 +1,8 @@
 <?php
 
 /**************************************************/
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 ob_start();
-
 define ("PAGE_HEADER_TEXT", "Admin Proxy Bid Section");
 
 define ("INCLUDE_PATH", "../");

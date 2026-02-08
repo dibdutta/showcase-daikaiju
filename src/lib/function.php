@@ -469,7 +469,8 @@ function moveUploadedFile($fieldName, $path, $fileName = '')
         if($fileName == ''){
             $fileName = $_FILES[$fieldName]['name'];
         }
-        $ext = strtolower(end(explode('.', $_FILES[$fieldName]['name'])));
+        $extParts = explode('.', $_FILES[$fieldName]['name']);
+        $ext = strtolower(end($extParts));
         $fileName = $fileName.'.'.$ext;
         @chmod($path, 0777);
         $newpath = $path."/".$fileName;
@@ -501,7 +502,8 @@ function moveUploadedFile1($fieldName, $path, $fileName = '', $is_array = false,
         if($fileName == ''){
             $fileName = $name;
         }
-        $ext = strtolower(end(explode('.', $name)));
+        $extParts = explode('.', $name);
+        $ext = strtolower(end($extParts));
 
         $fileName = $fileName.'.'.$ext;
         @chmod($path, 0777);
@@ -1363,13 +1365,31 @@ function increment_amount($buy_now){
 	require_once 'AWS/aws-autoloader.php';
 
 	// Make paths absolute so thumbnail functions can find files
-	$docRoot = rtrim($_SERVER['DOCUMENT_ROOT'], '/').'/';
-	$src_temp = $docRoot . ltrim($src_temp, '/');
-	$dest_poster_photo = $docRoot . ltrim($dest_poster_photo, '/');
-	$destThumb = $docRoot . ltrim($destThumb, '/');
-	$destThumb_buy = $docRoot . ltrim($destThumb_buy, '/');
-	$destThumb_buy_gallery = $docRoot . ltrim($destThumb_buy_gallery, '/');
-	if(!empty($destThumb_big_slider)) $destThumb_big_slider = $docRoot . ltrim($destThumb_big_slider, '/');
+	// Get document root, with fallback for cases where it's empty
+	$docRoot = !empty($_SERVER['DOCUMENT_ROOT']) ? rtrim($_SERVER['DOCUMENT_ROOT'], '/') : '/var/www/html';
+	$docRoot = $docRoot . '/';
+
+	// Helper function to convert relative path to absolute
+	$makeAbsolute = function($path) use ($docRoot) {
+		// If path starts with ../ it's relative, convert to absolute
+		if (strpos($path, '../') === 0) {
+			// Remove ../ and prepend document root
+			return $docRoot . ltrim(preg_replace('#^\.\./#', '', $path), '/');
+		} elseif (strpos($path, '/') === 0) {
+			// Already absolute path starting with /
+			return $path;
+		} else {
+			// Relative path without ../, prepend document root
+			return $docRoot . ltrim($path, '/');
+		}
+	};
+
+	$src_temp = $makeAbsolute($src_temp);
+	$dest_poster_photo = $makeAbsolute($dest_poster_photo);
+	$destThumb = $makeAbsolute($destThumb);
+	$destThumb_buy = $makeAbsolute($destThumb_buy);
+	$destThumb_buy_gallery = $makeAbsolute($destThumb_buy_gallery);
+	if(!empty($destThumb_big_slider)) $destThumb_big_slider = $makeAbsolute($destThumb_big_slider);
 
  	//$obj = new Poster();
 
@@ -1382,7 +1402,8 @@ function increment_amount($buy_now){
 
 	foreach($posterArr as $key => $value){
 
-		$imageExt=$fileExt = end(explode('.', $value));
+		$extParts = explode('.', $value);
+		$imageExt = $fileExt = end($extParts);
 		if ($has_default) {
 			$set_default = ($value == $is_default) ? 1 : 0;
 		} else {

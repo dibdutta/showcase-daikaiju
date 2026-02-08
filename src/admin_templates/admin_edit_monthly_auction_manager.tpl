@@ -295,12 +295,12 @@ document.getElementById("cnt").value=countImage();
                                                 <select name="event_month" class="look">
                                                     <option value="" selected="selected">Select</option>
                                                     {section name=counter loop=$eventRows}
-                                                        <option value="{$eventRows[counter].event_id}" {if $auctionRow[0].fk_event_id == $eventRows[counter].event_id} selected {/if}>{$eventRows[counter].event_title} ({$eventRows[counter].event_start_date|date_format '%D'}&nbsp;({$eventRows[counter].event_start_date|date_format:"%H:%M:%S"}) - {$eventRows[counter].event_end_date|date_format '%D'}&nbsp;({$eventRows[counter].event_end_date|date_format:"%H:%M:%S"}))</option>
+                                                        <option value="{$eventRows[counter].event_id}" {if $auctionRow[0].fk_event_id == $eventRows[counter].event_id} selected {/if}>{$eventRows[counter].event_title} ({$eventRows[counter].event_start_date|date_format:"%D"}&nbsp;({$eventRows[counter].event_start_date|date_format:"%H:%M:%S"}) - {$eventRows[counter].event_end_date|date_format:"%D"}&nbsp;({$eventRows[counter].event_end_date|date_format:"%H:%M:%S"}))</option>
                                                     {/section}
                                                 </select><br /><span class="err">{$event_month_err}</span>
                                                 {else}
                                                 <input type="hidden" name="event_month" value="{$auctionRow[0].fk_event_id}" />
-                                                {$auctionRow[0].event_title}&nbsp;({$auctionRow[0].event_start_date|date_format '%D'}&nbsp;({$auctionRow[0].event_start_date|date_format:"%H:%M:%S"}) - {$auctionRow[0].event_end_date|date_format '%D'}&nbsp;({$auctionRow[0].event_end_date|date_format:"%H:%M:%S"}))
+                                                {$auctionRow[0].event_title}&nbsp;({$auctionRow[0].event_start_date|date_format:"%D"}&nbsp;({$auctionRow[0].event_start_date|date_format:"%H:%M:%S"}) - {$auctionRow[0].event_end_date|date_format:"%D"}&nbsp;({$auctionRow[0].event_end_date|date_format:"%H:%M:%S"}))
                                                 {/if}
                                                 </td>
                                             </tr>

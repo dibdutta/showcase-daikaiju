@@ -1,5 +1,6 @@
 <?php
 /**************************************************/
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 ob_start();
 
 define ("INCLUDE_PATH", "../");
@@ -14,13 +15,13 @@ $search = $_REQUEST['search'] ?? '';
 
 if($mode == "update_slider"){
  	updateSlider();
-}if($mode == "auction"){
+}elseif($mode == "auction"){
     updateSliderForAuction();
-}if($mode == "update_auction_for_home"){
+}elseif($mode == "update_auction_for_home"){
     update_auction_for_home();
-}if($search == "upcoming"){
+}elseif($search == "upcoming"){
     upcoming();
-}if($mode == "update_upcoming_for_home"){
+}elseif($mode == "update_upcoming_for_home"){
     update_upcoming_for_home();
 }else{
 	fixedPriceSale();
@@ -32,12 +33,14 @@ ob_end_flush();
 /*********************	START of FixedPriceSale Function	**********/
 
 	function fixedPriceSale() {
-		require_once INCLUDE_PATH."lib/adminCommon.php";
 		if(($_REQUEST['search'] ?? '') == 'selling' ){
 			define ("PAGE_HEADER_TEXT", "Featured Items for Sale");
 		}else if(($_REQUEST['search'] ?? '') == 'sold'){
 			define ("PAGE_HEADER_TEXT", "Recent Sales Results");
+		}else{
+			define ("PAGE_HEADER_TEXT", "Set First Image for Home");
 		}
+		require_once INCLUDE_PATH."lib/adminCommon.php";
 
 		$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
 		$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
@@ -91,9 +94,8 @@ ob_end_flush();
 	 echo "Poster is Successfuly set as first poster in Recent Sales Results Slider.";
 }
 function updateSliderForAuction(){
-
-    require_once INCLUDE_PATH."lib/adminCommon.php";
     define ("PAGE_HEADER_TEXT", "Featured Auction Items");
+    require_once INCLUDE_PATH."lib/adminCommon.php";
 
     $smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
     $smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
@@ -167,9 +169,8 @@ function update_auction_for_home(){
     echo "Poster is Successfuly set as first poster in Featured Auction Items Slider.";
 }
 function upcoming(){
-
-    require_once INCLUDE_PATH."lib/adminCommon.php";
     define ("PAGE_HEADER_TEXT", "Featured Upcoming Items");
+    require_once INCLUDE_PATH."lib/adminCommon.php";
 
     $smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
     $smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));

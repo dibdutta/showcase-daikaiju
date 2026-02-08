@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 define ("INCLUDE_PATH", "./");
 require_once INCLUDE_PATH."lib/inc.php";
 
@@ -143,9 +144,9 @@ function validatePostBid($lastBid)
 	}elseif($lastBid['auction_is_sold'] != '0'){
 		$errCounter++;
 		$errorArr['auction_is_sold'] = "Bid is closed.";
-	}elseif($_REQUEST['curr_bid']>0 && $bid_amount < $_REQUEST['curr_bid']){
+	}elseif(is_numeric($_REQUEST['curr_bid'] ?? '') && $_REQUEST['curr_bid'] > 0 && $bid_amount < $_REQUEST['curr_bid']){
 		$errCounter++;
-		$errorArr['bid_amount'] = "Bidd must be greater than or equal to $".number_format(($_REQUEST['curr_bid']),2);
+		$errorArr['bid_amount'] = "Bidd must be greater than or equal to $".number_format((float)$_REQUEST['curr_bid'], 2);
 	}
 
 	if($errCounter > 0){
@@ -571,7 +572,7 @@ function postBid($lastBid)
                 $tot_counter_row_second=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],$tot_bid_sql_second));
 
                 $counter_tot_second=$tot_counter_row_second['0'];
-                if($counter_tot_second==0 && $second_highest_user!=0){
+                if($counter_tot_second==0 && !empty($second_highest_user) && $second_highest_user > 0 && !empty($second_highest_val) && $second_highest_val > 0){
                     $data = array("bid_fk_user_id" => $second_highest_user, "bid_fk_auction_id" => $auction_id, "bid_amount" => $second_highest_val,
                         "bid_is_won" => 0, "post_date" => date("Y-m-d H:i:s"), "post_ip" => $_SERVER['HTTP_HOST']);
                     $bid = $auctionObj->updateData(TBL_BID, $data);

@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 /**************************************************/
 define ("PAGE_HEADER_TEXT", "Admin Auction Week Manager");
 
@@ -425,7 +426,7 @@ function update_auction_week()
 		}
 	}else{
 		if($total_pending==0 && $total_selling==0){
-			$auctionRows_sold_total = $auctionObj->fetchWeeklyAuctionByWeek($_REQUEST['week_id'],'','sold','0',$auctionWeekDetails[0]['is_stills']);
+			$auctionRows_sold_total = $auctionObj->fetchWeeklyAuctionByWeek($_REQUEST['week_id'],'','sold','0',$auctionWeekDetails[0]['is_stills']) ?? [];
 			$total_sold = count($auctionRows_sold_total);
 		}
 	}
@@ -456,13 +457,14 @@ function update_auction_week()
         $user_arr = array();
         $amount_arr = array();
         $auction_arr = array();
+        $new_user_arr = array();
         foreach($auctionRows_sold  as $key => $val){
 
             $user_arr[]=$auctionRows_sold[$key]['user_id'];
             $amount_arr[]=$auctionRows_sold[$key]['amount'];
             //$auction_arr[]=$auctionRows_sold[$key]['auction_id'];
         }
-        foreach($auctionRows_sold_total  as $key => $val){
+        foreach($auctionRows_sold_total ?? [] as $key => $val){
             $auction_arr[]=$auctionRows_sold_total[$key]['auction_id'];
             $new_user_arr[]=$auctionRows_sold_total[$key]['user_id'];
         }
@@ -573,7 +575,7 @@ function update_auction_week()
 	}
 	$smarty->assign("is_default_err", $GLOBALS['is_default_err']);
 
-	$random = ($_POST['random'] == '')? session_id().'_'.md5(date('Y-m-d H:i:s')).'_'.$_SESSION['adminLoginID'] : $_POST['random'];
+	$random = (($_POST['random'] ?? '') == '')? session_id().'_'.md5(date('Y-m-d H:i:s')).'_'.$_SESSION['adminLoginID'] : $_POST['random'];
 	$smarty->assign("random", $random);
 	$_SESSION['random']=$random;
 	if(isset($posterImageRows)){
@@ -582,14 +584,14 @@ function update_auction_week()
 		}
 		$existing_images_arr = explode(',',trim($existingImages, ','));
 		$smarty->assign("existingImages", $existingImages);
-		$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows)));
+		$smarty->assign("browse_count", (count($poster_images_arr ?? []) + count($posterImageRows)));
 	}
 	
 	
 	
 	
-	$obj->orderBy = FIRSTNAME;
-	$obj->orderType = ASC;
+	$obj->orderBy = 'firstname';
+	$obj->orderType = 'ASC';
 	
 	$userRow = $obj->selectData(USER_TABLE, array('user_id', 'firstname','lastname'), array('status' => 1), true);
 	$smarty->assign("userRow", $userRow);
@@ -927,12 +929,13 @@ function combine_buyer_invoice(){
         $user_arr = array();
         $amount_arr = array();
         $auction_arr = array();
-        foreach($auctionRows_sold  as $key => $val){
+        $new_user_arr = array();
+        foreach($auctionRows_sold ?? [] as $key => $val){
 
             $user_arr[]=$auctionRows_sold[$key]['user_id'];
             $amount_arr[]=$auctionRows_sold[$key]['amount'];
         }
-        foreach($auctionRows_sold_total  as $key => $val){
+        foreach($auctionRows_sold_total ?? [] as $key => $val){
             $auction_arr[]=$auctionRows_sold_total[$key]['auction_id'];
             $new_user_arr[]=$auctionRows_sold_total[$key]['user_id'];
         }

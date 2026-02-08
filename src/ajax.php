@@ -312,12 +312,12 @@ function updateSession(){
 	
 }
 function get_cond_desc(){
-	$id = $_REQUEST['id'];
+	$id = $_REQUEST['id'] ?? '';
 	$sql= " Select desc_condition from tbl_cond_desc where fk_condition_id = ".$id." 
 				   ";
 	$resSql=mysqli_query($GLOBALS['db_connect'],$sql);
 	$fetchSql= mysqli_fetch_array($resSql);
-	echo $fetchSql['desc_condition'];
+	echo $fetchSql['desc_condition'] ?? '';
 }
 function chk_item_type(){
 	//$auction_id = explode(',',$_REQUEST['allVals']);

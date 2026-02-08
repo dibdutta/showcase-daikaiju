@@ -1125,7 +1125,8 @@ function bulkupload()
 function validateBulkupload()
 {
     $errCounter = 0;
-    $fileExt = end(explode('.', $_FILES['bulkupload']['name']));
+    $extParts = explode('.', $_FILES['bulkupload']['name']);
+    $fileExt = end($extParts);
     $size = $_FILES['bulkupload']['size']/ 1000000;
     if(is_uploaded_file($_FILES['bulkupload']['tmp_name']) && $fileExt != 'zip') {
          $type = $_FILES['bulkupload']['type']; 
@@ -1749,7 +1750,8 @@ function images_next(){
  }
  function save_bulk_to_admin(){
  	require_once INCLUDE_PATH."lib/common.php";
- 	$fileExt = end(explode('.', $_FILES['bulkupload_admin']['name']));
+ 	$extParts = explode('.', $_FILES['bulkupload_admin']['name']);
+ 	$fileExt = end($extParts);
     $size = $_FILES['bulkupload_admin']['size']/ 1000000;
  	if($fileExt != 'zip') {
         $_SESSION['Err'] = "Invalid file format. Please upload zip file only.";

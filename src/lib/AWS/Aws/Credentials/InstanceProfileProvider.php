@@ -73,11 +73,16 @@ class InstanceProfileProvider
         return $fn($request, ['timeout' => $this->timeout])
             ->then(function (ResponseInterface $response) {
                 return (string) $response->getBody();
-            })->otherwise(function (array $reason) {
-                $reason = $reason['exception'];
-                $msg = $reason->getMessage();
+            })->otherwise(function ($reason) {
+                // Handle both array (older Guzzle) and exception object (PHP 8)
+                if (is_array($reason) && isset($reason['exception'])) {
+                    $exception = $reason['exception'];
+                } else {
+                    $exception = $reason;
+                }
+                $msg = $exception->getMessage();
                 throw new CredentialsException(
-                    $this->createErrorMessage($msg, 0, $reason)
+                    $this->createErrorMessage($msg)
                 );
             });
     }

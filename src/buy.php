@@ -189,7 +189,7 @@ function displayList()
                     $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$auctionItems[$i]['poster_thumb'];
                     $auctionItems[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }else{
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/mpe/poster_photo/thumb_buy/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy/".$auctionItems[$i]['poster_thumb'];
                 }
             }
         /*}else{
@@ -209,7 +209,6 @@ function displayList()
 				$myObj->$auctionItems[$i]['fk_auction_week_id'] =$auctionItems[$i]['auction_week_end_date'] ;
 			}			
 			$myJSON = json_encode($myObj);
-			echo $myJSON;
 			$smarty->assign('auction_week_end_time',$myJSON);
 			$auctionItems[$i]['auction_countdown'] = '<span id="cd_'.$auctionItems[$i]['auction_id'].'"><script language="javascript">$("#cd_'.$auctionItems[$i]['auction_id'].'").countdown({until: dateAdd(\'s\', '.$auctionItems[$i]['seconds_left'].', new Date())});</script></span>';
 			}
@@ -1048,12 +1047,12 @@ if(isset($_SESSION['sessUserID'])){
 		$auctionDetails[0]['is_selling']=0;
 	}
     if ($auctionDetails[0]['is_cloud']==1){
-        list($width, $height, $type, $attr) = @getimagesize("/mpe/poster_photo/".$auctionDetails[0]['poster_thumb']);
+        list($width, $height, $type, $attr) = @getimagesize("/poster_photo/".$auctionDetails[0]['poster_thumb']);
         $smarty->assign('width', $width);
         $smarty->assign('height', $height);
-        $auctionDetails[0]['image_path']="http://".$_SERVER['HTTP_HOST']."/mpe/poster_photo/thumb_buy_gallery/".$auctionDetails[0]['poster_thumb'];
-        $auctionDetails[0]['large_image']="http://".$_SERVER['HTTP_HOST']."/mpe/poster_photo/".$auctionDetails[0]['poster_thumb'];
-		$auctionDetails[0]['disp_image']="http://".$_SERVER['HTTP_HOST']."/mpe/poster_photo/".$auctionDetails[0]['poster_thumb'];
+        $auctionDetails[0]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionDetails[0]['poster_thumb'];
+        $auctionDetails[0]['large_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/".$auctionDetails[0]['poster_thumb'];
+		$auctionDetails[0]['disp_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/".$auctionDetails[0]['poster_thumb'];
     }else{
         list($width, $height, $type, $attr) = @getimagesize(CLOUD_POSTER.$auctionDetails[0]['poster_thumb']);
         $smarty->assign('width', $width);

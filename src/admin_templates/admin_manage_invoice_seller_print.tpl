@@ -85,6 +85,7 @@ margin:0px;
                                                 <th align="left" width="25%" >Price</th>
                                             </tr>
                                             <tr><td colspan="3">&nbsp;</td></tr>
+                                            {assign var="subTotal" value=0}
                                             {section name=counter loop=$invoiceData.auction_details}
                                         	<tr class="printer" >
                                                 <td align="left" >#{$invoiceData.auction_details[counter].poster_sku}</td>
@@ -99,7 +100,7 @@ margin:0px;
                                             </tr>
                                            {section name=counter loop=$invoiceData.additional_charges}
                                             <tr class="printer">
-                                             	<td align="right" >{if $invoiceData.is_approved == '0' && $invoiceData.is_cancelled == '0' && $invoiceData.is_paid == '0'}
+                                             	<td align="right" >{if $invoiceData[0].is_approved == '0' && $invoiceData[0].is_cancelled == '0' && $invoiceData[0].is_paid == '0'}
                                              	<img src='.{$smarty.const.CLOUD_STATIC_ADMIN}delete_charge.jpg' id='del_charge_{$smarty.section.counter.index}' title='Delete' style="border:1px solid #cccccc;">{else}&nbsp;{/if}</td>
                                                 <td align="right" >
                                                 (+)&nbsp;{$invoiceData.additional_charges[counter].description}</td>
@@ -110,7 +111,7 @@ margin:0px;
                                             {/section}
                                             {section name=counter loop=$invoiceData.discounts}
                                             <tr class="printer" >
-                                            <td align="right">{if $invoiceData.is_approved == '0' && $invoiceData.is_cancelled == '0' && $invoiceData.is_paid == '0'}
+                                            <td align="right">{if $invoiceData[0].is_approved == '0' && $invoiceData[0].is_cancelled == '0' && $invoiceData[0].is_paid == '0'}
                                             <img  src='{$smarty.const.CLOUD_STATIC_ADMIN}delete_charge.jpg' id='del_amnt_{$smarty.section.counter.index}' title='Delete' onclick='del_discount(this.id)'>{else}&nbsp;{/if}</td>
                                                 <td align="right" >
                                                 <input type='hidden' name='desc_del_amnt_{$smarty.section.counter.index}' id='desc_del_amnt_{$smarty.section.counter.index}' value='{$invoiceData.discounts[counter].description}' />

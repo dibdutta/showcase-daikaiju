@@ -2,7 +2,9 @@
 define ("INCLUDE_PATH", "../");
 require_once INCLUDE_PATH."lib/configures.php";
 header('content-type: application/x-javascript;');
-$phpPage = reset(explode("?", basename($_SERVER['HTTP_REFERER'])));
+$referer = basename($_SERVER['HTTP_REFERER'] ?? '');
+$refererParts = explode("?", $referer);
+$phpPage = reset($refererParts);
 ?>
 
 var hostName = '<?php echo DOMAIN_PATH; ?>';

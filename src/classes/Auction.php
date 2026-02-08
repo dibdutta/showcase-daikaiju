@@ -47,14 +47,15 @@ class Auction extends DBCommon{
 				AND (UNIX_TIMESTAMP(tw.auction_week_end_date) - UNIX_TIMESTAMP()) <= 0 ";
 		}else{
 			$sql = "SELECT count(a.auction_id) AS counter
-				FROM tbl_auction_live a 
-				WHERE  1 ";
+				FROM tbl_auction_live a
+				INNER JOIN tbl_poster_images_live pi ON a.fk_poster_id = pi.fk_poster_id
+				WHERE pi.is_default = '1' ";
 		}
-			
+
 		if($fetch == 'fixed'){
 			$sql .= " AND a.auction_is_sold IN ('0','3') AND a.fk_auction_type_id = '1'  ";
 		}elseif($fetch == 'weekly'){
-			$sql .= " AND a.auction_is_sold ='0' AND ((a.auction_actual_start_datetime <= now() AND a.auction_actual_end_datetime >= now()))";
+			$sql .= " AND a.auction_is_approved = '1' AND a.in_cart <> '1' AND a.auction_is_sold ='0' AND ((a.auction_actual_start_datetime <= now() AND a.auction_actual_end_datetime >= now()))";
 		}elseif($fetch == 'extended'){
 			$sql .= " AND a.auction_is_sold ='0' AND ((a.auction_actual_start_datetime <= now() AND a.auction_actual_end_datetime >= now()))";
 		}/*elseif($fetch == 'stills'){
@@ -482,7 +483,6 @@ class Auction extends DBCommon{
         
            
         }
-		//echo 	$sql;	
 		//die();
 	   if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
@@ -1383,7 +1383,7 @@ class Auction extends DBCommon{
                 }
 
                 $i=1;
-                while(list($key,$val)=each($split_stemmed)){
+                foreach($split_stemmed as $key=>$val){
 
                     if($val<>" " and strlen($val) > 0 and ($search_type=='title_desc' || $search_type=='')){
                         $i = $sql." ( p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' )) ";
@@ -1596,7 +1596,7 @@ class Auction extends DBCommon{
 			/*if($keyword != ''){
                 $sql .= " AND ( ";
                 $split_stemmed = explode(" ",$keyword);
-                while(list($key,$val)=each($split_stemmed)){
+                foreach($split_stemmed as $key=>$val){
                     if($val<>" " and strlen($val) > 0 and ($search_type=='title_desc' || $search_type=='')){
                         $sql .= " ( p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' ) OR";
                     }elseif($val<>" " and strlen($val) > 0 and $search_type=='title' ){
@@ -4381,7 +4381,7 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
                 }
 
                 $i=1;
-                while(list($key,$val)=each($split_stemmed)){
+                foreach($split_stemmed as $key=>$val){
 
                     if($val<>" " and strlen($val) > 0 and ($search_type=='title_desc' || $search_type=='')){
                         $i = $sql." ( p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' )) ";
@@ -4933,7 +4933,7 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
                 }
 
                 $i=1;
-                while(list($key,$val)=each($split_stemmed)){
+                foreach($split_stemmed as $key=>$val){
 
                     if($val<>" " and strlen($val) > 0 and ($search_type=='title_desc' || $search_type=='')){
                         $i = $sql." ( p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' )) ";
@@ -5133,7 +5133,7 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 				$sql .= $qry;
 				$split_stemmed = explode(" ",$keyword);
 				$sql .= " AND ( ";
-				while(list($key,$val)=each($split_stemmed)){
+				foreach($split_stemmed as $key=>$val){
 					if($val<>" " and strlen($val) > 0){
 						$sql .= " ( p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' ) OR";
 					}
@@ -5193,7 +5193,7 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 				}
 				$split_stemmed = explode(" ",$keyword);
 				$sql .= " AND ( ";
-				while(list($key,$val)=each($split_stemmed)){
+				foreach($split_stemmed as $key=>$val){
 					if($val<>" " and strlen($val) > 0){
 						$sql .= " ( p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' ) OR";
 					}
@@ -5251,7 +5251,7 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 				}
 				$split_stemmed = explode(" ",$keyword);
 				$sql .= " AND ( ";
-				while(list($key,$val)=each($split_stemmed)){
+				foreach($split_stemmed as $key=>$val){
 					if($val<>" " and strlen($val) > 0){
 						$sql .= " ( p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' ) OR";
 					}
@@ -5310,7 +5310,7 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 				}
 				$split_stemmed = explode(" ",$keyword);
 				$sql .= " AND ( ";
-				while(list($key,$val)=each($split_stemmed)){
+				foreach($split_stemmed as $key=>$val){
 					if($val<>" " and strlen($val) > 0){
 						$sql .= " ( p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' ) OR";
 					}
@@ -7039,7 +7039,7 @@ function fetchStillsLiveAuctions($view_mode=''){
                 }
 
                 $i=1;
-                while(list($key,$val)=each($split_stemmed)){
+                foreach($split_stemmed as $key=>$val){
                     
                         $iAuction = $sqlAuction." AND ( p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' ) ";
                         $iOthers = $sqlOthers." AND ( p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$val)."%' ) ";

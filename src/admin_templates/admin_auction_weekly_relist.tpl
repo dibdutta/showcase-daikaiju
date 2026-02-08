@@ -68,7 +68,7 @@
           <select name="auction_week" id="auction_week" style="width:320px;" class="formlisting-txtfield required">
             <option value="" selected="selected">Select</option>
             {section name=counter loop=$aucetionWeeks}
-            <option value="{$aucetionWeeks[counter].auction_week_id}" {if $auction_week == $aucetionWeeks[counter].auction_week_id} selected {/if}>{$aucetionWeeks[counter].auction_week_title}&nbsp;({$aucetionWeeks[counter].auction_week_start_date|date_format '%D'}&nbsp; - {$aucetionWeeks[counter].auction_week_end_date|date_format '%D'})
+            <option value="{$aucetionWeeks[counter].auction_week_id}" {if $auction_week == $aucetionWeeks[counter].auction_week_id} selected {/if}>{$aucetionWeeks[counter].auction_week_title}&nbsp;({$aucetionWeeks[counter].auction_week_start_date|date_format:"%D"}&nbsp; - {$aucetionWeeks[counter].auction_week_end_date|date_format:"%D"})
             </option>
             {/section}
           </select>

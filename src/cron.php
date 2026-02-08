@@ -65,7 +65,7 @@ define ('MAIL_BODY_BOTTOM', '</td></tr>
 	define ("DB_USER", "root");
 	define ("DB_PASSWORD", "");
 }elseif(HOST_NAME=="movieposterexchange.com" ||  HOST_NAME=="www.movieposterexchange.com"){*/
-	define ("DB_SERVER", "127.0.0.1");
+	define ("DB_SERVER", "mysql");
 	define ("DB_NAME", "mpe");
 	define ("DB_USER", "root");
 	define ("DB_PASSWORD", "root");
@@ -82,8 +82,12 @@ define ('MAIL_BODY_BOTTOM', '</td></tr>
 	define ("DB_PASSWORD", "gipl@321890");
 }*/
 
-$connect=mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD) or die("Cannot connect DB Server!");
-$link=mysqli_select_db($connect, DB_NAME) or die("Cannot find database!");
+$connect=mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME) or die("Cannot connect DB Server: " . mysqli_connect_error());
+$GLOBALS['db_connect'] = $connect;
+
+// Disable strict SQL modes for MySQL 8 compatibility with legacy queries
+mysqli_query($connect, "SET SESSION sql_mode='NO_ENGINE_SUBSTITUTION'");
+
 date_default_timezone_set('America/New_York');
 
 
