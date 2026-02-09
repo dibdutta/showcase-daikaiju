@@ -98,7 +98,13 @@
 	 }
 	
 	function hidelogin(){
-		$('#login-panel').hide();
+		$('#login-modal-box').hide();
+		$('#login-modal-overlay').hide();
+	}
+	function showLogIn(){
+		$('#login-modal-overlay').show();
+		$('#login-modal-box').show();
+		$('#username').focus();
 	}
 	function refine_search(type,id){
 		if(type=='decade'){
@@ -181,7 +187,7 @@
          {*<div style="position:absolute; left:167px; top:90px; background:#fff; height:15px;color:red;">
 		 <label>The site will be under maintainance for three(3) Hrs.sorry for the inconvenience caused</label>
 		 </div>*}
-        <div id="logopanel"><a href="{$actualPath}/index.php" title="Movie Poster Exchange"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/logo.png" alt="Movie Poster Exchange" title="Movie Poster Exchange" width="165" height="93"/></a></div>
+        <div id="logopanel" style="width:165px; min-height:93px; display:flex; align-items:center; justify-content:center;"><a href="{$actualPath}/index.php" title="Movie Poster Exchange"><img src="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/logo/3bb4d422-bdd7-43a5-8462-a3f81cde183b.png/:/rs=w:98,h:80,cg:true,m/cr=w:98,h:80/qt=q:95" alt="Movie Poster Exchange" title="Movie Poster Exchange" width="98" height="80"/></a></div>
         <!--Header Top navigation Starts-->
         <div id="mainnavigation" class="innerbg">
           <ul class="menu">
@@ -214,7 +220,7 @@
         </div>
         <!--Search Panel Starts-->
         
-        <div id="searchbar">
+        <div id="searchbar" style="background:#003878; width:100%; box-sizing:border-box;">
         <!--<div class="search-left-bg"></div>-->
             <div class="search-midrept-bg ">
                 <label><img src="https://d2m46dmzqzklm5.cloudfront.net/images/search-img.png" width="20" height="37" /></label>
@@ -245,59 +251,10 @@
          <ul>
         <li><!--<a href="javascript:void(0);" class="drop" onclick="showlogin();" ><img src="{$actualPath}/images/signin.png" width="60" height="37" />-->
         <div id="mypanel" class="ddpanel" style="margin-top:16px;">
-<!--<div id="mypanelcontent" class="ddpanelcontent">-->
-<div>
-<div id="signup-login" style="position: absolute; left: 0pt; top: 0pt; margin: 32px 0pt 0pt 700px; z-index:70000000;">
-<div class="col_2">
-			   <form name="frmlogin" id="frmlogin" method="post" action="auth.php">
-            	<input type="hidden" name="mode" value="process_login" />
-                
-                <table width="120" border="0" cellspacing="2" cellpadding="0" id="login-panel" style="display:none;">
-                <tr>
-                <td>
-               	 <h1>Member's Login</h1>
-                </td>
-                </tr>
-				<tr>
-				<td><div style="width: 30px; height: 30px; position: absolute; z-index: 8; margin: -60px 0px 0px 210px;"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/fancy_close.png" width="30" height="30" onclick="hidelogin();" style="cursor:pointer;"/></div></td>
-				</tr>
-                <tr>
-					<td id="error">
-					
-					</td>
-				  <tr>
-					<td>
-					<input type="text" id="username" name="username" {if $smarty.const.NewUserName!=''} value="{$smarty.const.NewUserName}" {/if} class="w170 required" />
-					</td>
-				  </tr>
-				  <tr>
-					<td>					
-					<input type="password" id="password" name="password" {if $smarty.const.NewPassWord!=''} value="{$smarty.const.NewPassWord}" {/if} class="w170 required"  style="font-size:10px;" onfocus="{literal}$(this).keypress(function(event){
-			var keycode = (event.keyCode ? event.keyCode : event.which);
-			if(keycode == '13'){			
-			submitDetailsForm()
-			}	
-		}); {/literal}" />
-					</td>
-				  </tr>
-				  <tr>
-					<td><input type="button" class="login-blue-btn" value="Login" id="submitButton" name="submit" onclick="submitDetailsForm()" >
-									   </td>
-				  </tr>
-				  <tr>
-					<td> <a href="{$actualPath}/forget_password.php">Forgot password</a></td>
-				  </tr>
-				</table>
-              </form>
-            </div></div>
-
-
-</div>
 <div id="mypaneltab" class="ddpaneltab">
 <div class="pcontent"></div>
 <a href="javascript:void(0);" onclick="showLogIn();"><span>Sign In</span></a>
 </div>
-
 </div><!-- Begin Home Item -->
          
         <div ><!-- Begin 2 columns container -->
@@ -519,3 +476,35 @@
     	</div>
   </div>
 <!--Page Ends-->
+
+<!-- Login Modal Overlay -->
+<div id="login-modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:200000;" onclick="hidelogin();"></div>
+<!-- Login Modal -->
+<div id="login-modal-box" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:200001; background:#fff; border-radius:8px; box-shadow:0 4px 24px rgba(0,0,0,0.3); padding:32px 36px 24px; width:380px; max-width:90vw; height:auto; overflow:visible;">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <h2 style="margin:0; font-size:22px; color:#333; font-weight:600;">Member's Login</h2>
+    <span onclick="hidelogin();" style="cursor:pointer; font-size:28px; color:#999; line-height:1; padding:0 4px;">&times;</span>
+  </div>
+  <form name="frmlogin" id="frmlogin" method="post" action="auth.php">
+    <input type="hidden" name="mode" value="process_login" />
+    <div id="error" style="color:red; margin-bottom:8px;"></div>
+    <div id="log-in-popup-text" style="color:#555; margin-bottom:12px; font-size:14px;"></div>
+    <div style="margin-bottom:16px;">
+      <label for="username" style="display:block; margin-bottom:6px; font-size:14px; font-weight:600; color:#555;">Username</label>
+      <input type="text" id="username" name="username" {if $smarty.const.NewUserName!=''} value="{$smarty.const.NewUserName}" {/if} class="required" placeholder="Enter your username" style="width:100%; padding:10px 12px; border:1px solid #ccc; border-radius:4px; font-size:14px; box-sizing:border-box;" />
+    </div>
+    <div style="margin-bottom:20px;">
+      <label for="password" style="display:block; margin-bottom:6px; font-size:14px; font-weight:600; color:#555;">Password</label>
+      <input type="password" id="password" name="password" {if $smarty.const.NewPassWord!=''} value="{$smarty.const.NewPassWord}" {/if} class="required" placeholder="Enter your password" style="width:100%; padding:10px 12px; border:1px solid #ccc; border-radius:4px; font-size:14px; box-sizing:border-box;" onfocus="{literal}$(this).keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){ submitDetailsForm(); }
+      }); {/literal}" />
+    </div>
+    <div style="margin-bottom:16px;">
+      <input type="button" value="LOGIN" id="submitButton" name="submit" onclick="submitDetailsForm()" style="width:100%; padding:10px; background:#cc0000; color:#fff; border:none; border-radius:4px; font-size:15px; font-weight:600; cursor:pointer; letter-spacing:1px;" />
+    </div>
+    <div style="text-align:center; padding-bottom:8px;">
+      <a href="{$actualPath}/forget_password.php" style="color:#cc0000; font-size:13px; text-decoration:none;">Forgot password?</a>
+    </div>
+  </form>
+</div>

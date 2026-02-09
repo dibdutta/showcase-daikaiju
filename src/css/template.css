@@ -283,15 +283,21 @@ ul {
 /*19/04/12 Ends*/
 
 #header #logopanel {
-
 	float: left;
 	margin: 0;
+	width: 165px; /* Fixed width to maintain layout with new logo */
+	min-height: 93px; /* Maintain minimum height */
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 
 /*19/04/12 Starts*/
 #header #logopanel a img {
 	margin-top: 0px;
+	max-width: 100%;
+	height: auto;
 }
 
 /*19/04/12 Ends*/
