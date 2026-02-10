@@ -1,4 +1,5 @@
 <?php  
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 ob_start();
 define ("INCLUDE_PATH", "./");
 require_once INCLUDE_PATH."lib/inc.php";
@@ -23,8 +24,8 @@ function displayList()
         $_SESSION['sessAuction'] = $_REQUEST['view_mode'];
     }
 	
-	if(isset($_REQUEST[type]) && $_REQUEST[type]!=''){
-		$type=$_REQUEST[type];
+	if(isset($_REQUEST['type']) && $_REQUEST['type']!=''){
+		$type=$_REQUEST['type'];
 	}else{
 		$type='';
 	}

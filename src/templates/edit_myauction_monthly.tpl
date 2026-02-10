@@ -354,7 +354,7 @@ textarea
                                             <select name="event_month" class="monthly_event_select required">
                                                 <option value="" selected="selected">Select</option>
                                                 {section name=counter loop=$eventRows}
-                                                    <option value="{$eventRows[counter].event_id}" {if $auctionRow[0].fk_event_id == $eventRows[counter].event_id} selected {/if}>{$eventRows[counter].event_title} ({$eventRows[counter].event_start_date|date_format '%D'} - {$eventRows[counter].event_end_date|date_format '%D'})</option>
+                                                    <option value="{$eventRows[counter].event_id}" {if $auctionRow[0].fk_event_id == $eventRows[counter].event_id} selected {/if}>{$eventRows[counter].event_title} ({$eventRows[counter].event_start_date|date_format:'%D'} - {$eventRows[counter].event_end_date|date_format:'%D'})</option>
                                                 {/section}
                                             </select>
                                             {/if}

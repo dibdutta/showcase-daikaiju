@@ -83,7 +83,7 @@ function show_text(){
 						  <select name="auction_week" style="width:230px; margin-left:5px;"  class="look" onchange="javascript: this.form.submit();">
                                  <option value="" selected="selected">All Auction</option>
                                  {section name=counter loop=$auctionWeek}
-                                     <option value="{$auctionWeek[counter].auction_week_id}" {if $smarty.request.auction_week == $auctionWeek[counter].auction_week_id} selected {/if} >MPE Stills Auction&nbsp;( {$auctionWeek[counter].auction_week_end_date|date_format '%D'})</option>
+                                     <option value="{$auctionWeek[counter].auction_week_id}" {if $smarty.request.auction_week == $auctionWeek[counter].auction_week_id} selected {/if} >MPE Stills Auction&nbsp;( {$auctionWeek[counter].auction_week_end_date|date_format:'%D'})</option>
                                  {/section}
                              </select></div>
 							<div class="sortblock_auction" style="margin-top: 8px;">{$displaySortByTXT}</div>

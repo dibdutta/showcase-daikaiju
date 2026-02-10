@@ -221,7 +221,7 @@
 																  {if $smarty.request.list!='extendded'}
 																	<div class="timerwrapper" style="float:right">
 																 	<!-- <div class="timer-left"></div>-->
-																  	<div class="text-timer" id="timer_{$auctionItems[counter].auction_id}">{$auctionItems[counter].auction_countdown}</div>
+																  	<div class="text-timer" id="timer_{$auctionItems[counter].auction_id}" style="background:#003878; background-image:none; color:#fff; border-radius:3px;">{$auctionItems[counter].auction_countdown}</div>
 																  	<!--<div class="timer-right"></div>-->
 																  	</div>
 																	<input type="button" value="Watch" class="track-btn" style="width:60px;" onclick="add_watchlist_for_details({$auctionItems[counter].auction_id});" id="watch_{$auctionItems[counter].auction_id}" />
@@ -229,7 +229,7 @@
 																{else}
 																	<div class="timerwrapper" style="float:right">
 																 	<!-- <div class="timer-left"></div>-->
-																  		<div class="text-timer" id="timer_{$auctionItems[counter].auction_id}">{$auctionItems[counter].auction_countdown}</div>
+																  		<div class="text-timer" id="timer_{$auctionItems[counter].auction_id}" style="background:#003878; background-image:none; color:#fff; border-radius:3px;">{$auctionItems[counter].auction_countdown}</div>
 																  		<!--<div class="timer-right"></div>-->
 																  	</div>
 																	<input type="button" value="Watching" style="width:60px;" onclick="redirect_watchlist({$auctionItems[counter].auction_id});" class="track-btn"  />

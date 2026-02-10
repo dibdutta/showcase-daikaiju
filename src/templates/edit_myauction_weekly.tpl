@@ -392,13 +392,13 @@ textarea
                                             {if $auctionRow[0].auction_is_approved=='1'}
                                                 {section name=counter loop=$aucetionWeeks}                                                        
                                                     <input type="hidden" name="auction_week" value="{$aucetionWeeks[counter].auction_week_id}" />
-                                                    <input type="text" name="auction_week_val" value="{$aucetionWeeks[counter].auction_week_title}&nbsp;({$aucetionWeeks[counter].auction_week_start_date|date_format '%D'} - {$aucetionWeeks[counter].auction_week_end_date|date_format '%D'})" class="bigfield required" readonly="readonly" />
+                                                    <input type="text" name="auction_week_val" value="{$aucetionWeeks[counter].auction_week_title}&nbsp;({$aucetionWeeks[counter].auction_week_start_date|date_format:'%D'} - {$aucetionWeeks[counter].auction_week_end_date|date_format:'%D'})" class="bigfield required" readonly="readonly" />
                                                 {/section}
                                             {else}
                                                 <select name="auction_week" style="width:320px;" class="formlisting-txtfield required"  >
                                                     <option value="" selected="selected">Select</option>
                                                     {section name=counter loop=$aucetionWeeks}
-                                                        <option value="{$aucetionWeeks[counter].auction_week_id}" {if $auctionRow[0].fk_auction_week_id == $aucetionWeeks[counter].auction_week_id} selected {/if}>{$aucetionWeeks[counter].auction_week_title}&nbsp;({$aucetionWeeks[counter].auction_week_start_date|date_format '%D'} - {$aucetionWeeks[counter].auction_week_end_date|date_format '%D'})</option>
+                                                        <option value="{$aucetionWeeks[counter].auction_week_id}" {if $auctionRow[0].fk_auction_week_id == $aucetionWeeks[counter].auction_week_id} selected {/if}>{$aucetionWeeks[counter].auction_week_title}&nbsp;({$aucetionWeeks[counter].auction_week_start_date|date_format:'%D'} - {$aucetionWeeks[counter].auction_week_end_date|date_format:'%D'})</option>
                                                     {/section}
                                                 </select>
                                             {/if}

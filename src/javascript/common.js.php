@@ -1426,22 +1426,13 @@ function stateOptions(country_id, state_textbox, state_select)
 	}
 }
 function showLogIn(){
- $("#signup-login").css("position","fixed");
- $("#signup-login").css("left","42%");
- $("#signup-login").css("top","25%");
- $("#signup-login").css("margin-left","0px");
- $("#log-in-popup-text").html("Please Login To Continue"); 
- //$("#sb-container").show();
- $("#login-panel").show();
+ $('#login-modal-overlay').show();
+ $('#login-modal-box').show();
+ $('#username').focus();
 }
 function hideLogIn(){
- $('#login-panel').hide();
- $('#sb-container').hide();
- $("#signup-login").css("position","absolute");
- $("#signup-login").css("left","0");
- $("#signup-login").css("top","0");
- $("#signup-login").css("margin","32px 0 0 700px");
- $("#log-in-popup-text").html("Members Login");
+ $('#login-modal-box').hide();
+ $('#login-modal-overlay').hide();
 }
 function redirect_watchlist(id){
     window.location="user_watching.php#"+id;

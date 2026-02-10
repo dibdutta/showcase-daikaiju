@@ -3417,6 +3417,7 @@ class Auction extends DBCommon{
 	}
 	
 	function fetchSoldPriceForSeller(&$dataAuction){
+		if(!is_array($dataAuction) && !($dataAuction instanceof Countable)) return;
 		for($i=0;$i<count($dataAuction);$i++){
 			if(($dataAuction[$i]['fk_auction_type_id']=='1' || $dataAuction[$i]['fk_auction_type_id']=='4') && $dataAuction[$i]['auction_is_sold']=='1'){
 				 $sql ="SELECT u.firstname winnerFname, u.lastname winnerLname,

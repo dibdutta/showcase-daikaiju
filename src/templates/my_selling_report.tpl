@@ -121,14 +121,14 @@
 										  <select name="auction_week"  class="formlisting-txtfield" id="auction_week" {if $auction_type!='weekly'}style="display: none;"{/if} onchange="check_auction_week_type(this.value);" >
                                             <option value="" selected="selected">All Auction</option>
 											{section name=counter loop=$auctionWeek}
-												<option value="{$auctionWeek[counter].auction_week_id}" {if $smarty.request.auction_week == $auctionWeek[counter].auction_week_id} selected {/if} >MPE Weekly Auction&nbsp;( {$auctionWeek[counter].auction_week_end_date|date_format '%D'})</option>
+												<option value="{$auctionWeek[counter].auction_week_id}" {if $smarty.request.auction_week == $auctionWeek[counter].auction_week_id} selected {/if} >MPE Weekly Auction&nbsp;( {$auctionWeek[counter].auction_week_end_date|date_format:'%D'})</option>
 											{/section}
                                          </select>
 										 
 										 <select name="auction_stills"  class="look" id="auction_stills" {if $auction_type!='stills'}style="display: none;"{/if}>
                                             <option value="" selected="selected">All Stills Auction</option>
 											{section name=counter loop=$auctionWeekStills}
-												<option value="{$auctionWeekStills[counter].auction_week_id}" {if $smarty.request.auction_stills == $auctionWeekStills[counter].auction_week_id} selected {/if} >MPE Stills Auction&nbsp;( {$auctionWeekStills[counter].auction_week_end_date|date_format '%D'})</option>
+												<option value="{$auctionWeekStills[counter].auction_week_id}" {if $smarty.request.auction_stills == $auctionWeekStills[counter].auction_week_id} selected {/if} >MPE Stills Auction&nbsp;( {$auctionWeekStills[counter].auction_week_end_date|date_format:'%D'})</option>
 											{/section}
                                          </select>
      								 </td>

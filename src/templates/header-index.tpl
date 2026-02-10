@@ -495,10 +495,13 @@
     </div>
     <div style="margin-bottom:20px;">
       <label for="password" style="display:block; margin-bottom:6px; font-size:14px; font-weight:600; color:#555;">Password</label>
-      <input type="password" id="password" name="password" {if $smarty.const.NewPassWord!=''} value="{$smarty.const.NewPassWord}" {/if} class="required" placeholder="Enter your password" style="width:100%; padding:10px 12px; border:1px solid #ccc; border-radius:4px; font-size:14px; box-sizing:border-box;" onfocus="{literal}$(this).keypress(function(event){
-        var keycode = (event.keyCode ? event.keyCode : event.which);
-        if(keycode == '13'){ submitDetailsForm(); }
-      }); {/literal}" />
+      <div style="position:relative;">
+        <input type="password" id="password" name="password" {if $smarty.const.NewPassWord!=''} value="{$smarty.const.NewPassWord}" {/if} class="required" placeholder="Enter your password" style="width:100%; padding:10px 36px 10px 12px; border:1px solid #ccc; border-radius:4px; font-size:14px; box-sizing:border-box;" onfocus="{literal}$(this).keypress(function(event){
+          var keycode = (event.keyCode ? event.keyCode : event.which);
+          if(keycode == '13'){ submitDetailsForm(); }
+        }); {/literal}" />
+        <span onclick="{literal}var p=document.getElementById('password');if(p.type==='password'){p.type='text';this.textContent='HIDE';}else{p.type='password';this.textContent='SHOW';}{/literal}" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:11px; font-weight:600; color:#cc0000; user-select:none; letter-spacing:0.5px;">SHOW</span>
+      </div>
     </div>
     <div style="margin-bottom:16px;">
       <input type="button" value="LOGIN" id="submitButton" name="submit" onclick="submitDetailsForm()" style="width:100%; padding:10px; background:#cc0000; color:#fff; border:none; border-radius:4px; font-size:15px; font-weight:600; cursor:pointer; letter-spacing:1px;" />

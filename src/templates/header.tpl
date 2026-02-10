@@ -380,41 +380,7 @@ function showTimer1(list,id){
 </div>
          
         <div class="dropdown_2columns"><!-- Begin 2 columns container -->
-    
-            <div class="col_2">
-                <h2>Members Login</h2>
-            </div>
-    
-            <div class="col_2">
-			   <form name="frmlogin" id="frmlogin" method="post" action="auth.php">
-            	<input type="hidden" name="mode" value="process_login" />
-                <table width="120" border="0" cellspacing="2" cellpadding="0">
-				 <tr>
-				 <td><div id="loginmsg" class="login-err" style="display:none;"></div></td>
-				 </tr>
-				  <tr>
-					<td>
-					<input type="text" id="username" name="username" {if $smarty.const.NewUserName!=''} value="{$smarty.const.NewUserName}" {/if} class="w170 required" />
-					</td>
-				  </tr>
-				  <tr>
-					<td>					
-					<input type="password" id="password" name="password" {if $smarty.const.NewPassWord!=''} value="{$smarty.const.NewPassWord}" {/if} class="w170 required"  style="font-size:10px;" />
-					</td>
-				  </tr>
-				  <tr>
-					<td><input type="submit" class="login-blue-btn" value="Login" id="submit" name="submit">
-									   </td>
-				  </tr>
-				  <tr>
-					<td> <a href="{$actualPath}/forget_password.php">Forgot password</a></td>
-				  </tr>
-				</table>
-              </form>
-            </div>
-    
-            
-          
+            &nbsp;
         </div><!-- End 2 columns container -->
     
     </li>
@@ -691,10 +657,13 @@ function showTimer1(list,id){
     </div>
     <div style="margin-bottom:20px;">
       <label for="password" style="display:block; margin-bottom:6px; font-size:14px; font-weight:600; color:#555;">Password</label>
-      <input type="password" id="password" name="password" {if $smarty.const.NewPassWord!=''} value="{$smarty.const.NewPassWord}" {/if} class="required" placeholder="Enter your password" style="width:100%; padding:10px 12px; border:1px solid #ccc; border-radius:4px; font-size:14px; box-sizing:border-box;" onfocus="{literal}$(this).keypress(function(event){
-        var keycode = (event.keyCode ? event.keyCode : event.which);
-        if(keycode == '13'){ submitDetailsForm(); }
-      }); {/literal}" />
+      <div style="position:relative;">
+        <input type="password" id="password" name="password" {if $smarty.const.NewPassWord!=''} value="{$smarty.const.NewPassWord}" {/if} class="required" placeholder="Enter your password" style="width:100%; padding:10px 36px 10px 12px; border:1px solid #ccc; border-radius:4px; font-size:14px; box-sizing:border-box;" onfocus="{literal}$(this).keypress(function(event){
+          var keycode = (event.keyCode ? event.keyCode : event.which);
+          if(keycode == '13'){ submitDetailsForm(); }
+        }); {/literal}" />
+        <span onclick="{literal}var p=document.getElementById('password');if(p.type==='password'){p.type='text';this.textContent='HIDE';}else{p.type='password';this.textContent='SHOW';}{/literal}" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:11px; font-weight:600; color:#cc0000; user-select:none; letter-spacing:0.5px;">SHOW</span>
+      </div>
     </div>
     <div style="margin-bottom:16px;">
       <input type="button" value="LOGIN" id="submitButton" name="submit" onclick="submitDetailsForm()" style="width:100%; padding:10px; background:#cc0000; color:#fff; border:none; border-radius:4px; font-size:15px; font-weight:600; cursor:pointer; letter-spacing:1px;" />
