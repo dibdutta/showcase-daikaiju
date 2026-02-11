@@ -116,7 +116,7 @@ function tipsy(id){
 
                                                    <div class="poster-detail">${$dataArrMonthly[counter].auction_asked_price|number_format:2}</div>
                                                    <div class="poster-det-caraousel">
-                                                       <a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataArrMonthly[counter].auction_id}" title="{$dataArrMonthly[counter].poster_title}"  id="tipsy_{$dataArrMonthly[counter].auction_id}" onMouseOver="tipsy(this.id)">{$dataArrMonthly[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataArrMonthly[counter].poster_sku}){/if*}</a>
+                                                       <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrMonthly[counter].auction_id}" title="{$dataArrMonthly[counter].poster_title}"  id="tipsy_{$dataArrMonthly[counter].auction_id}" onMouseOver="tipsy(this.id)">{$dataArrMonthly[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataArrMonthly[counter].poster_sku}){/if*}</a>
 
                                                    </div>
                                                    {if $dataArrMonthly[counter].watch_indicator == 0}
@@ -149,7 +149,7 @@ function tipsy(id){
                                                    <div class="poster-detail">${if $dataArrWeekly[counter].last_bid_amount|number_format:2 > 0}{$dataArrWeekly[counter].last_bid_amount|number_format:2}{else}{$dataArrWeekly[counter].auction_asked_price|number_format:2}{/if}</div>
                                                    <div class="poster-det-caraousel">
 
-                                                       <a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataArrWeekly[counter].auction_id}" title="{$dataArrWeekly[counter].poster_title}" id="tipsy_{$dataArrWeekly[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataArrWeekly[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataArrWeekly[counter].poster_sku}){/if*}</a>								</div>
+                                                       <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrWeekly[counter].auction_id}" title="{$dataArrWeekly[counter].poster_title}" id="tipsy_{$dataArrWeekly[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataArrWeekly[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataArrWeekly[counter].poster_sku}){/if*}</a>								</div>
 
 
 
@@ -181,7 +181,7 @@ function tipsy(id){
                {if $totMonthly > 0 || $totWeekly > 0}
                    <div class="lower-poster-area">
                        
-                       <input type="button" value="See All " class="more-btn" onclick="$(location).attr('href', '{$actualPath}/buy.php?list=weekly');" />
+                       <input type="button" value="See All " class="more-btn" onclick="$(location).attr('href', '{$actualPath}/buy?list=weekly');" />
                    </div>
                {/if}
                </div>
@@ -201,7 +201,7 @@ function tipsy(id){
 
                    <div class="black-left-crnr"></div>
                    <div class="black-midrept">
-                       <span class="white-txt" ><strong style="cursor:pointer" onclick="$(location).attr('href', '{$actualPath}/buy.php?list=upcoming');">Featured Upcoming Auction </strong></span>
+                       <span class="white-txt" ><strong style="cursor:pointer" onclick="$(location).attr('href', '{$actualPath}/buy?list=upcoming');">Featured Upcoming Auction </strong></span>
                    </div>
                    <div class="black-right-crnr"></div>
                </div>
@@ -230,7 +230,7 @@ function tipsy(id){
 
                                                    <div class="poster-detail">${$dataArrUpcoming[counter].auction_asked_price|number_format:2}</div>
                                                    <div class="poster-det-caraousel">
-                                                       <a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataArrUpcoming[counter].auction_id}" title="{$dataArrUpcoming[counter].poster_title}"  id="tipsy_{$dataArrUpcoming[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataArrUpcoming[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataArrUpcoming[counter].poster_sku}){/if*}</a>
+                                                       <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrUpcoming[counter].auction_id}" title="{$dataArrUpcoming[counter].poster_title}"  id="tipsy_{$dataArrUpcoming[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataArrUpcoming[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataArrUpcoming[counter].poster_sku}){/if*}</a>
                                                    </div>
                                                    {if $dataArrUpcoming[counter].watch_indicator == 0}
                                                        <div class="poster-area-list" style="margin-left:28px;">
@@ -260,7 +260,7 @@ function tipsy(id){
                    {if $totUpcoming > 0}
                        <div class="lower-poster-area">
 
-                           <input type="button" value="See All " class="more-btn" onclick="$(location).attr('href', '{$actualPath}/buy.php?list=upcoming');" />
+                           <input type="button" value="See All " class="more-btn" onclick="$(location).attr('href', '{$actualPath}/buy?list=upcoming');" />
                        </div>
                    {/if}
                </div>
@@ -279,7 +279,7 @@ function tipsy(id){
             {*if $errorMessage<>""}<div class="messageBox">{$errorMessage}</div><div>&nbsp;</div>{/if*}
         		            	<div class="black-left-crnr"></div>
                 <div class="black-midrept">
-                	<span class="white-txt" ><strong style="cursor:pointer" onclick="$(location).attr('href', '{$actualPath}/buy.php?list=fixed');">Featured Items for Sale</strong></span>
+                	<span class="white-txt" ><strong style="cursor:pointer" onclick="$(location).attr('href', '{$actualPath}/buy?list=fixed');">Featured Items for Sale</strong></span>
                 </div>
                 <div class="black-right-crnr"></div>
             </div>
@@ -308,7 +308,7 @@ function tipsy(id){
 
                 <div class="poster-detail">${$dataArrFixed[counter].auction_asked_price|number_format:2}</div>
                 <div class="poster-det-caraousel">
-                <a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataArrFixed[counter].auction_id}" title="{$dataArrFixed[counter].poster_title}"  id="tipsy_{$dataArrFixed[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataArrFixed[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataArrFixed[counter].poster_sku}){/if*}</a>
+                <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrFixed[counter].auction_id}" title="{$dataArrFixed[counter].poster_title}"  id="tipsy_{$dataArrFixed[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataArrFixed[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataArrFixed[counter].poster_sku}){/if*}</a>
 				</div>
                     {if $dataArrFixed[counter].watch_indicator == 0}
                         <div class="poster-area-list" style="margin-left:28px;">
@@ -338,7 +338,7 @@ function tipsy(id){
            {if $totFixed > 0}
             <div class="lower-poster-area">
 <!--              	<input type="button" value="Bid Now!!" class="bidnow-btn"/>-->
-                    <input type="button" value="See All " class="more-btn" onclick="$(location).attr('href', '{$actualPath}/buy.php?list=fixed');" />
+                    <input type="button" value="See All " class="more-btn" onclick="$(location).attr('href', '{$actualPath}/buy?list=fixed');" />
                 </div>
                 {/if}
 
@@ -354,7 +354,7 @@ function tipsy(id){
           <div class="black-topbg-main">
         		            	<div class="black-left-crnr"></div>
                 <div class="black-midrept">
-                	<span class="white-txt" ><strong style="cursor:pointer" onclick="$(location).attr('href', '{$actualPath}/sold_item.php');">Recent Sales Results</strong></span>
+                	<span class="white-txt" ><strong style="cursor:pointer" onclick="$(location).attr('href', '{$actualPath}/sold_item');">Recent Sales Results</strong></span>
                 </div>
                 <div class="black-right-crnr"></div>
             </div>
@@ -381,7 +381,7 @@ function tipsy(id){
 
 
                 <div class="poster-detail">${if $dataJstFinishedAuction[counter].soldamnt==''}0.00{else}{$dataJstFinishedAuction[counter].soldamnt}{/if}</div>
-                <div class="poster-det-caraousel"><a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" title="{$dataJstFinishedAuction[counter].poster_title}" id="tipsy_{$dataJstFinishedAuction[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataJstFinishedAuction[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</a></div>
+                <div class="poster-det-caraousel"><a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" title="{$dataJstFinishedAuction[counter].poster_title}" id="tipsy_{$dataJstFinishedAuction[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataJstFinishedAuction[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</a></div>
                 </div>
 
                 </li>

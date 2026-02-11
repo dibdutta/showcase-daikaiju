@@ -157,7 +157,7 @@
                             <div class="div_submit" style="width: 100%; text-align: center;">
                                 
                                 <input type="button" value="Pay Now" class="submit-btn" onclick="if(confirm('Do you want to continue payment?'))$('#paypalpayment').submit();" />
-                                <input type="reset" value="Cancel Payment" class="cancel-btn" onclick="if(confirm('Do you want to cancel payment?'))$(location).attr('href', '{$actualPath}/my_invoice.php?mode=cancel_payment&invoice_id={$smarty.request.invoice_id}');" />
+                                <input type="reset" value="Cancel Payment" class="cancel-btn" onclick="if(confirm('Do you want to cancel payment?'))$(location).attr('href', '{$actualPath}/my_invoice?mode=cancel_payment&invoice_id={$smarty.request.invoice_id}');" />
                             </div>
                             <div class="clear"></div>
                         </div>

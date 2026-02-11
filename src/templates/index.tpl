@@ -98,7 +98,7 @@ function tipsy(id){
             {if $errorMessage<>""}<div class="messageBox">{$errorMessage}</div><div>&nbsp;</div>{/if}
         		            	<div class="black-left-crnr"></div>
                 <div class="black-midrept">
-                	<span class="white-txt" ><strong style="cursor:pointer" onclick="$(location).attr('href', '{$actualPath}/buy.php?list=fixed');">Featured Items for Sale</strong></span>
+                	<span class="white-txt" ><strong style="cursor:pointer" onclick="$(location).attr('href', '{$actualPath}/buy?list=fixed');">Featured Items for Sale</strong></span>
                 </div>
                 <div class="black-right-crnr"></div>
             </div>
@@ -125,7 +125,7 @@ function tipsy(id){
                
                 <div class="poster-detail">${$dataArrFixed[counter].auction_asked_price|number_format:2}</div>
                 <div class="poster-det-caraousel">
-                <a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataArrFixed[counter].auction_id}" title="{$dataArrFixed[counter].poster_title}"  id="tipsy_{$dataArrFixed[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataArrFixed[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataArrFixed[counter].poster_sku}){/if*}</a>
+                <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrFixed[counter].auction_id}" title="{$dataArrFixed[counter].poster_title}"  id="tipsy_{$dataArrFixed[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataArrFixed[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataArrFixed[counter].poster_sku}){/if*}</a>
 				</div>
                     {if $dataArrFixed[counter].watch_indicator == 0}
                     <div class="poster-area-list" style="margin-left:28px;">		
@@ -151,7 +151,7 @@ function tipsy(id){
            {if $totFixed > 0}
             <div class="lower-poster-area">
 <!--              	<input type="button" value="Bid Now!!" class="bidnow-btn"/>-->
-                    <input type="button" value="See All " class="more-btn" onclick="$(location).attr('href', '{$actualPath}/buy.php?list=fixed');" />
+                    <input type="button" value="See All " class="more-btn" onclick="$(location).attr('href', '{$actualPath}/buy?list=fixed');" />
                 </div>
                 {/if}
             
@@ -167,7 +167,7 @@ function tipsy(id){
           <div class="black-topbg-main">
         		            	<div class="black-left-crnr"></div>
                 <div class="black-midrept">
-                	<span class="white-txt" ><strong style="cursor:pointer" onclick="$(location).attr('href', '{$actualPath}/sold_item.php');">Recent Sale Results</strong></span>
+                	<span class="white-txt" ><strong style="cursor:pointer" onclick="$(location).attr('href', '{$actualPath}/sold_item');">Recent Sale Results</strong></span>
                 </div>
                 <div class="black-right-crnr"></div>
             </div>
@@ -191,7 +191,7 @@ function tipsy(id){
                 
                 
                 <div class="poster-detail">${if $dataJstFinishedAuction[counter].soldamnt==''}0.00{else}{$dataJstFinishedAuction[counter].soldamnt}{/if}</div>
-                <div class="poster-det-caraousel"><a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" title="{$dataJstFinishedAuction[counter].poster_title}" id="tipsy_{$dataJstFinishedAuction[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataJstFinishedAuction[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</a></div>
+                <div class="poster-det-caraousel"><a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" title="{$dataJstFinishedAuction[counter].poster_title}" id="tipsy_{$dataJstFinishedAuction[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataJstFinishedAuction[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</a></div>
                 </div>
                 
                 </li>

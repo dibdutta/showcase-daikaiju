@@ -113,7 +113,7 @@ if(radList[i].checked) radList[i].checked = false;
 		});
 });
 	function chkPosterSize(id){
-		var url = "bid_popup.php";
+		var url = "bid_popup";
 		$.get(url, {mode : 'chkPosterSizeCount', id : id}, function(data){
 		var newData = data.split("-");
 				if( newData[0] ==1){
@@ -254,7 +254,7 @@ textarea
                                                     {/if}
                                                     {/section}
                                                 </select>
-												&nbsp;<a onclick="javascript:window.open('{$actualPath}/myselling.php?mode=faq','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" href="javascript:void(0)" class="FAQIcon" style="right:15px;"><img src="{$smarty.const.CLOUD_STATIC}faq_fixed.png"/></a>
+												&nbsp;<a onclick="javascript:window.open('{$actualPath}/myselling?mode=faq','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" href="javascript:void(0)" class="FAQIcon" style="right:15px;"><img src="{$smarty.const.CLOUD_STATIC}faq_fixed.png"/></a>
                                                 <div class="disp-err">{$condition_err}</div>
                                                 </div>
                                             </td>

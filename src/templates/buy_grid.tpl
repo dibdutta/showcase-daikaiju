@@ -36,24 +36,24 @@
             <div id="tabbed-inner-nav">
 				<div class="tabbed-inner-nav-left">
 					<ul class="menu">
-						{*<li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/buy.php"><span>See all Items</span></a></li>*}
-						<li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy.php?list=fixed"><span>Poster Shop</span></a></li>
+						{*<li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/buy"><span>See all Items</span></a></li>*}
+						<li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy?list=fixed"><span>Poster Shop</span></a></li>
 						{if $live_count<=1}
-                    	<li {if $smarty.request.list == 'weekly' && $smarty.request.track_is_expired != '1'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly"><span>{if $totalLiveWeekly > 0}{$auctionWeeksData[0].auction_week_title}{else}{$latestEndedAuction} Results{/if}</span></a></li>
-                    	{*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=monthly"><span>Event Auctions</span></a></li>*}
+                    	<li {if $smarty.request.list == 'weekly' && $smarty.request.track_is_expired != '1'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly"><span>{if $totalLiveWeekly > 0}{$auctionWeeksData[0].auction_week_title}{else}{$latestEndedAuction} Results{/if}</span></a></li>
+                    	{*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy?list=monthly"><span>Event Auctions</span></a></li>*}
                     	{if $upcomingTotal >0}
-                    		<li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy.php?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
+                    		<li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
 						{else}
-							<li {if $smarty.request.track_is_expired == '1'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly&track_is_expired=1"><span> {$latestEndedAuction} Results</span></a></li>
+							<li {if $smarty.request.track_is_expired == '1'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly&track_is_expired=1"><span> {$latestEndedAuction} Results</span></a></li>
 						{/if}
 						{elseif $live_count>1}
-							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[0].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly&auction_week_id={$auctionWeeksData[0].auction_week_id}"><span>{$auctionWeeksData[0].auction_week_title}</span></a></li>
-							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[1].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly&auction_week_id={$auctionWeeksData[1].auction_week_id}"><span>{$auctionWeeksData[1].auction_week_title}</span></a></li>	
+							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[0].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy?list=weekly&auction_week_id={$auctionWeeksData[0].auction_week_id}"><span>{$auctionWeeksData[0].auction_week_title}</span></a></li>
+							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[1].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy?list=weekly&auction_week_id={$auctionWeeksData[1].auction_week_id}"><span>{$auctionWeeksData[1].auction_week_title}</span></a></li>	
 						{/if}
 						{if $extendedAuction != ""}					    
-							<li {if $smarty.request.list == 'extended'} class="active" {/if}><a href="{$actualPath}/buy.php?list=extended&view_mode=grid"><span>Extended Auction {$extendedAuction}</span></a></li>
+							<li {if $smarty.request.list == 'extended'} class="active" {/if}><a href="{$actualPath}/buy?list=extended&view_mode=grid"><span>Extended Auction {$extendedAuction}</span></a></li>
 						{/if}
-					    <li {if $smarty.request.list == 'alternative'} class="active" {/if}><a href="{$actualPath}/buy.php?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
+					    <li {if $smarty.request.list == 'alternative'} class="active" {/if}><a href="{$actualPath}/buy?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
 					</ul>
                      
 				</div>	
@@ -90,13 +90,13 @@
                                     <div class="dis">View as {$total} :</div>
                                     <ul class="menu">
 									{if $smarty.request.keyword!='' && $smarty.request.mode=='key_search'}
-										<li class="list"><a href="buy.php?view_mode=list&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}&search_type={$smarty.request.search_type}&is_expired={$is_expired}&is_expired_stills={$is_expired_stills}&auction_week_id={$smarty.request.auction_week_id}"></a> </li>
+										<li class="list"><a href="buy?view_mode=list&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}&search_type={$smarty.request.search_type}&is_expired={$is_expired}&is_expired_stills={$is_expired_stills}&auction_week_id={$smarty.request.auction_week_id}"></a> </li>
 									{elseif $smarty.request.mode=='search' || $smarty.request.mode=='dorefinesrc'}
-										<li class="list"><a href="buy.php?view_mode=list&list={$smarty.request.list}&mode={$smarty.request.mode}&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}&is_expired={$is_expired}&auction_week_id={$smarty.request.auction_week_id}"></a></li>	
+										<li class="list"><a href="buy?view_mode=list&list={$smarty.request.list}&mode={$smarty.request.mode}&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}&is_expired={$is_expired}&auction_week_id={$smarty.request.auction_week_id}"></a></li>	
 									{elseif $smarty.request.mode=='key_search_global'}
-										<li class="list"><a href="buy.php?view_mode=list&list={$smarty.request.list}&mode={$smarty.request.mode}&is_expired=0&auction_week_id=&is_expired_stills=&keyword={$smarty.request.keyword|urlencode}"></a></li>	
+										<li class="list"><a href="buy?view_mode=list&list={$smarty.request.list}&mode={$smarty.request.mode}&is_expired=0&auction_week_id=&is_expired_stills=&keyword={$smarty.request.keyword|urlencode}"></a></li>	
 									{else}
-                                        <li class="list"><a href="buy.php?view_mode=list&list={$smarty.request.list}&auction_week_id={$smarty.request.auction_week_id}"></a> </li>
+                                        <li class="list"><a href="buy?view_mode=list&list={$smarty.request.list}&auction_week_id={$smarty.request.auction_week_id}"></a> </li>
 									{/if}	
                                         |
                                         <li class="grida"><span class="active"></span></li>
@@ -184,34 +184,34 @@
                                                      <div class="buygridtb" style="padding:2px; text-align:center; height:170px;">
                                        					<div style="padding:2px; margin-bottom:2px;">
 														{if $auctionItems[counter].fk_auction_type_id=='1'}
-															<a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
+															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
 														{elseif $smarty.request.list=='extended'}
-															<a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&extended=true"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
+															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&extended=true"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
 														{else}
-															<a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
+															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
 														{/if}
                                                         
                                                         </div>
                                                       </div>
                                                         {if ($smarty.request.list=='alternative' || $smarty.request.list=='') && $auctionItems[counter].fk_auction_type_id == 6}
-                                                        <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
-														 <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].artist}</a></h3></div>	
-														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_size}</a></h3></div>
+                                                        <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
+														 <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].artist}</a></h3></div>	
+														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_size}</a></h3></div>
 														{if $auctionItems[counter].field_1 <> ''}
-														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].field_1}</a></h3></div>
+														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].field_1}</a></h3></div>
 														{/if}
 														{if $auctionItems[counter].field_2 <> ''}
-														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].field_2}</a></h3></div>
+														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].field_2}</a></h3></div>
 														{/if}
 														{if $auctionItems[counter].field_3 <> ''}
-														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].field_3}</a></h3></div>
+														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].field_3}</a></h3></div>
 														{/if}
 														{elseif $smarty.request.list=='fixed'}
-															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
+															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
 														{elseif $smarty.request.list=='extended'}
-															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&extended=true" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
+															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&extended=true" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
 														{else}
-															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
+															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
 														{/if}	
                                                          {if $is_expired=='0' && $is_expired_stills !='1' && $smarty.request.list!='alternative' &&  $smarty.request.list!=''}
 														   {if $auctionItems[counter].fk_auction_type_id <> '1'}
@@ -365,11 +365,11 @@
                                     <div class="dis">View as :</div>
                                     <ul class="menu">
 									{if $smarty.request.keyword!=''}
-										<li class="list"><a href="buy.php?view_mode=list&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}&search_type={$smarty.request.search_type}&is_expired={$is_expired}&auction_week_id={$smarty.request.auction_week_id}"></a> </li>
+										<li class="list"><a href="buy?view_mode=list&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}&search_type={$smarty.request.search_type}&is_expired={$is_expired}&auction_week_id={$smarty.request.auction_week_id}"></a> </li>
 									{elseif $smarty.request.mode=='search' || $smarty.request.mode=='dorefinesrc'}
-										<li class="list"><a href="buy.php?view_mode=list&list={$smarty.request.list}&mode={$smarty.request.mode}&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}&is_expired={$is_expired}&auction_week_id={$smarty.request.auction_week_id}"></a></li>	
+										<li class="list"><a href="buy?view_mode=list&list={$smarty.request.list}&mode={$smarty.request.mode}&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}&is_expired={$is_expired}&auction_week_id={$smarty.request.auction_week_id}"></a></li>	
 									{else}
-                                        <li class="list"><a href="buy.php?view_mode=list&list={$smarty.request.list}&auction_week_id={$smarty.request.auction_week_id}"></a> </li>
+                                        <li class="list"><a href="buy?view_mode=list&list={$smarty.request.list}&auction_week_id={$smarty.request.auction_week_id}"></a> </li>
 									{/if}	
                                         |
                                         <li class="grida"><span class="active"></span></li>
@@ -540,14 +540,14 @@ function toggleDiv(id,flagit,type,track) {
 		var is_expired = $('#is_expired').val();
 		var is_expired_stills = $('#is_expired_stills').val();
 		var auction_week_id = $('#auction_week_id').val();
-		window.location.href="buy.php?list="+list+"&mode=key_search&is_expired="+is_expired+"&is_expired_stills="+is_expired_stills+"&auction_week_id="+auction_week_id+"&keyword="+encodeURIComponent(search_text);
+		window.location.href="buy?list="+list+"&mode=key_search&is_expired="+is_expired+"&is_expired_stills="+is_expired_stills+"&auction_week_id="+auction_week_id+"&keyword="+encodeURIComponent(search_text);
 	}
 	function key_search_buy(list){
 		var search_text= $('#search_buy_items').val();
 		var is_expired = $('#is_expired').val();
 		var is_expired_stills = $('#is_expired_stills').val();
 		var auction_week_id = $('#auction_week_id').val();
-		window.location.href="buy.php?list="+list+"&mode=key_search&is_expired="+is_expired+"&is_expired_stills="+is_expired_stills+"&auction_week_id="+auction_week_id+"&keyword="+encodeURIComponent(search_text);
+		window.location.href="buy?list="+list+"&mode=key_search&is_expired="+is_expired+"&is_expired_stills="+is_expired_stills+"&auction_week_id="+auction_week_id+"&keyword="+encodeURIComponent(search_text);
 		return false;
 	}
 	function key_search_buy_clear(){

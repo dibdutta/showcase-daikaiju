@@ -10,7 +10,7 @@ $(document).ready(function(){
 
 function redirect_poster_details(auction_id)
 {
-	window.location="buy.php?mode=poster_details&auction_id="+auction_id;
+	window.location="buy?mode=poster_details&auction_id="+auction_id;
 }
 function lightbox_images_poster(){
     $(function() {
@@ -91,7 +91,7 @@ function toggleDiv(id,flagit,type,track) {
 				<div id="tabbed-inner-nav">
                	    <div class="tabbed-inner-nav-left">
 					<ul class="menu">
-						<li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/my_want_list.php"><span>My Want List </span></a></li>
+						<li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/my_want_list"><span>My Want List </span></a></li>
 					</ul>
                     
                     </div>
@@ -122,7 +122,7 @@ function toggleDiv(id,flagit,type,track) {
 							<td valign="top" class="pr10">
                   <!--3rd td-->  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 								    <tr>
-        							<td class="pb20"><h1><a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$mywantlist_array[counter].auction_id}" style="cursor:pointer;" ><strong>{$mywantlist_array[counter].poster_title}&nbsp;</strong></a> </h1></td>
+        							<td class="pb20"><h1><a href="{$actualPath}/buy?mode=poster_details&auction_id={$mywantlist_array[counter].auction_id}" style="cursor:pointer;" ><strong>{$mywantlist_array[counter].poster_title}&nbsp;</strong></a> </h1></td>
       							  </tr>
 								    <tr>
 									<td class="buylisttbtopbg"></td>

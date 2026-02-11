@@ -65,7 +65,7 @@ if($ack != 'SUCCESS' && $ack != 'SUCCESSWITHWARNING'){
 	//header("Location: $location");
 	$_SESSION['Err'] = "Payment failed. Please try again!"."<br/>"." Paypal Error Code:". $resArray['L_ERRORCODE0']."&nbsp;".$resArray['L_LONGMESSAGE0'];
 	
-	header("location:".SITE_URL."my_invoice.php?mode=do_express_checkout&invoice_id=".$_SESSION['invoice_id']);
+	header("location:".SITE_URL."my_invoice?mode=do_express_checkout&invoice_id=".$_SESSION['invoice_id']);
 	exit;
 }else{
 		$invoiceObj = new Invoice();
@@ -134,7 +134,7 @@ if($ack != 'SUCCESS' && $ack != 'SUCCESSWITHWARNING'){
 		unset($_SESSION['invoice_'.$_SESSION['invoice_id']]);
 		unset($_SESSION['invoice_id']);
 		$_SESSION['Err']="Payment is done successfully.";
-		header("location: ".SITE_URL."my_invoice.php");
+		header("location: ".SITE_URL."my_invoice");
 		exit;
 }
 ?>

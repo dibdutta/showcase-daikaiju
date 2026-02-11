@@ -79,8 +79,8 @@
                  <div id="tabbed-inner-nav">
                  <div class="tabbed-inner-nav-left">
                     <ul class="menu">
-                        <li class="active"><a href="{$actualPath}/my_report.php"><span>My Report </span></a></li>
-                        {*<li ><a href="{$actualPath}/my_report.php?mode=payment_from_mpe"><span>Payments from MPE</span></a></li>*}
+                        <li class="active"><a href="{$actualPath}/my_report"><span>My Report </span></a></li>
+                        {*<li ><a href="{$actualPath}/my_report?mode=payment_from_mpe"><span>Payments from MPE</span></a></li>*}
                     </ul>
                      
                     </div>
@@ -155,15 +155,15 @@
 									
 									<tr >
 										<td width="150"  >Total sold:</td >
-									  <td><div style="float:left; padding-right: 10px;">&nbsp;{$total_sold}&nbsp;{if $total_sold > 0}&nbsp;(${$total_amount_sold_by_mpe})</div><div style="float:left; padding-top: 0px;"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/icon_view.png" class="iconViewAlign" width="16" height="15" border="0" title="View & Print" style="cursor: pointer;" onclick="javascript:window.open('{$actualPath}/my_report.php?mode=print&search=sold&start_date={$start_date}&end_date={$end_date}&auction_type={$auction_type}&auction_week={$smarty.request.auction_week}','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" />{/if}</div></td>
+									  <td><div style="float:left; padding-right: 10px;">&nbsp;{$total_sold}&nbsp;{if $total_sold > 0}&nbsp;(${$total_amount_sold_by_mpe})</div><div style="float:left; padding-top: 0px;"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/icon_view.png" class="iconViewAlign" width="16" height="15" border="0" title="View & Print" style="cursor: pointer;" onclick="javascript:window.open('{$actualPath}/my_report?mode=print&search=sold&start_date={$start_date}&end_date={$end_date}&auction_type={$auction_type}&auction_week={$smarty.request.auction_week}','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" />{/if}</div></td>
 									</tr>
 									<tr >
 										<td >Total Paid by Buyer:</td >
-										<td><div style="float:left; padding-right: 10px;">&nbsp;{$total_paid_by_buyer}&nbsp;{if $total_paid_by_buyer > 0}&nbsp;(${$total_amount_paid_by_buyer})</div><div style="float:left; padding-top: 0px;"> <img src="https://d2m46dmzqzklm5.cloudfront.net/images/icon_view.png" class="iconViewAlign" width="16" height="15" border="0" style="cursor: pointer;" title="View & Print" onclick="javascript:window.open('{$actualPath}/my_report.php?mode=print&search=paid_by_buyer&start_date={$start_date}&end_date={$end_date}&auction_type={$auction_type}&auction_week={$smarty.request.auction_week}','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" />{/if}</div></td>
+										<td><div style="float:left; padding-right: 10px;">&nbsp;{$total_paid_by_buyer}&nbsp;{if $total_paid_by_buyer > 0}&nbsp;(${$total_amount_paid_by_buyer})</div><div style="float:left; padding-top: 0px;"> <img src="https://d2m46dmzqzklm5.cloudfront.net/images/icon_view.png" class="iconViewAlign" width="16" height="15" border="0" style="cursor: pointer;" title="View & Print" onclick="javascript:window.open('{$actualPath}/my_report?mode=print&search=paid_by_buyer&start_date={$start_date}&end_date={$end_date}&auction_type={$auction_type}&auction_week={$smarty.request.auction_week}','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" />{/if}</div></td>
 									</tr>
 									<tr >
 										<td  >Total Unpaid by Buyer:</td >
-										<td><div style="float:left; padding-right: 10px;">&nbsp;{$total_unpaid}&nbsp;{if $total_unpaid > 0}&nbsp;(${$total_amount_unpaid_by_buyer})</div><div style="float:left; padding-top: 0px;"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/icon_view.png" width="16" height="15" border="0" style="cursor: pointer;" title="View & Print" onclick="javascript:window.open('{$actualPath}/my_report.php?mode=print&search=unpaid&start_date={$start_date}&end_date={$end_date}&auction_type={$auction_type}&auction_week={$smarty.request.auction_week}','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" />{/if}</div></td>
+										<td><div style="float:left; padding-right: 10px;">&nbsp;{$total_unpaid}&nbsp;{if $total_unpaid > 0}&nbsp;(${$total_amount_unpaid_by_buyer})</div><div style="float:left; padding-top: 0px;"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/icon_view.png" width="16" height="15" border="0" style="cursor: pointer;" title="View & Print" onclick="javascript:window.open('{$actualPath}/my_report?mode=print&search=unpaid&start_date={$start_date}&end_date={$end_date}&auction_type={$auction_type}&auction_week={$smarty.request.auction_week}','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" />{/if}</div></td>
 									</tr>
                                     <!--<tr>
                                         <td width="33%"><strong>Poster Title</strong></td>
@@ -185,7 +185,7 @@
                                     {/section}
                                     <!--<tr>
 										<td align="center" colspan="3">                                        
-											<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_report.php?mode=print&start_date={$start_date}&end_date={$end_date}&auction_type={$auction_type}&auction_week={$smarty.request.auction_week}"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.jpg" onclick="fancy_images({$smarty.section.counter.index})"></a>                                     
+											<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_report?mode=print&start_date={$start_date}&end_date={$end_date}&auction_type={$auction_type}&auction_week={$smarty.request.auction_week}"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.jpg" onclick="fancy_images({$smarty.section.counter.index})"></a>                                     
 										</td>
                                     </tr>-->
 									{else}

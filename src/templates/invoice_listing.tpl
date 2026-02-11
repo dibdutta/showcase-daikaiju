@@ -34,9 +34,9 @@
                  <div id="tabbed-inner-nav">
                  	<div class="tabbed-inner-nav-left">
                     <ul class="menu">
-                        <li ><a href="{$actualPathJSCSS}/my_invoice.php"><span>My Invoice(Buyer)</span></a></li>
-						<li ><a href="{$actualPathJSCSS}/my_invoice.php?mode=archive_invoice"><span>My Archived Invoices(Buyer)</span></a></li>
-                        <li class="active"><a href="{$actualPathJSCSS}/my_invoice.php?mode=buyer"><span>Reconciliation(Seller)</span></a></li>
+                        <li ><a href="{$actualPathJSCSS}/my_invoice"><span>My Invoice(Buyer)</span></a></li>
+						<li ><a href="{$actualPathJSCSS}/my_invoice?mode=archive_invoice"><span>My Archived Invoices(Buyer)</span></a></li>
+                        <li class="active"><a href="{$actualPathJSCSS}/my_invoice?mode=buyer"><span>Reconciliation(Seller)</span></a></li>
                     </ul>
                   	
 					</div>	
@@ -83,7 +83,7 @@
                                                          {/if}</td>
                                             <td class="tar">${$invoiceData[counter].total_amount}</td>
                                             <td class="tac">{if $invoiceData[counter].is_paid=='0'}
-                                                Approved{else}Paid{/if} &nbsp;<a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice.php?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img src="../images/print.png" alt="Print" width="15" height="15" title="Print" onclick="fancy_images({$smarty.section.counter.index})"></a>
+                                                Approved{else}Paid{/if} &nbsp;<a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img src="../images/print.png" alt="Print" width="15" height="15" title="Print" onclick="fancy_images({$smarty.section.counter.index})"></a>
                                             </td>
                                         </tr>
                                     {/section}

@@ -18,9 +18,9 @@
 			 <div id="tabbed-inner-nav">
              <div class="tabbed-inner-nav-left">
              	<ul class="menu">
-                	<li class="active"><a href="{$actualPath}/send_message.php"><span>Inbox</span></a></li>
-                    <li><a href="{$actualPath}/send_message.php?mode=sent_messages"><span>Sent Items</span></a></li>
-                    <li><a href="{$actualPath}/send_message.php?mode=compose&encoded_string={$encoded_string}"><span>Compose</span></a></li>
+                	<li class="active"><a href="{$actualPath}/send_message"><span>Inbox</span></a></li>
+                    <li><a href="{$actualPath}/send_message?mode=sent_messages"><span>Sent Items</span></a></li>
+                    <li><a href="{$actualPath}/send_message?mode=compose&encoded_string={$encoded_string}"><span>Compose</span></a></li>
                 </ul>
                 <div class="tabbed-inner-nav-right"></div>
                 </div>
@@ -61,7 +61,7 @@
                                 <tr>
                                 	<td><input type="checkbox" name="message_ids[]" value="{$messageRows[counter].message_id}" class="checkBox" /></td>
                                     <td align="left">&nbsp;{$messageRows[counter].message_from_username}</td>
-                                    <td {if $messageRows[counter].message_is_new == '1'}style="font-weight:bolder;"{/if}><span><a href="{$actualPath}/send_message.php?mode=read&message_id={$messageRows[counter].message_id}&encoded_string={$encoded_string}">{$messageRows[counter].message_subject}</a></span>
+                                    <td {if $messageRows[counter].message_is_new == '1'}style="font-weight:bolder;"{/if}><span><a href="{$actualPath}/send_message?mode=read&message_id={$messageRows[counter].message_id}&encoded_string={$encoded_string}">{$messageRows[counter].message_subject}</a></span>
                                     </td>
                                     <td>
                                     	{$messageRows[counter].send_date}
@@ -69,7 +69,7 @@
                                     <td>
                                     	
                                 
-                                <a href="#" class="view_link" onclick="javascript: deleteConfirmRecord('{$actualPath}/send_message.php?mode=delete_message&message_id={$messageRows[counter].message_id}&encoded_string={$encoded_string}', 'Message'); return false;"><img src="{$smarty.const.CLOUD_STATIC}delete-icon.png" width="23" height="23" border="0" alt="delete" title="delete" /></a>
+                                <a href="#" class="view_link" onclick="javascript: deleteConfirmRecord('{$actualPath}/send_message?mode=delete_message&message_id={$messageRows[counter].message_id}&encoded_string={$encoded_string}', 'Message'); return false;"><img src="{$smarty.const.CLOUD_STATIC}delete-icon.png" width="23" height="23" border="0" alt="delete" title="delete" /></a>
                                     </td>
                                 </tr>
                                 {/section}

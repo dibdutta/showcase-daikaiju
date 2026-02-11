@@ -40,8 +40,8 @@
 <div id="tabbed-inner-nav">
     <div class="tabbed-inner-nav-left">
         <ul class="menu">
-            <li {if $smarty.request.mode == 'incoming_counters'}class="active"{/if}><a href="{$actualPath}/offers.php?mode=incoming_counters"><span>Recent Incoming Counters</span></a></li>
-            <li {if $smarty.request.mode == 'archived_outgoing_offers'} class="active"{/if}><a href="{$actualPath}/offers.php?mode=archived_outgoing_offers"><span>Archived Incoming Counters</span></a></li>
+            <li {if $smarty.request.mode == 'incoming_counters'}class="active"{/if}><a href="{$actualPath}/offers?mode=incoming_counters"><span>Recent Incoming Counters</span></a></li>
+            <li {if $smarty.request.mode == 'archived_outgoing_offers'} class="active"{/if}><a href="{$actualPath}/offers?mode=archived_outgoing_offers"><span>Archived Incoming Counters</span></a></li>
 
         </ul>
         

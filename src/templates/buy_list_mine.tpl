@@ -61,13 +61,13 @@ function toggleDiv(id,flagit,type,track) {
 			var search_text= $('#search_buy_items').val();
 			var is_expired = $('#is_expired').val();
 
-			window.location.href="buy.php?list="+list+"&mode=key_search&is_expired="+is_expired+"&keyword="+encodeURIComponent(search_text);
+			window.location.href="buy?list="+list+"&mode=key_search&is_expired="+is_expired+"&keyword="+encodeURIComponent(search_text);
 		}
 		function key_search_buy(list){
 		
 			var search_text= $('#search_buy_items').val();
 			var is_expired = $('#is_expired').val();
-			window.location.href="buy.php?list="+list+"&mode=key_search&is_expired="+is_expired+"&keyword="+encodeURIComponent(search_text);
+			window.location.href="buy?list="+list+"&mode=key_search&is_expired="+is_expired+"&keyword="+encodeURIComponent(search_text);
 		}
 		function key_search_buy_clear(){
 			$('#search_buy_items').unbind('keypress');
@@ -97,13 +97,13 @@ function toggleDiv(id,flagit,type,track) {
               <div id="tabbed-inner-nav">
                 <div class="tabbed-inner-nav-left">
                   <ul class="menu">
-                    <li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/buy.php"><span>See all Items</span></a></li>
-                    <li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy.php?list=fixed"><span>Fixed Price Items</span></a></li>
-                    <li {if $smarty.request.list == 'weekly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly"><span>{if $totalLiveWeekly > 0}Live Auction{else}Auction Results{/if}</span></a></li>
-                    {*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=monthly"><span>Event Auctions</span></a></li>*}
-                    <li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy.php?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
-                    <li {if $smarty.request.list == 'stills'} class="active"{/if}><a href="{$actualPath}/buy.php?list=stills"><span>Still/Photos Section</span></a></li>
-					{*<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy.php?list=stills"><span>Still/Photos Section</span></a></li>*}
+                    <li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/buy"><span>See all Items</span></a></li>
+                    <li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy?list=fixed"><span>Fixed Price Items</span></a></li>
+                    <li {if $smarty.request.list == 'weekly'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly"><span>{if $totalLiveWeekly > 0}Live Auction{else}Auction Results{/if}</span></a></li>
+                    {*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy?list=monthly"><span>Event Auctions</span></a></li>*}
+                    <li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
+                    <li {if $smarty.request.list == 'stills'} class="active"{/if}><a href="{$actualPath}/buy?list=stills"><span>Still/Photos Section</span></a></li>
+					{*<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy?list=stills"><span>Still/Photos Section</span></a></li>*}
 				  </ul>
                   
                 </div>
@@ -131,11 +131,11 @@ function toggleDiv(id,flagit,type,track) {
                               <li class="lista"><span class="active"></span></li>
                               |
                               {if $smarty.request.keyword!=''}
-                              <li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}&search_type={$smarty.request.search_type}&is_expired={$is_expired}"></a></li>
+                              <li class="grid"><a href="buy?view_mode=grid&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}&search_type={$smarty.request.search_type}&is_expired={$is_expired}"></a></li>
                               {elseif $smarty.request.mode=='search' || $smarty.request.mode=='dorefinesrc'}
-                              <li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode={$smarty.request.mode}&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}&is_expired={$is_expired}"></a></li>
+                              <li class="grid"><a href="buy?view_mode=grid&list={$smarty.request.list}&mode={$smarty.request.mode}&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}&is_expired={$is_expired}"></a></li>
                               {else}
-                              <li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}"></a></li>
+                              <li class="grid"><a href="buy?view_mode=grid&list={$smarty.request.list}"></a></li>
                               {/if}
                             </ul>
                           </div>
@@ -218,7 +218,7 @@ function toggleDiv(id,flagit,type,track) {
                                  <td valign="top" class="pr10">
                   <!--3rd td-->  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 								    <tr>
-        							<td class="pb20"><h1><a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" ><strong>{$auctionItems[counter].poster_title}&nbsp;</strong></a> </h1></td>
+        							<td class="pb20"><h1><a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" ><strong>{$auctionItems[counter].poster_title}&nbsp;</strong></a> </h1></td>
       							  </tr>
 								    <tr>
 									<td class="buylisttbtopbg"></td>
@@ -403,11 +403,11 @@ function toggleDiv(id,flagit,type,track) {
                               <li class="lista"><span class="active"></span></li>
                               |
                               {if $smarty.request.keyword!=''}
-                              <li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}&search_type={$smarty.request.search_type}&is_expired={$is_expired}"></a></li>
+                              <li class="grid"><a href="buy?view_mode=grid&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}&search_type={$smarty.request.search_type}&is_expired={$is_expired}"></a></li>
                               {elseif $smarty.request.mode=='search' || $smarty.request.mode=='dorefinesrc'}
-                              <li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode={$smarty.request.mode}&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}&is_expired={$is_expired}"></a></li>
+                              <li class="grid"><a href="buy?view_mode=grid&list={$smarty.request.list}&mode={$smarty.request.mode}&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}&is_expired={$is_expired}"></a></li>
                               {else}
-                              <li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}"></a></li>
+                              <li class="grid"><a href="buy?view_mode=grid&list={$smarty.request.list}"></a></li>
                               {/if}
                             </ul>
                           </div>

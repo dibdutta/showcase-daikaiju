@@ -188,9 +188,9 @@
                                 <label>&nbsp;</label>
                                 {if $smarty.request.mode == 'order'}
                                 {if $chk_item_type=='1' || $chk_item_type=='4'}
-								  <input type="button"   value="Continue to Checkout" onclick="$(location).attr('href','{$actualPath}/my_invoice.php?mode=shippinginfo&invoice_id={$invoice_id}&invoice_key={$userArr}');" class="track-btn-big" />
+								  <input type="button"   value="Continue to Checkout" onclick="$(location).attr('href','{$actualPath}/my_invoice?mode=shippinginfo&invoice_id={$invoice_id}&invoice_key={$userArr}');" class="track-btn-big" />
 								  {else}
-								  <input type="button"   value="Continue to Checkout" onclick="$(location).attr('href','{$actualPath}/my_invoice.php?mode=shippinginfo&invoice_id={$invoice_id}');" class="track-btn-big" />
+								  <input type="button"   value="Continue to Checkout" onclick="$(location).attr('href','{$actualPath}/my_invoice?mode=shippinginfo&invoice_id={$invoice_id}');" class="track-btn-big" />
 								  {/if}
                                 {elseif $smarty.request.mode == 'finalorder'}
                                 <input type="submit" value="Pay Now" class="submit-btn" />

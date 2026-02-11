@@ -42,7 +42,7 @@ function insert_proxy(auction_id,user_id,seller_id,asked_price){
  
 	if(confirm("Please confirm your proxy bid of $"+$('#proxy_bid_'+auction_id).val()+".00")){
 	
-	$.post("proxy_bid.php", { mode:'insert_proxy' , auction_id: auction_id, user_id: user_id , proxy_bid:proxy_bid,curr_bid:curr_bid,next_increment:next_increment},
+	$.post("proxy_bid", { mode:'insert_proxy' , auction_id: auction_id, user_id: user_id , proxy_bid:proxy_bid,curr_bid:curr_bid,next_increment:next_increment},
 			   function(data) {
 			  $("#edit_proxy_amnt_"+auction_id).val(data);
 			  $('#proxy_btn_'+auction_id).hide();
@@ -85,7 +85,7 @@ function insert_proxy(auction_id,user_id,seller_id,asked_price){
 // 
 //	if(confirm("Please confirm your proxy bid of $"+$('#proxy_bid_'+auction_id).val()+".00")){
 //	
-//	$.post("proxy_bid.php", { mode:'insert_proxy' , auction_id: auction_id, user_id: user_id , proxy_bid:proxy_bid,curr_bid:curr_bid,next_increment:next_increment},
+//	$.post("proxy_bid", { mode:'insert_proxy' , auction_id: auction_id, user_id: user_id , proxy_bid:proxy_bid,curr_bid:curr_bid,next_increment:next_increment},
 //			   function(data) {
 //			  $("#edit_proxy_amnt_"+auction_id).val(data);
 //			  $('#proxy_btn_'+auction_id).hide();
@@ -137,7 +137,7 @@ function insert_proxy(auction_id,user_id,seller_id,asked_price){
 	          	 return;
 	    	}
 	 if(confirm("Please confirm your proxy bid of $"+$('#'+auction_id).val()+".00")){
-	 $.post("proxy_bid.php", { mode:'edit_proxy' , auction_id: auction_id,proxy_bid:proxy_bid,curr_bid:curr_bid,next_increment:next_increment},
+	 $.post("proxy_bid", { mode:'edit_proxy' , auction_id: auction_id,proxy_bid:proxy_bid,curr_bid:curr_bid,next_increment:next_increment},
 			   function(data) {
 			  $("#edit_proxy_amnt_"+auction_id).val(data);
 			  $('#'+auction_id).hide();
@@ -150,7 +150,7 @@ function insert_proxy(auction_id,user_id,seller_id,asked_price){
  }
 // function delete_proxy(auction_id){
 //	 if(confirm("Are you sure want to delete the proxy bid")){
-//	  $.post("proxy_bid.php", { mode:'delete_proxy' , auction_id: auction_id},
+//	  $.post("proxy_bid", { mode:'delete_proxy' , auction_id: auction_id},
 //	  function(data) {
 //	  $('#del_div_'+auction_id).remove();
 //	  });
@@ -158,7 +158,7 @@ function insert_proxy(auction_id,user_id,seller_id,asked_price){
 // }
 // function delete_proxy_offer(auction_id){
 //	 if(confirm("Are you sure want to delete the proxy bid")){
-//	  $.post("proxy_bid.php", { mode:'delete_proxy_offer' , auction_id: auction_id},
+//	  $.post("proxy_bid", { mode:'delete_proxy_offer' , auction_id: auction_id},
 //	  function(data) {
 //	  $('#del_div_'+auction_id).remove();
 //	  });
@@ -190,7 +190,7 @@ $(document).ready(function(){
         <div id="tabbed-inner-nav">
           <div class="tabbed-inner-nav-left">
             <ul class="menu">
-              <li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/proxy_bid.php"><span>Proxy Bids</span></a></li>
+              <li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/proxy_bid"><span>Proxy Bids</span></a></li>
             </ul>
             <div class="tabbed-inner-nav-right"></div>
           </div>

@@ -35,9 +35,9 @@
                                     <div class="bulkinner">
                                         <div class="for-options">
                                             <div class="activity">Activities:</div>
-                                            <input type="radio" name="fixed" value="1" onclick="$(location).attr('href','{$actualPath}/my_invoice.php?mode=do_direct_payment&invoice_id={$smarty.request.invoice_id}');" /><span>Using Credit Card</span>&nbsp;&nbsp;
-                                            <input type="radio" name="weekly" value="2" onclick="$(location).attr('href','{$actualPath}/my_invoice.php?mode=do_express_checkout&invoice_id={$smarty.request.invoice_id}');" /><span>Using Paypal Account</span>&nbsp;&nbsp;
-                                           {* <input type="radio" name="monthly" value="3" onclick="$(location).attr('href','{$actualPath}/my_invoice.php?mode=phone_order&invoice_id={$smarty.request.invoice_id}');" /><span>Phone Order</span> &nbsp;&nbsp;   *}          </div>
+                                            <input type="radio" name="fixed" value="1" onclick="$(location).attr('href','{$actualPath}/my_invoice?mode=do_direct_payment&invoice_id={$smarty.request.invoice_id}');" /><span>Using Credit Card</span>&nbsp;&nbsp;
+                                            <input type="radio" name="weekly" value="2" onclick="$(location).attr('href','{$actualPath}/my_invoice?mode=do_express_checkout&invoice_id={$smarty.request.invoice_id}');" /><span>Using Paypal Account</span>&nbsp;&nbsp;
+                                           {* <input type="radio" name="monthly" value="3" onclick="$(location).attr('href','{$actualPath}/my_invoice?mode=phone_order&invoice_id={$smarty.request.invoice_id}');" /><span>Phone Order</span> &nbsp;&nbsp;   *}          </div>
                                     </div>
                                 </div>
                             </div>

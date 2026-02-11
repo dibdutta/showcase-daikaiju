@@ -481,7 +481,7 @@ function updateShippingInfo()
 	//$_SESSION['shipping_info']['shipping_methods'] = 'Shipping Charges ('.strtoupper($_POST['shipping_methods']).')';
 	//$_SESSION['shipping_info']['shipping_charge'] = $_POST['shipping_charge'];
 	
-	header("location: my_invoice.php?mode=paymentoption&invoice_id=".$_REQUEST['invoice_id']);
+	header("location: my_invoice?mode=paymentoption&invoice_id=".$_REQUEST['invoice_id']);
 	exit;
 }
 
@@ -852,7 +852,7 @@ function pay_now()
 		$_SESSION['Err'] = "Payment failed. Please try again!"."<br/>"." Paypal Error Code:". $resArray['L_ERRORCODE0']."&nbsp;".$resArray['L_LONGMESSAGE0'];
 	}
 
-	header("location: my_invoice.php");
+	header("location: my_invoice");
 	exit;
 }
 
@@ -864,7 +864,7 @@ function cancel_payment()
 	unset($_SESSION['cc_info']);
 	
 	$_SESSION['Err'] = "Payment process is cancelled.";
-	header("location: my_invoice.php?mode=order&invoice_id=".$_REQUEST['invoice_id']);
+	header("location: my_invoice?mode=order&invoice_id=".$_REQUEST['invoice_id']);
 	exit;
 }
 function setExpressCheckout(){
@@ -1125,7 +1125,7 @@ function generate_buy_now_invoice(){
         //$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
         unset($_SESSION['cart']);
         //$_SESSION['Err']="NOTE: Once an invoice is generated, you may wait up to 72 hours to pay. This is to give you the ability to receive counter offers/offer acceptances and/or combine with other purchases within that time period.";
-        header("location: my_invoice.php");
+        header("location: my_invoice");
         exit;
 
     }else{
@@ -1283,7 +1283,7 @@ function order_now(){
 		$_SESSION['Err']="Order is done successfully.";
 	
 
-	header("location: my_invoice.php");
+	header("location: my_invoice");
 	exit;
 
 }

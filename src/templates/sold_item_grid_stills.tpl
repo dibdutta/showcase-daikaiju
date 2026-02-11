@@ -33,10 +33,10 @@ function show_text(){
             <div id="tabbed-inner-nav">
 				<div class="tabbed-inner-nav-left">
 					<ul class="menu">
-						<li ><a href="{$actualPath}/sold_item.php"><span>All</span></a></li>
-                        <li ><a href="{$actualPath}/sold_item.php?mode=fixed"><span>Fixed Price</span></a></li>
-                        <li ><a href="{$actualPath}/sold_item.php?mode=weekly"><span>Auction</span></a></li>
-						<li class="active" ><a href="{$actualPath}/sold_item.php?mode=stills" ><span>Stills/Photos</span></a></li>
+						<li ><a href="{$actualPath}/sold_item"><span>All</span></a></li>
+                        <li ><a href="{$actualPath}/sold_item?mode=fixed"><span>Fixed Price</span></a></li>
+                        <li ><a href="{$actualPath}/sold_item?mode=weekly"><span>Auction</span></a></li>
+						<li class="active" ><a href="{$actualPath}/sold_item?mode=stills" ><span>Stills/Photos</span></a></li>
 					</ul>
                     
 				</div>	
@@ -56,9 +56,9 @@ function show_text(){
                                     <div class="dis">View as :</div>
                                     <ul class="menu">
 									{if $smarty.request.mode=='search_sold_stills'}
-										<li class="list"><a href="sold_item.php?view_mode=list&mode=search_sold_stills&search_sold={$smarty.request.search_sold|urlencode}">&nbsp;</a> </li>
+										<li class="list"><a href="sold_item?view_mode=list&mode=search_sold_stills&search_sold={$smarty.request.search_sold|urlencode}">&nbsp;</a> </li>
 									{else}
-                                        <li class="list"><a href="sold_item.php?view_mode=list&mode=stills">&nbsp;</a> </li>
+                                        <li class="list"><a href="sold_item?view_mode=list&mode=stills">&nbsp;</a> </li>
 									{/if}	
                                         |
                                         <li class="grida"><span class="active">&nbsp;</span></li>
@@ -125,7 +125,7 @@ function show_text(){
                                                 <div id="gallery_{$smarty.section.counter.index}" class="image-hldr">
                                                      <div class="buygridtb">
                                        <div><img class="image-brdr" src="{$dataJstFinishedAuction[counter].image_path}" onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});" style="cursor:pointer;" /></div></div>
-                                       <div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" style="cursor:pointer;" >{$dataJstFinishedAuction[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</a> </h3></div>
+                                       <div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" style="cursor:pointer;" >{$dataJstFinishedAuction[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</a> </h3></div>
                                                 </div>                                            
                                                 
                                              </div>										
@@ -143,7 +143,7 @@ function show_text(){
                                                     <div class="buylist_cbid" style="width:230px; margin-right:0;">&nbsp;&nbsp;Sold Amount : <span class="SoldPrice">{if $dataJstFinishedAuction[counter].soldamnt > 0}${$dataJstFinishedAuction[counter].soldamnt|number_format:2}{else}0.00{/if}{*$dataJstFinishedAuction[counter].auction_id*}</span></div>
                                                     <!-- Make Offer section for fixed price sell items -->
 												{*else}
-													<div class="buylist_cbid" style="width:230px; margin-right:0;font-size:12px;">&nbsp;&nbsp;<a href="javascript:void(0)" onclick="showLogIn();">Sign In</a> or <a href="register.php">Register</a> to view details</div>	
+													<div class="buylist_cbid" style="width:230px; margin-right:0;font-size:12px;">&nbsp;&nbsp;<a href="javascript:void(0)" onclick="showLogIn();">Sign In</a> or <a href="register">Register</a> to view details</div>	
 												{/if*}
                                                 </div>
 											</div>

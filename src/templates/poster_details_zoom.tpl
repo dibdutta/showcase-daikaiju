@@ -37,7 +37,7 @@ function highlight()
 			document.getElementById('highlight').style.backgroundColor="#64FE2E";
 		}
 function toggleDiv(id,flagit,type,track) {
- 	 var url = "bid_popup.php";
+ 	 var url = "bid_popup";
 	 if(type==1 && track==1){
 	 	$.post(url, {mode : 'offer_popup', id : id}, function(data){
 			$('#'+id).html(data);
@@ -93,7 +93,7 @@ function toggleDiv(id,flagit,type,track) {
 	function open_new_window(){
 		index_id = $('#photo_index').val();
 		
-		window.open('{/literal}{$actualPath}{literal}/auction_images_large.php?mode=auction_images_large&id={/literal}{$auctionDetails[0].poster_id}{literal}&auction_id={/literal}{$auctionDetails[0].auction_id}{literal}&page_index='+index_id,'mywindow','menubar=1,resizable=1,width={/literal}{$width+100}{literal},height={/literal}{$height+100}{literal},scrollbars=yes')
+		window.open('{/literal}{$actualPath}{literal}/auction_images_large?mode=auction_images_large&id={/literal}{$auctionDetails[0].poster_id}{literal}&auction_id={/literal}{$auctionDetails[0].auction_id}{literal}&page_index='+index_id,'mywindow','menubar=1,resizable=1,width={/literal}{$width+100}{literal},height={/literal}{$height+100}{literal},scrollbars=yes')
 	}
 </script>
 <style type="text/css">.div {position:absolute;  min-width:120px; left:200px; top:50px; list-style-type:none; visibility:hidden;background-color:#881318;color:white; z-index:50;font-size:12px; padding:6px; outline:4px solid #881318; border: 1px solid #a3595c;}
@@ -123,24 +123,24 @@ function toggleDiv(id,flagit,type,track) {
 			 <div id="tabbed-inner-nav">
              	<div class="tabbed-inner-nav-left">
              	<ul class="menu" >
-                	{*<li><a class="active" href="{$actualPath}/buy.php"><span>See all Items</span></a></li>*}
-                    <li><a href="{$actualPath}/buy.php?list=fixed"><span>Fixed Price</span></a></li>
+                	{*<li><a class="active" href="{$actualPath}/buy"><span>See all Items</span></a></li>*}
+                    <li><a href="{$actualPath}/buy?list=fixed"><span>Fixed Price</span></a></li>
 					{if $live_count<=1}
-                    	<li {if $smarty.request.list == 'weekly' && $smarty.request.track_is_expired != '1'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly"><span>{if $totalLiveWeekly > 0}{$auctionWeeksData[0].auction_week_title}{else}Auction Results{/if}</span></a></li>
-                    	{*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=monthly"><span>Event Auctions</span></a></li>*}
+                    	<li {if $smarty.request.list == 'weekly' && $smarty.request.track_is_expired != '1'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly"><span>{if $totalLiveWeekly > 0}{$auctionWeeksData[0].auction_week_title}{else}Auction Results{/if}</span></a></li>
+                    	{*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy?list=monthly"><span>Event Auctions</span></a></li>*}
                     	{if $upcomingTotal >0}
-                    		<li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy.php?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
+                    		<li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
 						{else}
-							<li {if $smarty.request.track_is_expired == '1'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly&track_is_expired=1"><span> Auction Results</span></a></li>
+							<li {if $smarty.request.track_is_expired == '1'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly&track_is_expired=1"><span> Auction Results</span></a></li>
 						{/if}
 						{elseif $live_count>1}
-							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[0].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly&auction_week_id={$auctionWeeksData[0].auction_week_id}"><span>{$auctionWeeksData[0].auction_week_title}</span></a></li>
-							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[1].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly&auction_week_id={$auctionWeeksData[1].auction_week_id}"><span>{$auctionWeeksData[1].auction_week_title}</span></a></li>	
+							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[0].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy?list=weekly&auction_week_id={$auctionWeeksData[0].auction_week_id}"><span>{$auctionWeeksData[0].auction_week_title}</span></a></li>
+							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[1].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy?list=weekly&auction_week_id={$auctionWeeksData[1].auction_week_id}"><span>{$auctionWeeksData[1].auction_week_title}</span></a></li>	
 						{/if}
 						
                     
-					<li {if $smarty.request.list == 'alternative'} class="active" {/if}><a href="{$actualPath}/buy.php?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
-					{*<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy.php?list=stills"><span>Fixed Stills</span></a></li>*}
+					<li {if $smarty.request.list == 'alternative'} class="active" {/if}><a href="{$actualPath}/buy?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
+					{*<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy?list=stills"><span>Fixed Stills</span></a></li>*}
                 </ul>
                 
                 

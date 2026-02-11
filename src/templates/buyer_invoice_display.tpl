@@ -51,8 +51,8 @@
 			 <div id="tabbed-inner-nav">
              <div class="tabbed-inner-nav-left">
              	<ul class="menu">
-                	<li class="active"><a href="{$actualPath}/my_invoice.php"><span>My Invoice(Seller)</span></a></li>
-                	<li class="active"><a href="{$actualPath}/my_invoice.php?mode=buyer_view"><span>My Invoice(Buyer)</span></a></li>
+                	<li class="active"><a href="{$actualPath}/my_invoice"><span>My Invoice(Seller)</span></a></li>
+                	<li class="active"><a href="{$actualPath}/my_invoice?mode=buyer_view"><span>My Invoice(Buyer)</span></a></li>
                 </ul>
 				<div class="tabbed-inner-nav-right"></div>
 				</div>	
@@ -87,7 +87,7 @@
                                 <td align="left">{$invoiceData[counter].poster_details}</td>
                                 <td>{$invoiceData[counter].post_date|date_format:"%m/%d/%Y"}</td>
                                 <td>${$invoiceData[counter].total_amount}</td>
-                                <td><a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice.php?mode=buyer_print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="{$actualPath}/images/print.jpg" onclick="fancy_images({$smarty.section.counter.index})"></a></td>
+                                <td><a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=buyer_print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="{$actualPath}/images/print.jpg" onclick="fancy_images({$smarty.section.counter.index})"></a></td>
                                 </tr>
                                 {/section}
                             </table>

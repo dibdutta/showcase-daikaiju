@@ -51,11 +51,11 @@ function fancy_images(i){
                 <div id="tabbed-inner-nav">
                 <div class="tabbed-inner-nav-left">
                     <ul class="menu">
-                        <li {if $smarty.request.mode == 'selling'}class="active"{/if}><a href="{$actualPath}/myselling.php?mode=selling"><span>Selling</span></a></li>
-                        <li {if $smarty.request.mode == 'pending'}class="active"{/if}><a href="{$actualPath}/myselling.php?mode=pending"><span>Pending</span></a></li>
-                        <li {if $smarty.request.mode == 'sold'}class="active"{/if}><a href="{$actualPath}/myselling.php?mode=sold"><span>Sold</span></a></li>
-                        <li {if $smarty.request.mode == 'unsold'}class="active"{/if}><a href="{$actualPath}/myselling.php?mode=unsold"><span>Unsold/Closed</span></a></li>
-                        <li {if $smarty.request.mode == 'upcoming'}class="active"{/if}><a href="{$actualPath}/myselling.php?mode=upcoming"><span>Up Coming</span></a></li>
+                        <li {if $smarty.request.mode == 'selling'}class="active"{/if}><a href="{$actualPath}/myselling?mode=selling"><span>Selling</span></a></li>
+                        <li {if $smarty.request.mode == 'pending'}class="active"{/if}><a href="{$actualPath}/myselling?mode=pending"><span>Pending</span></a></li>
+                        <li {if $smarty.request.mode == 'sold'}class="active"{/if}><a href="{$actualPath}/myselling?mode=sold"><span>Sold</span></a></li>
+                        <li {if $smarty.request.mode == 'unsold'}class="active"{/if}><a href="{$actualPath}/myselling?mode=unsold"><span>Unsold/Closed</span></a></li>
+                        <li {if $smarty.request.mode == 'upcoming'}class="active"{/if}><a href="{$actualPath}/myselling?mode=upcoming"><span>Up Coming</span></a></li>
                     </ul>
                     <div class="tabbed-inner-nav-right"></div>
 				</div>
@@ -107,15 +107,15 @@ function fancy_images(i){
                                     <td class="list-poster-box" valign="top">
                                         <div class="poster-area-list">
                                             {if $auction[counter].fk_auction_type_id == 1}
-                                                <div class="left"><a href="{$actualPath}/edit_myauction.php?auction_id={$auction[counter].auction_id}&type=fixed&encoded_string={$encoded_string}"><img src="images/edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
+                                                <div class="left"><a href="{$actualPath}/edit_myauction?auction_id={$auction[counter].auction_id}&type=fixed&encoded_string={$encoded_string}"><img src="images/edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
                                             {elseif $auction[counter].fk_auction_type_id == 2 && $auction[counter].auction_is_approved==0}
-                                                <div class="left"><a href="{$actualPath}/edit_myauction.php?auction_id={$auction[counter].auction_id}&type=weekly&encoded_string={$encoded_string}"><img src="images/edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
+                                                <div class="left"><a href="{$actualPath}/edit_myauction?auction_id={$auction[counter].auction_id}&type=weekly&encoded_string={$encoded_string}"><img src="images/edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
                                             {elseif $auction[counter].fk_auction_type_id == 3 && $auction[counter].auction_is_approved==0}
-                                                <div class="left"><a href="{$actualPath}/edit_myauction.php?auction_id={$auction[counter].auction_id}&type=monthly&encoded_string={$encoded_string}"><img src="images/edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
+                                                <div class="left"><a href="{$actualPath}/edit_myauction?auction_id={$auction[counter].auction_id}&type=monthly&encoded_string={$encoded_string}"><img src="images/edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
                                             {/if}
                                             &nbsp;
 											{if ($auction[counter].fk_auction_type_id != 3 || $auction[counter].auction_is_approved==0)}
-                                              <img src="images/delete_image.png" alt="Delete" title="Delete" height="16px" width="16px" border="0" onclick="javascript: deleteConfirmRecord('{$actualPath}/edit_myauction.php?mode=delete_auction&auction_id={$auction[counter].auction_id}&status={$smarty.request.mode}&encoded_string={$encoded_string}&toshow={$toshow}&offset={$offset}', 'auction');" style="cursor: pointer;" />
+                                              <img src="images/delete_image.png" alt="Delete" title="Delete" height="16px" width="16px" border="0" onclick="javascript: deleteConfirmRecord('{$actualPath}/edit_myauction?mode=delete_auction&auction_id={$auction[counter].auction_id}&status={$smarty.request.mode}&encoded_string={$encoded_string}&toshow={$toshow}&offset={$offset}', 'auction');" style="cursor: pointer;" />
 											 {/if} 
                                             &nbsp;
                                           
@@ -126,13 +126,13 @@ function fancy_images(i){
                                         <div id="gallery_{$smarty.section.counter.index}" class="image-hldr">
                                         <div class="shadowbottom">
                                        <div class="shadow-bringer shadow">
-                                            <img  class="image-brdr" src="{$actualPath}/poster_photo/thumbnail/{$auction[counter].poster_thumb}"  border="0" style="cursor:pointer;"   onclick="javascript:window.open('{$actualPath}/auction_images_large.php?mode=auction_images_large&id={$auction[counter].poster_id}','mywindow','menubar=1,resizable=1,width={$auction[counter].img_width+100},height={$auction[counter].img_height+100},scrollbars=yes')" />
+                                            <img  class="image-brdr" src="{$actualPath}/poster_photo/thumbnail/{$auction[counter].poster_thumb}"  border="0" style="cursor:pointer;"   onclick="javascript:window.open('{$actualPath}/auction_images_large?mode=auction_images_large&id={$auction[counter].poster_id}','mywindow','menubar=1,resizable=1,width={$auction[counter].img_width+100},height={$auction[counter].img_height+100},scrollbars=yes')" />
                                            </div></div>
                                             <!---Move To Weekly Button---->
                                             <div class="Buttondesign MoveToWeekly">
         		            				<div class="ButtondesignLeft"></div>
                								 <div class="ButtondesignMiddle">
-												 <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/myselling.php?mode=move_to_weekly&id={$auction[counter].auction_id}"><input type="button" id="{$smarty.section.counter.index}" onclick="fancy_images(this.id)" class="bidnow-btn" value="Move to weekly" /></a>
+												 <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/myselling?mode=move_to_weekly&id={$auction[counter].auction_id}"><input type="button" id="{$smarty.section.counter.index}" onclick="fancy_images(this.id)" class="bidnow-btn" value="Move to weekly" /></a>
                 							</div>
                							 	<div class="ButtondesignRight movetoweekly"></div>
            								  </div>

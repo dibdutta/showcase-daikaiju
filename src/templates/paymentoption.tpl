@@ -64,7 +64,7 @@ $(document).ready(function() {
                                 </div>
                                 <div class="per-field">
                                     <label>Expiration Date<span class="red-star">*</span></label>
-                                    {html_select_date prefix='exp_' time=$time start_year='-0' end_year='+30' display_days=false month_value_format=%m month_format=%m class="input_textbox" style="width:65px;"}
+                                    {html_select_date prefix='exp_' time=$time start_year='-0' end_year='+30' display_days=false month_value_format='%m' month_format='%m' class="input_textbox" style="width:65px;"}
                                     <div class="disp-err">{$exp_year_err}</div>
                                 </div>
                                 <div class="per-field">

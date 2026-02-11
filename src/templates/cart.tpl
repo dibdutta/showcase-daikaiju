@@ -26,7 +26,7 @@ var sum = 0;
 	for(var k=0;k<amountArr.length;k++){
 		sum +=parseFloat(amountArr[k])* parseInt(quantityArr[k]);
 	}
-	var url = "ajax.php?mode=updateSession&auctionArr=" + auctionArr+"&amountArr="+amountArr+"&quantityArr="+quantityArr;
+	var url = "ajax?mode=updateSession&auctionArr=" + auctionArr+"&amountArr="+amountArr+"&quantityArr="+quantityArr;
 	jQuery.ajax({
   	type : 'GET',
   	url : url,
@@ -54,7 +54,7 @@ var sum = 0;
  }
 function chkQuantity(id,quantity,inputId){
  	
-	var url = "ajax.php?mode=chkQuantity&id=" + id+"&quantity="+quantity;
+	var url = "ajax?mode=chkQuantity&id=" + id+"&quantity="+quantity;
 	jQuery.ajax({
   	type : 'GET',
   	url : url,
@@ -100,9 +100,9 @@ function chkQuantity(id,quantity,inputId){
 			 {*<div id="tabbed-inner-nav">
              	<div class="tabbed-inner-nav-left">
              	<ul class="menu">
-                	<li><a href="{$actualPath}/send_message.php"><span>Inbox</span></a></li>
-                    <li class="active"><a href="{$actualPath}/send_message.php?mode=sent_messages"><span>Sent Items</span></a></li>
-                    <li><a href="{$actualPath}/send_message.php?mode=compose&encoded_string={$encoded_string}"><span>Compose</span></a></li>
+                	<li><a href="{$actualPath}/send_message"><span>Inbox</span></a></li>
+                    <li class="active"><a href="{$actualPath}/send_message?mode=sent_messages"><span>Sent Items</span></a></li>
+                    <li><a href="{$actualPath}/send_message?mode=compose&encoded_string={$encoded_string}"><span>Compose</span></a></li>
                 </ul>
                 
  				
@@ -111,7 +111,7 @@ function chkQuantity(id,quantity,inputId){
             <div id="tabbed-inner-nav">
             <div class="tabbed-inner-nav-left">
                     <ul class="menu">
-                        <li class="active"><a href="{$actualPath}/cart.php"><span>My Shopping Cart</span></a></li>
+                        <li class="active"><a href="{$actualPath}/cart"><span>My Shopping Cart</span></a></li>
                         
                     </ul>
                     
@@ -184,7 +184,7 @@ function chkQuantity(id,quantity,inputId){
 								</td>
 								</tr>
                                 <tr>                                	
-                                   <td colspan="3" align="center" style="padding:10px;"><input type="submit" value="Clear from Cart" class="track-btn"  />&nbsp;<input type="button" value="Continue Shopping" class="track-btn"  onclick="$(location).attr('href', '{$actualPath}/buy.php');" />&nbsp;<input type="button" value="CONTINUE TO CHECKOUT" class="track-btn"   onclick="$(location).attr('href', '{$actualPath}/my_invoice.php?mode=generate_buy_now_invoice');" /></td>
+                                   <td colspan="3" align="center" style="padding:10px;"><input type="submit" value="Clear from Cart" class="track-btn"  />&nbsp;<input type="button" value="Continue Shopping" class="track-btn"  onclick="$(location).attr('href', '{$actualPath}/buy');" />&nbsp;<input type="button" value="CONTINUE TO CHECKOUT" class="track-btn"   onclick="$(location).attr('href', '{$actualPath}/my_invoice?mode=generate_buy_now_invoice');" /></td>
                                 </tr>
                             </table>
                             </form>   

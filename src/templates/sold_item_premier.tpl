@@ -29,7 +29,7 @@ function show_text(){
 				<div id="tabbed-inner-nav">
                 <div class="tabbed-inner-nav-left">
 					<ul class="menu">
-						<li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/sold_item.php?mode=premier&toshow=20&order_by=auction_asked_price&order_type=DESC"><span>Premier Auction Results</span></a></li>
+						<li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/sold_item?mode=premier&toshow=20&order_by=auction_asked_price&order_type=DESC"><span>Premier Auction Results</span></a></li>
 						
 					</ul>
 				<div class="tabbed-inner-nav-right"></div>
@@ -79,7 +79,7 @@ function show_text(){
                             <div>
                             <div class="display-listing-main">
                                 <table class="list-view-main" cellpadding="0" cellspacing="0" border="0">
-                                <tr class="list-poster-box" valign="top"><td colspan="3"><div class="poster-area-list"><a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" style="cursor:pointer;" ><strong>{$dataJstFinishedAuction[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</strong></a></div></td></tr>
+                                <tr class="list-poster-box" valign="top"><td colspan="3"><div class="poster-area-list"><a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" style="cursor:pointer;" ><strong>{$dataJstFinishedAuction[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</strong></a></div></td></tr>
                                     <tr>
                                         <td class="list-poster-box" valign="top">                                               
                                             <div class="poster-area-list">

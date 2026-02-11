@@ -40,7 +40,7 @@
 				var key = data;
 				if(key==0){
 					if(confirm("Are you sure you want to combine invoices?")){
-							$.get("my_invoice.php", { mode:"combine_buyer_invoice","invoice_id[]": allVals},
+							$.get("my_invoice", { mode:"combine_buyer_invoice","invoice_id[]": allVals},
 								function(data) {
 									if(data=='1'){
 										alert("Successfully invoices are combined");
@@ -103,7 +103,7 @@
             if(totalInv >0){				
                 if(confirm("Click to confirm archive!")){
 				
-                    $.get("my_invoice.php", { mode:"archive_buyer_invoice","invoice_id[]": allVals},
+                    $.get("my_invoice", { mode:"archive_buyer_invoice","invoice_id[]": allVals},
                             function(data) {							
                                 if(data=='1'){
                                     alert("Archive Successful");
@@ -172,9 +172,9 @@
                  <div id="tabbed-inner-nav">
                  <div class="tabbed-inner-nav-left">
                     <ul class="menu">
-                        <li class="active"><a href="{$actualPathJSCSS}/my_invoice.php"><span>My Invoice(Buyer)</span></a></li>
-						<li ><a href="{$actualPathJSCSS}/my_invoice.php?mode=archive_invoice"><span>My Archived Invoices(Buyer)</span></a></li>
-                        <li ><a href="{$actualPathJSCSS}/my_invoice.php?mode=buyer"><span>Reconciliation(Seller)</span></a></li>
+                        <li class="active"><a href="{$actualPathJSCSS}/my_invoice"><span>My Invoice(Buyer)</span></a></li>
+						<li ><a href="{$actualPathJSCSS}/my_invoice?mode=archive_invoice"><span>My Archived Invoices(Buyer)</span></a></li>
+                        <li ><a href="{$actualPathJSCSS}/my_invoice?mode=buyer"><span>Reconciliation(Seller)</span></a></li>
                         
                     </ul>
                     
@@ -236,15 +236,15 @@
                                       <td class="tar">${$invoiceData[counter].total_amount}</td>
                                         <td class="tac">
                                         {if $invoiceData[counter].is_cancelled == '1'}
-                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice.php?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
+                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
                                         {elseif $invoiceData[counter].is_paid == '1'}
-                                        PAID &nbsp;<a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice.php?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
+                                        PAID &nbsp;<a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
                                         {elseif $invoiceData[counter].is_paid == '0' && $invoiceData[counter].is_cancelled == '0' && $invoiceData[counter].is_ordered == '0'}
-                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice.php?mode=order&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Pay Now" title="Pay Now" width="67" src="https://d2m46dmzqzklm5.cloudfront.net/images/pay_now.png" /></a>
+                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=order&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Pay Now" title="Pay Now" width="67" src="https://d2m46dmzqzklm5.cloudfront.net/images/pay_now.png" /></a>
                                         {elseif $invoiceData[counter].is_paid == '1' || $invoiceData[counter].is_cancelled == '1'}
-                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice.php?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
+                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
                                         {elseif $invoiceData[counter].is_ordered == '1' && $invoiceData[counter].is_cancelled == '0'}
-										<a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice.php?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Phone Order" title="Phone Order" src="https://d2m46dmzqzklm5.cloudfront.net/images/phn_order.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
+										<a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Phone Order" title="Phone Order" src="https://d2m46dmzqzklm5.cloudfront.net/images/phn_order.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
 										{/if}
                                         </td>
                                     </tr>

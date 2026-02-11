@@ -27,7 +27,7 @@ $(document).ready(function(){
 </script>
 <script type="text/javascript">
 function toggleDiv(id,flagit,type,track) {
- 	 var url = "bid_popup.php";
+ 	 var url = "bid_popup";
 	 if(type==1 && track==1){
 	 	$.get(url, {mode : 'offer_popup', id : id}, function(data){
 			$('#'+id).html(data);
@@ -101,24 +101,24 @@ function toggleDiv(id,flagit,type,track) {
 			 <div id="tabbed-inner-nav">
              	<div class="tabbed-inner-nav-left">
              	<ul class="menu" >
-                	<li><a class="active" href="{$actualPath}/buy.php"><span>See all Items</span></a></li>
-                    <li><a href="{$actualPath}/buy.php?list=fixed"><span>Fixed Price Items</span></a></li>
+                	<li><a class="active" href="{$actualPath}/buy"><span>See all Items</span></a></li>
+                    <li><a href="{$actualPath}/buy?list=fixed"><span>Fixed Price Items</span></a></li>
                     {if $live_count<=1}
-                    		<li {if $smarty.request.list == 'weekly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly"><span>{if $totalLiveWeekly > 0}{$auctionWeeksData[0].auction_week_title}{else}Auction Results{/if}</span></a></li>
-                    		{*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=monthly"><span>Event Auctions</span></a></li>*}
-                    		<li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy.php?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
+                    		<li {if $smarty.request.list == 'weekly'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly"><span>{if $totalLiveWeekly > 0}{$auctionWeeksData[0].auction_week_title}{else}Auction Results{/if}</span></a></li>
+                    		{*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy?list=monthly"><span>Event Auctions</span></a></li>*}
+                    		<li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
 						{elseif $live_count>1}
-							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[0].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly&auction_week_id={$auctionWeeksData[0].auction_week_id}"><span>{$auctionWeeksData[0].auction_week_title}</span></a></li>
-							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[1].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly&auction_week_id={$auctionWeeksData[1].auction_week_id}"><span>{$auctionWeeksData[1].auction_week_title}</span></a></li>	
+							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[0].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy?list=weekly&auction_week_id={$auctionWeeksData[0].auction_week_id}"><span>{$auctionWeeksData[0].auction_week_title}</span></a></li>
+							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[1].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy?list=weekly&auction_week_id={$auctionWeeksData[1].auction_week_id}"><span>{$auctionWeeksData[1].auction_week_title}</span></a></li>	
 						{/if}
 					{if $liveStilltrack ==1}
-					    <li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy.php?list=stills"><span>{$stillsWeeksData[0].auction_week_title}</span></a></li>
+					    <li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy?list=stills"><span>{$stillsWeeksData[0].auction_week_title}</span></a></li>
 						{elseif $upcomingStilltrack==1}
-						<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy.php?list=stills"><span>Upcoming Photo Auction</span></a></li>
+						<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy?list=stills"><span>Upcoming Photo Auction</span></a></li>
 						{else}
-						<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy.php?list=stills"><span>Photo Auction Results</span></a></li>
+						<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy?list=stills"><span>Photo Auction Results</span></a></li>
 						{/if}
-					{*<li {if $smarty.request.list == 'stills'} {/if}><a href="{$actualPath}/buy.php?list=stills"><span>Still/Photos Section</span></a></li>*}
+					{*<li {if $smarty.request.list == 'stills'} {/if}><a href="{$actualPath}/buy?list=stills"><span>Still/Photos Section</span></a></li>*}
                 </ul>
                 
                 
@@ -148,15 +148,15 @@ function toggleDiv(id,flagit,type,track) {
                                 <div class="buygrid_big">
                                        <div>
                                    								
-									<img class="image-brdr" src="{$auctionDetails[0].large_image}"   border="0" {if $smarty.session.sessUserID != ""} style="cursor:pointer;width:318px;" {else}style="cursor:pointer;width:318px;"{/if}  {if $smarty.session.sessUserID != ""} onclick="javascript:window.open('{$actualPath}/auction_images_large.php?mode=auction_images_large&id={$auctionDetails[0].poster_id}','mywindow','menubar=1,resizable=1,width={$width+100},height={$height+100},scrollbars=yes')" {/if} />
+									<img class="image-brdr" src="{$auctionDetails[0].large_image}"   border="0" {if $smarty.session.sessUserID != ""} style="cursor:pointer;width:318px;" {else}style="cursor:pointer;width:318px;"{/if}  {if $smarty.session.sessUserID != ""} onclick="javascript:window.open('{$actualPath}/auction_images_large?mode=auction_images_large&id={$auctionDetails[0].poster_id}','mywindow','menubar=1,resizable=1,width={$width+100},height={$height+100},scrollbars=yes')" {/if} />
 									</div></div>
                             </td></tr></tbody></table>
                                
-                                    <input type="button" value="Click to Enlarge" class="track-btn" {if $smarty.session.sessUserID != ""}  onclick="javascript:window.open('{$actualPath}/auction_images_large.php?mode=auction_images_large&id={$auctionDetails[0].poster_id}','mywindow','menubar=1,resizable=1,width={$width+100},height={$height+100},scrollbars=yes')"{/if} />
+                                    <input type="button" value="Click to Enlarge" class="track-btn" {if $smarty.session.sessUserID != ""}  onclick="javascript:window.open('{$actualPath}/auction_images_large?mode=auction_images_large&id={$auctionDetails[0].poster_id}','mywindow','menubar=1,resizable=1,width={$width+100},height={$height+100},scrollbars=yes')"{/if} />
 									
 									 {if $auctionDetails[0].total_poster > 1}
 								<div style="float:right; padding:0; margin:4px 0 0 0;">
-									<a href="#" class="posternumber" {if $smarty.session.sessUserID != ""} onclick="javascript:window.open('{$actualPath}/auction_images_large.php?mode=auction_images_large&id={$auctionDetails[0].poster_id}','mywindow','menubar=1,resizable=1,width={$width+100},height={$height+100},scrollbars=yes')" {/if}>
+									<a href="#" class="posternumber" {if $smarty.session.sessUserID != ""} onclick="javascript:window.open('{$actualPath}/auction_images_large?mode=auction_images_large&id={$auctionDetails[0].poster_id}','mywindow','menubar=1,resizable=1,width={$width+100},height={$height+100},scrollbars=yes')" {/if}>
 									<u>{$auctionDetails[0].total_poster}&nbsp;Images</u>&nbsp;&nbsp;</a>  
 								</div>
 							{/if}
@@ -202,7 +202,7 @@ function toggleDiv(id,flagit,type,track) {
                                         <td valign="top" colspan="2"><input type="button" id="buynow_bttn_{$auctionDetails[0].auction_id}" value="" onclick="redirect_to_cart({$auctionDetails[0].auction_id}, '{$auctionDetails[0].fk_user_id}')" class="bidnow-btn BuyNow" style="margin:1px 0 0 0;" /></td>
 										{else}
 									  	<td style="font-size:15px;">
-										<a href="javascript:void(0)" onclick="showLogIn();">Sign In</a> or <a href="register.php">Join Us</a> to view details
+										<a href="javascript:void(0)" onclick="showLogIn();">Sign In</a> or <a href="register">Join Us</a> to view details
 										</td>
 										{/if}	
                                         </tr>
@@ -246,7 +246,7 @@ function toggleDiv(id,flagit,type,track) {
                                 >
 								{else}
 									<td style="font-size:15px;">
-									<a href="javascript:void(0)" onclick="showLogIn();">Sign In</a> or <a href="register.php">Join Us</a> to view details
+									<a href="javascript:void(0)" onclick="showLogIn();">Sign In</a> or <a href="register">Join Us</a> to view details
 									</td>	
 								{/if}
 								</tr>
@@ -265,7 +265,7 @@ function toggleDiv(id,flagit,type,track) {
 									</td>
 									{else}
 										<div class="auction-row">
-										<div class="buy-text bold">	<a href="javascript:void(0)" onclick="showLogIn();">Sign In</a> or <a href="register.php">Join Us</a> to view details</div></div>
+										<div class="buy-text bold">	<a href="javascript:void(0)" onclick="showLogIn();">Sign In</a> or <a href="register">Join Us</a> to view details</div></div>
 										</td>
 									{/if}
                                 </tr>
@@ -312,7 +312,7 @@ function toggleDiv(id,flagit,type,track) {
 										</td>
 									  {else}
 									  	<td style="font-size:15px;">
-										<a href="javascript:void(0)" onclick="showLogIn();">Sign In</a> or <a href="register.php">Join Us</a> to view details
+										<a href="javascript:void(0)" onclick="showLogIn();">Sign In</a> or <a href="register">Join Us</a> to view details
 										</td>
 									  {/if}		
                                      </tr>
@@ -369,7 +369,7 @@ function toggleDiv(id,flagit,type,track) {
 												 </div>
 											 {else}
 											 	<div style="width:210px; float:left;">
-													<div class="buy-text bold"><a href="javascript:void(0)" onclick="showLogIn();">Sign In</a> or <a href="register.php">Join Us</a> to view details</div>
+													<div class="buy-text bold"><a href="javascript:void(0)" onclick="showLogIn();">Sign In</a> or <a href="register">Join Us</a> to view details</div>
 												</div>	 
 											 {/if}
                                              </div>

@@ -117,9 +117,9 @@ function collapse_full(id,image_id1,image_id2){
                 <li><a href="{$actualPath}/myaccount.php?mode=profile">Profile</a></li>
                 <li><a href="{$actualPath}/send_message.php">Messages&nbsp;({$countMsg}) </a></li>
                 <li><a href="{$actualPath}/my_want_list.php">My Want List ({$total_want_count})</a></li>
-                <li><a href="{$actualPath}/my_invoice.php">Invoices</a></li>
-                <li><a href="{$actualPath}/my_report.php">Reports</a></li>
-                <li><a href="{$actualPath}/myaccount.php?mode=change_password">Change Password</a></li>
+                <li><a href="{$actualPath}/my_invoice">Invoices</a></li>
+                <li><a href="{$actualPath}/my_report">Reports</a></li>
+                <li><a href="{$actualPath}/myaccount?mode=change_password">Change Password</a></li>
             </ul>
         </div>
         

@@ -53,8 +53,8 @@ function toggleDiv(id,flagit) {
                             <!--<div class="left-submenu">
                                 <span class="goto-span"><strong>GO TO: <u>FIXED PRICE</u></strong></span>
                                 <ul class="menu">
-                                    <li>[<a href="{$actualPath}/offers.php">My Outgoing Counters</a>]</li>
-                                    <li>[<a href="{$actualPath}/offers.php?mode=incoming_counters">My Incoming Counters</a>]</li>
+                                    <li>[<a href="{$actualPath}/offers">My Outgoing Counters</a>]</li>
+                                    <li>[<a href="{$actualPath}/offers?mode=incoming_counters">My Incoming Counters</a>]</li>
                                 </ul>
                             </div>-->
                            
@@ -63,11 +63,11 @@ function toggleDiv(id,flagit) {
                             <div class="right-submenu">
                                 <span class="goto-span"><strong>ITEMS I AM CURRENTLY:</strong></span>
                                 <ul class="menu">
-                                    <li>[<!--  <a href="{$actualPath}/my_bid.php">My Bids</a>--></li>
-									<li><img class="imgprpty" src="{$smarty.const.CLOUD_STATIC}winning-bid-img.png" width="13" height="14" border="0" /><a class="green" href="{$actualPath}/my_bid.php?mode=winning">Winning</a>]</li>
+                                    <li>[<!--  <a href="{$actualPath}/my_bid">My Bids</a>--></li>
+									<li><img class="imgprpty" src="{$smarty.const.CLOUD_STATIC}winning-bid-img.png" width="13" height="14" border="0" /><a class="green" href="{$actualPath}/my_bid?mode=winning">Winning</a>]</li>
                                     <li>&nbsp;[</li>
-									<li><img class="imgprpty" src="{$smarty.const.CLOUD_STATIC}losing-bid-img.png" width="13" height="14" border="0"  /><a class="red" href="{$actualPath}/my_bid.php?mode=losing">Losing</a>]</li>
-                                    <li>&nbsp;[<a href="{$actualPath}/my_bid.php">All</a>]</li>
+									<li><img class="imgprpty" src="{$smarty.const.CLOUD_STATIC}losing-bid-img.png" width="13" height="14" border="0"  /><a class="red" href="{$actualPath}/my_bid?mode=losing">Losing</a>]</li>
+                                    <li>&nbsp;[<a href="{$actualPath}/my_bid">All</a>]</li>
                                 </ul>	
                             </div>
                             </div>

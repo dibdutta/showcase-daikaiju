@@ -77,7 +77,7 @@ function validateForm(){
 							</div>
 							<div class="per-field">
                                 <div style="font-size:11px; font-family:Verdana, Geneva, sans-serif; padding:10px 0px; text-align:justify;">
-                                Upload zip file in a specific format. <a href="{$actualPath}/myselling.php?mode=download&file=sample.zip"><font color="#0000FF">Download</font></a> the sample zip file and <a href="{$actualPath}/myselling.php?mode=download&file=instructions.txt"><font color="#0000FF">download</font></a> the instruction file.</div>
+                                Upload zip file in a specific format. <a href="{$actualPath}/myselling?mode=download&file=sample.zip"><font color="#0000FF">Download</font></a> the sample zip file and <a href="{$actualPath}/myselling?mode=download&file=instructions.txt"><font color="#0000FF">download</font></a> the instruction file.</div>
 							</div>
 							{if $err >=3}
 							 <div class="per-field">

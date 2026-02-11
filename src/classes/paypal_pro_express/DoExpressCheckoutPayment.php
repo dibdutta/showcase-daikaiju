@@ -116,7 +116,7 @@ if($ack != 'SUCCESS' && $ack != 'SUCCESSWITHWARNING'){
 	unset($_SESSION['billing_info']);
 	unset($_SESSION['shipping_info']);
 	$_SESSION['Err'] = "Payment is done successfully!";
-	header("location:".SITE_URL."my_invoice.php?invoice_id=".$invoice_id);
+	header("location:".SITE_URL."my_invoice?invoice_id=".$invoice_id);
 	exit;
 }
 

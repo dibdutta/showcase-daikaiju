@@ -16,13 +16,13 @@
     	<div id="footernavigator" {if $smarty.const.PHP_SELF=='/index.php' || $smarty.const.PHP_SELF==''} {else}style="border:none;"{/if}>
         	<div class="left">
             	<ul class="menu">
-                	<li {if $smarty.const.PHP_SELF == '' || $smarty.const.PHP_SELF == '/index.php'}class="active"{/if}><a {if $smarty.session.sessUserID != ''}href="{$actualPath}/index.php"{else}href="{$actualPath}/index.php"{/if} title="Home">Home</a>&nbsp;|&nbsp;</li>                    
-                    {if $smarty.session.sessUserID != ''}<li {if $smarty.const.PHP_SELF == '/myaccount.php'}class="active"{/if}><a href="{$actualPath}/myaccount.php" title="My Account">My Dashboard</a>&nbsp;|&nbsp;</li>{/if}
-                    <li {if $smarty.const.PHP_SELF == '/buy.php' && $smarty.request.mode == 'refinesrc'}class="active"{/if}><a href="{$actualPath}/buy.php?mode=refinesrc" title="Advanced Search">Advanced Search</a>&nbsp;|&nbsp;</li>
-                    <li {if $smarty.const.PHP_SELF == '/siteurl.php'}class="active"{/if}><a href="{$actualPath}/siteurl.php" title="Sitemap">Sitemap</a>&nbsp;|&nbsp;</li>
-                    <li {if $smarty.const.PHP_SELF == '/contactus.php'}class="active"{/if}><a href="{$actualPath}/contactus.php" title="Contact Us">Contact Us</a>&nbsp;|&nbsp;</li>
+                	<li {if $smarty.const.PHP_SELF == '' || $smarty.const.PHP_SELF == '/index.php'}class="active"{/if}><a {if $smarty.session.sessUserID != ''}href="{$actualPath}/index"{else}href="{$actualPath}/index"{/if} title="Home">Home</a>&nbsp;|&nbsp;</li>                    
+                    {if $smarty.session.sessUserID != ''}<li {if $smarty.const.PHP_SELF == '/myaccount.php'}class="active"{/if}><a href="{$actualPath}/myaccount" title="My Account">My Dashboard</a>&nbsp;|&nbsp;</li>{/if}
+                    <li {if $smarty.const.PHP_SELF == '/buy.php' && $smarty.request.mode == 'refinesrc'}class="active"{/if}><a href="{$actualPath}/buy?mode=refinesrc" title="Advanced Search">Advanced Search</a>&nbsp;|&nbsp;</li>
+                    <li {if $smarty.const.PHP_SELF == '/siteurl.php'}class="active"{/if}><a href="{$actualPath}/siteurl" title="Sitemap">Sitemap</a>&nbsp;|&nbsp;</li>
+                    <li {if $smarty.const.PHP_SELF == '/contactus.php'}class="active"{/if}><a href="{$actualPath}/contactus" title="Contact Us">Contact Us</a>&nbsp;|&nbsp;</li>
                     {*<li><a href="#" title="Receive Email Updates">Receive Email Updates</a>&nbsp;|&nbsp;</li>*}
-                    <li {if $smarty.const.PHP_SELF == '/privacypolicy.php'}class="active"{/if}><a href="{$actualPath}/user_agreement.php" title="User Agreement and policies">User Agreement and Policies</a></li>
+                    <li {if $smarty.const.PHP_SELF == '/privacypolicy.php'}class="active"{/if}><a href="{$actualPath}/user_agreement" title="User Agreement and policies">User Agreement and Policies</a></li>
                     {*<li><a href="#" title="Archives">Archives</a></li>*}
                 </ul>
             </div>            

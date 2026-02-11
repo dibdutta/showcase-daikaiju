@@ -14,13 +14,13 @@
 			var search_text= $('#search_buy_items').val();
 			var auction_week= $('#auction_week').val();
 			var list= $('#list').val();
-			window.location.href="buy.php?list="+list+"&mode=key_search_upcoming&keyword="+search_text+"&auction_week="+auction_week+"&list="+list;
+			window.location.href="buy?list="+list+"&mode=key_search_upcoming&keyword="+search_text+"&auction_week="+auction_week+"&list="+list;
 		}
 		function key_search_buy(list){
 			var search_text= $('#search_buy_items').val();
 			var auction_week= $('#auction_week').val();
 			var list= $('#list').val();
-			window.location.href="buy.php?list="+list+"&mode=key_search_upcoming&keyword="+search_text+"&auction_week="+auction_week+"&list="+list;
+			window.location.href="buy?list="+list+"&mode=key_search_upcoming&keyword="+search_text+"&auction_week="+auction_week+"&list="+list;
 		}
 		function key_search_buy_clear(){
 			$('#search_buy_items').unbind('keypress');
@@ -29,7 +29,7 @@
 		function sort_upcoming_auction(auction_week){
 			//$('#mode').val("");
 			//document.forms["listFrom"].submit();
-			window.location.href="buy.php?list=upcoming&auction_week="+auction_week;
+			window.location.href="buy?list=upcoming&auction_week="+auction_week;
 		}
 </script>
 
@@ -55,21 +55,21 @@
 				<div id="tabbed-inner-nav">
                 	<div class="tabbed-inner-nav-left">
 					<ul class="menu" >
-						{*<li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/buy.php"><span>See all Items</span></a></li>*}
-						<li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy.php?list=fixed"><span>Fixed Price</span></a></li>
+						{*<li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/buy"><span>See all Items</span></a></li>*}
+						<li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy?list=fixed"><span>Fixed Price</span></a></li>
 						{if $live_count<=1}
-                    		<li {if $smarty.request.list == 'weekly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly"><span>{if $totalLiveWeekly > 0}{$auctionWeeksData[0].auction_week_title}{else}{$latestEndedAuction} Results{/if}</span></a></li>
-                    		{*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=monthly"><span>Event Auctions</span></a></li>*}
-                    		<li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy.php?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
+                    		<li {if $smarty.request.list == 'weekly'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly"><span>{if $totalLiveWeekly > 0}{$auctionWeeksData[0].auction_week_title}{else}{$latestEndedAuction} Results{/if}</span></a></li>
+                    		{*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy?list=monthly"><span>Event Auctions</span></a></li>*}
+                    		<li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
 						{elseif $live_count>1}
-							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[0].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly&auction_week_id={$auctionWeeksData[0].auction_week_id}"><span>{$auctionWeeksData[0].auction_week_title}</span></a></li>
-							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[1].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly&auction_week_id={$auctionWeeksData[1].auction_week_id}"><span>{$auctionWeeksData[1].auction_week_title}</span></a></li>	
+							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[0].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy?list=weekly&auction_week_id={$auctionWeeksData[0].auction_week_id}"><span>{$auctionWeeksData[0].auction_week_title}</span></a></li>
+							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[1].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy?list=weekly&auction_week_id={$auctionWeeksData[1].auction_week_id}"><span>{$auctionWeeksData[1].auction_week_title}</span></a></li>	
 						{/if}
 						{if $extendedAuction != ""}					    
-							<li {if $smarty.request.list == 'extended'} class="active" {/if}><a href="{$actualPath}/buy.php?list=extended&view_mode=grid"><span>Extended Auction {$extendedAuction}</span></a></li>
+							<li {if $smarty.request.list == 'extended'} class="active" {/if}><a href="{$actualPath}/buy?list=extended&view_mode=grid"><span>Extended Auction {$extendedAuction}</span></a></li>
 						{/if}
-						<li {if $smarty.request.list == 'alternative'} class="active" {/if}><a href="{$actualPath}/buy.php?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
-						{*<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy.php?list=stills"><span>Fixed Price Stills</span></a></li>*}
+						<li {if $smarty.request.list == 'alternative'} class="active" {/if}><a href="{$actualPath}/buy?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
+						{*<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy?list=stills"><span>Fixed Price Stills</span></a></li>*}
 					</ul>
 					
                 	</div>
@@ -97,9 +97,9 @@
 									<li class="lista"><span class="active">&nbsp;</span></li>
                                     |
 									{if $smarty.request.keyword!=''}
-									<li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode=key_search_upcoming&keyword={$smarty.request.keyword}">&nbsp;</a></li>
+									<li class="grid"><a href="buy?view_mode=grid&list={$smarty.request.list}&mode=key_search_upcoming&keyword={$smarty.request.keyword}">&nbsp;</a></li>
 									{else}
-									<li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}">&nbsp;</a></li>
+									<li class="grid"><a href="buy?view_mode=grid&list={$smarty.request.list}">&nbsp;</a></li>
 									{/if}
 								</ul>
                           </div>
@@ -145,17 +145,17 @@
 							<!--  <div class="left-submenu">
 								<span class="goto-span"><strong>GO TO: <u>FIXED PRICE</u></strong></span>
                                 <ul class="menu">
-                                    <li>[<a href="{$actualPath}/offers.php">My Outgoing Counters</a>]</li>
-                                    <li>[<a href="{$actualPath}/offers.php?mode=incoming_counters">My Incoming Counters</a>]</li>
+                                    <li>[<a href="{$actualPath}/offers">My Outgoing Counters</a>]</li>
+                                    <li>[<a href="{$actualPath}/offers?mode=incoming_counters">My Incoming Counters</a>]</li>
                                 </ul>
 							</div>-->
 							<!--<div class="right-submenu">
 								<span class="goto-span"><strong>AUCTIONS</strong></span>
                                 <ul class="menu">
-                                    <li>[<a href="{$actualPath}/my_bid.php">My Bids</a></li>
-                                    <li><img class="imgprpty" src="{$actualPath}/images/losing-bid-img.png" width="13" height="14" border="0"  /><a class="red" href="{$actualPath}/my_bid.php?mode=losing">Losing Bids</a>|</li>
-                                    <li><img class="imgprpty" src="{$actualPath}/images/winning-bid-img.png" width="13" height="14" border="0" /><a class="green" href="{$actualPath}/my_bid.php?mode=winning">Winning Bids</a>]</li>
-                                    <li>[<a href="{$actualPath}/user_watching.php">Watch List</a>]</li>
+                                    <li>[<a href="{$actualPath}/my_bid">My Bids</a></li>
+                                    <li><img class="imgprpty" src="{$actualPath}/images/losing-bid-img.png" width="13" height="14" border="0"  /><a class="red" href="{$actualPath}/my_bid?mode=losing">Losing Bids</a>|</li>
+                                    <li><img class="imgprpty" src="{$actualPath}/images/winning-bid-img.png" width="13" height="14" border="0" /><a class="green" href="{$actualPath}/my_bid?mode=winning">Winning Bids</a>]</li>
+                                    <li>[<a href="{$actualPath}/user_watching">Watch List</a>]</li>
                                 </ul>	
 							</div>-->
                             </div>
@@ -187,7 +187,7 @@
   <tr>
     <td width="25" valign="top" class="pt10 tac"><input name="" type="checkbox" value="" /></td>
     <td width="200" class="buylisttb">
-    <div><a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"  /></a></div>
+    <div><a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"  /></a></div>
      
                                     <!--<input type="button" class="bidnow-btn" value="Details" onclick="redirect_poster_details({$auctionItems[counter].auction_id});"/>-->
                                     {if $auctionItems[counter].watch_indicator ==0}
@@ -200,7 +200,7 @@
     </td>
     <td valign="top" class="pr10"><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td class="pb20"><a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" ><h1>{$auctionItems[counter].poster_title}&nbsp;</h1></a></td>
+        <td class="pb20"><a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" ><h1>{$auctionItems[counter].poster_title}&nbsp;</h1></a></td>
       </tr>
       <tr>
         <td class="buylisttbtopbg"></td>
@@ -285,9 +285,9 @@
 									<li class="lista"><span class="active"></span></li>
                                     |
 									{if $smarty.request.keyword!=''}
-									<li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode=key_search_upcoming&keyword={$smarty.request.keyword}"></a></li>
+									<li class="grid"><a href="buy?view_mode=grid&list={$smarty.request.list}&mode=key_search_upcoming&keyword={$smarty.request.keyword}"></a></li>
 									{else}
-									<li class="grid"><a href="buy.php?view_mode=grid&list={$smarty.request.list}"></a></li>
+									<li class="grid"><a href="buy?view_mode=grid&list={$smarty.request.list}"></a></li>
 									{/if}
 								</ul>
 							</div>

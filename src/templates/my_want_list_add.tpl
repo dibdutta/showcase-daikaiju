@@ -6,10 +6,10 @@ $(document).ready(function() {
 });
 function view_want_list()
 {
-	window.location.href='{/literal}{$actualPath}/my_want_list.php{literal}';
+	window.location.href='{/literal}{$actualPath}/my_want_list{literal}';
 }
 function autocom(q){
-	var url = "ajax.php?mode=autocomplete_want&q="+q;
+	var url = "ajax?mode=autocomplete_want&q="+q;
 	jQuery.ajax({
   	type : 'GET',
   	url : url,

@@ -160,7 +160,7 @@ function countImage()
 }
 
 function deletePhoto(divID, photo, type,key){
-    var url = "ajax.php";
+    var url = "ajax";
     //var request = url+"?mode=delete_poster&poster_image="+photo+"&type="+type+"&poster_id="+$('#poster_id').val();
     //alert(request);
     $.post(url, {mode: 'delete_poster', poster_image: photo, type: type,key:key, folder: $("#random").val(), poster_id: $('#poster_id').val()}, function(retunedData, textStatus){
@@ -228,7 +228,7 @@ function lookupAjax(){
 function autoComplete(id)
 {
     $('#'+id).autocomplete(
-        'ajax.php?mode=autocomplete',
+        'ajax?mode=autocomplete',
         {
             delay:10,
             minChars:2,
@@ -320,17 +320,17 @@ function postBid(auction_id, user_id,buy_now)
 		  
 		  if(buy_now > 1){		  	
 			if(bid_price < buy_now){
-				var url = "mybuying.php";   
+				var url = "mybuying";   
 				$.post(url, {mode : 'post_bid', auction_id : auction_id,curr_bid:curr_bid,next_increment:next_increment, bid_amount : bid_price,secs_left:secs_left}, function(data, textStatus){
 		    			var txt=data;
 		    			var clr="green";
 					showalert(txt,clr,'');
 				}); 
 			}else{
-       			window.location="cart.php?id="+auction_id;
+       			window.location="cart?id="+auction_id;
        		}		  	 
 		  }else{		  	
-			var url = "mybuying.php";   
+			var url = "mybuying";   
 			$.post(url, {mode : 'post_bid', auction_id : auction_id,curr_bid:curr_bid,next_increment:next_increment, bid_amount : bid_price,secs_left:secs_left}, function(data, textStatus){
 				var txt=data;
 				var clr="green";
@@ -379,12 +379,12 @@ function postOffer(auction_id, user_id,buy_now)
  
     var offer_price=Math.floor($('#offer_price_'+auction_id).val());
     if(offer_price < buy_now){
-        var url = "mybuying.php";
+        var url = "mybuying";
         $.post(url, {mode : 'post_offer', auction_id : auction_id, offer_amount : offer_price}, function(data, textStatus){
             alert(data);
         });
         }else{
-        	window.location="cart.php?id="+auction_id;
+        	window.location="cart?id="+auction_id;
         }
        
     }
@@ -393,7 +393,7 @@ function postOffer(auction_id, user_id,buy_now)
 
 function postBuynow(auction_id)
 {
-    var url = "mybuying.php";
+    var url = "mybuying";
     $.post(url, {mode : 'post_buynow', auction_id : auction_id, bid_amount : $('#buynow_price_'+auction_id).val()}, function(data, textStatus){
         alert(data);
         $('#buynow_price_'+auction_id).val("");
@@ -422,7 +422,7 @@ function placeAllBids(dataArr)
 				}
 			}
 			
-			var url = "mybuying.php?action=place_all_bids&"+formData+"&ids="+ids;
+			var url = "mybuying?action=place_all_bids&"+formData+"&ids="+ids;
 			
 			$.post(url, function(data, textStatus){
 				for(i=0; i<dataArr.length; i++){
@@ -458,7 +458,7 @@ function timeLeft(dataArr,list)
         var bidDataArr = new Array();
         var dispData = '';
         var datetime;
-        var url = "ajax.php";
+        var url = "ajax";
         var ids = ''; 
         for(var k=0; k < dataArr.length; k++){
             ids += dataArr[k]['auction_id'];
@@ -588,7 +588,7 @@ function timeLeftGallery(dataArr,list)
         var bidDataArr = new Array();
         var dispData = '';
         var datetime;
-        var url = "ajax.php";
+        var url = "ajax";
         var ids = ''; 
         for(var k=0; k<dataArr.length; k++){
             ids += dataArr[k]['auction_id'];
@@ -710,7 +710,7 @@ function timeLeftPosterDetails(dataArr)
         var bidDataArr = new Array();
         var dispData = '';
         var datetime;
-        var url = "ajax.php";
+        var url = "ajax";
         var ids = ''; 
 		var list = "details";
         for(var k=0; k<dataArr.length; k++){
@@ -836,9 +836,9 @@ function dateAdd(timeU,byMany,dateObj) {
 /* Offer functins start */
 function acceptOfferOnly(auction_id, offer_id, cntr_offer_id, flag,offset,toshow)
 {
-   $.post('offers.php', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
+   $.post('offers', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
    if(data=='1'){
-    var url = "offers.php";
+    var url = "offers";
     //$("input.track-btn").attr("disabled", true);
     if(flag == 'buyer'){
         $.post(url, {mode : 'accept_offer', type : 'buyer', auction_id : auction_id, offer_id : cntr_offer_id}, function(data, textStatus){
@@ -872,9 +872,9 @@ function acceptOfferOnly(auction_id, offer_id, cntr_offer_id, flag,offset,toshow
 
 function rejectOfferOnly(offer_id, cntr_offer_id, flag,offset,toshow)
 {
-  $.post('offers.php', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
+  $.post('offers', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
    if(data=='1'){
-    var url = "offers.php";
+    var url = "offers";
     //$("input.track-btn").attr("disabled", true);
     if(flag == 'buyer'){
         $.post(url, {mode : 'reject_offer', type : 'buyer', offer_id : cntr_offer_id}, function(data, textStatus){
@@ -904,9 +904,9 @@ function rejectOfferOnly(offer_id, cntr_offer_id, flag,offset,toshow)
 }
 function acceptOffer(auction_id, offer_id, cntr_offer_id, flag,offset,toshow)
 {
-   $.post('offers.php', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
+   $.post('offers', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
    if(data=='1'){
-    var url = "offers.php";
+    var url = "offers";
     //$("input.track-btn").attr("disabled", true);
     if(flag == 'buyer'){
         $.post(url, {mode : 'accept_offer', type : 'buyer', auction_id : auction_id, offer_id : cntr_offer_id}, function(data, textStatus){
@@ -940,9 +940,9 @@ function acceptOffer(auction_id, offer_id, cntr_offer_id, flag,offset,toshow)
 
 function acceptOfferNew(auction_id, offer_id, cntr_offer_id, flag,offset,toshow)
 {
-   $.post('offers.php', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
+   $.post('offers', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
    if(data=='1'){
-    var url = "offers.php";
+    var url = "offers";
     //$("input.track-btn").attr("disabled", true);
     if(flag == 'buyer'){
         $.post(url, {mode : 'accept_offer', type : 'buyer', auction_id : auction_id, offer_id : cntr_offer_id}, function(data, textStatus){
@@ -975,9 +975,9 @@ function acceptOfferNew(auction_id, offer_id, cntr_offer_id, flag,offset,toshow)
 }
 	function acceptOfferModified(auction_id, offer_id, cntr_offer_id, flag,offset,toshow)
 	{
-	   $.post('offers.php', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
+	   $.post('offers', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
 	   if(data=='1'){
-	    var url = "offers.php";
+	    var url = "offers";
 	    //$("input.track-btn").attr("disabled", true);
 	    if(flag == 'buyer'){
 	        $.post(url, {mode : 'accept_offer', type : 'buyer', auction_id : auction_id, offer_id : cntr_offer_id}, function(data, textStatus){
@@ -1011,9 +1011,9 @@ function acceptOfferNew(auction_id, offer_id, cntr_offer_id, flag,offset,toshow)
 
 function rejectOffer(offer_id, cntr_offer_id, flag,offset,toshow)
 {
-  $.post('offers.php', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
+  $.post('offers', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
    if(data=='1'){
-    var url = "offers.php";
+    var url = "offers";
     //$("input.track-btn").attr("disabled", true);
     if(flag == 'buyer'){
         $.post(url, {mode : 'reject_offer', type : 'buyer', offer_id : cntr_offer_id}, function(data, textStatus){
@@ -1043,9 +1043,9 @@ function rejectOffer(offer_id, cntr_offer_id, flag,offset,toshow)
 }
 function rejectOfferNew(offer_id, cntr_offer_id, flag,offset,toshow)
 {
-  $.post('offers.php', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
+  $.post('offers', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
    if(data=='1'){
-    var url = "offers.php";
+    var url = "offers";
     //$("input.track-btn").attr("disabled", true);
     if(flag == 'buyer'){
         $.post(url, {mode : 'reject_offer', type : 'buyer', offer_id : cntr_offer_id}, function(data, textStatus){
@@ -1075,9 +1075,9 @@ function rejectOfferNew(offer_id, cntr_offer_id, flag,offset,toshow)
 }
 	function rejectOfferModified(offer_id, cntr_offer_id, flag,offset,toshow)
 	{
-	  $.post('offers.php', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
+	  $.post('offers', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
 	   if(data=='1'){
-	    var url = "offers.php";
+	    var url = "offers";
 	    //$("input.track-btn").attr("disabled", true);
 	    if(flag == 'buyer'){
 	        $.post(url, {mode : 'reject_offer', type : 'buyer', offer_id : cntr_offer_id}, function(data, textStatus){
@@ -1107,7 +1107,7 @@ function rejectOfferNew(offer_id, cntr_offer_id, flag,offset,toshow)
 	}
 function makeCounterOffer(auction_id, offer_id, cntr_amt,offset,toshow)
 {   
-	$.post('offers.php', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
+	$.post('offers', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
       if(data=='1'){
 	    var chk_ind=/^ *[0-9]+ *$/.test(cntr_amt);
 	    if(cntr_amt == parseFloat(cntr_amt) && chk_ind==false){
@@ -1115,7 +1115,7 @@ function makeCounterOffer(auction_id, offer_id, cntr_amt,offset,toshow)
 	    	 $('#cntr_amt_'+offer_id).val("");
 	    	 return;
 	    }else{
-		    var url = "offers.php";
+		    var url = "offers";
 		    $.post(url, {mode : 'make_counter_offer', auction_id : auction_id, offer_id : offer_id, offer_amount : cntr_amt}, function(data, textStatus){
 		        if(data == 'true'){
 		            $("#cntr_ofr_"+offer_id).text('$'+cntr_amt+'.00');
@@ -1135,7 +1135,7 @@ function makeCounterOffer(auction_id, offer_id, cntr_amt,offset,toshow)
 }
 function makeCounterOfferModified(auction_id, offer_id, cntr_amt,offset,toshow)
 {   
-	$.post('offers.php', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
+	$.post('offers', {mode : 'trackOfferIfExists',offer_id:offer_id}, function(data) {
       if(data=='1'){
 	    var chk_ind=/^ *[0-9]+ *$/.test(cntr_amt);
 	    if(cntr_amt == parseFloat(cntr_amt) && chk_ind==false){
@@ -1143,7 +1143,7 @@ function makeCounterOfferModified(auction_id, offer_id, cntr_amt,offset,toshow)
 	    	 $('#cntr_amt_'+offer_id).val("");
 	    	 return;
 	    }else{
-		    var url = "offers.php";
+		    var url = "offers";
 		    $.post(url, {mode : 'make_counter_offer', auction_id : auction_id, offer_id : offer_id, offer_amount : cntr_amt}, function(data, textStatus){
 		        if(data == 'true'){
 		            $("#cntr_ofr_"+offer_id).text('$'+cntr_amt+'.00');
@@ -1164,13 +1164,13 @@ function makeCounterOfferModified(auction_id, offer_id, cntr_amt,offset,toshow)
 
 function refreshOutgoingOffersOnly(offset,toshow,orderBy,orderType){
 	
-    $.get('offers.php', {mode : 'refresh_outgoing_offers_only',offset:offset,toshow:toshow,order_by:orderBy,order_type:orderType}, function(data, textStatus){
+    $.get('offers', {mode : 'refresh_outgoing_offers_only',offset:offset,toshow:toshow,order_by:orderBy,order_type:orderType}, function(data, textStatus){
         $('#offers').html(data);
     })                   
 }
 function refreshOutgoingOffers(offset,toshow,orderBy,orderType){
 	
-    $.get('offers.php', {mode : 'refresh_outgoing_offers',offset:offset,toshow:toshow,order_by:orderBy,order_type:orderType}, function(data, textStatus){
+    $.get('offers', {mode : 'refresh_outgoing_offers',offset:offset,toshow:toshow,order_by:orderBy,order_type:orderType}, function(data, textStatus){
         $('#offers').html(data);
     })                   
 }
@@ -1178,14 +1178,14 @@ function refreshOutgoingOffers(offset,toshow,orderBy,orderType){
 function refreshIncomingCounters(offset,toshow,orderBy,orderType){
     
 	
-    $.get('offers.php', {mode : 'refresh_incoming_counters',offset:offset,toshow:toshow,order_by:orderBy,order_type:orderType}, function(data, textStatus){
+    $.get('offers', {mode : 'refresh_incoming_counters',offset:offset,toshow:toshow,order_by:orderBy,order_type:orderType}, function(data, textStatus){
         $('#offers').html(data);
     })                   
 }
 function refreshIncomingOffersOnly(offset,toshow,orderBy,orderType){
     
 	
-    $.get('offers.php', {mode : 'refresh_incoming_offers_only',offset:offset,toshow:toshow,order_by:orderBy,order_type:orderType}, function(data, textStatus){
+    $.get('offers', {mode : 'refresh_incoming_offers_only',offset:offset,toshow:toshow,order_by:orderBy,order_type:orderType}, function(data, textStatus){
         $('#offers').html(data);
     })                   
 }
@@ -1199,12 +1199,12 @@ function add_watchlist(id)
     	showLogIn();
     }else{
 	    if(document.getElementById('watch_'+id).value=='Watch this item'){
-			$.post('buy.php', {mode : 'select_watchlist',is_track : id}, function(data, textStatus){
+			$.post('buy', {mode : 'select_watchlist',is_track : id}, function(data, textStatus){
 			//window.location.reload();
 			document.getElementById('watch_'+id).value="You are watching";
 			}) 
 		}else{
-			window.location="user_watching.php#"+id;
+			window.location="user_watching#"+id;
 		}
 		
     //document.getElementById('is_track').value=id;
@@ -1213,7 +1213,7 @@ function add_watchlist(id)
 }
 function add_watchlist_for_details(id)
 {
-	$.post('buy.php', {mode : 'select_watchlist',is_track : id}, function(data, textStatus){
+	$.post('buy', {mode : 'select_watchlist',is_track : id}, function(data, textStatus){
         window.location.reload();
     })  
 	
@@ -1270,7 +1270,7 @@ function shippingMethod(param)
         $('#options').html('<img src="https://c4808190.ssl.cf2.rackcdn.com/loader.gif">');
         if(param == 'usps'){
             if(country_id == '230'){
-                $.get('usps/usps.php', {country_id:country_id, zip_code:zip_code, city:city, address1:address1,totalPoster:totalPoster, weights:weights}, function(data){
+                $.get('usps/usps', {country_id:country_id, zip_code:zip_code, city:city, address1:address1,totalPoster:totalPoster, weights:weights}, function(data){
 				var newData = data.split("/");
 				if(newData[0] == 'Y'){
 					uspsOpts ='<span>Technical problem plese try again with your proper shipping details.</span>';
@@ -1287,7 +1287,7 @@ function shippingMethod(param)
                         $('#options').html('<div id="shipping_options">'+uspsOpts+'<div>');
                 });
             }else if(country_id!=''){
-                $.get('usps/usps_intl.php', {country_id:country_id, zip_code:zip_code, city:city, address1:address1,totalPoster:totalPoster,weights:weights}, function(data){
+                $.get('usps/usps_intl', {country_id:country_id, zip_code:zip_code, city:city, address1:address1,totalPoster:totalPoster,weights:weights}, function(data){
 				var newData = data.split("/");
 				if(newData[0] == 'Y'){
 					uspsOpts ='<span>Technical problem plese try again with your proper shipping details.</span>';
@@ -1306,7 +1306,7 @@ function shippingMethod(param)
             }
         }else if(param == 'fedex'){
             if(country_id == '230'){
-                $.get('fedex/RateWebServiceClientLocal.php', {country_id:country_id, zip_code:zip_code, city:city, address1:address1,totalPoster:totalPoster,weights:weights}, function(data){
+                $.get('fedex/RateWebServiceClientLocal', {country_id:country_id, zip_code:zip_code, city:city, address1:address1,totalPoster:totalPoster,weights:weights}, function(data){
                     optionsArr = eval(data);
                     uspsOpts = '';
                     if(optionsArr[0]['option'] == 'error'){
@@ -1326,7 +1326,7 @@ function shippingMethod(param)
                     $('#options').html('<div id="shipping_options">'+uspsOpts+'<div>');             
                 });
             }else if(country_id != ''){
-                $.get('fedex/RateWebServiceClient.php', {country_id:country_id,zip_code:zip_code,city:city,address1:address1,totalPoster:totalPoster,weights:weights},function(data){
+                $.get('fedex/RateWebServiceClient', {country_id:country_id,zip_code:zip_code,city:city,address1:address1,totalPoster:totalPoster,weights:weights},function(data){
                     optionsArr = eval(data);
                     uspsOpts = '';
                     if(optionsArr[0]['option'] == 'error'){
@@ -1361,7 +1361,7 @@ function setShippingDesc(id)
 
 function frmSubmit()
 {
-    var url = "auth.php";
+    var url = "auth";
     var data = $('#frmlogin').serialize();
     var retunedData;
     $.post(url, data, function(retunedData, textStatus){
@@ -1387,9 +1387,9 @@ function remove_dummy_password(){
 function redirect_poster_details(auction_id,type)
 {
 	if(type==1){
-		window.location="buy.php?mode=poster_details&auction_id="+auction_id+"&fixed=1";
+		window.location="buy?mode=poster_details&auction_id="+auction_id+"&fixed=1";
 	}else{
-		window.location="buy.php?mode=poster_details&auction_id="+auction_id;
+		window.location="buy?mode=poster_details&auction_id="+auction_id;
 	}
 }
 
@@ -1402,12 +1402,12 @@ function redirect_to_cart(auction_id, user_id)
 		alert("Seller cannot buy his own poster.");
 	}else{
 		var in_cart;
-	    $.post("ajax.php", { auction_id:auction_id,mode:"chkcart" }, function(data){		 
+	    $.post("ajax", { auction_id:auction_id,mode:"chkcart" }, function(data){		 
   	 	 in_cart = data;
 		 if(in_cart=='1'){
 			alert("This Item is already added in cart by other user.");
 		}else{
-			window.location="cart.php?id="+auction_id;
+			window.location="cart?id="+auction_id;
 		}
   	  });
 	 
@@ -1435,7 +1435,7 @@ function hideLogIn(){
  $('#login-modal-overlay').hide();
 }
 function redirect_watchlist(id){
-    window.location="user_watching.php#"+id;
+    window.location="user_watching#"+id;
 }
 
 

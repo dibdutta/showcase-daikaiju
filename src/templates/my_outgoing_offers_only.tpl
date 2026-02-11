@@ -49,8 +49,8 @@ function toggleDiv(id,flagit) {
                 <div id="tabbed-inner-nav">
                     <div class="tabbed-inner-nav-left">
                         <ul class="menu">
-                            <li {if $smarty.request.mode == ''}class="active"{/if}><a href="{$actualPath}/offers.php"><span>Recent Outgoing Offers</span></a></li>
-                            <li {if $smarty.request.mode == 'archived_outgoing_offers_only'} class="active"{/if}><a href="{$actualPath}/offers.php?mode=archived_outgoing_offers_only"><span>Archived Outgoing Offers</span></a></li>
+                            <li {if $smarty.request.mode == ''}class="active"{/if}><a href="{$actualPath}/offers"><span>Recent Outgoing Offers</span></a></li>
+                            <li {if $smarty.request.mode == 'archived_outgoing_offers_only'} class="active"{/if}><a href="{$actualPath}/offers?mode=archived_outgoing_offers_only"><span>Archived Outgoing Offers</span></a></li>
 
                         </ul>
                        

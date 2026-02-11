@@ -18,7 +18,7 @@ function highlight()
 	function open_new_window(){
 		index_id = $('#photo_index').val();
 		
-		window.open('{/literal}{$actualPath}{literal}/auction_images_large.php?mode=auction_images_large&id={/literal}{$auctionDetails[0].poster_id}{literal}&auction_id={/literal}{$auctionDetails[0].auction_id}{literal}&page_index='+index_id,'mywindow','menubar=1,resizable=1,width={/literal}{$width+100}{literal},height={/literal}{$height+100}{literal},scrollbars=yes')
+		window.open('{/literal}{$actualPath}{literal}/auction_images_large?mode=auction_images_large&id={/literal}{$auctionDetails[0].poster_id}{literal}&auction_id={/literal}{$auctionDetails[0].auction_id}{literal}&page_index='+index_id,'mywindow','menubar=1,resizable=1,width={/literal}{$width+100}{literal},height={/literal}{$height+100}{literal},scrollbars=yes')
 	}
 </script>
 {/literal}
@@ -43,21 +43,21 @@ function highlight()
             <div id="tabbed-inner-nav">
             	<div class="tabbed-inner-nav-left">
                     <ul class="menu">
-                        {*<li><a class="active" href="{$actualPath}/buy.php"><span>See all Items</span></a></li>*}
-                        <li><a href="{$actualPath}/buy.php?list=fixed"><span>Fixed Price</span></a></li>
+                        {*<li><a class="active" href="{$actualPath}/buy"><span>See all Items</span></a></li>*}
+                        <li><a href="{$actualPath}/buy?list=fixed"><span>Fixed Price</span></a></li>
                        {if $live_count<=1}
-                    		<li {if $smarty.request.list == 'weekly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly"><span>{if $totalLiveWeekly > 0}{$auctionWeeksData[0].auction_week_title}{else}{$latestEndedAuction} Results{/if}</span></a></li>
-                    		{*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=monthly"><span>Event Auctions</span></a></li>*}
-                    		<li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy.php?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
+                    		<li {if $smarty.request.list == 'weekly'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly"><span>{if $totalLiveWeekly > 0}{$auctionWeeksData[0].auction_week_title}{else}{$latestEndedAuction} Results{/if}</span></a></li>
+                    		{*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy?list=monthly"><span>Event Auctions</span></a></li>*}
+                    		<li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
 						{elseif $live_count>1}
-							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[0].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly&auction_week_id={$auctionWeeksData[0].auction_week_id}"><span>{$auctionWeeksData[0].auction_week_title}</span></a></li>
-							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[1].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly&auction_week_id={$auctionWeeksData[1].auction_week_id}"><span>{$auctionWeeksData[1].auction_week_title}</span></a></li>	
+							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[0].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy?list=weekly&auction_week_id={$auctionWeeksData[0].auction_week_id}"><span>{$auctionWeeksData[0].auction_week_title}</span></a></li>
+							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[1].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy?list=weekly&auction_week_id={$auctionWeeksData[1].auction_week_id}"><span>{$auctionWeeksData[1].auction_week_title}</span></a></li>	
 						{/if}
             {if $extendedAuction != ""}					    
-						  <li {if $smarty.request.list == 'extended'} class="active" {/if}><a href="{$actualPath}/buy.php?list=extended&view_mode=grid"><span>Extended Auction {$extendedAuction}</span></a></li>
+						  <li {if $smarty.request.list == 'extended'} class="active" {/if}><a href="{$actualPath}/buy?list=extended&view_mode=grid"><span>Extended Auction {$extendedAuction}</span></a></li>
 						{/if}
-						<li {if $smarty.request.list == 'alternative'} class="active" {/if}><a href="{$actualPath}/buy.php?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
-						{*<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy.php?list=stills"><span>Fixed Price Stills</span></a></li>*}
+						<li {if $smarty.request.list == 'alternative'} class="active" {/if}><a href="{$actualPath}/buy?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
+						{*<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy?list=stills"><span>Fixed Price Stills</span></a></li>*}
                     </ul>
 					
                 	</div>
@@ -86,10 +86,10 @@ function highlight()
 									</div></div>
                             </td></tr></tbody></table>
                                
-                                 {*  <input type="button" value="Click to enlarge" class="track-btn"  onclick="javascript:window.open('{$actualPath}/auction_images_large.php?mode=auction_images_large&id={$auctionDetails[0].poster_id}','mywindow','menubar=1,resizable=1,width={$width+100},height={$height+100},scrollbars=yes')"/>*}
+                                 {*  <input type="button" value="Click to enlarge" class="track-btn"  onclick="javascript:window.open('{$actualPath}/auction_images_large?mode=auction_images_large&id={$auctionDetails[0].poster_id}','mywindow','menubar=1,resizable=1,width={$width+100},height={$height+100},scrollbars=yes')"/>*}
                                      {if $auctionDetails[0].total_poster > 1}
                                         {* <div style="padding:0; margin:4px 0 0 0;">
-                                             <a href="#" class="posternumber" onclick="javascript:window.open('{$actualPath}/auction_images_large.php?mode=auction_images_large&id={$auctionDetails[0].poster_id}','mywindow','menubar=1,resizable=1,width={$width+100},height={$height+100},scrollbars=yes')">
+                                             <a href="#" class="posternumber" onclick="javascript:window.open('{$actualPath}/auction_images_large?mode=auction_images_large&id={$auctionDetails[0].poster_id}','mywindow','menubar=1,resizable=1,width={$width+100},height={$height+100},scrollbars=yes')">
                                                  <u>{$auctionDetails[0].total_poster}&nbsp;Images </u></a> 
 								</div>*}
 								<div style="text-align:left; margin-left:10px;">

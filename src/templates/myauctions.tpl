@@ -56,13 +56,13 @@ function clear_text(){
                 <div id="tabbed-inner-nav">
                 <div class="tabbed-inner-nav-left">
                     <ul class="menu">
-                        <li {if $smarty.request.mode == 'selling'}class="active"{/if}><a href="{$actualPath}/myselling.php?mode=selling"><span>Selling (Auction)</span></a></li>
-						<li {if $smarty.request.mode == 'fixed_selling'}class="active"{/if}><a href="{$actualPath}/myselling.php?mode=fixed_selling"><span>Selling (Fixed)</span></a></li>
-                        <li {if $smarty.request.mode == 'pending'}class="active"{/if}><a href="{$actualPath}/myselling.php?mode=pending"><span>Pending</span></a></li>
-                        <li {if $smarty.request.mode == 'sold'}class="active"{/if}><a href="{$actualPath}/myselling.php?mode=sold"><span>Sold</span></a></li>
-                        <li {if $smarty.request.mode == 'unsold'}class="active"{/if}><a href="{$actualPath}/myselling.php?mode=unsold"><span>Unsold/Closed</span></a></li>
-                        <li {if $smarty.request.mode == 'upcoming'}class="active"{/if}><a href="{$actualPath}/myselling.php?mode=upcoming"><span>Upcoming</span></a></li>
-						<li {if $smarty.request.mode == 'unpaid'} class="active"{/if}><a href="{$actualPath}/myselling.php?mode=unpaid"><span>Sale Pending</span></a></li>
+                        <li {if $smarty.request.mode == 'selling'}class="active"{/if}><a href="{$actualPath}/myselling?mode=selling"><span>Selling (Auction)</span></a></li>
+						<li {if $smarty.request.mode == 'fixed_selling'}class="active"{/if}><a href="{$actualPath}/myselling?mode=fixed_selling"><span>Selling (Fixed)</span></a></li>
+                        <li {if $smarty.request.mode == 'pending'}class="active"{/if}><a href="{$actualPath}/myselling?mode=pending"><span>Pending</span></a></li>
+                        <li {if $smarty.request.mode == 'sold'}class="active"{/if}><a href="{$actualPath}/myselling?mode=sold"><span>Sold</span></a></li>
+                        <li {if $smarty.request.mode == 'unsold'}class="active"{/if}><a href="{$actualPath}/myselling?mode=unsold"><span>Unsold/Closed</span></a></li>
+                        <li {if $smarty.request.mode == 'upcoming'}class="active"{/if}><a href="{$actualPath}/myselling?mode=upcoming"><span>Upcoming</span></a></li>
+						<li {if $smarty.request.mode == 'unpaid'} class="active"{/if}><a href="{$actualPath}/myselling?mode=unpaid"><span>Sale Pending</span></a></li>
 					</ul>
                 
 				</div>
@@ -133,13 +133,13 @@ function clear_text(){
                                								
 								{*if $auction[counter].fk_auction_type_id==1 && $smarty.request.mode=='selling'}
                                     
-												 <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/myselling.php?mode=move_to_weekly&id={$auction[counter].auction_id}"><input type="button" id="{$smarty.section.counter.index}" onclick="fancy_images(this.id)" class="track-btn" value="Move to weekly" /></a>
+												 <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/myselling?mode=move_to_weekly&id={$auction[counter].auction_id}"><input type="button" id="{$smarty.section.counter.index}" onclick="fancy_images(this.id)" class="track-btn" value="Move to weekly" /></a>
                 							
                                 {/if*}
 											
 								{if $auction[counter].fk_auction_type_id==2  && $smarty.request.mode=='unsold'}
                                     
-												 <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/myselling.php?mode=weekly_relist&id={$auction[counter].auction_id}"><input type="button" id="{$smarty.section.counter.index}" onclick="fancy_images(this.id)" class="track-btn" value="Relist" /></a>
+												 <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/myselling?mode=weekly_relist&id={$auction[counter].auction_id}"><input type="button" id="{$smarty.section.counter.index}" onclick="fancy_images(this.id)" class="track-btn" value="Relist" /></a>
                 							
                                 {/if} 
 								  </td>
@@ -149,17 +149,17 @@ function clear_text(){
                                     <td class="pb20">
 									<div class="poster-area-list">
                                             {if $auction[counter].fk_auction_type_id == 1}
-                                                <div class="left"><a href="{$actualPath}/edit_myauction.php?auction_id={$auction[counter].auction_id}&type=fixed&encoded_string={$encoded_string}"><img src="{$smarty.const.CLOUD_STATIC}edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
+                                                <div class="left"><a href="{$actualPath}/edit_myauction?auction_id={$auction[counter].auction_id}&type=fixed&encoded_string={$encoded_string}"><img src="{$smarty.const.CLOUD_STATIC}edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
                                             {elseif ($auction[counter].fk_auction_type_id == 2 || $auction[counter].fk_auction_type_id == 5) && $auction[counter].auction_is_approved==0}
-                                                <div class="left"><a href="{$actualPath}/edit_myauction.php?auction_id={$auction[counter].auction_id}&type=weekly&encoded_string={$encoded_string}"><img src="{$smarty.const.CLOUD_STATIC}edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
+                                                <div class="left"><a href="{$actualPath}/edit_myauction?auction_id={$auction[counter].auction_id}&type=weekly&encoded_string={$encoded_string}"><img src="{$smarty.const.CLOUD_STATIC}edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
                                             {elseif $auction[counter].fk_auction_type_id == 3 && $auction[counter].auction_is_approved==0}
-                                                <div class="left"><a href="{$actualPath}/edit_myauction.php?auction_id={$auction[counter].auction_id}&type=monthly&encoded_string={$encoded_string}"><img src="{$smarty.const.CLOUD_STATIC}edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
+                                                <div class="left"><a href="{$actualPath}/edit_myauction?auction_id={$auction[counter].auction_id}&type=monthly&encoded_string={$encoded_string}"><img src="{$smarty.const.CLOUD_STATIC}edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
                                             {elseif $auction[counter].fk_auction_type_id == 4 && $auction[counter].auction_is_approved==0}
-												<div class="left"><a href="{$actualPath}/edit_myauction.php?auction_id={$auction[counter].auction_id}&type=stills&encoded_string={$encoded_string}"><img src="{$smarty.const.CLOUD_STATIC}edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
+												<div class="left"><a href="{$actualPath}/edit_myauction?auction_id={$auction[counter].auction_id}&type=stills&encoded_string={$encoded_string}"><img src="{$smarty.const.CLOUD_STATIC}edit-icon.png" alt="Modify" title="Modify" height="16px" width="16px" border="0" /></a></div>
 											{/if}
                                             &nbsp;
 											{if (($auction[counter].fk_auction_type_id != 3 && $auction[counter].fk_auction_type_id != 2) || $auction[counter].auction_is_approved==0)}
-                                              <img src="{$smarty.const.CLOUD_STATIC}delete_image.png" alt="Delete" title="Delete" height="16px" width="16px" border="0" onclick="javascript: deleteConfirmRecord('{$actualPath}/edit_myauction.php?mode=delete_auction&auction_id={$auction[counter].auction_id}&status={$smarty.request.mode}&encoded_string={$encoded_string}&toshow={$toshow}&offset={$offset}', 'auction');" style="cursor: pointer;" />
+                                              <img src="{$smarty.const.CLOUD_STATIC}delete_image.png" alt="Delete" title="Delete" height="16px" width="16px" border="0" onclick="javascript: deleteConfirmRecord('{$actualPath}/edit_myauction?mode=delete_auction&auction_id={$auction[counter].auction_id}&status={$smarty.request.mode}&encoded_string={$encoded_string}&toshow={$toshow}&offset={$offset}', 'auction');" style="cursor: pointer;" />
 											 {/if} 
                                             &nbsp;
                                           

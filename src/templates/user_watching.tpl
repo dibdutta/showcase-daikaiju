@@ -15,7 +15,7 @@ $(document).ready(function(){
 
 function redirect_poster_details(auction_id)
 {
-	window.location="buy.php?mode=poster_details&auction_id="+auction_id;
+	window.location="buy?mode=poster_details&auction_id="+auction_id;
 }
 </script>
 <script type="text/javascript">
@@ -146,9 +146,9 @@ function toggleDiv(id,flagit,type,track) {
 				 <div id="tabbed-inner-nav">
             	<div class="tabbed-inner-nav-left">
 					<ul class="menu">
-						<li {if $smarty.request.type == ''}class="active"{/if}><a href="{$actualPath}/user_watching.php"><span>My Auction Watch List</span></a></li>
-						<li {if $smarty.request.type=='fixed'}class="active"{/if}><a href="{$actualPath}/user_watching.php?type=fixed"><span>My Fixed Price Watch List</span></a></li>
-						<li {if $smarty.request.type=='sold'}class="active"{/if}><a href="{$actualPath}/user_watching.php?type=sold"><span>My Sold Watch List</span></a></li>
+						<li {if $smarty.request.type == ''}class="active"{/if}><a href="{$actualPath}/user_watching"><span>My Auction Watch List</span></a></li>
+						<li {if $smarty.request.type=='fixed'}class="active"{/if}><a href="{$actualPath}/user_watching?type=fixed"><span>My Fixed Price Watch List</span></a></li>
+						<li {if $smarty.request.type=='sold'}class="active"{/if}><a href="{$actualPath}/user_watching?type=sold"><span>My Sold Watch List</span></a></li>
 						
 					</ul>
                     
@@ -172,7 +172,7 @@ function toggleDiv(id,flagit,type,track) {
                                     <ul class="menu">									
                                         <li class="lista"><span class="active"></span> </li>
 										|
-                                        <li class="grid"><a href="user_watching.php?view_mode=grid&type={$smarty.request.type}"></a></li>
+                                        <li class="grid"><a href="user_watching?view_mode=grid&type={$smarty.request.type}"></a></li>
                                     </ul>
                                 </div>
 								<div class="sortblock">{$displaySortByTXT}</div>
@@ -218,7 +218,7 @@ function toggleDiv(id,flagit,type,track) {
 							<td valign="top" class="pr10">
                   <!--3rd td-->  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 								    <tr>
-        							<td class="pb20"><h1><a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$watchingItems[counter].auction_id}" style="cursor:pointer;" ><strong>{$watchingItems[counter].poster_title}&nbsp;</strong></a> </h1></td>
+        							<td class="pb20"><h1><a href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}" style="cursor:pointer;" ><strong>{$watchingItems[counter].poster_title}&nbsp;</strong></a> </h1></td>
       							  </tr>
 								    <tr>
 									<td class="buylisttbtopbg"></td>

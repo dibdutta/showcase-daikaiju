@@ -41,16 +41,16 @@
 
 function submitDetailsForm(){
 		$.ajax({
-			url: 'auth.php',
+			url: 'auth',
 			type: 'get',
 			data: { username: $('#username').val(),password:$('#password').val(),mode:'process_login' },
 			success: function(data) {
 					   if(data=='2'){
-					   	  window.location.href  = "buy.php?list=upcoming";
+					   	  window.location.href  = "buy?list=upcoming";
 					   }else if (data=='1'){
-					   	  window.location.href  = "buy.php?list=weekly";
+					   	  window.location.href  = "buy?list=weekly";
 					   }else if (data=='3'){
-					   	  window.location.href  = "buy.php?list=weekly";
+					   	  window.location.href  = "buy?list=weekly";
 					   }else{
 					   	 $("#error").text(data);
 					   }
@@ -84,11 +84,11 @@ function clear_text_for_poster(){
     }
 }
 function check_session(){
-    $.post('ajax.php', {mode : 'delete_session'}, function(){
+    $.post('ajax', {mode : 'delete_session'}, function(){
 
     })
 	var actualPath=' {/literal}{$actualPath}{literal}';
-		$(location).attr('href',actualPath+'/register.php');
+		$(location).attr('href',actualPath+'/register');
 }
 function refine_search(type,id){
     if(type=='decade'){
@@ -156,10 +156,10 @@ function cancelWarning(){
 	location.reload();
 }
 function acceptWarning(){
-	var url='{/literal}/ajax.php{literal}';
+	var url='{/literal}/ajax{literal}';
 	$.post(url, {mode:"logoutInactiveUser" }, function(data){
 		$("#reset_warning").hide();	
-		window.location.href = "index.php";	
+		window.location.href = "index";	
 	})
 	
 }
@@ -223,8 +223,8 @@ function acceptWarning1(list,id){
   }else if(list==5){
   	type='stills';
   }
-		//window.location.href = "sold_item.php?mode=search_sold_"+type+"&auction_week="+id;	
-		window.location.href = "buy.php?list=extended";
+		//window.location.href = "sold_item?mode=search_sold_"+type+"&auction_week="+id;	
+		window.location.href = "buy?list=extended";
 }
 function timerIncrement1(list,id) {
     idleTime1 = idleTime1 + 1;
@@ -245,7 +245,7 @@ function showTimer1(list,id){
   if(document.getElementById('timer1')){
 	  
 	  countdown = setInterval(function(){
-	  $.get('ajax.php?mode=chk_auction_week&week_id='+id, function(data) {
+	  $.get('ajax?mode=chk_auction_week&week_id='+id, function(data) {
 	   if(data=='1'){
 		 acceptWarning1(list,id);
 		}
@@ -266,7 +266,7 @@ function showTimer1(list,id){
  	<div id="header-wrapper">
     <!--Header Starts-->
      <div id="header">
-	  <form name="frm_refine" id="frm_refine" method="get" action="{$actualPath}/buy.php">
+	  <form name="frm_refine" id="frm_refine" method="get" action="{$actualPath}/buy">
                 <input type="hidden" name="mode" value="search" />
                 <input type="hidden" name="poster_size_id" id="poster_size_id" value="{$smarty.request.poster_size_id}" />
                 <input type="hidden" name="genre_id" id="genre_id" value="{$smarty.request.genre_id}" />
@@ -288,17 +288,17 @@ function showTimer1(list,id){
          {*<div style="position:absolute; left:167px; top:90px; background:#fff; height:15px;color:red;">
 		 <label>The site will be under maintainance for three(3) Hrs.sorry for the inconvenience caused</label>
 		 </div>*}
-        <div id="logopanel"><a href="{$actualPath}/index.php" title="Movie Poster Exchange"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/logo.png" alt="Movie Poster Exchange" title="Movie Poster Exchange" width="165" height="93"/></a></div>
+        <div id="logopanel"><a href="{$actualPath}/index" title="Movie Poster Exchange"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/logo.png" alt="Movie Poster Exchange" title="Movie Poster Exchange" width="165" height="93"/></a></div>
         <!--Header Top navigation Starts-->
         <div id="mainnavigation" class="innerbg">
           <ul class="menu">
-                <li {if $smarty.const.PHP_SELF == '' || $smarty.const.PHP_SELF == '/index.php'}class="active homeover"{/if}><a href="{$actualPath}/index.php" title="HOME"><span>HOME</span></a></li>
-                <li {if $smarty.const.PHP_SELF == '/buy.php'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly" title="BUY"><span>AUCTIONS</span></a></li>
-                <li {if $smarty.const.PHP_SELF == '/sell.php'}class="active"{/if}><a href="{$actualPath}/sell.php" title="SELL"><span>SELL</span></a></li>
-                <li {if $smarty.const.PHP_SELF == '/faq.php'}class="active"{/if}><a href="{$actualPath}/faq.php" title="FAQ"><span>FAQ</a></span></li>
-                <li {if $smarty.const.PHP_SELF == '/contactus.php'}class="active"{/if}><a href="{$actualPath}/contactus.php" title="CONTACT"><span>CONTACT</span></a></li>
-                <li {if $smarty.const.PHP_SELF == '/aboutus.php'}class="active"{/if}><a href="{$actualPath}/aboutus.php" title="ABOUT US"><span>ABOUT US</span></a></li>
-                <li  ><a href="{$actualPath}/sold_item.php" title="SOLD ITEMS ARCHIVE"><span style="color:#CC0000;">SOLD ITEMS ARCHIVE</span></a></li></li>
+                <li {if $smarty.const.PHP_SELF == '' || $smarty.const.PHP_SELF == '/index.php'}class="active homeover"{/if}><a href="{$actualPath}/index" title="HOME"><span>HOME</span></a></li>
+                <li {if $smarty.const.PHP_SELF == '/buy.php'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly" title="BUY"><span>AUCTIONS</span></a></li>
+                <li {if $smarty.const.PHP_SELF == '/sell.php'}class="active"{/if}><a href="{$actualPath}/sell" title="SELL"><span>SELL</span></a></li>
+                <li {if $smarty.const.PHP_SELF == '/faq.php'}class="active"{/if}><a href="{$actualPath}/faq" title="FAQ"><span>FAQ</a></span></li>
+                <li {if $smarty.const.PHP_SELF == '/contactus.php'}class="active"{/if}><a href="{$actualPath}/contactus" title="CONTACT"><span>CONTACT</span></a></li>
+                <li {if $smarty.const.PHP_SELF == '/aboutus.php'}class="active"{/if}><a href="{$actualPath}/aboutus" title="ABOUT US"><span>ABOUT US</span></a></li>
+                <li  ><a href="{$actualPath}/sold_item" title="SOLD ITEMS ARCHIVE"><span style="color:#CC0000;">SOLD ITEMS ARCHIVE</span></a></li></li>
               </ul>
               
          
@@ -325,7 +325,7 @@ function showTimer1(list,id){
         <!--<div class="search-left-bg"></div>-->
             <div class="search-midrept-bg ">
                 <label><img src="https://d2m46dmzqzklm5.cloudfront.net/images/search-img.png" width="20" height="37" /></label>
-                <form name="frm_keysearch" method="get" action="{$actualPath}/buy.php">
+                <form name="frm_keysearch" method="get" action="{$actualPath}/buy">
                     <!--<input type="hidden" name="list" value="{$smarty.request.list}" class="srchbox-txt" />-->
                      <input type="hidden" name="mode" {if $smarty.request.list!='upcoming'} value="key_search_global"{else} value="key_search_upcoming"{/if} class="srchbox-txt" />
 					<input type="hidden" name="is_expired" value="{$is_expired}"  />
@@ -345,9 +345,9 @@ function showTimer1(list,id){
                 </form>
                 
 				{if $smarty.request.list != 'stills' && $smarty.request.mode != 'refinesrcStills'}
-					<input type="button" value="" class="refine-srchbtn-main" onclick="$(location).attr('href', '{$actualPath}/buy.php?mode=refinesrc&list={$smarty.request.list}&auction_week_id={$smarty.request.auction_week_id}');" />
+					<input type="button" value="" class="refine-srchbtn-main" onclick="$(location).attr('href', '{$actualPath}/buy?mode=refinesrc&list={$smarty.request.list}&auction_week_id={$smarty.request.auction_week_id}');" />
 				{else}
-				    <input type="button" value="" class="refine-srchbtn-main" onclick="$(location).attr('href', '{$actualPath}/buy.php?mode=refinesrcStills');" />
+				    <input type="button" value="" class="refine-srchbtn-main" onclick="$(location).attr('href', '{$actualPath}/buy?mode=refinesrcStills');" />
 				{/if}
             </div>
        
@@ -363,7 +363,7 @@ function showTimer1(list,id){
 <div>
 <div id="signup-login" style="position: absolute; left: 0pt; top: 0pt; margin: 32px 0pt 0pt 700px; z-index:70000000;">
 <div class="col_2">
-			   <form name="frmlogin" id="frmlogin" method="post" action="auth.php">
+			   <form name="frmlogin" id="frmlogin" method="post" action="auth">
             	<input type="hidden" name="mode" value="process_login" />
                 
                 <table width="120" border="0" cellspacing="2" cellpadding="0" id="login-panel" style="display:none;">
@@ -399,7 +399,7 @@ function showTimer1(list,id){
 									   </td>
 				  </tr>
 				  <tr>
-					<td> <a href="{$actualPath}/forget_password.php">Forgot password</a></td>
+					<td> <a href="{$actualPath}/forget_password">Forgot password</a></td>
 				  </tr>
 				</table>
                 
@@ -422,7 +422,7 @@ function showTimer1(list,id){
             </div>
     
             <div class="col_2">
-			   <form name="frmlogin" id="frmlogin" method="post" action="auth.php">
+			   <form name="frmlogin" id="frmlogin" method="post" action="auth">
             	<input type="hidden" name="mode" value="process_login" />
                 <table width="120" border="0" cellspacing="2" cellpadding="0">
 				 <tr>
@@ -443,7 +443,7 @@ function showTimer1(list,id){
 									   </td>
 				  </tr>
 				  <tr>
-					<td> <a href="{$actualPath}/forget_password.php">Forgot password</a></td>
+					<td> <a href="{$actualPath}/forget_password">Forgot password</a></td>
 				  </tr>
 				</table>
               </form>
@@ -469,11 +469,11 @@ function showTimer1(list,id){
             
                 <h3>MY BUYING</h3>
                 <ul>
-                   <li><a href="{$actualPath}/my_bid.php" >My Active Bids</a></li>
-                    <li><a  href="{$actualPath}/offers.php">My Outgoing Offers&nbsp;&nbsp;({$totalUnReadOutgoingOffer})</a></li>
-                    <li><a  href="{$actualPath}/offers.php?mode=incoming_counters" {if $totalUnReadIncomingCounters > 0} style="color:#FF4E09;" {/if}>My Incoming Counters&nbsp;&nbsp;({$totalUnReadIncomingCounters})</a></li>
-                    <li><a  href="{$actualPath}/my_bid.php?mode=closed">My Closed Items</a></li>
-                    <li><a  href="{$actualPath}/user_watching.php">Watch List&nbsp;&nbsp;({$count_watching})</a></li>
+                   <li><a href="{$actualPath}/my_bid" >My Active Bids</a></li>
+                    <li><a  href="{$actualPath}/offers">My Outgoing Offers&nbsp;&nbsp;({$totalUnReadOutgoingOffer})</a></li>
+                    <li><a  href="{$actualPath}/offers?mode=incoming_counters" {if $totalUnReadIncomingCounters > 0} style="color:#FF4E09;" {/if}>My Incoming Counters&nbsp;&nbsp;({$totalUnReadIncomingCounters})</a></li>
+                    <li><a  href="{$actualPath}/my_bid?mode=closed">My Closed Items</a></li>
+                    <li><a  href="{$actualPath}/user_watching">Watch List&nbsp;&nbsp;({$count_watching})</a></li>
                 </ul>   
                  
             </div>
@@ -482,17 +482,17 @@ function showTimer1(list,id){
             
                 <h3>MY SELLING</h3>
                 <ul>
-                    <li><a  href="{$actualPath}/myselling.php?mode=fixed">Manual Upload</a></li>
-                    <!--<li><a  href="{$actualPath}/myselling.php?mode=bulkupload">Bulk Upload</a></li>-->
-                    <li><a  href="{$actualPath}/myselling.php?mode=selling">Selling (Auction Items)</a></li>
-					<li><a  href="{$actualPath}/myselling.php?mode=fixed_selling">Selling (Fixed Items)</a></li>
-                    <li><a  href="{$actualPath}/offers.php?mode=incoming_offers" {if $totalUnReadIncomingOffers > 0} style="color:#FF4E09;" {/if} >My Incoming Offers&nbsp;&nbsp;({$totalUnReadIncomingOffers})</a></li>
-                    <li><a  href="{$actualPath}/offers.php?mode=outgoing_counters">My Outgoing&nbsp;&nbsp; Counters({$totalUnReadOutgoingCounters})</a></li>
-					<li><a  href="{$actualPath}/myselling.php?mode=pending">Pending</a></li>
-					<li><a  href="{$actualPath}/myselling.php?mode=sold">Sold</a></li>
-					<li><a  href="{$actualPath}/myselling.php?mode=upcoming">Upcoming</a></li>
-					<li><a  href="{$actualPath}/myselling.php?mode=unsold">Unsold/Closed</a></li>
-					<li><a  href="{$actualPath}/myselling.php?mode=unpaid">Sale Pending</a></li>
+                    <li><a  href="{$actualPath}/myselling?mode=fixed">Manual Upload</a></li>
+                    <!--<li><a  href="{$actualPath}/myselling?mode=bulkupload">Bulk Upload</a></li>-->
+                    <li><a  href="{$actualPath}/myselling?mode=selling">Selling (Auction Items)</a></li>
+					<li><a  href="{$actualPath}/myselling?mode=fixed_selling">Selling (Fixed Items)</a></li>
+                    <li><a  href="{$actualPath}/offers?mode=incoming_offers" {if $totalUnReadIncomingOffers > 0} style="color:#FF4E09;" {/if} >My Incoming Offers&nbsp;&nbsp;({$totalUnReadIncomingOffers})</a></li>
+                    <li><a  href="{$actualPath}/offers?mode=outgoing_counters">My Outgoing&nbsp;&nbsp; Counters({$totalUnReadOutgoingCounters})</a></li>
+					<li><a  href="{$actualPath}/myselling?mode=pending">Pending</a></li>
+					<li><a  href="{$actualPath}/myselling?mode=sold">Sold</a></li>
+					<li><a  href="{$actualPath}/myselling?mode=upcoming">Upcoming</a></li>
+					<li><a  href="{$actualPath}/myselling?mode=unsold">Unsold/Closed</a></li>
+					<li><a  href="{$actualPath}/myselling?mode=unpaid">Sale Pending</a></li>
                 </ul>   
                  
             </div>
@@ -501,13 +501,13 @@ function showTimer1(list,id){
             
                 <h3>MY ACCOUNT</h3>
                 <ul>
-                    <li><a  href="{$actualPath}/myaccount.php">My Account / Dashboard</a></li>
-                    <li><a  href="{$actualPath}/myaccount.php?mode=profile">Profile</a></li>
-                    {*<li><a  href="{$actualPath}/send_message.php">Messages&nbsp;&nbsp;({$countMsg}) </a></li>*}
-                    <li><a  href="{$actualPath}/my_want_list.php">My Want List&nbsp;&nbsp;({$total_want_count})</a></li>
-                    <li><a  href="https://www.movieposterexchange.com/my_invoice.php">Invoices/Reconciliation</a></li>
-					<li><a  href="{$actualPath}/my_report.php">Reports</a></li>
-					<li><a  href="{$actualPath}/myaccount.php?mode=change_password">Change Password</a></li>
+                    <li><a  href="{$actualPath}/myaccount">My Account / Dashboard</a></li>
+                    <li><a  href="{$actualPath}/myaccount?mode=profile">Profile</a></li>
+                    {*<li><a  href="{$actualPath}/send_message">Messages&nbsp;&nbsp;({$countMsg}) </a></li>*}
+                    <li><a  href="{$actualPath}/my_want_list">My Want List&nbsp;&nbsp;({$total_want_count})</a></li>
+                    <li><a  href="https://www.movieposterexchange.com/my_invoice">Invoices/Reconciliation</a></li>
+					<li><a  href="{$actualPath}/my_report">Reports</a></li>
+					<li><a  href="{$actualPath}/myaccount?mode=change_password">Change Password</a></li>
                 </ul>   
                  
             </div>
@@ -518,10 +518,10 @@ function showTimer1(list,id){
       </ul>  
     	 </div>
          <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
-        <div class="w60 fll pt18 pl14 scart"><a href="javascript:void(0)" onclick="$(location).attr('href','{$actualPath}/myaccount.php?mode=logout');">Sign Out</a></div>
+        <div class="w60 fll pt18 pl14 scart"><a href="javascript:void(0)" onclick="$(location).attr('href','{$actualPath}/myaccount?mode=logout');">Sign Out</a></div>
 		{/if}
         <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
-        <div class="w24 fll pt18 pl14"><a href="{$actualPath}/cart.php"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/cart1-icon.png" width="24" height="15" /></a></div>
+        <div class="w24 fll pt18 pl14"><a href="{$actualPath}/cart"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/cart1-icon.png" width="24" height="15" /></a></div>
     	<div class="w24 fll pt18 pl14 scart">({if $smarty.session.cart}{$smarty.session.cart|@count}{else}0{/if})</div>
        
     	  

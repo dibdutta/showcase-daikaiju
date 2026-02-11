@@ -57,7 +57,7 @@
                                             </tr>                                        
                                             {/section}
                                             <!--<tr>
-                                                <td colspan="3" align="right"><a href="{$actualPath}/my_bid.php?mode=closed&type=winning"><img src="{$smarty.const.CLOUD_STATIC}more.jpg" border="0" /></a></td>
+                                                <td colspan="3" align="right"><a href="{$actualPath}/my_bid?mode=closed&type=winning"><img src="{$smarty.const.CLOUD_STATIC}more.jpg" border="0" /></a></td>
                                             </tr>-->
                                             {else}
                                             <tr>
@@ -67,7 +67,7 @@
                                         </table>
                                         
                                       </div>
-                                        <div class="tar morediv"><a href="{$actualPath}/my_bid.php?mode=winning"><img src="../images/more.jpg" border="0" /></a></div>
+                                        <div class="tar morediv"><a href="{$actualPath}/my_bid?mode=winning"><img src="../images/more.jpg" border="0" /></a></div>
                                         <div class="dashboard-main_shadow"></div>
                                     </div>
                                     <div class="dashblock">
@@ -91,7 +91,7 @@
                                             </tr>
                                             {/section}
                                             <!--<tr>
-                                                <td colspan="3" align="right"><a href="{$actualPath}/offers.php"><img src="{$smarty.const.CLOUD_STATIC}more.jpg" border="0" /></a></td>
+                                                <td colspan="3" align="right"><a href="{$actualPath}/offers"><img src="{$smarty.const.CLOUD_STATIC}more.jpg" border="0" /></a></td>
                                             </tr>-->
                                             {else}
                                             <tr>
@@ -100,7 +100,7 @@
                                             {/if}
                                         </table>
                                         </div>
-                                         <div class="tar morediv"><a href="{$actualPath}/offers.php"><img src="../images/more.jpg" border="0" /></a></div>
+                                         <div class="tar morediv"><a href="{$actualPath}/offers"><img src="../images/more.jpg" border="0" /></a></div>
                                         <div class="dashboard-main_shadow"></div>
                                     </div>
                                     <div class="dashblock mr24">
@@ -123,7 +123,7 @@
                                             </tr>
                                             {/section}
                                             <!--<tr>
-                                                <td colspan="3" align="right"><a href="{$actualPath}/myselling.php?mode=selling" ><img src="{$smarty.const.CLOUD_STATIC}more.jpg" border="0" /></a></td>
+                                                <td colspan="3" align="right"><a href="{$actualPath}/myselling?mode=selling" ><img src="{$smarty.const.CLOUD_STATIC}more.jpg" border="0" /></a></td>
                                             </tr>-->
                                             {else}
                                             <tr>
@@ -132,7 +132,7 @@
                                             {/if}
                                         </table>
                                         </div>
-                                         <div class="tar morediv"><a href="{$actualPath}/myselling.php?mode=selling"><img src="../images/more.jpg" border="0" /></a></div>
+                                         <div class="tar morediv"><a href="{$actualPath}/myselling?mode=selling"><img src="../images/more.jpg" border="0" /></a></div>
                                         <div class="dashboard-main_shadow"></div>
                                     </div>
 									{*
@@ -155,7 +155,7 @@
                                             </tr>
                                             {/section}
                                             <!--<tr>
-                                                <td colspan="3" align="right"><a href="{$actualPath}/myselling.php?mode=sold" ><img src="{$smarty.const.CLOUD_STATIC}more.jpg" border="0" /></a></td>
+                                                <td colspan="3" align="right"><a href="{$actualPath}/myselling?mode=sold" ><img src="{$smarty.const.CLOUD_STATIC}more.jpg" border="0" /></a></td>
                                             </tr>-->
                                             {else}
                                             <tr>
@@ -164,7 +164,7 @@
                                             {/if}
                                         </table>
                                         </div>
-                                         <div class="tar morediv"><a href="{$actualPath}/myselling.php?mode=sold"><img src="../images/more.jpg" border="0" /></a></div>
+                                         <div class="tar morediv"><a href="{$actualPath}/myselling?mode=sold"><img src="../images/more.jpg" border="0" /></a></div>
                                         <div class="dashboard-main_shadow"></div>
                                     </div>
                                     *}

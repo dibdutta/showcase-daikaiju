@@ -22,10 +22,10 @@
 				<div id="tabbed-inner-nav">
                 <div class="tabbed-inner-nav-left">
 					<ul class="menu">
-						<li><a href="{$actualPath}/myselling.php"><span>Selling</span></a></li>
-						<li class="active"><a href="{$actualPath}/myselling.php?mode=pending"><span>Pending</span></a></li>
-						<li><a href="{$actualPath}/myselling.php?mode=sold"><span>Sold</span></a></li>
-						<li><a href="{$actualPath}/myselling.php?mode=unsold">Unsold</a></li>
+						<li><a href="{$actualPath}/myselling"><span>Selling</span></a></li>
+						<li class="active"><a href="{$actualPath}/myselling?mode=pending"><span>Pending</span></a></li>
+						<li><a href="{$actualPath}/myselling?mode=sold"><span>Sold</span></a></li>
+						<li><a href="{$actualPath}/myselling?mode=unsold">Unsold</a></li>
 					</ul>
                     <div class="tabbed-inner-nav-right"></div>
 				</div>	

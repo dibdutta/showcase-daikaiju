@@ -56,12 +56,12 @@ function toggleDiv(id,flagit,type,track) {
 	
 		function search_buy_items_func(list){
 			var search_text= $('#search_buy_items').val();
-			window.location.href="buy.php?list="+list+"&mode=key_search&keyword="+encodeURIComponent(search_text);
+			window.location.href="buy?list="+list+"&mode=key_search&keyword="+encodeURIComponent(search_text);
 		}
 		function key_search_buy(list){
 		
 			var search_text= $('#search_buy_items').val();
-			window.location.href="buy.php?list="+list+"&mode=key_search&keyword="+encodeURIComponent(search_text);
+			window.location.href="buy?list="+list+"&mode=key_search&keyword="+encodeURIComponent(search_text);
 		}
 		function key_search_buy_clear(){
 			$('#search_buy_items').unbind('keypress');
@@ -91,11 +91,11 @@ function toggleDiv(id,flagit,type,track) {
               <div id="tabbed-inner-nav">
                 <div class="tabbed-inner-nav-left">
                   <ul class="menu">
-                    <li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/buy.php"><span>See all Items</span></a></li>
-                    <li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy.php?list=fixed"><span>Fixed Price Items</span></a></li>
-                    <li {if $smarty.request.list == 'weekly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly"><span>Weekly Auctions</span></a></li>
-                    {*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy.php?list=monthly"><span>Event Auctions</span></a></li>*}
-                    <li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy.php?list=upcoming"><span>Upcoming</span></a></li>
+                    <li {if $smarty.request.list == ''}class="active"{/if}><a href="{$actualPath}/buy"><span>See all Items</span></a></li>
+                    <li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy?list=fixed"><span>Fixed Price Items</span></a></li>
+                    <li {if $smarty.request.list == 'weekly'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly"><span>Weekly Auctions</span></a></li>
+                    {*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy?list=monthly"><span>Event Auctions</span></a></li>*}
+                    <li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy?list=upcoming"><span>Upcoming</span></a></li>
                   </ul>
                   <div class="tabbed-inner-nav-right"></div>
                 </div>
@@ -122,11 +122,11 @@ function toggleDiv(id,flagit,type,track) {
                               <li class="active">List</li>
                               |
                               {if $smarty.request.keyword!=''}
-                              <li><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}">Gallery</a></li>
+                              <li><a href="buy?view_mode=grid&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}">Gallery</a></li>
                               {elseif $smarty.request.mode=='search'}
-                              <li><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode=search&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}">Gallery</a></li>
+                              <li><a href="buy?view_mode=grid&list={$smarty.request.list}&mode=search&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}">Gallery</a></li>
                               {else}
-                              <li><a href="buy.php?view_mode=grid&list={$smarty.request.list}">Gallery</a></li>
+                              <li><a href="buy?view_mode=grid&list={$smarty.request.list}">Gallery</a></li>
                               {/if}
                             </ul>
                           </div>
@@ -208,7 +208,7 @@ function toggleDiv(id,flagit,type,track) {
                               {/if}
                               <tr><td colspan="2" class="list-poster-box" ><div class="poster-area-list"> {if $smarty.session.sessUserID <> ""}
                                     <input type="checkbox" name="auction_ids[]" value="{$auctionItems[counter].auction_id}"/>
-                                    {/if} <a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" ><strong>{$auctionItems[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$auctionItems[counter].poster_sku}){/if*}</strong></a> </div></td></tr>
+                                    {/if} <a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" ><strong>{$auctionItems[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$auctionItems[counter].poster_sku}){/if*}</strong></a> </div></td></tr>
                               <tr>
                                 <td class="list-poster-box" valign="top">
                                   <div class="poster-area-list">
@@ -445,11 +445,11 @@ function toggleDiv(id,flagit,type,track) {
                               <li class="active">List</li>
                               |
                               {if $smarty.request.keyword!=''}
-                              <li><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}">Gallery</a></li>
+                              <li><a href="buy?view_mode=grid&list={$smarty.request.list}&mode=key_search&keyword={$smarty.request.keyword|urlencode}">Gallery</a></li>
                               {elseif $smarty.request.mode=='search'}
-                              <li><a href="buy.php?view_mode=grid&list={$smarty.request.list}&mode=search&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}">Gallery</a></li>
+                              <li><a href="buy?view_mode=grid&list={$smarty.request.list}&mode=search&poster_size_id={$smarty.request.poster_size_id}&genre_id={$smarty.request.genre_id}&decade_id={$smarty.request.decade_id}&country_id={$smarty.request.country_id}">Gallery</a></li>
                               {else}
-                              <li><a href="buy.php?view_mode=grid&list={$smarty.request.list}">Gallery</a></li>
+                              <li><a href="buy?view_mode=grid&list={$smarty.request.list}">Gallery</a></li>
                               {/if}
                             </ul>
                           </div>
@@ -485,17 +485,17 @@ function toggleDiv(id,flagit,type,track) {
                             <!--							<div class="left-submenu">-->
                             <!--							<span class="goto-span"><strong>GO TO: <u>FOR SALE</u></strong></span>-->
                             <!--							<ul class="menu">-->
-                            <!--								<li>[<a href="{$actualPath}/offers.php">My Outgoing Offers</a>]</li>-->
-                            <!--                                <li>[<a href="{$actualPath}/offers.php?mode=incoming_counters">My Incoming Offers</a>]</li>-->
+                            <!--								<li>[<a href="{$actualPath}/offers">My Outgoing Offers</a>]</li>-->
+                            <!--                                <li>[<a href="{$actualPath}/offers?mode=incoming_counters">My Incoming Offers</a>]</li>-->
                             <!--							</ul>-->
                             <!--							</div>-->
                             <!--							<div class="right-submenu">-->
                             <!--								<span class="goto-span"><strong>AUCTIONS</strong></span>-->
                             <!--                                <ul class="menu">-->
-                            <!--                                    <li>[<a href="{$actualPath}/my_bid.php">My Bids</a></li>-->
-                            <!--                                    <li><img class="imgprpty" src="{$actualPath}/images/losing-bid-img.png" width="13" height="14" border="0"  /><a class="red" href="{$actualPath}/my_bid.php?mode=losing">Losing Bids</a>|</li>-->
-                            <!--                                    <li><img class="imgprpty" src="{$actualPath}/images/winning-bid-img.png" width="13" height="14" border="0" /><a class="green" href="{$actualPath}/my_bid.php?mode=winning">Winning Bids</a>]</li>-->
-                            <!--                                    <li>[<a href="{$actualPath}/user_watching.php">Watch List</a>]</li>                                -->
+                            <!--                                    <li>[<a href="{$actualPath}/my_bid">My Bids</a></li>-->
+                            <!--                                    <li><img class="imgprpty" src="{$actualPath}/images/losing-bid-img.png" width="13" height="14" border="0"  /><a class="red" href="{$actualPath}/my_bid?mode=losing">Losing Bids</a>|</li>-->
+                            <!--                                    <li><img class="imgprpty" src="{$actualPath}/images/winning-bid-img.png" width="13" height="14" border="0" /><a class="green" href="{$actualPath}/my_bid?mode=winning">Winning Bids</a>]</li>-->
+                            <!--                                    <li>[<a href="{$actualPath}/user_watching">Watch List</a>]</li>                                -->
                             <!--                                </ul>	-->
                             <!--							</div>-->
                           </div>

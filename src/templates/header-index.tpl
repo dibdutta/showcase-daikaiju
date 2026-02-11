@@ -75,17 +75,17 @@
         console.log("Username:", $('#username').val());
         console.log("Password:", $('#password').val() ? '***' : 'empty');
 		$.ajax({
-			url: 'auth.php',
+			url: 'auth',
 			type: 'get',
 			data: { username: $('#username').val(),password:$('#password').val(),mode:'process_login' },
 			success: function(data) {
 					   console.log("AJAX success, data:", data);
 					   if(data=='2'){
-					   	  window.location.href  = "buy.php?list=upcoming";
+					   	  window.location.href  = "buy?list=upcoming";
 					   }else if (data=='1'){
-					   	  window.location.href  = "buy.php?list=weekly";
+					   	  window.location.href  = "buy?list=weekly";
 					   }else if (data=='3'){
-					   	  window.location.href  = "buy.php?list=weekly";
+					   	  window.location.href  = "buy?list=weekly";
 					   }else{
 					   	 $("#error").text(data);
 					   }
@@ -134,11 +134,11 @@
 		$('#frm_refine').submit();
  }
  	function check_session(){
-    $.post('ajax.php', {mode : 'delete_session'}, function(){
+    $.post('ajax', {mode : 'delete_session'}, function(){
 
     })
 	var actualPath=' {/literal}{$actualPath}{literal}';
-		$(location).attr('href',actualPath+'/register.php');
+		$(location).attr('href',actualPath+'/register');
 }
   function clear_text_for_poster(){
     if($("#search_for_poster").val()=='Search For Items by Title,Descriptions,Genre..'){
@@ -167,7 +167,7 @@
  	<div id="header-wrapper">
     <!--Header Starts-->
      <div id="header">
-	  <form name="frm_refine" id="frm_refine" method="get" action="{$actualPath}/buy.php">
+	  <form name="frm_refine" id="frm_refine" method="get" action="{$actualPath}/buy">
                 <input type="hidden" name="mode" value="search" />
                 <input type="hidden" name="poster_size_id" id="poster_size_id" value="{$smarty.request.poster_size_id}" />
                 <input type="hidden" name="genre_id" id="genre_id" value="{$smarty.request.genre_id}" />
@@ -187,17 +187,17 @@
          {*<div style="position:absolute; left:167px; top:90px; background:#fff; height:15px;color:red;">
 		 <label>The site will be under maintainance for three(3) Hrs.sorry for the inconvenience caused</label>
 		 </div>*}
-        <div id="logopanel" style="width:165px; min-height:93px; display:flex; align-items:center; justify-content:center;"><a href="{$actualPath}/index.php" title="Movie Poster Exchange"><img src="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/logo/3bb4d422-bdd7-43a5-8462-a3f81cde183b.png/:/rs=w:98,h:80,cg:true,m/cr=w:98,h:80/qt=q:95" alt="Movie Poster Exchange" title="Movie Poster Exchange" width="98" height="80"/></a></div>
+        <div id="logopanel" style="width:165px; min-height:93px; display:flex; align-items:center; justify-content:center;"><a href="{$actualPath}/index" title="Movie Poster Exchange"><img src="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/logo/3bb4d422-bdd7-43a5-8462-a3f81cde183b.png/:/rs=w:98,h:80,cg:true,m/cr=w:98,h:80/qt=q:95" alt="Movie Poster Exchange" title="Movie Poster Exchange" width="98" height="80"/></a></div>
         <!--Header Top navigation Starts-->
         <div id="mainnavigation" class="innerbg">
           <ul class="menu">
-                <li {if $smarty.const.PHP_SELF == '' || $smarty.const.PHP_SELF == '/index.php'}class="active homeover"{/if}><a href="{$actualPath}/index.php" title="HOME"><span>HOME</span></a></li>
-                <li {if $smarty.request.list == 'weekly' || $smarty.request.list == 'extended'}class="active"{/if}><a href="{$actualPath}/buy.php?list=weekly" title="BUY"><span>AUCTIONS</span></a></li>
-                <li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy.php?list=fixed" title="POSTER SHOP"><span>POSTER SHOP</span></a></li>
-                <li {if $smarty.const.PHP_SELF == '/sell.php'}class="active"{/if}><a href="{$actualPath}/sell.php" title="SELL"><span>SELL</span></a></li>
-                <li {if $smarty.const.PHP_SELF == '/faq.php'}class="active"{/if}><a href="{$actualPath}/faq.php" title="FAQ"><span>FAQ</span></a></li>
-                <li {if $smarty.const.PHP_SELF == '/contactus.php'}class="active"{/if}><a href="{$actualPath}/contactus.php" title="CONTACT"><span>CONTACT</span></a></li>
-                <li  ><a href="{$actualPath}/sold_item.php" title="SOLD ITEMS ARCHIVE"><span style="color:#CC0000;">SOLD ITEMS ARCHIVE</span></a></li>
+                <li {if $smarty.const.PHP_SELF == '' || $smarty.const.PHP_SELF == '/index.php'}class="active homeover"{/if}><a href="{$actualPath}/index" title="HOME"><span>HOME</span></a></li>
+                <li {if $smarty.request.list == 'weekly' || $smarty.request.list == 'extended'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly" title="BUY"><span>AUCTIONS</span></a></li>
+                <li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy?list=fixed" title="POSTER SHOP"><span>POSTER SHOP</span></a></li>
+                <li {if $smarty.const.PHP_SELF == '/sell.php'}class="active"{/if}><a href="{$actualPath}/sell" title="SELL"><span>SELL</span></a></li>
+                <li {if $smarty.const.PHP_SELF == '/faq.php'}class="active"{/if}><a href="{$actualPath}/faq" title="FAQ"><span>FAQ</span></a></li>
+                <li {if $smarty.const.PHP_SELF == '/contactus.php'}class="active"{/if}><a href="{$actualPath}/contactus" title="CONTACT"><span>CONTACT</span></a></li>
+                <li  ><a href="{$actualPath}/sold_item" title="SOLD ITEMS ARCHIVE"><span style="color:#CC0000;">SOLD ITEMS ARCHIVE</span></a></li>
               </ul>
               
          
@@ -224,7 +224,7 @@
         <!--<div class="search-left-bg"></div>-->
             <div class="search-midrept-bg ">
                 <label><img src="https://d2m46dmzqzklm5.cloudfront.net/images/search-img.png" width="20" height="37" /></label>
-                <form name="frm_keysearch" method="get" action="{$actualPath}/buy.php">
+                <form name="frm_keysearch" method="get" action="{$actualPath}/buy">
                     <input type="hidden" name="list" value="{$smarty.request.list}" class="srchbox-txt" />
                     <input type="hidden" name="mode" value="key_search_global" class="srchbox-txt" />
 					<input type="hidden" name="is_expired" value="{$is_expired}"  />
@@ -240,7 +240,7 @@
                     </div>-->
                     <input type="submit" value="" class="srchbtn-main" />
                 </form>
-                <input type="button" value="" class="refine-srchbtn-main" onclick="$(location).attr('href', '{$actualPath}/buy.php?mode=refinesrc');" />
+                <input type="button" value="" class="refine-srchbtn-main" onclick="$(location).attr('href', '{$actualPath}/buy?mode=refinesrc');" />
             </div>
        
         <!--<div class="search-right-bg"></div>-->
@@ -283,11 +283,11 @@
             
                 <h3>MY BUYING</h3>
                 <ul>
-                   <li><a href="{$actualPath}/my_bid.php" >My Active Bids</a></li>
-                    <li><a  href="{$actualPath}/offers.php">My Outgoing Offers&nbsp;&nbsp;({$totalUnReadOutgoingOffer})</a></li>
-                    <li><a  href="{$actualPath}/offers.php?mode=incoming_counters" {if $totalUnReadIncomingCounters > 0} style="color:#FF4E09;" {/if}>My Incoming Counters&nbsp;&nbsp;({$totalUnReadIncomingCounters})</a></li>
-                    <li><a  href="{$actualPath}/my_bid.php?mode=closed">My Closed Items</a></li>
-                    <li><a  href="{$actualPath}/user_watching.php">Watch List&nbsp;&nbsp;({$count_watching})</a></li>
+                   <li><a href="{$actualPath}/my_bid" >My Active Bids</a></li>
+                    <li><a  href="{$actualPath}/offers">My Outgoing Offers&nbsp;&nbsp;({$totalUnReadOutgoingOffer})</a></li>
+                    <li><a  href="{$actualPath}/offers?mode=incoming_counters" {if $totalUnReadIncomingCounters > 0} style="color:#FF4E09;" {/if}>My Incoming Counters&nbsp;&nbsp;({$totalUnReadIncomingCounters})</a></li>
+                    <li><a  href="{$actualPath}/my_bid?mode=closed">My Closed Items</a></li>
+                    <li><a  href="{$actualPath}/user_watching">Watch List&nbsp;&nbsp;({$count_watching})</a></li>
                 </ul>   
                  
             </div>
@@ -296,17 +296,17 @@
             
                 <h3>MY SELLING</h3>
                 <ul>
-                    <li><a  href="{$actualPath}/myselling.php?mode=fixed">Manual Upload</a></li>
-                    <!--<li><a  href="{$actualPath}/myselling.php?mode=bulkupload">Bulk Upload</a></li>-->
-                    <li><a  href="{$actualPath}/myselling.php?mode=selling">Selling (Auction Items)</a></li>
-					<li><a  href="{$actualPath}/myselling.php?mode=fixed_selling">Selling (Fixed Items)</a></li>	
-                    <li><a  href="{$actualPath}/offers.php?mode=incoming_offers" {if $totalUnReadIncomingOffers > 0} style="color:#FF4E09;" {/if}>My Incoming Offers&nbsp;&nbsp;({$totalUnReadIncomingOffers})</a></li>
-                    <li><a  href="{$actualPath}/offers.php?mode=outgoing_counters">My Outgoing Counters&nbsp;&nbsp;({$totalUnReadOutgoingCounters})</a></li>
-					<li><a  href="{$actualPath}/myselling.php?mode=pending">Pending</a></li>
-					<li><a  href="{$actualPath}/myselling.php?mode=sold">Sold</a></li>
-					<li><a  href="{$actualPath}/myselling.php?mode=upcoming">Upcoming</a></li>
-					<li><a  href="{$actualPath}/myselling.php?mode=unsold">Unsold/Closed</a></li>
-					<li><a  href="{$actualPath}/myselling.php?mode=unpaid">Sale Pending</a></li>
+                    <li><a  href="{$actualPath}/myselling?mode=fixed">Manual Upload</a></li>
+                    <!--<li><a  href="{$actualPath}/myselling?mode=bulkupload">Bulk Upload</a></li>-->
+                    <li><a  href="{$actualPath}/myselling?mode=selling">Selling (Auction Items)</a></li>
+					<li><a  href="{$actualPath}/myselling?mode=fixed_selling">Selling (Fixed Items)</a></li>	
+                    <li><a  href="{$actualPath}/offers?mode=incoming_offers" {if $totalUnReadIncomingOffers > 0} style="color:#FF4E09;" {/if}>My Incoming Offers&nbsp;&nbsp;({$totalUnReadIncomingOffers})</a></li>
+                    <li><a  href="{$actualPath}/offers?mode=outgoing_counters">My Outgoing Counters&nbsp;&nbsp;({$totalUnReadOutgoingCounters})</a></li>
+					<li><a  href="{$actualPath}/myselling?mode=pending">Pending</a></li>
+					<li><a  href="{$actualPath}/myselling?mode=sold">Sold</a></li>
+					<li><a  href="{$actualPath}/myselling?mode=upcoming">Upcoming</a></li>
+					<li><a  href="{$actualPath}/myselling?mode=unsold">Unsold/Closed</a></li>
+					<li><a  href="{$actualPath}/myselling?mode=unpaid">Sale Pending</a></li>
                 </ul>   
                  
             </div>
@@ -315,13 +315,13 @@
             
                 <h3>MY ACCOUNT</h3>
                 <ul>
-                    <li><a  href="{$actualPath}/myaccount.php">My Account / Dashboard</a></li>
-                    <li><a  href="{$actualPath}/myaccount.php?mode=profile">Profile</a></li>
-                    <li><a  href="{$actualPath}/send_message.php">Messages&nbsp;&nbsp;({$countMsg}) </a></li>
-                    <li><a  href="{$actualPath}/my_want_list.php">My Want List ({$total_want_count})</a></li>
-                    <li><a  href="{$actualPath}/my_invoice.php">Invoices/Reconciliation</a></li>
-					<li><a  href="{$actualPath}/my_report.php">Reports</a></li>
-					<li><a  href="{$actualPath}/myaccount.php?mode=change_password">Change Password</a></li>
+                    <li><a  href="{$actualPath}/myaccount">My Account / Dashboard</a></li>
+                    <li><a  href="{$actualPath}/myaccount?mode=profile">Profile</a></li>
+                    <li><a  href="{$actualPath}/send_message">Messages&nbsp;&nbsp;({$countMsg}) </a></li>
+                    <li><a  href="{$actualPath}/my_want_list">My Want List ({$total_want_count})</a></li>
+                    <li><a  href="{$actualPath}/my_invoice">Invoices/Reconciliation</a></li>
+					<li><a  href="{$actualPath}/my_report">Reports</a></li>
+					<li><a  href="{$actualPath}/myaccount?mode=change_password">Change Password</a></li>
                 </ul>   
                  
             </div>
@@ -332,10 +332,10 @@
       </ul>  
     	 </div>
          <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
-        <div class="w60 fll pt18 pl14 scart"><a href="javascript:void(0)" onclick="$(location).attr('href','{$actualPath}/myaccount.php?mode=logout');">Sign Out</a></div>
+        <div class="w60 fll pt18 pl14 scart"><a href="javascript:void(0)" onclick="$(location).attr('href','{$actualPath}/myaccount?mode=logout');">Sign Out</a></div>
 		{/if}
         <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
-        <div class="w24 fll pt18 pl14"><a href="{$actualPath}/cart.php"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/cart1-icon.png" width="24" height="15" /></a></div>
+        <div class="w24 fll pt18 pl14"><a href="{$actualPath}/cart"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/cart1-icon.png" width="24" height="15" /></a></div>
     	<div class="w24 fll pt18 pl14 scart">({$totalCartCount})</div>
        
     	  
@@ -485,7 +485,7 @@
     <h2 style="margin:0; font-size:22px; color:#333; font-weight:600;">Member's Login</h2>
     <span onclick="hidelogin();" style="cursor:pointer; font-size:28px; color:#999; line-height:1; padding:0 4px;">&times;</span>
   </div>
-  <form name="frmlogin" id="frmlogin" method="post" action="auth.php">
+  <form name="frmlogin" id="frmlogin" method="post" action="auth">
     <input type="hidden" name="mode" value="process_login" />
     <div id="error" style="color:red; margin-bottom:8px;"></div>
     <div id="log-in-popup-text" style="color:#555; margin-bottom:12px; font-size:14px;"></div>
@@ -507,7 +507,7 @@
       <input type="button" value="LOGIN" id="submitButton" name="submit" onclick="submitDetailsForm()" style="width:100%; padding:10px; background:#cc0000; color:#fff; border:none; border-radius:4px; font-size:15px; font-weight:600; cursor:pointer; letter-spacing:1px;" />
     </div>
     <div style="text-align:center; padding-bottom:8px;">
-      <a href="{$actualPath}/forget_password.php" style="color:#cc0000; font-size:13px; text-decoration:none;">Forgot password?</a>
+      <a href="{$actualPath}/forget_password" style="color:#cc0000; font-size:13px; text-decoration:none;">Forgot password?</a>
     </div>
   </form>
 </div>

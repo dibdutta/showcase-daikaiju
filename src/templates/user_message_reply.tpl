@@ -65,7 +65,7 @@ $(document).ready(function() {
                                         <div class="btn-box">
                                             <label></label>
                                             <input type="submit" value="Submit" class="submit-btn" />
-                                            <input type="button" name="" value="Discard" class="submit-btn" onclick="javascript: location.href='{$actualPath}/send_message.php?mode=read&message_id={$message_id}&encoded_string={$encoded_string}'; ">
+                                            <input type="button" name="" value="Discard" class="submit-btn" onclick="javascript: location.href='{$actualPath}/send_message?mode=read&message_id={$message_id}&encoded_string={$encoded_string}'; ">
                                         </div>
                                 	</form>
                                 </td>

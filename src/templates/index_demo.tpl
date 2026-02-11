@@ -54,7 +54,7 @@ document.getElementById("frm1").submit();
 			  <div class="slides_container slides_containerbg" style="width:570px;">
 				{section name=counterslider loop=$dataArrSlider}
 			  		<div class="slide">
-						<a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataArrSlider[counterslider].auction_id}" title="{$dataArrSlider[counterslider].poster_title}" ><img src="{$dataArrSlider[counterslider].big_image}"  alt="Slide 2"></a>
+						<a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrSlider[counterslider].auction_id}" title="{$dataArrSlider[counterslider].poster_title}" ><img src="{$dataArrSlider[counterslider].big_image}"  alt="Slide 2"></a>
 						<div class="caption">
 							<p>{$dataArrSlider[counterslider].poster_title}</p>
 					  </div>
@@ -187,7 +187,7 @@ document.getElementById("frm1").submit();
 					{if $smarty.session.sessUserID <> ""}
                     	<h2 class="pb10">${if $dataArrWeekly[counter].last_bid_amount|number_format:2 > 0}{$dataArrWeekly[counter].last_bid_amount|number_format:2}{else}{$dataArrWeekly[counter].auction_asked_price|number_format:2}{/if}</h2>
 					{/if}
-                    <a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataArrWeekly[counter].auction_id}" title="{$dataArrWeekly[counter].poster_title}"  id="tipsy_{$dataArrWeekly[counter].auction_id}" onMouseOver="tipsy(this.id)" ><h3 class="pb10">{$dataArrWeekly[counter].poster_title|substr:0:10}..</h3></a>
+                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrWeekly[counter].auction_id}" title="{$dataArrWeekly[counter].poster_title}"  id="tipsy_{$dataArrWeekly[counter].auction_id}" onMouseOver="tipsy(this.id)" ><h3 class="pb10">{$dataArrWeekly[counter].poster_title|substr:0:10}..</h3></a>
 					{if $dataArrWeekly[counter].watch_indicator == 0}
                     <input type="button" value="Watch this item" class="track-btn" onclick="add_watchlist('{$dataArrWeekly[counter].auction_id}');" id="watch_{$dataArrWeekly[counter].auction_id}" />
 					{else}
@@ -212,7 +212,7 @@ document.getElementById("frm1").submit();
 		</div>
 	</div>
 
-<div class="seeall lower-poster-area"><input type="button" value="" class="seeall-btn" onclick="$(location).attr('href', '{$actualPath}/buy.php?list=weekly');" /></div>
+<div class="seeall lower-poster-area"><input type="button" value="" class="seeall-btn" onclick="$(location).attr('href', '{$actualPath}/buy?list=weekly');" /></div>
 </div>    
 {/if} 
 
@@ -232,7 +232,7 @@ document.getElementById("frm1").submit();
 					{if $smarty.session.sessUserID <> ""}
                     	<h2 class="pb10">${$dataArrUpcoming[counter].auction_asked_price|number_format:2}</h2>
 					{/if}
-                    <a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataArrUpcoming[counter].auction_id}" title="{$dataArrUpcoming[counter].poster_title}"  id="tipsy_{$dataArrUpcoming[counter].auction_id}" onMouseOver="tipsy(this.id)" ><h3 class="pb10">{$dataArrUpcoming[counter].poster_title|substr:0:10}..</h3></a>
+                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrUpcoming[counter].auction_id}" title="{$dataArrUpcoming[counter].poster_title}"  id="tipsy_{$dataArrUpcoming[counter].auction_id}" onMouseOver="tipsy(this.id)" ><h3 class="pb10">{$dataArrUpcoming[counter].poster_title|substr:0:10}..</h3></a>
 					{if $dataArrUpcoming[counter].watch_indicator == 0}
                     <input type="button" value="Watch this item" class="track-btn" onclick="add_watchlist('{$dataArrUpcoming[counter].auction_id}');" id="watch_{$dataArrUpcoming[counter].auction_id}" />
 					{else}
@@ -257,7 +257,7 @@ document.getElementById("frm1").submit();
 		</div>
 	</div>
 
-<div class="seeall lower-poster-area"><input type="button" value="" class="seeall-btn" onclick="$(location).attr('href', '{$actualPath}/buy.php?list=upcoming');" /></div>
+<div class="seeall lower-poster-area"><input type="button" value="" class="seeall-btn" onclick="$(location).attr('href', '{$actualPath}/buy?list=upcoming');" /></div>
 </div>    
 {/if} 	
 {if $totFixed > 0}    
@@ -276,7 +276,7 @@ document.getElementById("frm1").submit();
 					{if $smarty.session.sessUserID <> ""}
                    	 <h2 class="pb10">${$dataArrFixed[counter].auction_asked_price|number_format:2}</h2>
 					{/if}
-                    <a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataArrFixed[counter].auction_id}" title="{$dataArrFixed[counter].poster_title}"  id="tipsy_{$dataArrFixed[counter].auction_id}" onMouseOver="tipsy(this.id)" ><h3 class="pb10">{$dataArrFixed[counter].poster_title|substr:0:10}..</h3></a>
+                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrFixed[counter].auction_id}" title="{$dataArrFixed[counter].poster_title}"  id="tipsy_{$dataArrFixed[counter].auction_id}" onMouseOver="tipsy(this.id)" ><h3 class="pb10">{$dataArrFixed[counter].poster_title|substr:0:10}..</h3></a>
 					{if $dataArrFixed[counter].watch_indicator == 0}
                     <input type="button" value="Watch this item" class="track-btn" onclick="add_watchlist('{$dataArrFixed[counter].auction_id}');" id="watch_{$dataArrFixed[counter].auction_id}" />
 					{else}
@@ -301,7 +301,7 @@ document.getElementById("frm1").submit();
 		</div>
 	</div>
 
-<div class="seeall lower-poster-area"><input type="button" value="" class="seeall-btn" onclick="$(location).attr('href', '{$actualPath}/buy.php?list=fixed');" /></div>
+<div class="seeall lower-poster-area"><input type="button" value="" class="seeall-btn" onclick="$(location).attr('href', '{$actualPath}/buy?list=fixed');" /></div>
 </div>    
 {/if}    
  
@@ -322,7 +322,7 @@ document.getElementById("frm1").submit();
 					{if $smarty.session.sessUserID <> ""}
                     	<h2 class="pb10">${if $dataJstFinishedAuction[counter].soldamnt==''}0.00{else}{$dataJstFinishedAuction[counter].soldamnt}{/if}</h2>
 					{/if}	
-					<a href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" title="{$dataJstFinishedAuction[counter].poster_title}" id="tipsy_{$dataJstFinishedAuction[counter].auction_id}" onMouseOver="tipsy(this.id)" ><h3 class="pb10">{$dataJstFinishedAuction[counter].poster_title|substr:0:10}..</h3></a>                    
+					<a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" title="{$dataJstFinishedAuction[counter].poster_title}" id="tipsy_{$dataJstFinishedAuction[counter].auction_id}" onMouseOver="tipsy(this.id)" ><h3 class="pb10">{$dataJstFinishedAuction[counter].poster_title|substr:0:10}..</h3></a>                    
 					
                     </div>
 			  </div>		
@@ -343,7 +343,7 @@ document.getElementById("frm1").submit();
 		</div>
 	</div>
 
-<div class="seeall lower-poster-area"><input type="button" value="" class="seeall-btn" onclick="$(location).attr('href', '{$actualPath}/sold_item.php');" /></div>
+<div class="seeall lower-poster-area"><input type="button" value="" class="seeall-btn" onclick="$(location).attr('href', '{$actualPath}/sold_item');" /></div>
 </div>    
 {/if}    
 </form>

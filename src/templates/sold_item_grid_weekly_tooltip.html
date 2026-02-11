@@ -53,14 +53,14 @@
                             <div id="tabbed-inner-nav">
                                 <div class="tabbed-inner-nav-left">
                                     <ul class="menu">
-                                        <li><a href="{$actualPath}/sold_item.php"><span>All</span></a></li>
-                                        <li><a href="{$actualPath}/sold_item.php?mode=fixed"><span>Fixed
+                                        <li><a href="{$actualPath}/sold_item"><span>All</span></a></li>
+                                        <li><a href="{$actualPath}/sold_item?mode=fixed"><span>Fixed
                                                     Price</span></a></li>
                                         <li class="active"><a
-                                                href="{$actualPath}/sold_item.php?mode=weekly"><span>Auction</span></a>
+                                                href="{$actualPath}/sold_item?mode=weekly"><span>Auction</span></a>
                                         </li>
                                         {*<li><a
-                                                href="{$actualPath}/sold_item.php?mode=stills"><span>Stills/Photos</span></a>
+                                                href="{$actualPath}/sold_item?mode=stills"><span>Stills/Photos</span></a>
                                         </li>*}
                                     </ul>
 
@@ -84,11 +84,11 @@
                                                         <ul class="menu">
                                                             {if $smarty.request.mode=='search_sold_weekly'}
                                                             <li class="list"><a
-                                                                    href="sold_item.php?view_mode=list&mode=search_sold_weekly&search_sold={$smarty.request.search_sold|urlencode}">&nbsp;</a>
+                                                                    href="sold_item?view_mode=list&mode=search_sold_weekly&search_sold={$smarty.request.search_sold|urlencode}">&nbsp;</a>
                                                             </li>
                                                             {else}
                                                             <li class="list"><a
-                                                                    href="sold_item.php?view_mode=list&mode=weekly">&nbsp;</a>
+                                                                    href="sold_item?view_mode=list&mode=weekly">&nbsp;</a>
                                                             </li>
                                                             {/if}
                                                             |
@@ -191,7 +191,7 @@
                                                                                 <div class="pb05 pl10 pr10 tac"
                                                                                     style="height:40px;">
                                                                                     <h3><a class="gridView"
-                                                                                            href="{$actualPath}/buy.php?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}"
+                                                                                            href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}"
                                                                                             style="cursor:pointer;">{$dataJstFinishedAuction[counter].poster_title}&nbsp;{*if
                                                                                             $smarty.session.sessUserID
                                                                                             <>
@@ -236,7 +236,7 @@
                                                                                             href="javascript:void(0)"
                                                                                             onclick="showLogIn();">Sign
                                                                                             In</a> or <a
-                                                                                            href="register.php">Register</a>
+                                                                                            href="register">Register</a>
                                                                                         to view details</div>
                                                                                     {/if*}
                                                                             </div>

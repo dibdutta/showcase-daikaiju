@@ -649,7 +649,7 @@ function pay_now()
 		$_SESSION['Err'] = "Payment failed. Please try again!"."<br/>"." Paypal Error Code:". $resArray['L_ERRORCODE0']."&nbsp;".$resArray['L_LONGMESSAGE0'];
 		//$smarty->assign('errorMessage', $_SESSION['Err']);
 	}
-	header("location: my_invoice.php?invoice_id=".$invoice_id);
+	header("location: my_invoice?invoice_id=".$invoice_id);
 	exit;
 }
 

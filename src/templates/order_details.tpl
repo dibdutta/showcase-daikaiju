@@ -123,7 +123,7 @@
                             <div class="div_submit" style="margin-left: 300px;">
                                 <label>&nbsp;</label>
                                 <input type="button" value="Pay Now" class="submit-btn" onclick="if(confirm('Do you want to continue payment?'))$('#paypalpayment').submit();" />
-                                <input type="reset" value="Cancel Payment" class="cancel-btn" onclick="if(confirm('Do you want to cancel payment?'))$(location).attr('href', '{$actualPath}/cart.php?mode=cancel_payment');" />
+                                <input type="reset" value="Cancel Payment" class="cancel-btn" onclick="if(confirm('Do you want to cancel payment?'))$(location).attr('href', '{$actualPath}/cart?mode=cancel_payment');" />
                             </div>
                             <div class="clear"></div>
                         </div>

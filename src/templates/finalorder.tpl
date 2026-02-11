@@ -184,13 +184,13 @@
                             <div class="div_submit" style="margin-left: 300px;">
                                 <label>&nbsp;</label>
                                 {if $smarty.request.mode == 'order'}
-                                <input type="button" value="Continue" onclick="$(location).attr('href','{$actualPath}/my_invoice.php?mode=shippinginfo&invoice_id={$invoice_id}');" class="submit-btn" />
+                                <input type="button" value="Continue" onclick="$(location).attr('href','{$actualPath}/my_invoicep?mode=shippinginfo&invoice_id={$invoice_id}');" class="submit-btn" />
                                 {elseif $smarty.request.mode == 'finalorder'}
                                 <input type="button" value="Pay Now" class="submit-btn" onclick="if(confirm('Do you want to continue payment?'))$('#paypalpayment').submit();" />
-                                <input type="button" value="Cancel Payment" onclick="if(confirm('Do you want to cancel payment?'))$(location).attr('href','{$actualPath}/my_invoice.php?mode=cancel_payment&invoice_id={$invoice_id}');" class="cancel-btn" />
+                                <input type="button" value="Cancel Payment" onclick="if(confirm('Do you want to cancel payment?'))$(location).attr('href','{$actualPath}/my_invoice?mode=cancel_payment&invoice_id={$invoice_id}');" class="cancel-btn" />
                                 {elseif $smarty.request.mode == 'phone_order'}
 									<input type="button" value="Confirm Order" class="cancel-btn" onclick="if(confirm('Are you sure you want to Confirm order?'))$('#paypalpayment').submit();" />
-									<input type="button" value="Cancel Order" onclick="if(confirm('Are you sure you want to Cancel order?'))$(location).attr('href','{$actualPath}/my_invoice.php?mode=cancel_payment&invoice_id={$invoice_id}');" class="cancel-btn" />
+									<input type="button" value="Cancel Order" onclick="if(confirm('Are you sure you want to Cancel order?'))$(location).attr('href','{$actualPath}/my_invoice?mode=cancel_payment&invoice_id={$invoice_id}');" class="cancel-btn" />
 								{/if}
                             </div>
                             <div class="clear"></div>
