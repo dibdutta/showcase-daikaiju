@@ -16,14 +16,8 @@
 
 <link rel="shortcut icon" href="{$smarty.const.CLOUD_STATIC}favicon.ico" >
 
-<!--<link href="https://c15123524.ssl.cf2.rackcdn.com/template_test.css" rel="stylesheet" type="text/css"/>-->
-
-
-<link href="https://d2m46dmzqzklm5.cloudfront.net/css/style.css" rel="stylesheet" type="text/css" />
-<!--<link rel="stylesheet" type="text/css" href="{$smarty.const.DOMAIN_PATH}/javascript/slider/skins/tango/skin.css" />
-<link rel="stylesheet" type="text/css" href="{$actualPath}/javascript/tooltip/css/temp.css" media="screen" />-->
-<link href="https://d2m46dmzqzklm5.cloudfront.net/css/fonts.css" rel="stylesheet" type="text/css" />
-<link href="https://d2m46dmzqzklm5.cloudfront.net/css/template.css" rel="stylesheet" type="text/css" />
+<!-- Merged CSS: style.css + fonts.css + jquery-ui.css + template.css + glob.css + dddropdownpanel.css -->
+<link href="{$actualPath}/css/site.css" rel="stylesheet" type="text/css" />
 
 {if $smarty.const.PHP_SELF != '/myselling.php' && $smarty.const.PHP_SELF != '/edit_myauction.php'}
 	<script src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery-1.10.2.js"></script>
@@ -33,7 +27,6 @@
 {/if}
 {* <script type="text/javascript" src="{$smarty.const.PAGE_LINK_SSL_CSSJS}/javascript/common.js.php"></script> *}
 <script type="text/javascript" src="{$actualPath}/javascript/common.js.php"></script>
-<link rel="stylesheet" href="https://d2m46dmzqzklm5.cloudfront.net/css/jquery-ui.css">
 
 
 
@@ -271,7 +264,6 @@ function showTimer1(list,id){
 </script>
 {/literal}
  <!-- sign in popup  -->
-    <link rel="stylesheet" type="text/css" href="https://d2m46dmzqzklm5.cloudfront.net/css/dddropdownpanel.css" />
 
 </head>
 <body>
@@ -392,7 +384,7 @@ function showTimer1(list,id){
 		{elseif $smarty.session.sessUserID != ''}
         <div class="w60 fll pt07 pl122">
 		<ul id="menu"> 
-     <li class="menu_right"><a href="#" class="drop"> User Panel<!--Welcome {$smarty.session.sessUsername}!--></a>
+     <li class="menu_right"><a href="#" class="drop"> Hi, {$smarty.session.sessUsername}</a>
          <div class="dropdown_4columns align_right"><!-- Begin 2 columns container -->
     
             <div class="col_1">

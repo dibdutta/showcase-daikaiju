@@ -7,7 +7,7 @@
 .popDiv_Auction { position:absolute; min-width:120px; list-style-type:none; background-color:#881318 ;color:white; z-index:1000;font-size:12px; padding:6px; outline:4px solid #881318; border: 1px solid #a3595c; margin-left:150px; margin-top:45px;visibility:hidden;}
 
 #track-btn-id:hover {
-	background-image: url(https://c4808190.ssl.cf2.rackcdn.com/watchthisitem_btn.png);
+	background: #7a3050;
 }
 
 </style>
@@ -147,7 +147,7 @@
 										
                                         <div style="float:left; padding:0px; margin:0px;">
 										{if $smarty.session.sessUserID <> ""}
-                                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="" />
+                                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="Place All Bids" />
 										{else}	
 										  &nbsp;
 										{/if}	
@@ -232,7 +232,7 @@
 																  		<div class="text-timer" id="timer_{$auctionItems[counter].auction_id}" style="background:#003878; background-image:none; color:#fff; border-radius:3px;">{$auctionItems[counter].auction_countdown}</div>
 																  		<!--<div class="timer-right"></div>-->
 																  	</div>
-																	<input type="button" value="Watching" style="width:60px;" onclick="redirect_watchlist({$auctionItems[counter].auction_id});" class="track-btn"  />
+																	<input type="button" value="Watching" style="width:80px;" onclick="redirect_watchlist({$auctionItems[counter].auction_id});" class="track-btn"  />
 													
 																{/if}
                                                                </div>
@@ -274,7 +274,7 @@
                                                             <div class="CurrencyDecimal" style="font-size:15px;">.00</div>
                                                         </div>
                                                         <div class="left-side fll">
-														<input type="button" id="bid_bttn_{$auctionItems[counter].auction_id}" value="" onclick="postBid({$auctionItems[counter].auction_id}, '{$auctionItems[counter].fk_user_id}');" class="bidnow-hammer-btn2" /></div>
+														<input type="button" id="bid_bttn_{$auctionItems[counter].auction_id}" value="Bid Now" onclick="postBid({$auctionItems[counter].auction_id}, '{$auctionItems[counter].fk_user_id}');" class="bidnow-hammer-btn2" /></div>
                                                     </div>
 												<div id="auction_data_{$auctionItems[counter].auction_id}" >
                                                     {if $auctionItems[counter].bid_count > 0}
@@ -419,7 +419,7 @@
                                {if ($smarty.request.list == "weekly" || $smarty.request.list == "extended") && ($is_expired=='0' && $is_expired_stills!='1')}
                                     <div class="inner-grey SelectionBtnPanel">
                                         <div style="float:left; padding:0px; margin:0px;">
-                                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);"  />
+                                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="Place All Bids" />
                                         </div>
 
                                         <div class="time_auction" id="auction_{$auctionItems[1].auction_id}">

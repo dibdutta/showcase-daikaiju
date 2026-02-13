@@ -1,5 +1,10 @@
 FROM php:8.3-apache
 
+# Install GD dependencies (for image processing)
+RUN apt-get update && apt-get install -y libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd
+
 # Install mysqli extension
 RUN docker-php-ext-install mysqli
 

@@ -14,12 +14,8 @@
 <!-- round corner ends here  -->
 <link rel="shortcut icon" href="{$smarty.const.CLOUD_STATIC}favicon.ico" >
 
-<!--<link href="https://c15123524.ssl.cf2.rackcdn.com/template_test.css" rel="stylesheet" type="text/css"/>-->
-
-
-<link href="https://d2m46dmzqzklm5.cloudfront.net/css/style.css" rel="stylesheet" type="text/css" />
-<link href="https://d2m46dmzqzklm5.cloudfront.net/css/fonts.css" rel="stylesheet" type="text/css" />
-<link href="https://d2m46dmzqzklm5.cloudfront.net/css/template.css" rel="stylesheet" type="text/css" />
+<!-- Merged CSS: style.css + fonts.css + jquery-ui.css + template.css + glob.css + dddropdownpanel.css -->
+<link href="{$actualPath}/css/site.css" rel="stylesheet" type="text/css" />
 
 
 
@@ -29,8 +25,6 @@
 
 
  <!-- Photogallery script  -->
- 
- 	<link rel="stylesheet" href="https://d2m46dmzqzklm5.cloudfront.net/css/glob.css">
 
 	<script src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery.min.js"></script>
 	<script src="https://d2m46dmzqzklm5.cloudfront.net/js/slides.jquery.js"></script>
@@ -153,7 +147,6 @@
     
     
     <!-- sign in popup  -->
-    <link rel="stylesheet" type="text/css" href="https://d2m46dmzqzklm5.cloudfront.net/css/dddropdownpanel.css" />
 	
     
     
@@ -221,7 +214,6 @@
         <!--Search Panel Starts-->
         
         <div id="searchbar" style="background:#003878; width:100%; box-sizing:border-box;">
-        <!--<div class="search-left-bg"></div>-->
             <div class="search-midrept-bg ">
                 <label><img src="https://d2m46dmzqzklm5.cloudfront.net/images/search-img.png" width="20" height="37" /></label>
                 <form name="frm_keysearch" method="get" action="{$actualPath}/buy">
@@ -275,7 +267,7 @@
 		{elseif $smarty.session.sessUserID != ''}
         <div class="w60 fll pt07 pl122">
 		<ul id="menu"> 
-     <li class="menu_right"><a href="#" class="drop"> User Panel <!--Welcome {$smarty.session.sessUsername}!--></a>
+            <li class="menu_right"><a href="#" class="drop"> Hi, {$smarty.session.sessUsername}</a>
      <div class="pcontent"></div>
          <div class="dropdown_4columns align_right"><!-- Begin 2 columns container -->
     
