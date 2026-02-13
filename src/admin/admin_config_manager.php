@@ -1,5 +1,6 @@
 <?php
 /**************************************************/
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 define ("PAGE_HEADER_TEXT", "Admin Configuration Section");
 
 define ("REQUIRED_PAYMENT_SYSTEM", false);              // For payment settings

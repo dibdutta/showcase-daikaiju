@@ -1103,6 +1103,7 @@ function combine_seller_invoice(){
                 and b.bid_fk_user_id=u.user_id and p.poster_id=pi.fk_poster_id ORDER BY p.poster_title,bid_amount desc ";
 				
 		$rs=mysqli_query($GLOBALS['db_connect'],$sql);
+		$dataArr = [];
 		while($row = mysqli_fetch_assoc($rs)){
 			   $dataArr[] = $row;
 		   }

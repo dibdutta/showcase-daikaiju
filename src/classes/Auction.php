@@ -3357,7 +3357,7 @@ class Auction extends DBCommon{
 	
 	function fetchWinnerAndSoldPrice(&$dataAuction){
 		for($i=0;$i<count($dataAuction);$i++){
-			if($dataAuction[$i]['fk_auction_type_id']=='1' && $dataAuction[$i]['auction_is_sold']=='1'){
+			if(($dataAuction[$i]['fk_auction_type_id']=='1' || $dataAuction[$i]['fk_auction_type_id']=='4') && $dataAuction[$i]['auction_is_sold']=='1'){
 				$sql ="SELECT u.firstname winnerFname, u.lastname winnerLname,
 					ofr.offer_id, cntr_ofr.offer_id AS cntr_offer_id, ofr.offer_is_accepted, cntr_ofr.offer_is_accepted cntr_offer_is_accepted, 
 					ofr.offer_amount, cntr_ofr.offer_amount AS cntr_offer_amount
@@ -3712,7 +3712,7 @@ class Auction extends DBCommon{
         $sql = "SELECT
 		 		a.auction_id,i.invoice_generated_on, a.fk_auction_type_id, a.auction_is_sold,a.auction_asked_price,a.auction_buynow_price,
 				 pi.poster_image,
-		 		p.poster_id, p.poster_title,  pi.poster_thumb,pi.is_cloud,a.fk_auction_week_id
+		 		p.poster_id, p.poster_title,  pi.poster_thumb,pi.is_cloud,a.fk_auction_week_id,tia.amount as soldamnt
 				FROM ".TBL_INVOICE." i ,".TBL_INVOICE_TO_AUCTION." tia,".TBL_AUCTION." a,".TBL_POSTER." p , ".TBL_POSTER_IMAGES." pi				
 					WHERE a.auction_is_approved = '1' 
 					AND tia.fk_auction_id = a.auction_id AND i.invoice_id=tia.fk_invoice_id AND i.is_buyers_copy = '1' 
@@ -3790,6 +3790,7 @@ class Auction extends DBCommon{
             }
         }
         //echo $sql;
+        $dataArr = [];
         if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
             while($row = mysqli_fetch_assoc($rs)){
                 $dataArr[] = $row;

@@ -30,8 +30,6 @@ function dispmiddle(){
             $dataJstFinishedAuction[$i]['image_path']=CLOUD_POSTER_THUMB.$dataJstFinishedAuction[$i]['poster_thumb'];
         }
     }
-	$dataJstFinishedAuction=$objAuction->fetchWinnerAndSoldPrice($dataJstFinishedAuction);
-
 	$smarty->assign('total', $totalSoldAuc);
 	$smarty->assign('dataJstFinishedAuction', $dataJstFinishedAuction);
 	$objBid = new Bid();
