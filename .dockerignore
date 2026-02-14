@@ -1,0 +1,10 @@
+.git
+.github
+infra
+*.md
+docker-compose.yml
+.dockerignore
+src/poster_photo/*
+src/bulkupload/*
+src/templates_c/*
+src/admin_templates_c/*

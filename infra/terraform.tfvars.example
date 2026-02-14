@@ -1,0 +1,14 @@
+aws_region  = "us-east-1"
+environment = "prod"
+
+# DB password is read from AWS Secrets Manager (showcase/prod/db-password)
+# Create it first: aws secretsmanager create-secret --name showcase/prod/db-password --secret-string "YOUR_PASSWORD" --region us-east-1
+
+domain_name = "movieposterexchange.com"
+
+# ECS task sizing
+web_task_cpu      = 512  # 0.5 vCPU
+web_task_memory   = 1024 # 1 GB
+web_desired_count = 2
+
+nat_instance_type = "t4g.nano"

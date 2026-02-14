@@ -65,10 +65,10 @@ define ('MAIL_BODY_BOTTOM', '</td></tr>
 	define ("DB_USER", "root");
 	define ("DB_PASSWORD", "");
 }elseif(HOST_NAME=="movieposterexchange.com" ||  HOST_NAME=="www.movieposterexchange.com"){*/
-	define ("DB_SERVER", "mysql");
-	define ("DB_NAME", "mpe");
-	define ("DB_USER", "root");
-	define ("DB_PASSWORD", "root");
+	define ("DB_SERVER", getenv('DB_SERVER') ?: "mysql");
+	define ("DB_NAME", getenv('DB_NAME') ?: "mpe");
+	define ("DB_USER", getenv('DB_USER') ?: "root");
+	define ("DB_PASSWORD", getenv('DB_PASSWORD') ?: "root");
 	
 /*}elseif(HOST_NAME=="mpe.geotechinfo.co.uk"){
 	define ("DB_SERVER", "localhost");

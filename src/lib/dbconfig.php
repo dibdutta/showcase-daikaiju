@@ -22,10 +22,10 @@ define("APP_ENV", getenv('APP_ENV') ?: 'local');
 //////////////   Database connection variables   ///////////////////////////////
 
 
-	define ("DB_SERVER", "mysql");
-	define ("DB_NAME", "mpe");
-	define ("DB_USER", "root");
-	define ("DB_PASSWORD", "root");
+	define ("DB_SERVER", getenv('DB_SERVER') ?: "mysql");
+	define ("DB_NAME", getenv('DB_NAME') ?: "mpe");
+	define ("DB_USER", getenv('DB_USER') ?: "root");
+	define ("DB_PASSWORD", getenv('DB_PASSWORD') ?: "root");
 	
 
 

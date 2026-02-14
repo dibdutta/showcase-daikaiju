@@ -142,13 +142,22 @@ define ("ADMIN_INSTRUCTION", nl2br($row[CONFIG_ADMIN_INSTRUCTION]));
 
 //////////////////    Link Variables   //////////////////////
 
-define ("IMAGE_LINK", "http://".$_SERVER['HTTP_HOST']."/images");
-define ("PAGE_LINK", "http://".$_SERVER['HTTP_HOST']);
-define ("PAGE_LINK_CSSJS", "http://".$_SERVER['HTTP_HOST']."/");
-
-define ("IMAGE_LINK_SSL", "http://".$_SERVER['HTTP_HOST']."/images"); 
-define ("PAGE_LINK_SSL", "http://".$_SERVER['HTTP_HOST']."");
-define ("PAGE_LINK_SSL_CSSJS", "http://".$_SERVER['HTTP_HOST']."/");
+if (APP_ENV === 'production') {
+	$cdnBase = getenv('CDN_STATIC_URL') ?: "https://d2m46dmzqzklm5.cloudfront.net";
+	define ("IMAGE_LINK", $cdnBase."/images");
+	define ("PAGE_LINK", "https://".$_SERVER['HTTP_HOST']);
+	define ("PAGE_LINK_CSSJS", $cdnBase."/");
+	define ("IMAGE_LINK_SSL", $cdnBase."/images");
+	define ("PAGE_LINK_SSL", "https://".$_SERVER['HTTP_HOST']."");
+	define ("PAGE_LINK_SSL_CSSJS", $cdnBase."/");
+} else {
+	define ("IMAGE_LINK", "http://".$_SERVER['HTTP_HOST']."/images");
+	define ("PAGE_LINK", "http://".$_SERVER['HTTP_HOST']);
+	define ("PAGE_LINK_CSSJS", "http://".$_SERVER['HTTP_HOST']."/");
+	define ("IMAGE_LINK_SSL", "http://".$_SERVER['HTTP_HOST']."/images");
+	define ("PAGE_LINK_SSL", "http://".$_SERVER['HTTP_HOST']."");
+	define ("PAGE_LINK_SSL_CSSJS", "http://".$_SERVER['HTTP_HOST']."/");
+}
 
 define ("DOMAIN_PATH", "http://".$_SERVER['HTTP_HOST']."");
 if(isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT']=='443'){
@@ -170,8 +179,8 @@ define ("FULL_PATH", "http://www.movieposterexchange.com");
 /*
  * CLOUD configuration
  */
-define("CLOUD_API_USERNAME","mpexchange");
-define("CLOUD_API_PASSWORD","064276f5fdc0df2bb74addd027c71655"); 
+define("CLOUD_API_USERNAME", getenv('CLOUD_API_USERNAME') ?: "mpexchange");
+define("CLOUD_API_PASSWORD", getenv('CLOUD_API_PASSWORD') ?: "064276f5fdc0df2bb74addd027c71655"); 
 define("CLOUD_STATIC_IMAGE_CONTAINER","cloud_mpe_static");
 
 $currentPage = basename($_SERVER['PHP_SELF']);	
@@ -254,7 +263,7 @@ define ('MAIL_BODY_BOTTOM', '</td></tr>
 	
 ////////////////////////////////////////////////////////////////
 
-define ("MAILCHIMP_API", "5bc53167c17cc6e93a5f6aac6912c50e-us2");
+define ("MAILCHIMP_API", getenv('MAILCHIMP_API') ?: "5bc53167c17cc6e93a5f6aac6912c50e-us2");
 
 
 

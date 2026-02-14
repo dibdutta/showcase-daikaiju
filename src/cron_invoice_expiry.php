@@ -52,10 +52,10 @@ define ('MAIL_BODY_BOTTOM', '</td></tr>
 </body></html>');
 
 
-	define ("DB_SERVER", "localhost");
-	define ("DB_NAME", "mpe");
-	define ("DB_USER", "geotech");
-	define ("DB_PASSWORD", "Hello@4321");
+	define ("DB_SERVER", getenv('DB_SERVER') ?: "mysql");
+	define ("DB_NAME", getenv('DB_NAME') ?: "mpe");
+	define ("DB_USER", getenv('DB_USER') ?: "root");
+	define ("DB_PASSWORD", getenv('DB_PASSWORD') ?: "root");
 
 
 $connect=mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD) or die("Cannot connect DB Server!");
