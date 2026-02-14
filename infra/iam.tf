@@ -24,6 +24,28 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_default" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+# SSM permissions for ECS Exec (CloudBeaver, debugging)
+resource "aws_iam_role_policy" "ecs_task_ssm_exec" {
+  name = "${local.name_prefix}-ssm-exec"
+  role = aws_iam_role.ecs_task.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ssmmessages:CreateControlChannel",
+          "ssmmessages:CreateDataChannel",
+          "ssmmessages:OpenControlChannel",
+          "ssmmessages:OpenDataChannel"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy" "ecs_execution_ssm" {
   name = "${local.name_prefix}-ssm-access"
   role = aws_iam_role.ecs_execution.id

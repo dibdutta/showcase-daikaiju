@@ -204,7 +204,7 @@ resource "aws_ecs_service" "web" {
   deployment_minimum_healthy_percent = 50
   deployment_maximum_percent         = 200
 
-  depends_on = [aws_lb_listener.https]
+  depends_on = [aws_lb_listener.http, aws_lb_listener.https]
 }
 
 ################################################################################
@@ -291,6 +291,7 @@ resource "aws_ecs_task_definition" "cloudbeaver" {
   cpu                      = 256
   memory                   = 512
   execution_role_arn       = aws_iam_role.ecs_execution.arn
+  task_role_arn            = aws_iam_role.ecs_task.arn
 
   container_definitions = jsonencode([
     {

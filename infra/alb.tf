@@ -3,9 +3,9 @@
 ################################################################################
 
 resource "aws_acm_certificate" "main" {
-  domain_name       = var.domain_name
+  domain_name               = var.domain_name
   subject_alternative_names = ["*.${var.domain_name}"]
-  validation_method = "DNS"
+  validation_method         = "DNS"
 
   lifecycle {
     create_before_destroy = true
@@ -59,9 +59,26 @@ resource "aws_lb_target_group" "web" {
 
 ################################################################################
 # Listeners
+# Phase 1 (domain_validated=false): HTTP forwards to target group
+# Phase 2 (domain_validated=true):  HTTP redirects to HTTPS, HTTPS forwards
 ################################################################################
 
+# When cert NOT validated: HTTP listener forwards directly to app
 resource "aws_lb_listener" "http" {
+  count             = var.domain_validated ? 0 : 1
+  load_balancer_arn = aws_lb.main.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.web.arn
+  }
+}
+
+# When cert IS validated: HTTP redirects to HTTPS
+resource "aws_lb_listener" "http_redirect" {
+  count             = var.domain_validated ? 1 : 0
   load_balancer_arn = aws_lb.main.arn
   port              = 80
   protocol          = "HTTP"
@@ -77,7 +94,9 @@ resource "aws_lb_listener" "http" {
   }
 }
 
+# When cert IS validated: HTTPS listener
 resource "aws_lb_listener" "https" {
+  count             = var.domain_validated ? 1 : 0
   load_balancer_arn = aws_lb.main.arn
   port              = 443
   protocol          = "HTTPS"

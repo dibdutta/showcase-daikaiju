@@ -59,8 +59,14 @@ variable "web_desired_count" {
   default     = 2
 }
 
+variable "domain_validated" {
+  description = "Set to true after ACM certificate DNS validation is complete to enable HTTPS"
+  type        = bool
+  default     = false
+}
+
 variable "nat_instance_type" {
   description = "Instance type for NAT instance"
   type        = string
-  default     = "t2.micro"
+  default     = "t3.micro"
 }

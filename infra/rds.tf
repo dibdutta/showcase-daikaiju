@@ -55,11 +55,11 @@ resource "aws_db_instance" "main" {
 
   engine         = "mysql"
   engine_version = "8.0"
-  instance_class = "db.t4g.micro"
+  instance_class = "db.t3.micro"
 
   allocated_storage     = 20
   max_allocated_storage = 100
-  storage_type          = "gp3"
+  storage_type          = "gp2"
   storage_encrypted     = true
 
   db_name  = var.db_name
@@ -75,7 +75,7 @@ resource "aws_db_instance" "main" {
   skip_final_snapshot = false
   final_snapshot_identifier = "${local.name_prefix}-final-snapshot"
 
-  backup_retention_period = 7
+  backup_retention_period = 1
   backup_window           = "03:00-04:00"
   maintenance_window      = "sun:04:00-sun:05:00"
 

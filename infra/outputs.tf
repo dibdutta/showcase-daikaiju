@@ -53,3 +53,24 @@ output "s3_static_bucket" {
   description = "S3 bucket for static assets"
   value       = aws_s3_bucket.static_assets.id
 }
+
+output "acm_certificate_validation_records" {
+  description = "DNS records to add at your domain registrar for ACM cert validation"
+  value = {
+    for dvo in aws_acm_certificate.main.domain_validation_options : dvo.domain_name => {
+      type  = dvo.resource_record_type
+      name  = dvo.resource_record_name
+      value = dvo.resource_record_value
+    }
+  }
+}
+
+output "ecs_execution_role_arn" {
+  description = "ECS execution role ARN"
+  value       = aws_iam_role.ecs_execution.arn
+}
+
+output "ecs_task_role_arn" {
+  description = "ECS task role ARN"
+  value       = aws_iam_role.ecs_task.arn
+}

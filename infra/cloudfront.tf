@@ -7,8 +7,10 @@ resource "aws_cloudfront_distribution" "main" {
   is_ipv6_enabled     = true
   comment             = "MPE Static Assets and Site CDN"
   default_root_object = "index.php"
-  aliases             = [var.domain_name, "www.${var.domain_name}"]
   price_class         = "PriceClass_100" # US, Canada, Europe only (cost saving)
+
+  # Only attach custom domain when cert is validated
+  aliases = var.domain_validated ? [var.domain_name, "www.${var.domain_name}"] : []
 
   # Origin 1: S3 for static assets
   origin {
@@ -25,7 +27,7 @@ resource "aws_cloudfront_distribution" "main" {
     custom_origin_config {
       http_port              = 80
       https_port             = 443
-      origin_protocol_policy = "https-only"
+      origin_protocol_policy = var.domain_validated ? "https-only" : "http-only"
       origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
@@ -119,10 +121,21 @@ resource "aws_cloudfront_distribution" "main" {
     }
   }
 
-  viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate.main.arn
-    ssl_support_method       = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2021"
+  # Use custom cert when validated, otherwise default CloudFront cert
+  dynamic "viewer_certificate" {
+    for_each = var.domain_validated ? [1] : []
+    content {
+      acm_certificate_arn      = aws_acm_certificate.main.arn
+      ssl_support_method       = "sni-only"
+      minimum_protocol_version = "TLSv1.2_2021"
+    }
+  }
+
+  dynamic "viewer_certificate" {
+    for_each = var.domain_validated ? [] : [1]
+    content {
+      cloudfront_default_certificate = true
+    }
   }
 
   tags = { Name = "${local.name_prefix}-cdn" }
