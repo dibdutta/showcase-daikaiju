@@ -63,29 +63,23 @@ resource "aws_subnet" "database" {
 # NAT Instance (cost-efficient alternative to NAT Gateway)
 ################################################################################
 
-data "aws_ami" "nat" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn-ami-vpc-nat-*-x86_64-ebs"]
-  }
-}
-
-# For ARM-based t4g instances, use AL2023 with NAT configuration
 data "aws_ami" "al2023_arm" {
   most_recent = true
   owners      = ["amazon"]
 
   filter {
     name   = "name"
-    values = ["al2023-ami-*-arm64"]
+    values = ["al2023-ami-minimal-*-arm64"]
   }
 
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["arm64"]
   }
 }
 
