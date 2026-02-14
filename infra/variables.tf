@@ -62,5 +62,5 @@ variable "web_desired_count" {
 variable "nat_instance_type" {
   description = "Instance type for NAT instance"
   type        = string
-  default     = "t4g.nano"
+  default     = "t2.micro"
 }

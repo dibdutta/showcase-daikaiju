@@ -8,4 +8,4 @@ web_task_cpu      = 256  # 0.25 vCPU
 web_task_memory   = 512  # 0.5 GB
 web_desired_count = 1
 
-nat_instance_type = "t4g.nano"
+nat_instance_type = "t2.micro"

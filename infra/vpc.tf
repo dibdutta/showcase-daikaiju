@@ -63,13 +63,13 @@ resource "aws_subnet" "database" {
 # NAT Instance (cost-efficient alternative to NAT Gateway)
 ################################################################################
 
-data "aws_ami" "al2023_arm" {
+data "aws_ami" "al2023" {
   most_recent = true
   owners      = ["amazon"]
 
   filter {
     name   = "name"
-    values = ["al2023-ami-minimal-*-arm64"]
+    values = ["al2023-ami-minimal-*-x86_64"]
   }
 
   filter {
@@ -79,12 +79,12 @@ data "aws_ami" "al2023_arm" {
 
   filter {
     name   = "architecture"
-    values = ["arm64"]
+    values = ["x86_64"]
   }
 }
 
 resource "aws_instance" "nat" {
-  ami                    = data.aws_ami.al2023_arm.id
+  ami                    = data.aws_ami.al2023.id
   instance_type          = var.nat_instance_type
   subnet_id              = aws_subnet.public[0].id
   vpc_security_group_ids = [aws_security_group.nat.id]
