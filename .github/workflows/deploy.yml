@@ -55,14 +55,12 @@ jobs:
             --cache-control "max-age=2592000" --delete
           aws s3 sync src/javascript/ s3://${{ secrets.S3_STATIC_BUCKET }}/javascript/ \
             --cache-control "max-age=2592000" --delete
-          aws s3 sync src/images/ s3://${{ secrets.S3_STATIC_BUCKET }}/images/ \
-            --cache-control "max-age=2592000" --delete
 
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.CLOUDFRONT_DIST_ID }} \
-            --paths "/css/*" "/javascript/*" "/images/*"
+            --paths "/css/*" "/javascript/*"
 
       - name: Update ECS task definition with new image
         id: task-def
