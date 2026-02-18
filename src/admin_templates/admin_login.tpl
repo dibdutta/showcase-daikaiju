@@ -13,7 +13,7 @@
 						<img src="{$smarty.const.CLOUD_STATIC_ADMIN}icon_login.gif" alt="" border="0"><br><strong>Welcome to</strong><br>{$smarty.const.ADMIN_WELCOMETEXT}<br><br>Use a valid username and password to gain access to the administration console.
 					</td>
 					<td valign="top" align="left" width="65%">
-						<form action="{$smalrty.const.PHP_SELF}" method="post" name="form" autocomplete="off" >
+						<form action="{$smarty.const.PHP_SELF}" method="post" name="form" autocomplete="off" >
 							<input type="hidden" name="mode" value="checkLogin">
 							<table width="95%" border="0" cellspacing="0" cellpadding="0">
 								<tr>

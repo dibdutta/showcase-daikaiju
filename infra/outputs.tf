@@ -65,6 +65,31 @@ output "acm_certificate_validation_records" {
   }
 }
 
+output "efs_access_point_sessions" {
+  description = "EFS access point ID for sessions"
+  value       = aws_efs_access_point.sessions.id
+}
+
+output "efs_access_point_poster_photo" {
+  description = "EFS access point ID for poster_photo"
+  value       = aws_efs_access_point.poster_photo.id
+}
+
+output "efs_access_point_templates_c" {
+  description = "EFS access point ID for templates_c"
+  value       = aws_efs_access_point.templates_c.id
+}
+
+output "efs_access_point_admin_templates_c" {
+  description = "EFS access point ID for admin_templates_c"
+  value       = aws_efs_access_point.admin_templates_c.id
+}
+
+output "efs_access_point_bulkupload" {
+  description = "EFS access point ID for bulkupload"
+  value       = aws_efs_access_point.bulkupload.id
+}
+
 output "ecs_execution_role_arn" {
   description = "ECS execution role ARN"
   value       = aws_iam_role.ecs_execution.arn
