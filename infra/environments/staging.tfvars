@@ -1,7 +1,7 @@
 aws_region  = "us-east-1"
 environment = "staging"
 
-domain_name = "staging.movieposterexchange.com"
+domain_name = "staging.mygodzillashop.com"
 
 # Smaller sizing for staging
 web_task_cpu      = 256  # 0.25 vCPU

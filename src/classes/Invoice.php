@@ -823,7 +823,7 @@ class Invoice extends DBCommon{
 				//$textContent .= '<b>Poster Title : </b>'.$invoice['poster_title'].'<br />';
 				$textContent .= 'Congratulations! Your Item has Sold and Buyer has paid for:<br />';
 				$textContent .= "<b>".$invoice['poster_title']."</b><br />";
-				$textContent .= "Please ship to Buyer promptly so that we may expedite payment to you. Please email MPE at info@movieposterexchange.com and confirm item has shipped(You can simply reply to this email with info). <br /><br />";
+				$textContent .= "Please ship to Buyer promptly so that we may expedite payment to you. Please email MPE at ".SITE_EMAIL." and confirm item has shipped(You can simply reply to this email with info). <br /><br />";
 				$textContent .= "Please provide method of shipping and tracking information.<br /><br />";
 				$textContent .= $email_template;
 				

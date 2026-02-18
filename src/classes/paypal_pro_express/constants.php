@@ -16,7 +16,7 @@ Called by CallerService.php.
 ****************************************************/
 /**
 # API user: The user that is identified as making the call. you can
-# also use your own API username that you created on PayPal’s sandbox
+# also use your own API username that you created on PayPalï¿½s sandbox
 # or the PayPal live site
 */
 //for 3-token -> API_USERNAME,API_PASSWORD,API_SIGNATURE  are needed
@@ -93,5 +93,5 @@ define('VERSION', '65.1');
 // Ack related constants
 define('ACK_SUCCESS', 'SUCCESS');
 define('ACK_SUCCESS_WITH_WARNING', 'SUCCESSWITHWARNING');
-define('SITE_URL', 'http://www.movieposterexchange.com/');
+// SITE_URL is now defined centrally in lib/site_constants.php
 ?>

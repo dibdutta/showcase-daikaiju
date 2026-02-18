@@ -9,8 +9,9 @@ $row = mysqli_fetch_array($res);
 define ("ADMIN_NAME", $row['admin_name']);
 define ("ADMIN_EMAIL_ADDRESS", $row['admin_email']);
 define("CLOUD_STATIC","https://c4808190.ssl.cf2.rackcdn.com/");
-define ("FULL_PATH", "http://www.movieposterexchange.com");
-define ("HOST_NAME", "www.movieposterexchange.com");
+require_once __DIR__ . "/../../lib/site_constants.php";
+define ("FULL_PATH", SITE_URL);
+define ("HOST_NAME", SITE_HOST);
 //////////////    administration  information   //////////
 
 //////////////   Mail Body variables   ///////////////////////////////

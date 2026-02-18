@@ -12,7 +12,8 @@ $client = new Aws\Ses\SesClient([
 		 ]);
 
 
-define('SENDER', 'Movie Poster Exchange <info@movieposterexchange.com>');
+require_once __DIR__ . "/site_constants.php";
+define('SENDER', SITE_EMAIL_SENDER);
 
 // Replace recipient@example.com with a "To" address. If your account
 // is still in the sandbox, this address must be verified.

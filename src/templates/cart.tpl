@@ -203,7 +203,7 @@ function chkQuantity(id,quantity,inputId){
 		                     				
 							</div>
 							<div style="float:left; margin:10px 0 0 5px;">
-								<a href="https://www.paypal.com/us/verified/pal=info%40movieposterexchange%2ecom" target="_blank"><img src="../images/verification_seal.png" border="0" alt="Official PayPal Seal"></A>
+								<a href="https://www.paypal.com/us/verified/pal=info%40mygodzillashop%2ecom" target="_blank"><img src="../images/verification_seal.png" border="0" alt="Official PayPal Seal"></A>
 							</div>
 						</div>
 						<div style="clear:both;height: 0"></div>
@@ -221,7 +221,7 @@ function chkQuantity(id,quantity,inputId){
 							<div style="margin-top:10px;">
 								<div>
 								
-								<a href="https://www.paypal.com/us/verified/pal=info%40movieposterexchange%2ecom" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/verification_seal.png" border="0" alt="Official PayPal Seal"></a>
+								<a href="https://www.paypal.com/us/verified/pal=info%40mygodzillashop%2ecom" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/verification_seal.png" border="0" alt="Official PayPal Seal"></a>
 								</div>
 							</div>
                         </td>

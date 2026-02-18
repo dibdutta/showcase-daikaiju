@@ -905,7 +905,7 @@ function sendOfferMail($offer_id, $status)
         //$textContent .= 'For more details, please <a href="http://'.HOST_NAME.'">login</a><br /><br />';
     }
 	
-	$textContent .= 'Please contact us at <a href="mailto:info@movieposterexchange.com">info@movieposterexchange.com</a> if you have any questions.<br /><br />';    
+	$textContent .= 'Please contact us at <a href="mailto:'.SITE_EMAIL.'">'.SITE_EMAIL.'</a> if you have any questions.<br /><br />';    
     $textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;    
     $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 	

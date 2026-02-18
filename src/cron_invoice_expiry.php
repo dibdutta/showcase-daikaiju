@@ -13,9 +13,10 @@ ob_end_flush();*/
 /*************************************************/
 
 ini_set("display_errors","on");
-define ("FULL_PATH", "http://www.movieposterexchange.com");
+require_once __DIR__ . "/lib/site_constants.php";
+define ("FULL_PATH", SITE_URL);
 define ("CLOUD_STATIC","http://c4808190.r90.cf2.rackcdn.com/");
-define ("HOST_NAME", "www.movieposterexchange.com");
+define ("HOST_NAME", SITE_HOST);
 define ('MAIL_BODY_TOP', '<html><head></head><body style="  padding:0px; margin:0px;">
 <table align="center" bgcolor="#FFFFFF" width="600px" border="0" cellspacing="0" cellpadding="0">
 

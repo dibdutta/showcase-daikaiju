@@ -4,7 +4,7 @@ environment = "prod"
 # DB password is read from AWS Secrets Manager (showcase/prod/db-password)
 # Create it first: aws secretsmanager create-secret --name showcase/prod/db-password --secret-string "YOUR_PASSWORD" --region us-east-1
 
-domain_name = "movieposterexchange.com"
+domain_name = "mygodzillashop.com"
 
 # ECS task sizing
 web_task_cpu      = 512  # 0.5 vCPU

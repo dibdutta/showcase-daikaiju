@@ -16,7 +16,7 @@ td,th{text-align:left}td pre,th{padding:5px}h1,h2,h3,h4,h5,h6{color:#4088b8;clea
     font-family: 'open_sansbold';
     src: url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-bold-webfont.eot');
     src: url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('https://www.movieposterexchange.com/css/type/opensans-bold-webfont.woff') format('woff'),
+         url('type/opensans-bold-webfont.woff') format('woff'),
          url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-bold-webfont.ttf') format('truetype'),
          url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-bold-webfont.svg#open_sansbold') format('svg');
     font-weight: normal;
@@ -31,7 +31,7 @@ td,th{text-align:left}td pre,th{padding:5px}h1,h2,h3,h4,h5,h6{color:#4088b8;clea
     font-family: 'open_sanslight';
     src: url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-light-webfont.eot');
     src: url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-light-webfont.eot?#iefix') format('embedded-opentype'),
-         url('https://www.movieposterexchange.com/css/type/opensans-light-webfont.woff') format('woff'),
+         url('type/opensans-light-webfont.woff') format('woff'),
          url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-light-webfont.ttf') format('truetype'),
          url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-light-webfont.svg#open_sanslight') format('svg');
     font-weight: normal;
@@ -46,7 +46,7 @@ td,th{text-align:left}td pre,th{padding:5px}h1,h2,h3,h4,h5,h6{color:#4088b8;clea
     font-family: 'open_sansregular';
     src: url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-regular-webfont.eot');
     src: url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('https://www.movieposterexchange.com/css/type/opensans-regular-webfont.woff') format('woff'),
+         url('type/opensans-regular-webfont.woff') format('woff'),
          url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-regular-webfont.ttf') format('truetype'),
          url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-regular-webfont.svg#open_sansregular') format('svg');
     font-weight: normal;
@@ -61,7 +61,7 @@ td,th{text-align:left}td pre,th{padding:5px}h1,h2,h3,h4,h5,h6{color:#4088b8;clea
     font-family: 'open_sanssemibold';
     src: url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-semibold-webfont.eot');
     src: url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-semibold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('https://www.movieposterexchange.com/css/type/opensans-semibold-webfont.woff') format('woff'),
+         url('type/opensans-semibold-webfont.woff') format('woff'),
          url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-semibold-webfont.ttf') format('truetype'),
          url('https://d2m46dmzqzklm5.cloudfront.net/css/opensans-semibold-webfont.svg#open_sanssemibold') format('svg');
     font-weight: normal;
@@ -74,7 +74,7 @@ td,th{text-align:left}td pre,th{padding:5px}h1,h2,h3,h4,h5,h6{color:#4088b8;clea
     font-family: 'latobold';
     src: url('https://d2m46dmzqzklm5.cloudfront.net/css/lato-bol-webfont.eot');
     src: url('https://d2m46dmzqzklm5.cloudfront.net/css/lato-bol-webfont.eot?#iefix') format('embedded-opentype'),
-         url('https://www.movieposterexchange.com/css/type/lato-bol-webfont.woff') format('woff'),
+         url('type/lato-bol-webfont.woff') format('woff'),
          url('https://d2m46dmzqzklm5.cloudfront.net/css/lato-bol-webfont.ttf') format('truetype'),
          url('https://d2m46dmzqzklm5.cloudfront.net/css/lato-bol-webfont.svg#latobold') format('svg');
     font-weight: normal;

@@ -26,7 +26,7 @@
                     <div class="inner-area-general" style="width: 685px;">
 						<div class="formarea" style="margin-left:0; text-align:center; width:100%;">
 						<input type="hidden" name="invoice_id" value="{$smarty.request.invoice_id}">
-							<form {if $smarty.const.PHP_SELF == '/cart.php' } action="https://movieposterexchange.com/classes/paypal_pro_express/ReviewOrder.php" {else} action="https://{$paypal_url}/classes/paypal_pro_express/ReviewInvoice.php?invoice_id={$smarty.request.invoice_id}" {/if} method="POST">
+							<form {if $smarty.const.PHP_SELF == '/cart.php' } action="{$smarty.const.SITE_URL}/classes/paypal_pro_express/ReviewOrder.php" {else} action="https://{$paypal_url}/classes/paypal_pro_express/ReviewInvoice.php?invoice_id={$smarty.request.invoice_id}" {/if} method="POST">
 								<input type=hidden name=paymentType value='Sale' >
 								<input type="image" name="submit" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" />
 							</form> 

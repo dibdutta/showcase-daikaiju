@@ -8,7 +8,7 @@
     <div class="fll"><table width="138" border="0" cellspacing="0" cellpadding="0" style="border:0;">
   <tr>
     <td><img src="https://d2m46dmzqzklm5.cloudfront.net/images/followus.png" width="78" height="45" /></td>
-    <td><a href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Fwww.movieposterexchange.com%2Findex.php&amp;region=follow_link&amp;screen_name=MoviePosterExch&amp;source=followbutton&amp;variant=2.0" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/followus_tweter.png" alt="Follow us on Tweeter" width="30" height="45" /></a></td>
+    <td><a href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Fwww.mygodzillashop.com%2Findex.php&amp;region=follow_link&amp;screen_name=MoviePosterExch&amp;source=followbutton&amp;variant=2.0" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/followus_tweter.png" alt="Follow us on Tweeter" width="30" height="45" /></a></td>
     <td><a href="https://www.facebook.com/pages/MoviePosterExchangecom/105014962910848" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/followus_fb.png" alt="Follow us on Facebook" width="30" height="45" /></a></td>
   </tr>
 </table>

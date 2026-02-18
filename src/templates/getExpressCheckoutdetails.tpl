@@ -36,7 +36,7 @@
                 {if $errorMessage<>""}<div class="messageBox">{$errorMessage}</div>{/if}
                 <!--  inner listing starts  -->
                   <div class="display-listing-main">
-                  <form name="paypalpayment" id="paypalpayment" action="https://www.movieposterexchange.com/classes/paypal_pro_express/DoExpressCheckoutPayment.php" method="post">
+                  <form name="paypalpayment" id="paypalpayment" action="{$smarty.const.SITE_URL}/classes/paypal_pro_express/DoExpressCheckoutPayment.php" method="post">
                         <input type="hidden" name="mode" value="pay_now" />
                   	<!--invoice begins here added on 20th june 2011-->
                         <div class="dashboard-main">
@@ -143,7 +143,7 @@
 	                     {/literal}					
 						</div>
 						<div style="float:left">
-							<a href="https://www.paypal.com/us/verified/pal=info%40movieposterexchange%2ecom" target="_blank"><img src="https://www.paypal.com/en_US/i/icon/verification_seal.gif" border="0" alt="Official PayPal Seal"></A>
+							<a href="https://www.paypal.com/us/verified/pal=info%40mygodzillashop%2ecom" target="_blank"><img src="https://www.paypal.com/en_US/i/icon/verification_seal.gif" border="0" alt="Official PayPal Seal"></A>
 						</div>
 					</div>
 					<div style="clear:both;height: 0"></div>   

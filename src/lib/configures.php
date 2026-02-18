@@ -1,6 +1,7 @@
 <?php
-require_once "dbconfig.php"; 
-require_once "var.inc.php"; 
+require_once "dbconfig.php";
+require_once "var.inc.php";
+require_once __DIR__ . "/site_constants.php";
 $connect=mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME) or die("Cannot connect DB Server: " . mysqli_connect_error());
 $GLOBALS['db_connect'] = $connect;
 
@@ -173,7 +174,7 @@ if (APP_ENV === 'production') {
 	define ("ADMIN_PAGE_LINK", "http://".$_SERVER['HTTP_HOST']."/admin");
 }
 
-define ("FULL_PATH", "http://www.movieposterexchange.com");
+define ("FULL_PATH", SITE_URL);
 
 
 /*

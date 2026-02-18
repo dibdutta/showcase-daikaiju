@@ -11,9 +11,10 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode'] == "process_offers"){
 
 ob_end_flush();*/
 /*************************************************/
-define ("FULL_PATH", "http://www.movieposterexchange.com");
+require_once __DIR__ . "/lib/site_constants.php";
+define ("FULL_PATH", SITE_URL);
 define ("CLOUD_STATIC","https://d2m46dmzqzklm5.cloudfront.net/images/");
-define ("HOST_NAME", "www.movieposterexchange.com");
+define ("HOST_NAME", SITE_HOST);
 define ('MAIL_BODY_TOP', '<html><head></head><body style="  padding:0px; margin:0px;">
 <table align="center" bgcolor="#FFFFFF" width="600px" border="0" cellspacing="0" cellpadding="0">
 
@@ -172,20 +173,20 @@ function sendOfferMailCron($row, $status)
     if($status == "no_respose_from_seller"){ // Mail goes to seller for no response from seller's end
     	$subject = "MPE::Buyer Offer Rejected - ".$row['poster_title']." (#".$row['poster_sku'].")";
         $textContent .= 'Buyer offer is rejected as there is no response from your end in the allotted 72 hrs.<br /><br />';
-        $textContent .= 'For more details, please <a href="http://movieposterexchange.com">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Selling/My Incoming Offers.<br /><br />';
+        $textContent .= 'For more details, please <a href="'.SITE_URL.'">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Selling/My Incoming Offers.<br /><br />';
     }elseif($status == "no_respose_from_buyer"){ // Mail goes to seller for no response from buyer's end
     	$subject = "MPE::Your Offer Rejected - ".$row['poster_title']." (#".$row['poster_sku'].")";
         $textContent .= 'Buyer has not responded to your counter offer within the allotted 72 hours. Counter offer has expired.<br /><br />';
-        $textContent .= 'For more details, please <a href="http://movieposterexchange.com">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Selling/My Outgoing Counters. <br /><br />';
+        $textContent .= 'For more details, please <a href="'.SITE_URL.'">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Selling/My Outgoing Counters. <br /><br />';
     }elseif($status == "reject_offer_seller"){ // Mail goes to buyer for no response from seller's end
     	$subject = "MPE::Your Offer Rejected - ".$row['poster_title']." (#".$row['poster_sku'].")";
         //$textContent .= 'Your offer has expired with no response, but we encourage you to submit another offer.<br /><br />';
         $textContent .= 'Seller has not responded to your offer in the allotted 72 hours. Offer has expired.<br /><br />';
-        $textContent .= 'For more details, please <a href="http://movieposterexchange.com">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Buying/My Outgoing Offers.<br /><br />';
+        $textContent .= 'For more details, please <a href="'.SITE_URL.'">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Buying/My Outgoing Offers.<br /><br />';
     }elseif($status == "reject_offer_buyer"){ // Mail goes to buyer for no response from buyer's end
     	$subject = "MPE::Seller Offer Rejected - ".$row['poster_title']." (#".$row['poster_sku'].")";
         $textContent .= 'Seller offer is rejected as there is no response from your end in the allotted 72 hrs.<br /><br />';
-        $textContent .= 'For more details, please <a href="http://movieposterexchange.com">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Buying/My Incoming Counters.<br /><br />';
+        $textContent .= 'For more details, please <a href="'.SITE_URL.'">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Buying/My Incoming Counters.<br /><br />';
     }
     
 	$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;    

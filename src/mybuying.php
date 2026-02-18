@@ -77,7 +77,7 @@ $auctionObj= new Auction();
 			$textContent .= '<b>Item Title : </b>'.$row['poster_title'].'<br /><br />';
 			$textContent .= 'Your offer of $'.$row['offer_amount'].' has been submitted. The seller has 72 hours to respond.<br />';
 			$textContent .= 'You may view this and any other submitted offers by logging in and choosing <b>Outgoing Offers</b> located in <b>User Section</b> under <b>My Buying/My Outgoing Offers</b>.<br /><br />';
-			$textContent .= 'Please contact us at <a href="mailto:info@movieposterexchange.com">info@movieposterexchange.com</a> if you have any questions.<br /><br />';    
+			$textContent .= 'Please contact us at <a href="mailto:'.SITE_EMAIL.'">'.SITE_EMAIL.'</a> if you have any questions.<br /><br />';    
 			$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;    
 			$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 			//echo $textContent;

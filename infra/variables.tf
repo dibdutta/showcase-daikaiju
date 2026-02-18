@@ -38,7 +38,7 @@ variable "db_username" {
 variable "domain_name" {
   description = "Domain name for the application"
   type        = string
-  default     = "movieposterexchange.com"
+  default     = "mygodzillashop.com"
 }
 
 variable "web_task_cpu" {

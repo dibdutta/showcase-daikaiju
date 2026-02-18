@@ -430,7 +430,7 @@ function sendMail($toMail, $toName, $subject, $textContent) {
 				//'debug'   => true
 	]);
 	
-	define('SENDER', 'Movie Poster Exchange <info@movieposterexchange.com>');
+	define('SENDER', SITE_EMAIL_SENDER);
 
 	// Replace recipient@example.com with a "To" address. If your account
 	// is still in the sandbox, this address must be verified.
@@ -1631,7 +1631,7 @@ function chkTimeOut(){}
 				//'debug'   => true
 	]);
 	
-	define('SENDER', 'Movie Poster Exchange <info@movieposterexchange.com>');
+	define('SENDER', SITE_EMAIL_SENDER);
 
 	// Replace recipient@example.com with a "To" address. If your account
 	// is still in the sandbox, this address must be verified.

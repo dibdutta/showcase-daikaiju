@@ -11,9 +11,10 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode'] == "process_offers"){
 
 ob_end_flush();*/
 /*************************************************/
-define ("FULL_PATH", "http://www.movieposterexchange.com");
+require_once __DIR__ . "/lib/site_constants.php";
+define ("FULL_PATH", SITE_URL);
 define ("CLOUD_STATIC","https://d2m46dmzqzklm5.cloudfront.net/images/");
-define ("HOST_NAME", "www.movieposterexchange.com");
+define ("HOST_NAME", SITE_HOST);
 define ('MAIL_BODY_TOP', '<html><head></head><body style="  padding:0px; margin:0px;">
 <table align="center" bgcolor="#FFFFFF" width="600px" border="0" cellspacing="0" cellpadding="0">
 

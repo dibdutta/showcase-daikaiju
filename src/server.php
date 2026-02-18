@@ -4,7 +4,8 @@ require_once("libs/nusoap.php");
 require_once("libs/functions.php");
 // load library that holds implementations of functions we're making available to the web service
 // set namespace
-$ns="http://movieposterexchange.com/";
+require_once(__DIR__ . "/lib/site_constants.php");
+$ns="http://" . SITE_DOMAIN . "/";
 // create SOAP server object
 $server = new soap_server();
 // setup WSDL file, a WSDL file can contain multiple services

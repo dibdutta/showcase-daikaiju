@@ -1,7 +1,7 @@
 aws_region  = "us-east-1"
 environment = "prod"
 
-domain_name = "movieposterexchange.com"
+domain_name = "mygodzillashop.com"
 
 # ECS task sizing
 web_task_cpu      = 512  # 0.5 vCPU

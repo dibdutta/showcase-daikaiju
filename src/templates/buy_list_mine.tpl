@@ -206,7 +206,7 @@ function toggleDiv(id,flagit,type,track) {
                                    {/if} 
 								 </td>
                                  <td width="200" class="buylisttb">
-<div><a href="#"><img  class="image-brdr"  src="http://www.movieposterexchange.com:8081/poster_photo/thumb_buy/{$auctionItems[counter].poster_thumb}"  onclick="redirect_poster_details({$auctionItems[counter].auction_id});" style="cursor:pointer;"  /></a>
+<div><a href="#"><img  class="image-brdr"  src="{$smarty.const.SITE_URL}/poster_photo/thumb_buy/{$auctionItems[counter].poster_thumb}"  onclick="redirect_poster_details({$auctionItems[counter].auction_id});" style="cursor:pointer;"  /></a>
                                            
 										   </div>								
 								 {if $auctionItems[counter].watch_indicator ==0}

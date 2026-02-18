@@ -9,7 +9,7 @@ if($auction_id >0){
 // Pull in the NuSOAP code
 require('nusoap.php');
 // Create the client instance
-$client = new nusoap_client('http://www.movieposterexchange.com/webservice/server.php?wsdl', true);
+$client = new nusoap_client('http://www.mygodzillashop.com/webservice/server.php?wsdl', true);
 // Check for an error
 $err = $client->getError();
 if ($err) {

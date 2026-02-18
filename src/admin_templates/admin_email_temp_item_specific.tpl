@@ -16,7 +16,7 @@
                         <td colspan="5"><img height="22" width="752" src="https://d2m46dmzqzklm5.cloudfront.net/images/img_001.jpg" alt="" /></td>
                     </tr>
                     <tr>
-                        <td width="136"><a href="http://www.movieposterexchange.com" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_002.jpg" width="136" height="60" /></a></td>
+                        <td width="136"><a href="{$smarty.const.SITE_URL}" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_002.jpg" width="136" height="60" /></a></td>
                         <td width="115">&nbsp;</td>
                         <td width="309" style="background-image:url(https://d2m46dmzqzklm5.cloudfront.net/images/img_003.jpg); background-repeat:repeat-x; padding-left:10px;"><a style="color:#881318; font-family:Arial, Helvetica, sans-serif; text-decoration:none; font-size:15px;" target="_blank" href="{$banner_link}">{$banner_text}
                         </a></td>
@@ -63,7 +63,7 @@
                                     <table cellspacing="1" cellpadding="0" border="0" width="100%" style="margin-bottom:40px; background-color:#FFF;">
                                         <tbody>
                                             <tr>
-                                                <td width="318" style="padding:20px; font-family:Arial, Helvetica, sans-serif; font-weight:normal; font-size:13px; line-height:17px; vertical-align:top; text-align:justify;"><a href="http://movieposterexchange.com/buy.php?mode=poster_details&auction_id={$auction_id}" target="_blank"><img  width="318" alt="" src="{$image_path}" /></a></td>
+                                                <td width="318" style="padding:20px; font-family:Arial, Helvetica, sans-serif; font-weight:normal; font-size:13px; line-height:17px; vertical-align:top; text-align:justify;"><a href="{$smarty.const.SITE_URL}/buy.php?mode=poster_details&auction_id={$auction_id}" target="_blank"><img  width="318" alt="" src="{$image_path}" /></a></td>
                                                 <td style="padding:20px 20px 0 0; font-family:Arial, Helvetica, sans-serif; font-weight:normal; font-size:13px; line-height:17px; vertical-align:top; text-align:justify;">
                                                 <h2><span style="color: rgb(128, 0, 0);">{$poster_title}<br />
                                                 </span></h2>
@@ -72,9 +72,9 @@
                                                 <p>&nbsp;</p>
 												
 												{if $is_auction==1}
-													<a href="http://movieposterexchange.com/buy.php?mode=poster_details&auction_id={$auction_id}" target="_blank"><img height="24" width="61" src="http://www.movieposterexchange.com/newsletter/img_011.jpg" alt="" /></a>
+													<a href="{$smarty.const.SITE_URL}/buy.php?mode=poster_details&auction_id={$auction_id}" target="_blank"><img height="24" width="61" src="{$smarty.const.SITE_URL}/newsletter/img_011.jpg" alt="" /></a>
 												{else}
-													<a href="http://movieposterexchange.com/buy.php?mode=poster_details&auction_id={$auction_id}&fixed=1" target="_blank"><img height="24" width="61" src="http://www.movieposterexchange.com/newsletter/img_011.jpg" alt="" /></a>
+													<a href="{$smarty.const.SITE_URL}/buy.php?mode=poster_details&auction_id={$auction_id}&fixed=1" target="_blank"><img height="24" width="61" src="{$smarty.const.SITE_URL}/newsletter/img_011.jpg" alt="" /></a>
 												{/if}
 												
                                                </td>
@@ -92,7 +92,7 @@
             </td>
         </tr>
         <tr>
-            <td style="background-color:#989693; background-image:url(https://d2m46dmzqzklm5.cloudfront.net/images/img_010.jpg); background-repeat:no-repeat; background-position:left bottom; text-align:center; color:#989693; padding:6px 0;"><a href="http://www.movieposterexchange.com/contactus.php" target="_blank" style="color:#989693; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #989693; font-size:12px;">Contact Customer Service</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.movieposterexchange.com/user_agreement.php" target="_blank" style="color:#989693; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #989693; font-size:12px;">View our User Agreement</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.movieposterexchange.com/faq.php" target="_blank" style="color:#989693; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #989693; font-size:12px;">FAQ</a></td>
+            <td style="background-color:#989693; background-image:url(https://d2m46dmzqzklm5.cloudfront.net/images/img_010.jpg); background-repeat:no-repeat; background-position:left bottom; text-align:center; color:#989693; padding:6px 0;"><a href="{$smarty.const.SITE_URL}/contactus.php" target="_blank" style="color:#989693; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #989693; font-size:12px;">Contact Customer Service</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{$smarty.const.SITE_URL}/user_agreement.php" target="_blank" style="color:#989693; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #989693; font-size:12px;">View our User Agreement</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{$smarty.const.SITE_URL}/faq.php" target="_blank" style="color:#989693; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #989693; font-size:12px;">FAQ</a></td>
         </tr>
     </tbody>
 </table>
