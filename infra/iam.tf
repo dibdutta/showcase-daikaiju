@@ -329,7 +329,7 @@ resource "aws_iam_role_policy" "github_actions_terraform" {
           "s3:*",
           "cloudfront:*",
           "acm:*",
-          "efs:*",
+          "elasticfilesystem:*",
           "ssm:*",
           "secretsmanager:GetSecretValue",
           "secretsmanager:DescribeSecret",
