@@ -26,6 +26,11 @@ on:
           - oidc
           - access_keys
         default: oidc
+      first_time_setup:
+        description: 'First-time setup? Creates S3 bucket, DynamoDB table, verifies secrets. Skip for existing environments.'
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   id-token: write
@@ -62,8 +67,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      # ---------- Create state backend resources ----------
+      # ---------- Create state backend resources (first-time only) ----------
       - name: Create S3 state bucket
+        if: inputs.first_time_setup
         run: |
           BUCKET="showcase-terraform-state-${{ inputs.environment }}"
           if aws s3api head-bucket --bucket "$BUCKET" 2>/dev/null; then
@@ -81,6 +87,7 @@ jobs:
           fi
 
       - name: Create DynamoDB lock table
+        if: inputs.first_time_setup
         run: |
           TABLE="showcase-terraform-locks-${{ inputs.environment }}"
           if aws dynamodb describe-table --table-name "$TABLE" 2>/dev/null; then
@@ -95,8 +102,9 @@ jobs:
             echo "Created lock table: $TABLE"
           fi
 
-      # ---------- Verify DB password exists in Secrets Manager ----------
+      # ---------- Verify DB password exists in Secrets Manager (first-time only) ----------
       - name: Verify DB password exists in AWS Secrets Manager
+        if: inputs.first_time_setup
         run: |
           SECRET_NAME="showcase/${{ inputs.environment }}/db-password"
           if aws secretsmanager describe-secret --secret-id "$SECRET_NAME" 2>/dev/null; then
