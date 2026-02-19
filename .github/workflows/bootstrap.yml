@@ -18,6 +18,14 @@ on:
           - plan
           - apply
         default: plan
+      auth_method:
+        description: 'Authentication method'
+        required: true
+        type: choice
+        options:
+          - oidc
+          - access_keys
+        default: oidc
 
 permissions:
   id-token: write
@@ -39,7 +47,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials (OIDC)
+        if: inputs.auth_method == 'oidc'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Configure AWS credentials (Access Keys)
+        if: inputs.auth_method == 'access_keys'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
