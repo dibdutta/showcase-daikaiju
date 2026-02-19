@@ -39,6 +39,8 @@ resource "aws_lb_target_group" "web" {
   vpc_id      = aws_vpc.main.id
   target_type = "ip"
 
+  deregistration_delay = 30
+
   health_check {
     path                = "/healthcheck.php"
     healthy_threshold   = 2
