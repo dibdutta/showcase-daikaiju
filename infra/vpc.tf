@@ -97,7 +97,9 @@ resource "aws_instance" "nat" {
     systemctl start iptables
     echo 1 > /proc/sys/net/ipv4/ip_forward
     echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-    iptables -t nat -A POSTROUTING -o ens5 -j MASQUERADE
+    # Auto-detect the primary network interface (works on all instance types)
+    PRIMARY_IF=$(ip -o link show | awk -F': ' '{print $2}' | grep -v lo | head -1)
+    iptables -t nat -A POSTROUTING -o $PRIMARY_IF -j MASQUERADE
     iptables-save > /etc/sysconfig/iptables
   EOF
 
