@@ -215,6 +215,7 @@ resource "aws_iam_role" "github_actions" {
   })
 }
 
+# Deploy-only permissions (used by deploy.yml)
 resource "aws_iam_role_policy" "github_actions" {
   name = "${local.name_prefix}-github-deploy"
   role = aws_iam_role.github_actions.id
@@ -223,6 +224,7 @@ resource "aws_iam_role_policy" "github_actions" {
     Version = "2012-10-17"
     Statement = [
       {
+        Sid    = "ECRAccess"
         Effect = "Allow"
         Action = [
           "ecr:GetAuthorizationToken",
@@ -237,6 +239,7 @@ resource "aws_iam_role_policy" "github_actions" {
         Resource = "*"
       },
       {
+        Sid    = "ECSAccess"
         Effect = "Allow"
         Action = [
           "ecs:UpdateService",
@@ -247,6 +250,7 @@ resource "aws_iam_role_policy" "github_actions" {
         Resource = "*"
       },
       {
+        Sid    = "PassRole"
         Effect = "Allow"
         Action = [
           "iam:PassRole"
@@ -257,6 +261,7 @@ resource "aws_iam_role_policy" "github_actions" {
         ]
       },
       {
+        Sid    = "S3StaticAssets"
         Effect = "Allow"
         Action = [
           "s3:PutObject",
@@ -269,11 +274,72 @@ resource "aws_iam_role_policy" "github_actions" {
         ]
       },
       {
+        Sid    = "CloudFrontInvalidation"
         Effect = "Allow"
         Action = [
           "cloudfront:CreateInvalidation"
         ]
         Resource = aws_cloudfront_distribution.main.arn
+      }
+    ]
+  })
+}
+
+# Terraform permissions (used by bootstrap.yml)
+resource "aws_iam_role_policy" "github_actions_terraform" {
+  name = "${local.name_prefix}-github-terraform"
+  role = aws_iam_role.github_actions.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "TerraformStateS3"
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:DeleteObject",
+          "s3:ListBucket"
+        ]
+        Resource = [
+          "arn:aws:s3:::showcase-terraform-state-${var.environment}",
+          "arn:aws:s3:::showcase-terraform-state-${var.environment}/*"
+        ]
+      },
+      {
+        Sid    = "TerraformStateDynamoDB"
+        Effect = "Allow"
+        Action = [
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem"
+        ]
+        Resource = "arn:aws:dynamodb:${var.aws_region}:${data.aws_caller_identity.current.account_id}:table/showcase-terraform-locks-${var.environment}"
+      },
+      {
+        Sid    = "TerraformManageInfra"
+        Effect = "Allow"
+        Action = [
+          "ec2:*",
+          "ecs:*",
+          "ecr:*",
+          "elasticloadbalancing:*",
+          "rds:*",
+          "s3:*",
+          "cloudfront:*",
+          "acm:*",
+          "efs:*",
+          "ssm:*",
+          "secretsmanager:GetSecretValue",
+          "secretsmanager:DescribeSecret",
+          "iam:*",
+          "logs:*",
+          "scheduler:*",
+          "application-autoscaling:*",
+          "sts:GetCallerIdentity"
+        ]
+        Resource = "*"
       }
     ]
   })
