@@ -39,8 +39,8 @@
                         <h4>&nbsp;<span style="color: rgb(255, 255, 255);"><strong>{$sub_banner_text}</strong></span></h4>
                         </td>
                         <td width="65"><img height="49" width="65" src="https://d2m46dmzqzklm5.cloudfront.net/images/img_005.jpg" alt="" /></td>
-                        <td width="26"><a href="https://twitter.com/movieposterexch" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_006.jpg" width="26" height="49" /></a></td>
-                        <td width="25"><a href="https://www.facebook.com/MoviePosterExchange" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_007.jpg" width="25" height="49" /></a></td>
+                        <td width="26"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_006.jpg" width="26" height="49" /></td>
+                        <td width="25"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_007.jpg" width="25" height="49" /></td>
                         <td width="118"><img height="49" width="118" src="https://d2m46dmzqzklm5.cloudfront.net/images/img_008.jpg" alt="" /></td>
                     </tr>
                 </tbody>

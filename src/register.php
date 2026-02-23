@@ -319,7 +319,7 @@ function save_user()
 		$country_name= $fetchCountry['country_name'];
 		
 		$subjectAdmin= "New User Registration";
-		$textContentAdmin ="The following user has registered with MoviePosterExchange.<br/>";
+		$textContentAdmin ="The following user has registered.<br/>";
 		$textContentAdmin .="Username: ".$_POST['username'].".<br/>";
 		$textContentAdmin .="Name: ".$_POST['firstname']." ".$_POST['lastname'].".<br/>";
 		$textContentAdmin .="Address: ".$_POST['address1'].",".$country_name.",".$_POST['city']."-".$_POST['zipcode'].".<br/>";

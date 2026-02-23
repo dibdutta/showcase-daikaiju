@@ -29,7 +29,7 @@ define ('MAIL_BODY_BOTTOM', '</td></tr>
 <td background="'.CLOUD_STATIC.'footer-bg.png"  width="100%" height="75">
 	<table align="center" width="100%" cellspacing="0" cellpadding="0">
 		<tr>
-			<td align="right"><p style="padding: 5px; font-family: Trebuchet MS, Arial, Helvetica, sans-serif; font-size:12px; color: #a2a8ab;" ><span>&copy; 2010 - 2011.Movie Poster exchange .</span>
+			<td align="right"><p style="padding: 5px; font-family: Trebuchet MS, Arial, Helvetica, sans-serif; font-size:12px; color: #a2a8ab;" ><span>&copy; 2010. All rights reserved.</span>
 			</td>
 		</tr>
 	</table>
@@ -137,10 +137,6 @@ while($row = mysqli_fetch_array($res)){
         $textContentSeller = 'Dear '.$rowSeller['firstname'].' '.$rowSeller['lastname'].',<br /><br />';
         $textContentSeller.= 'Congratulations! Your Poster <b>(Poster Title : '.$poster_title_sold.'</b>) has been sold.To view this as well as any other items you have sold please login to your account and select <b>Sold</b>, located in <b>User Panel</b>, under <b>My Selling</b>.  <br /><br/>';
         //$textContentSeller.= 'Please Ship item promptly so that we may expedite shipment to buyer and payment to you. Ship to:<br /><br/>';
-		//$textContentSeller.= 'Movie Poster Exchange<br />';
-		//$textContentSeller.= 'POB 123<br />';
-		//$textContentSeller.= 'Gibsonville, NC 27249<br /><br/>';
-		//$textContentSeller.= 'If MPE is currently holding item then please disregard.<br /><br/>';
 		$textContentSeller.= 'Click <a href="http://'.HOST_NAME.'/buy.php"> Here </a> to go to site.<br /><br />';
         $textContentSeller.= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
         $textContentSeller= MAIL_BODY_TOP.$textContentSeller.MAIL_BODY_BOTTOM;

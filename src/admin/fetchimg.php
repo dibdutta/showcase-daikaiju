@@ -24,7 +24,6 @@ if(isset($_REQUEST['imgurl']))
 ob_start();
 session_start();
 ob_end_clean();
-//$url = 'http://www.movieposterexchange.com/poster_photo/thumb_buy/1074.jpg';
 $url=$_REQUEST['imgurl'] ?? '';
 $urlarr=explode(".",$_REQUEST['imgurl'] ?? '');
 $urlarr=array_reverse($urlarr);

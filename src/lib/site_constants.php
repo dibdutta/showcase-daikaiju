@@ -9,5 +9,5 @@ if (!defined('SITE_DOMAIN')) {
     define("SITE_URL", "https://www." . SITE_DOMAIN);
     define("SITE_HOST", "www." . SITE_DOMAIN);
     define("SITE_EMAIL", "info@" . SITE_DOMAIN);
-    define("SITE_EMAIL_SENDER", "Movie Poster Exchange <" . SITE_EMAIL . ">");
+    define("SITE_EMAIL_SENDER", "MPE <" . SITE_EMAIL . ">");
 }

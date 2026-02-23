@@ -29,8 +29,8 @@
       <tr>
         <td style="padding-left:15px;"><a href="{$smarty.const.SITE_URL}/buy.php?list=fixed" style="color:#ebebea; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #ff646b; font-size:15px;">{$fixed_text}</a></td>
         <td width="65"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_005.jpg" width="65" height="49" /></td>
-        <td width="26"><a href="https://twitter.com/movieposterexch" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_006.jpg" width="26" height="49" /></a></td>
-        <td width="25"><a href="https://www.facebook.com/MoviePosterExchange" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_007.jpg" width="25" height="49" /></a></td>
+        <td width="26"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_006.jpg" width="26" height="49" /></td>
+        <td width="25"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_007.jpg" width="25" height="49" /></td>
         <td width="118"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_008.jpg" width="118" height="49" /></td>
       </tr>
     </table></td>

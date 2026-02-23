@@ -844,7 +844,7 @@ class Invoice extends DBCommon{
 				$textContent = 'Dear '.$invoice['firstname'].' '.$invoice['lastname'].',<br /><br />';
 				$textContent .= 'Congratulations! <b>Poster Title : </b>'.$invoice['poster_title'].' has been sold. <br />';
 				$textContent .= 'Buyer has paid! Please ship item to:<br /><br />';
-				$textContent .= 'Movie Poster Exchange <br /><br />';
+				$textContent .= ADMIN_BUY_NAME.' <br /><br />';
 				$textContent .= 'POB 123<br /><br />';
 				$textContent .= 'Gibsonville, NC 27249 <br /><br />';
 				$textContent .= 'Please ship promptly so that we may expedite transaction and issue payment to you! If MPE is currently holding item then please disregard. <br /><br />';
@@ -1109,9 +1109,9 @@ class Invoice extends DBCommon{
 		$toNameAdmin = ADMIN_NAME;
 		
 		if($EmailType=='phone_order' ){
-			$subject = "Movie Poster Exchange: Phone Order Invoice from ".$toName;
+			$subject = "Phone Order Invoice from ".$toName;
 		}elseif($EmailType=='phone_order_approve'){
-			$subject = "Movie Poster Exchange: You have marked as Paid invoice of ".$toName;
+			$subject = "You have marked as Paid invoice of ".$toName;
 		}else{
 			$subject = "Movie Poster Invoice";
 		}

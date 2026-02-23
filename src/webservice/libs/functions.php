@@ -42,7 +42,7 @@ define ('MAIL_BODY_BOTTOM', '</td></tr>
 <td  background="'.CLOUD_STATIC.'footer-bg.png"  width="100%" height="75">
 	<table align="center" width="100%" cellspacing="0" cellpadding="0">
 		<tr>
-			<td align="right"><p style="padding: 5px; font-family: Trebuchet MS, Arial, Helvetica, sans-serif; font-size:12px; color: #a2a8ab;" ><span>&copy; 2011 - 2012. Movie Poster Exchange.</span>
+			<td align="right"><p style="padding: 5px; font-family: Trebuchet MS, Arial, Helvetica, sans-serif; font-size:12px; color: #a2a8ab;" ><span>&copy; 2011. All rights reserved.</span>
 			</td>
 		</tr>
 	</table>

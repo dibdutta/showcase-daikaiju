@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>::Movie Poster Exchange::</title>
+<title>::{$smarty.const.SITE_TITLE}::</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"  >
 <meta name="description" content="{$metaDescription}" >
 <meta name="keywords" content="{$metaKeywords}" >
@@ -12,7 +12,7 @@
 <!--<link rel="stylesheet" href="{$actualPath}/css/menu.css" type="text/css" media="screen" />
 -->
 <!-- round corner ends here  -->
-<link rel="shortcut icon" href="{$smarty.const.CLOUD_STATIC}favicon.ico" >
+<link rel="shortcut icon" href="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/favicon/111624e5-c88b-4ca0-8e89-53a48821379c.jpg/:/rs=w:24,h:24,m" >
 
 <!-- Merged CSS: style.css + fonts.css + jquery-ui.css + template.css + glob.css + dddropdownpanel.css -->
 <link href="{$actualPath}/css/site.css" rel="stylesheet" type="text/css" />
@@ -173,14 +173,10 @@
 				{/if}
 				<input type="hidden" name="is_expired" value="{$is_expired}" />
          </form>
-         <!--<div class="banner">
-             <a href="{$smarty.const.BANNER_LINK}" class="bannertxt" style="float:left;" title="Movie Poster Exchange" id="banner">{$smarty.const.BANNER_TITLE}</a>
-             <a href="http://www.gavelsnipe.com" target="_blank" style=""><img src="{$smarty.const.CLOUD_STATIC}banner2.png" alt="Gavelsnipe" title="Gavelsnipe"/></a>
-         </div>-->
          {*<div style="position:absolute; left:167px; top:90px; background:#fff; height:15px;color:red;">
 		 <label>The site will be under maintainance for three(3) Hrs.sorry for the inconvenience caused</label>
 		 </div>*}
-        <div id="logopanel" style="width:165px; min-height:93px; display:flex; align-items:center; justify-content:center;"><a href="{$actualPath}/index" title="Movie Poster Exchange"><img src="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/logo/3bb4d422-bdd7-43a5-8462-a3f81cde183b.png/:/rs=w:98,h:80,cg:true,m/cr=w:98,h:80/qt=q:95" alt="Movie Poster Exchange" title="Movie Poster Exchange" width="98" height="80"/></a></div>
+        <div id="logopanel" style="width:165px; min-height:93px; display:flex; align-items:center; justify-content:center;"><a href="{$actualPath}/index" title="Home"><img src="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/logo/3bb4d422-bdd7-43a5-8462-a3f81cde183b.png/:/rs=w:98,h:80,cg:true,m/cr=w:98,h:80/qt=q:95" alt="Logo" title="Home" width="98" height="80"/></a></div>
         <!--Header Top navigation Starts-->
         <div id="mainnavigation" class="innerbg">
           <ul class="menu">
@@ -198,15 +194,6 @@
           <!-- ADD THIS ICON -->   
           
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <!-- FACEBOOK  -->
-         <!-- <a class="facebooklike" title="Like MoviePosterExchange on Facebook" href="https://www.facebook.com/pages/MoviePosterExchangecom/105014962910848" target="_blank">
-          <img src="{$smarty.const.CLOUD_STATIC}icon_facebook.jpg" alt="" /></a>-->
-          <!-- FACEBOOK -->
-          
-          <!-- TWITTER -->
-         <!-- <a class="btn" target="_blank" id="follow-button" title="Follow @MoviePosterExch on Twitter" href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Fwww.movieposterexchange.com%2Findex.php&amp;region=follow_link&amp;screen_name=MoviePosterExch&amp;source=followbutton&amp;variant=2.0">
-          <img src="{$smarty.const.CLOUD_STATIC}icon_twitter.jpg" alt="" /></a>-->
-          <!-- TWITTER -->
           
           
           

@@ -35,6 +35,7 @@ $GLOBALS["metaKeywords"] = $row[SITE_GLOBAL_KEYWORDS];
 $GLOBALS["metaDescription"] = $row[SITE_GLOBAL_DESCRIPTION];
 define ("ADMIN_NAME", $row[CONFIG_ADMIN_NAME]);
 define ("ADMIN_EMAIL_ADDRESS", $row[CONFIG_ADMIN_EMAIL]);
+define ("SITE_TITLE", $row[CONFIG_ADMIN_PAGE_TITLE] ?: "MPE");
 
 //////////////    Auction Settings   //////////
 
@@ -94,7 +95,7 @@ define ("SHORT_TYPE", $row['short_type']);
 /* Shipping Default Parameters Ends */
 
 /* Admin Details Starts */
-define ("ADMIN_BUY_NAME", 'Movie Poster Exchange');
+define ("ADMIN_BUY_NAME", $row[CONFIG_ADMIN_NAME] ?: 'MPE');
 define ("ADMIN_ADDRESS1", '221 E MAIN ST');
 define ("ADMIN_CITY", 'GIBSONVILLE');
 define ("ADMIN_STATE", 'NC');
@@ -253,7 +254,7 @@ define ('MAIL_BODY_BOTTOM', '</td></tr>
 <td  background="'.CLOUD_STATIC.'footer-bg.png"  width="100%" height="75">
 	<table align="center" width="100%" cellspacing="0" cellpadding="0">
 		<tr>
-			<td align="right"><p style="padding: 5px; font-family: Trebuchet MS, Arial, Helvetica, sans-serif; font-size:12px; color: #a2a8ab;" ><span>&copy; 2011 - 2012. Movie Poster Exchange.</span>
+			<td align="right"><p style="padding: 5px; font-family: Trebuchet MS, Arial, Helvetica, sans-serif; font-size:12px; color: #a2a8ab;" ><span>&copy; 2011. All rights reserved.</span>
 			</td>
 		</tr>
 	</table>
