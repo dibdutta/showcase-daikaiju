@@ -71,7 +71,9 @@ jobs:
       - name: Create S3 state bucket
         if: inputs.first_time_setup
         run: |
-          BUCKET="showcase-terraform-state-${{ inputs.environment }}"
+          ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+          BUCKET="showcase-terraform-state-${{ inputs.environment }}-${ACCOUNT_ID}"
+          echo "BUCKET_NAME=${BUCKET}" >> $GITHUB_ENV
           if aws s3api head-bucket --bucket "$BUCKET" 2>/dev/null; then
             echo "Bucket $BUCKET already exists, skipping."
           else
@@ -89,7 +91,8 @@ jobs:
       - name: Create DynamoDB lock table
         if: inputs.first_time_setup
         run: |
-          TABLE="showcase-terraform-locks-${{ inputs.environment }}"
+          ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+          TABLE="showcase-terraform-locks-${{ inputs.environment }}-${ACCOUNT_ID}"
           if aws dynamodb describe-table --table-name "$TABLE" 2>/dev/null; then
             echo "Table $TABLE already exists, skipping."
           else
@@ -122,10 +125,18 @@ jobs:
         with:
           terraform_version: "~> 1.5"
 
+      - name: Set backend bucket name
+        run: |
+          ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+          echo "TF_BUCKET=showcase-terraform-state-${{ inputs.environment }}-${ACCOUNT_ID}" >> $GITHUB_ENV
+          echo "TF_DYNAMO=showcase-terraform-locks-${{ inputs.environment }}-${ACCOUNT_ID}" >> $GITHUB_ENV
+
       - name: Terraform Init
         run: |
           terraform init \
-            -backend-config="environments/${{ inputs.environment }}.backend.hcl"
+            -backend-config="environments/${{ inputs.environment }}.backend.hcl" \
+            -backend-config="bucket=${{ env.TF_BUCKET }}" \
+            -backend-config="dynamodb_table=${{ env.TF_DYNAMO }}"
 
       - name: Terraform Format Check
         run: terraform fmt -check

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.47, created on 2026-01-26 22:11:41
+/* Smarty version 3.1.47, created on 2026-02-22 11:23:07
   from '/var/www/html/templates/header.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.47',
-  'unifunc' => 'content_69782cedd66bd8_95869644',
+  'unifunc' => 'content_699b2d6b8a6553_91933293',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '88dbf58bd600aa27802129682ad443d483d9dea4' => 
     array (
       0 => '/var/www/html/templates/header.tpl',
-      1 => 1769483492,
+      1 => 1771776335,
       2 => 'file',
     ),
   ),
@@ -20,12 +20,13 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_69782cedd66bd8_95869644 (Smarty_Internal_Template $_smarty_tpl) {
+function content_699b2d6b8a6553_91933293 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>::Movie Poster Exchange::</title>
+<title>::<?php echo (defined('SITE_TITLE') ? constant('SITE_TITLE') : null);?>
+::</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"  >
 <meta name="description" content="<?php echo $_smarty_tpl->tpl_vars['metaDescription']->value;?>
 " >
@@ -39,19 +40,11 @@ function content_69782cedd66bd8_95869644 (Smarty_Internal_Template $_smarty_tpl)
 <!-- round corner ends here  -->
 
 
-<link rel="shortcut icon" href="<?php echo (defined('CLOUD_STATIC') ? constant('CLOUD_STATIC') : null);?>
-favicon.ico" >
+<link rel="shortcut icon" href="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/favicon/111624e5-c88b-4ca0-8e89-53a48821379c.jpg/:/rs=w:24,h:24,m" >
 
-<!--<link href="https://c15123524.ssl.cf2.rackcdn.com/template_test.css" rel="stylesheet" type="text/css"/>-->
-
-
-<link href="https://d2m46dmzqzklm5.cloudfront.net/css/style.css" rel="stylesheet" type="text/css" />
-<!--<link rel="stylesheet" type="text/css" href="<?php echo (defined('DOMAIN_PATH') ? constant('DOMAIN_PATH') : null);?>
-/javascript/slider/skins/tango/skin.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/javascript/tooltip/css/temp.css" media="screen" />-->
-<link href="https://d2m46dmzqzklm5.cloudfront.net/css/fonts.css" rel="stylesheet" type="text/css" />
-<link href="https://d2m46dmzqzklm5.cloudfront.net/css/template.css" rel="stylesheet" type="text/css" />
+<!-- Merged CSS: style.css + fonts.css + jquery-ui.css + template.css + glob.css + dddropdownpanel.css -->
+<link href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
+/css/site.css" rel="stylesheet" type="text/css" />
 
 <?php if ((defined('PHP_SELF') ? constant('PHP_SELF') : null) != '/myselling.php' && (defined('PHP_SELF') ? constant('PHP_SELF') : null) != '/edit_myauction.php') {?>
 	<?php echo '<script'; ?>
@@ -69,7 +62,6 @@ echo '<script'; ?>
  type="text/javascript" src="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
 /javascript/common.js.php"><?php echo '</script'; ?>
 >
-<link rel="stylesheet" href="https://d2m46dmzqzklm5.cloudfront.net/css/jquery-ui.css">
 
 
 
@@ -80,16 +72,16 @@ echo '<script'; ?>
 function submitDetailsForm(){
     console.log("Inside submitDetailsForm123")
 		$.ajax({
-			url: 'auth.php',
+			url: 'auth',
 			type: 'get',
 			data: { username: $('#username').val(),password:$('#password').val(),mode:'process_login' },
 			success: function(data) {
 					   if(data=='2'){
-					   	  window.location.href  = "buy.php?list=upcoming";
+					   	  window.location.href  = "buy?list=upcoming";
 					   }else if (data=='1'){
-					   	  window.location.href  = "buy.php?list=weekly";
+					   	  window.location.href  = "buy?list=weekly";
 					   }else if (data=='3'){
-					   	  window.location.href  = "buy.php?list=weekly";
+					   	  window.location.href  = "buy?list=weekly";
 					   }else{
 					   	 $("#error").text(data);
 					   }
@@ -123,12 +115,12 @@ function clear_text_for_poster(){
     }
 }
 function check_session(){
-    $.post('ajax.php', {mode : 'delete_session'}, function(){
+    $.post('ajax', {mode : 'delete_session'}, function(){
 
     })
 	var actualPath=' <?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
 ';
-		$(location).attr('href',actualPath+'/register.php');
+		$(location).attr('href',actualPath+'/register');
 }
 function refine_search(type,id){
     if(type=='decade'){
@@ -158,7 +150,13 @@ function refine_search(type,id){
     $('#frm_refine').submit();
 }
 function hidelogin(){
-		$('#login-panel').hide();
+		$('#login-modal-box').hide();
+		$('#login-modal-overlay').hide();
+	}
+	function showLogIn(){
+		$('#login-modal-overlay').show();
+		$('#login-modal-box').show();
+		$('#username').focus();
 	}
 	
 <?php echo '</script'; ?>
@@ -202,7 +200,7 @@ function acceptWarning(){
 	var url='/ajax.php';
 	$.post(url, {mode:"logoutInactiveUser" }, function(data){
 		$("#reset_warning").hide();	
-		window.location.href = "index.php";	
+		window.location.href = "index";	
 	})
 	
 }
@@ -269,14 +267,14 @@ function acceptWarning1(list,id){
   }else if(list==5){
   	type='stills';
   }
-		//window.location.href = "sold_item.php?mode=search_sold_"+type+"&auction_week="+id;
+		//window.location.href = "sold_item?mode=search_sold_"+type+"&auction_week="+id;
 
         $.ajax({
-            url: 'http://localhost/mpe/ajax.php?mode=update_exetended_items_endtime&id='+id,
+            url: 'http://localhost/mpe/ajax?mode=update_exetended_items_endtime&id='+id,
             type: 'GET',
             //data: "mode=update_exetended_items_endtime&id="+id,
             success: function(response) {
-                window.location.href = "buy.php?list=extended";
+                window.location.href = "buy?list=extended";
             }
         });
 }
@@ -299,7 +297,7 @@ function showTimer1(list,id){
   if(document.getElementById('timer1')){
 	  
 	  countdown = setInterval(function(){
-	  $.get('http://localhost/mpe/ajax.php?mode=chk_auction_week&week_id='+id, function(data) {
+	  $.get('http://localhost/mpe/ajax?mode=chk_auction_week&week_id='+id, function(data) {
 	   if(data=='1'){
 		 acceptWarning1(list,id);
 		}
@@ -311,7 +309,6 @@ function showTimer1(list,id){
 >
 
  <!-- sign in popup  -->
-    <link rel="stylesheet" type="text/css" href="https://d2m46dmzqzklm5.cloudfront.net/css/dddropdownpanel.css" />
 
 </head>
 <body>
@@ -322,7 +319,7 @@ function showTimer1(list,id){
     <!--Header Starts-->
      <div id="header">
 	  <form name="frm_refine" id="frm_refine" method="get" action="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php">
+/buy">
                 <input type="hidden" name="mode" value="search" />
                 <input type="hidden" name="poster_size_id" id="poster_size_id" value="<?php echo $_REQUEST['poster_size_id'];?>
 " />
@@ -345,32 +342,25 @@ function showTimer1(list,id){
 				<input type="hidden" name="auction_week_id" value="<?php echo $_REQUEST['auction_week_id'];?>
 " />
          </form>
-         <!--<div class="banner">
-             <a href="<?php echo (defined('BANNER_LINK') ? constant('BANNER_LINK') : null);?>
-" class="bannertxt" style="float:left;" title="Movie Poster Exchange" id="banner"><?php echo (defined('BANNER_TITLE') ? constant('BANNER_TITLE') : null);?>
-</a>
-             <a href="http://www.gavelsnipe.com" target="_blank" style=""><img src="<?php echo (defined('CLOUD_STATIC') ? constant('CLOUD_STATIC') : null);?>
-banner2.png" alt="Gavelsnipe" title="Gavelsnipe"/></a>
-         </div>-->
-                 <div id="logopanel"><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/index.php" title="Movie Poster Exchange"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/logo.png" alt="Movie Poster Exchange" title="Movie Poster Exchange" width="165" height="93"/></a></div>
+                 <div id="logopanel" style="width:165px; min-height:93px; display:flex; align-items:center; justify-content:center;"><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
+/index" title="Home"><img src="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/logo/3bb4d422-bdd7-43a5-8462-a3f81cde183b.png/:/rs=w:98,h:80,cg:true,m/cr=w:98,h:80/qt=q:95" alt="Logo" title="Home" width="98" height="80"/></a></div>
         <!--Header Top navigation Starts-->
         <div id="mainnavigation" class="innerbg">
           <ul class="menu">
                 <li <?php if ((defined('PHP_SELF') ? constant('PHP_SELF') : null) == '' || (defined('PHP_SELF') ? constant('PHP_SELF') : null) == '/index.php') {?>class="active homeover"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/index.php" title="HOME"><span>HOME</span></a></li>
+/index" title="HOME"><span>HOME</span></a></li>
                 <li <?php if ($_REQUEST['list'] == 'weekly' || $_REQUEST['list'] == 'extended') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?list=weekly" title="BUY"><span>AUCTIONS</span></a></li>
+/buy?list=weekly" title="BUY"><span>AUCTIONS</span></a></li>
                 <li <?php if ($_REQUEST['list'] == 'fixed') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?list=fixed" title="POSTER SHOP"><span>POSTER SHOP</span></a></li>
+/buy?list=fixed" title="POSTER SHOP"><span>POSTER SHOP</span></a></li>
                 <li <?php if ((defined('PHP_SELF') ? constant('PHP_SELF') : null) == '/sell.php') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/sell.php" title="SELL"><span>SELL</span></a></li>
+/sell" title="SELL"><span>SELL</span></a></li>
                 <li <?php if ((defined('PHP_SELF') ? constant('PHP_SELF') : null) == '/faq.php') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/faq.php" title="FAQ"><span>FAQ</a></span></li>
+/faq" title="FAQ"><span>FAQ</a></span></li>
                 <li <?php if ((defined('PHP_SELF') ? constant('PHP_SELF') : null) == '/contactus.php') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/contactus.php" title="CONTACT"><span>CONTACT</span></a></li>
+/contactus" title="CONTACT"><span>CONTACT</span></a></li>
                 <li  ><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/sold_item.php" title="SOLD ITEMS ARCHIVE"><span style="color:#CC0000;">SOLD ITEMS ARCHIVE</span></a></li></li>
+/sold_item" title="SOLD ITEMS ARCHIVE"><span style="color:#CC0000;">SOLD ITEMS ARCHIVE</span></a></li></li>
               </ul>
               
          
@@ -378,17 +368,6 @@ banner2.png" alt="Gavelsnipe" title="Gavelsnipe"/></a>
           <!-- ADD THIS ICON -->   
           
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <!-- FACEBOOK  -->
-         <!-- <a class="facebooklike" title="Like MoviePosterExchange on Facebook" href="https://www.facebook.com/pages/MoviePosterExchangecom/105014962910848" target="_blank">
-          <img src="<?php echo (defined('CLOUD_STATIC') ? constant('CLOUD_STATIC') : null);?>
-icon_facebook.jpg" alt="" /></a>-->
-          <!-- FACEBOOK -->
-          
-          <!-- TWITTER -->
-         <!-- <a class="btn" target="_blank" id="follow-button" title="Follow @MoviePosterExch on Twitter" href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Fwww.movieposterexchange.com%2Findex.php&amp;region=follow_link&amp;screen_name=MoviePosterExch&amp;source=followbutton&amp;variant=2.0">
-          <img src="<?php echo (defined('CLOUD_STATIC') ? constant('CLOUD_STATIC') : null);?>
-icon_twitter.jpg" alt="" /></a>-->
-          <!-- TWITTER -->
           
           
           
@@ -400,7 +379,7 @@ icon_twitter.jpg" alt="" /></a>-->
             <div class="search-midrept-bg ">
                 <label><img src="https://d2m46dmzqzklm5.cloudfront.net/images/search-img.png" width="20" height="37" /></label>
                 <form name="frm_keysearch" method="get" action="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php">
+/buy">
                     <!--<input type="hidden" name="list" value="<?php echo $_REQUEST['list'];?>
 " class="srchbox-txt" />-->
                      <input type="hidden" name="mode" <?php if ($_REQUEST['list'] != 'upcoming') {?> value="key_search_global"<?php } else { ?> value="key_search_upcoming"<?php }?> class="srchbox-txt" />
@@ -427,12 +406,12 @@ search_right_crn.png" width="11" height="35" /></div>-->
                 
 				<?php if ($_REQUEST['list'] != 'stills' && $_REQUEST['mode'] != 'refinesrcStills') {?>
 					<input type="button" value="" class="refine-srchbtn-main" onclick="$(location).attr('href', '<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=refinesrc&list=<?php echo $_REQUEST['list'];?>
+/buy?mode=refinesrc&list=<?php echo $_REQUEST['list'];?>
 &auction_week_id=<?php echo $_REQUEST['auction_week_id'];?>
 ');" />
 				<?php } else { ?>
 				    <input type="button" value="" class="refine-srchbtn-main" onclick="$(location).attr('href', '<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=refinesrcStills');" />
+/buy?mode=refinesrcStills');" />
 				<?php }?>
             </div>
        
@@ -444,104 +423,13 @@ search_right_crn.png" width="11" height="35" /></div>-->
          <ul>
         <li>
 		<div id="mypanel" class="ddpanel" style="margin-top:16px;">
-<!--<div id="mypanelcontent" class="ddpanelcontent">-->
-<div>
-<div id="signup-login" style="position: absolute; left: 0pt; top: 0pt; margin: 32px 0pt 0pt 700px; z-index:70000000;">
-<div class="col_2">
-			   <form name="frmlogin" id="frmlogin" method="post" action="auth.php">
-            	<input type="hidden" name="mode" value="process_login" />
-                
-                <table width="120" border="0" cellspacing="2" cellpadding="0" id="login-panel" style="display:none;">
-				<tr>
-				<td>
-               	 <h1>Member's Login</h1>
-                </td>
-				</tr>
-				<tr>
-				<td><div style="width: 30px; height: 30px; position: absolute; z-index: 8; margin: -60px 0px 0px 210px;"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/fancy_close.png" width="30" height="30" onclick="hidelogin();" style="cursor:pointer;"/></div></td>
-				</tr>
-                <tr>
-					<td id="error">
-					
-					</td>
-				  <tr>
-					<td>
-					<input type="text" id="username" name="username" <?php if ((defined('NewUserName') ? constant('NewUserName') : null) != '') {?> value="<?php echo (defined('NewUserName') ? constant('NewUserName') : null);?>
-" <?php }?> class="w170 required" />
-					</td>
-				  </tr>
-				  <tr>
-					<td>					
-					<input type="password" id="password" name="password" <?php if ((defined('NewPassWord') ? constant('NewPassWord') : null) != '') {?> value="<?php echo (defined('NewPassWord') ? constant('NewPassWord') : null);?>
-" <?php }?> class="w170 required"  style="font-size:10px;" onfocus="$(this).keypress(function(event){
-			var keycode = (event.keyCode ? event.keyCode : event.which);
-			if(keycode == '13'){			
-			submitDetailsForm()
-			}	
-		}); " />
-					</td>
-				  </tr>
-				  <tr>
-					<td><input type="button" class="login-blue-btn" value="Login" id="submitButton" name="submit" onclick="submitDetailsForm()" >
-									   </td>
-				  </tr>
-				  <tr>
-					<td> <a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/forget_password.php">Forgot password</a></td>
-				  </tr>
-				</table>
-                
-                
-              </form>
-            </div></div>
-
-
-</div>
 <div id="mypaneltab" class="ddpaneltab">
 <a href="javascript:void(0);" onclick="showLogIn();"><span>Sign In</span></a>
 </div>
-
 </div>
          
         <div class="dropdown_2columns"><!-- Begin 2 columns container -->
-    
-            <div class="col_2">
-                <h2>Members Login</h2>
-            </div>
-    
-            <div class="col_2">
-			   <form name="frmlogin" id="frmlogin" method="post" action="auth.php">
-            	<input type="hidden" name="mode" value="process_login" />
-                <table width="120" border="0" cellspacing="2" cellpadding="0">
-				 <tr>
-				 <td><div id="loginmsg" class="login-err" style="display:none;"></div></td>
-				 </tr>
-				  <tr>
-					<td>
-					<input type="text" id="username" name="username" <?php if ((defined('NewUserName') ? constant('NewUserName') : null) != '') {?> value="<?php echo (defined('NewUserName') ? constant('NewUserName') : null);?>
-" <?php }?> class="w170 required" />
-					</td>
-				  </tr>
-				  <tr>
-					<td>					
-					<input type="password" id="password" name="password" <?php if ((defined('NewPassWord') ? constant('NewPassWord') : null) != '') {?> value="<?php echo (defined('NewPassWord') ? constant('NewPassWord') : null);?>
-" <?php }?> class="w170 required"  style="font-size:10px;" />
-					</td>
-				  </tr>
-				  <tr>
-					<td><input type="submit" class="login-blue-btn" value="Login" id="submit" name="submit">
-									   </td>
-				  </tr>
-				  <tr>
-					<td> <a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/forget_password.php">Forgot password</a></td>
-				  </tr>
-				</table>
-              </form>
-            </div>
-    
-            
-          
+            &nbsp;
         </div><!-- End 2 columns container -->
     
     </li>
@@ -553,8 +441,8 @@ search_right_crn.png" width="11" height="35" /></div>-->
 		<?php } elseif ($_SESSION['sessUserID'] != '') {?>
         <div class="w60 fll pt07 pl122">
 		<ul id="menu"> 
-     <li class="menu_right"><a href="#" class="drop"> User Panel<!--Welcome <?php echo $_SESSION['sessUsername'];?>
-!--></a>
+     <li class="menu_right"><a href="#" class="drop"> Hi, <?php echo $_SESSION['sessUsername'];?>
+</a>
          <div class="dropdown_4columns align_right"><!-- Begin 2 columns container -->
     
             <div class="col_1">
@@ -562,17 +450,17 @@ search_right_crn.png" width="11" height="35" /></div>-->
                 <h3>MY BUYING</h3>
                 <ul>
                    <li><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/my_bid.php" >My Active Bids</a></li>
+/my_bid" >My Active Bids</a></li>
                     <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/offers.php">My Outgoing Offers&nbsp;&nbsp;(<?php echo $_smarty_tpl->tpl_vars['totalUnReadOutgoingOffer']->value;?>
+/offers">My Outgoing Offers&nbsp;&nbsp;(<?php echo $_smarty_tpl->tpl_vars['totalUnReadOutgoingOffer']->value;?>
 )</a></li>
                     <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/offers.php?mode=incoming_counters" <?php if ($_smarty_tpl->tpl_vars['totalUnReadIncomingCounters']->value > 0) {?> style="color:#FF4E09;" <?php }?>>My Incoming Counters&nbsp;&nbsp;(<?php echo $_smarty_tpl->tpl_vars['totalUnReadIncomingCounters']->value;?>
+/offers?mode=incoming_counters" <?php if ($_smarty_tpl->tpl_vars['totalUnReadIncomingCounters']->value > 0) {?> style="color:#FF4E09;" <?php }?>>My Incoming Counters&nbsp;&nbsp;(<?php echo $_smarty_tpl->tpl_vars['totalUnReadIncomingCounters']->value;?>
 )</a></li>
                     <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/my_bid.php?mode=closed">My Closed Items</a></li>
+/my_bid?mode=closed">My Closed Items</a></li>
                     <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/user_watching.php">Watch List&nbsp;&nbsp;(<?php echo $_smarty_tpl->tpl_vars['count_watching']->value;?>
+/user_watching">Watch List&nbsp;&nbsp;(<?php echo $_smarty_tpl->tpl_vars['count_watching']->value;?>
 )</a></li>
                 </ul>   
                  
@@ -583,29 +471,29 @@ search_right_crn.png" width="11" height="35" /></div>-->
                 <h3>MY SELLING</h3>
                 <ul>
                     <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myselling.php?mode=fixed">Manual Upload</a></li>
+/myselling?mode=fixed">Manual Upload</a></li>
                     <!--<li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myselling.php?mode=bulkupload">Bulk Upload</a></li>-->
+/myselling?mode=bulkupload">Bulk Upload</a></li>-->
                     <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myselling.php?mode=selling">Selling (Auction Items)</a></li>
+/myselling?mode=selling">Selling (Auction Items)</a></li>
 					<li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myselling.php?mode=fixed_selling">Selling (Fixed Items)</a></li>
+/myselling?mode=fixed_selling">Selling (Fixed Items)</a></li>
                     <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/offers.php?mode=incoming_offers" <?php if ($_smarty_tpl->tpl_vars['totalUnReadIncomingOffers']->value > 0) {?> style="color:#FF4E09;" <?php }?> >My Incoming Offers&nbsp;&nbsp;(<?php echo $_smarty_tpl->tpl_vars['totalUnReadIncomingOffers']->value;?>
+/offers?mode=incoming_offers" <?php if ($_smarty_tpl->tpl_vars['totalUnReadIncomingOffers']->value > 0) {?> style="color:#FF4E09;" <?php }?> >My Incoming Offers&nbsp;&nbsp;(<?php echo $_smarty_tpl->tpl_vars['totalUnReadIncomingOffers']->value;?>
 )</a></li>
                     <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/offers.php?mode=outgoing_counters">My Outgoing&nbsp;&nbsp; Counters(<?php echo $_smarty_tpl->tpl_vars['totalUnReadOutgoingCounters']->value;?>
+/offers?mode=outgoing_counters">My Outgoing&nbsp;&nbsp; Counters(<?php echo $_smarty_tpl->tpl_vars['totalUnReadOutgoingCounters']->value;?>
 )</a></li>
 					<li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myselling.php?mode=pending">Pending</a></li>
+/myselling?mode=pending">Pending</a></li>
 					<li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myselling.php?mode=sold">Sold</a></li>
+/myselling?mode=sold">Sold</a></li>
 					<li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myselling.php?mode=upcoming">Upcoming</a></li>
+/myselling?mode=upcoming">Upcoming</a></li>
 					<li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myselling.php?mode=unsold">Unsold/Closed</a></li>
+/myselling?mode=unsold">Unsold/Closed</a></li>
 					<li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myselling.php?mode=unpaid">Sale Pending</a></li>
+/myselling?mode=unpaid">Sale Pending</a></li>
                 </ul>   
                  
             </div>
@@ -615,18 +503,18 @@ search_right_crn.png" width="11" height="35" /></div>-->
                 <h3>MY ACCOUNT</h3>
                 <ul>
                     <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myaccount.php">My Account / Dashboard</a></li>
+/myaccount">My Account / Dashboard</a></li>
                     <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myaccount.php?mode=profile">Profile</a></li>
+/myaccount?mode=profile">Profile</a></li>
                                         <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/my_want_list.php">My Want List&nbsp;&nbsp;(<?php echo $_smarty_tpl->tpl_vars['total_want_count']->value;?>
+/my_want_list">My Want List&nbsp;&nbsp;(<?php echo $_smarty_tpl->tpl_vars['total_want_count']->value;?>
 )</a></li>
                     <li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/my_invoice.php">Invoices/Reconciliation</a></li>
+/my_invoice">Invoices/Reconciliation</a></li>
 					<li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/my_report.php">Reports</a></li>
+/my_report">Reports</a></li>
 					<li><a  href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myaccount.php?mode=change_password">Change Password</a></li>
+/myaccount?mode=change_password">Change Password</a></li>
                 </ul>   
                  
             </div>
@@ -638,11 +526,11 @@ search_right_crn.png" width="11" height="35" /></div>-->
     	 </div>
          <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
         <div class="w60 fll pt18 pl14 scart"><a href="javascript:void(0)" onclick="$(location).attr('href','<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myaccount.php?mode=logout');">Sign Out</a></div>
+/myaccount?mode=logout');">Sign Out</a></div>
 		<?php }?>
         <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
         <div class="w24 fll pt18 pl14"><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/cart.php"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/cart1-icon.png" width="24" height="15" /></a></div>
+/cart"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/cart1-icon.png" width="24" height="15" /></a></div>
     	<div class="w24 fll pt18 pl14 scart">(<?php if ($_SESSION['cart']) {
 echo count($_SESSION['cart']);
 } else { ?>0<?php }?>)</div>
@@ -892,6 +780,45 @@ for ($__section_counter_4_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
 <?php }?>
 <div id="dialog-confirm" >
 </div>
+
+<!-- Login Modal Overlay -->
+<div id="login-modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:200000;" onclick="hidelogin();"></div>
+<!-- Login Modal -->
+<div id="login-modal-box" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:200001; background:#fff; border-radius:8px; box-shadow:0 4px 24px rgba(0,0,0,0.3); padding:32px 36px 24px; width:380px; max-width:90vw; height:auto; overflow:visible;">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <h2 style="margin:0; font-size:22px; color:#333; font-weight:600;">Member's Login</h2>
+    <span onclick="hidelogin();" style="cursor:pointer; font-size:28px; color:#999; line-height:1; padding:0 4px;">&times;</span>
+  </div>
+  <form name="frmlogin" id="frmlogin" method="post" action="auth">
+    <input type="hidden" name="mode" value="process_login" />
+    <div id="error" style="color:red; margin-bottom:8px;"></div>
+    <div id="log-in-popup-text" style="color:#555; margin-bottom:12px; font-size:14px;"></div>
+    <div style="margin-bottom:16px;">
+      <label for="username" style="display:block; margin-bottom:6px; font-size:14px; font-weight:600; color:#555;">Username</label>
+      <input type="text" id="username" name="username" <?php if ((defined('NewUserName') ? constant('NewUserName') : null) != '') {?> value="<?php echo (defined('NewUserName') ? constant('NewUserName') : null);?>
+" <?php }?> class="required" placeholder="Enter your username" style="width:100%; padding:10px 12px; border:1px solid #ccc; border-radius:4px; font-size:14px; box-sizing:border-box;" />
+    </div>
+    <div style="margin-bottom:20px;">
+      <label for="password" style="display:block; margin-bottom:6px; font-size:14px; font-weight:600; color:#555;">Password</label>
+      <div style="position:relative;">
+        <input type="password" id="password" name="password" <?php if ((defined('NewPassWord') ? constant('NewPassWord') : null) != '') {?> value="<?php echo (defined('NewPassWord') ? constant('NewPassWord') : null);?>
+" <?php }?> class="required" placeholder="Enter your password" style="width:100%; padding:10px 36px 10px 12px; border:1px solid #ccc; border-radius:4px; font-size:14px; box-sizing:border-box;" onfocus="$(this).keypress(function(event){
+          var keycode = (event.keyCode ? event.keyCode : event.which);
+          if(keycode == '13'){ submitDetailsForm(); }
+        }); " />
+        <span onclick="var p=document.getElementById('password');if(p.type==='password'){p.type='text';this.textContent='HIDE';}else{p.type='password';this.textContent='SHOW';}" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:11px; font-weight:600; color:#cc0000; user-select:none; letter-spacing:0.5px;">SHOW</span>
+      </div>
+    </div>
+    <div style="margin-bottom:16px;">
+      <input type="button" value="LOGIN" id="submitButton" name="submit" onclick="submitDetailsForm()" style="width:100%; padding:10px; background:#cc0000; color:#fff; border:none; border-radius:4px; font-size:15px; font-weight:600; cursor:pointer; letter-spacing:1px;" />
+    </div>
+    <div style="text-align:center; padding-bottom:8px;">
+      <a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
+/forget_password" style="color:#cc0000; font-size:13px; text-decoration:none;">Forgot password?</a>
+    </div>
+  </form>
+</div>
+
 </body>
 </html><?php }
 }

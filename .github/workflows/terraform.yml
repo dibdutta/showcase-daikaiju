@@ -52,8 +52,11 @@ jobs:
       - name: Terraform Init
         id: init
         run: |
+          ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
           terraform init \
-            -backend-config="environments/${{ env.TF_ENVIRONMENT }}.backend.hcl"
+            -backend-config="environments/${{ env.TF_ENVIRONMENT }}.backend.hcl" \
+            -backend-config="bucket=showcase-terraform-state-${{ env.TF_ENVIRONMENT }}-${ACCOUNT_ID}" \
+            -backend-config="dynamodb_table=showcase-terraform-locks-${{ env.TF_ENVIRONMENT }}-${ACCOUNT_ID}"
 
       - name: Terraform Validate
         id: validate

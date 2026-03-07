@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.47, created on 2026-02-01 12:36:34
+/* Smarty version 3.1.47, created on 2026-02-16 21:57:43
   from '/var/www/html/admin_templates/admin_login.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.47',
-  'unifunc' => 'content_697f8f2292b5a5_10372636',
+  'unifunc' => 'content_6993d9278e8bd3_36411100',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '87998b3b726f5037595a87b0f93117e1f50a5533' => 
     array (
       0 => '/var/www/html/admin_templates/admin_login.tpl',
-      1 => 1487960220,
+      1 => 1771297048,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:admin_footer_login.tpl' => 1,
   ),
 ),false)) {
-function content_697f8f2292b5a5_10372636 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6993d9278e8bd3_36411100 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:admin_header_login.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 <table width="50%" border="0" cellspacing="0" cellpadding="0" align="center">	
@@ -42,7 +42,7 @@ icon_login.gif" alt="" border="0"><br><strong>Welcome to</strong><br><?php echo 
 <br><br>Use a valid username and password to gain access to the administration console.
 					</td>
 					<td valign="top" align="left" width="65%">
-						<form action="<?php echo $_smarty_tpl->tpl_vars['smalrty']->value['const']['PHP_SELF'];?>
+						<form action="<?php echo (defined('PHP_SELF') ? constant('PHP_SELF') : null);?>
 " method="post" name="form" autocomplete="off" >
 							<input type="hidden" name="mode" value="checkLogin">
 							<table width="95%" border="0" cellspacing="0" cellpadding="0">

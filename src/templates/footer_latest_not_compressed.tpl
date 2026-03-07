@@ -15,12 +15,12 @@
                 </ul>
             </div>            
             <div class="right">
-            	<p><span>&copy; 2011 - 2012. Movie Poster Exchange.</span></p>                
+            	<p><span>&copy; 2011 - {$smarty.now|date_format:"%Y"}. All rights reserved.</span></p>                
             </div>            
         </div> 
         
         
-        <div class="paypal"><img src="{$smarty.const.CLOUD_STATIC}paypal_logos.jpg" alt="Movie Poster Exchange" title="Movie Poster Exchange" width="224" height="79"/></div>
+        <div class="paypal"><img src="{$smarty.const.CLOUD_STATIC}paypal_logos.jpg" alt="Accepted Payment Methods" title="Accepted Payment Methods" width="224" height="79"/></div>
   </div>
         
         
