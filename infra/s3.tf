@@ -3,7 +3,7 @@
 ################################################################################
 
 resource "aws_s3_bucket" "static_assets" {
-  bucket = "${local.name_prefix}-static-assets"
+  bucket = "${local.name_prefix}-static-assets-${data.aws_caller_identity.current.account_id}"
 
   tags = { Name = "${local.name_prefix}-static-assets" }
 }

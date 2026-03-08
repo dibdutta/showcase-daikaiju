@@ -11,4 +11,4 @@ web_desired_count = 2
 nat_instance_type = "t3.micro"
 
 # Set to true after adding ACM DNS validation records at your domain registrar
-domain_validated = true
+domain_validated = false
