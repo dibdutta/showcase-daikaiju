@@ -47,7 +47,7 @@ $maxFileAge = 5 * 3600; // Temp file age in seconds
 
 // Create target dir
 if (!file_exists($targetDir)) {
-	@mkdir($targetDir);
+	@mkdir($targetDir, 0777, true);
 }
 
 // Get a file name
