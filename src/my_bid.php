@@ -201,7 +201,7 @@ function displayList()
 	$objBid->fetchMyBidByTypeNew($dataBid,$_SESSION['sessUserID'],$type,'active');	
 	$objBid->fetch_BidCount_MaxBid($dataBid);
 			$objBid->fetchBidsByIdNew($dataBid);
-			for($i=0;$i<count($dataBid);$i++){
+			for($i=0;$i<count($dataBid ?? []);$i++){
                 if ($dataBid[$i]['is_cloud']==1){
 					$dataBid[$i]['image_path']=CLOUD_POSTER_THUMB.$dataBid[$i]['poster_thumb'];               
                 }else{
