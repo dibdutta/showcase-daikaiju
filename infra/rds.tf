@@ -71,7 +71,7 @@ resource "aws_db_instance" "main" {
   parameter_group_name   = aws_db_parameter_group.mysql80.name
 
   multi_az            = false
-  publicly_accessible = false
+  publicly_accessible = true
   skip_final_snapshot = false
   final_snapshot_identifier = "${local.name_prefix}-final-snapshot"
 
