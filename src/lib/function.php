@@ -1391,6 +1391,13 @@ function increment_amount($buy_now){
 	$destThumb_buy_gallery = $makeAbsolute($destThumb_buy_gallery);
 	if(!empty($destThumb_big_slider)) $destThumb_big_slider = $makeAbsolute($destThumb_big_slider);
 
+	// Ensure all destination directories exist on EFS
+	if (!is_dir($dest_poster_photo)) mkdir($dest_poster_photo, 0777, true);
+	if (!is_dir($destThumb)) mkdir($destThumb, 0777, true);
+	if (!is_dir($destThumb_buy)) mkdir($destThumb_buy, 0777, true);
+	if (!is_dir($destThumb_buy_gallery)) mkdir($destThumb_buy_gallery, 0777, true);
+	if (!empty($destThumb_big_slider) && !is_dir($destThumb_big_slider)) mkdir($destThumb_big_slider, 0777, true);
+
  	//$obj = new Poster();
 
 	$has_default = false;
