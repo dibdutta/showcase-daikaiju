@@ -205,11 +205,12 @@ define("CLOUD_POSTER_THUMB_BUY_GALLERY_CONTAINER","cloud_mpe_poster_thumb_buy_ga
 define("CLOUD_POSTER_THUMB_BIG_GALLERY_CONTAINER","cloud_mpe_big_slider");
 
 if (APP_ENV === 'production') {
-	define("CLOUD_POSTER","https://d2bqhgoagefnx4.cloudfront.net/");
-	define("CLOUD_POSTER_THUMB","https://d2uggmgf6ym3vq.cloudfront.net/");
-	define("CLOUD_POSTER_THUMB_BUY","https://d2k61xg10jbore.cloudfront.net/");
-	define("CLOUD_POSTER_THUMB_BUY_GALLERY","https://d3bzuoa6jwdlat.cloudfront.net/");
-	define("CLOUD_POSTER_THUMB_BIG_GALLERY","https://d1o27s03otm3kw.cloudfront.net/");
+	$posterBase = "https://" . $_SERVER['HTTP_HOST'] . "/";
+	define("CLOUD_POSTER", $posterBase . "poster_photo/");
+	define("CLOUD_POSTER_THUMB", $posterBase . "poster_photo/thumbnail/");
+	define("CLOUD_POSTER_THUMB_BUY", $posterBase . "poster_photo/thumb_buy/");
+	define("CLOUD_POSTER_THUMB_BUY_GALLERY", $posterBase . "poster_photo/thumb_buy_gallery/");
+	define("CLOUD_POSTER_THUMB_BIG_GALLERY", $posterBase . "poster_photo/thumb_big_slider/");
 } else {
 	$localBase = "http://" . $_SERVER['HTTP_HOST'] . "/";
 	define("CLOUD_POSTER", $localBase . "poster_photo/");
