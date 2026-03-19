@@ -1577,7 +1577,7 @@ ul {
 }
 
 #wrapper {
-	width: 995px;
+	width: 1200px;
 	margin: 0 auto;
 	padding: 0px;
 }
@@ -3008,8 +3008,8 @@ right: 144px;*/
 
 #inner-right-container {
 	width: 220px;
-	float: left;
-	margin: 50px 0 25px 20px;
+	float: right;
+	margin: 24px 0 25px 0;
 }
 
 
