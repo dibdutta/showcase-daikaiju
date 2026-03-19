@@ -6,8 +6,8 @@
 		<meta name="history" content="">
 		<meta name="author" content="Verdana Core, phpdoc.net Inc.">
 		<title>{$smarty.const.ADMIN_PAGE_TITLE}</title>
-		<link href="{$adminActualPath}/adminStyle.css" rel="stylesheet">
-        <link href="{$adminActualPath}/dropdown_menu.css" rel="stylesheet">
+		<link href="{$adminStaticPath}/adminStyle.css" rel="stylesheet">
+        <link href="{$adminStaticPath}/dropdown_menu.css" rel="stylesheet">
         <script src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery.min.js"></script>
         <script type="text/javascript" src="{$smarty.const.PAGE_LINK}/javascript/dropdown_menu.js"></script>
 		<script type="text/javascript" src="{$smarty.const.PAGE_LINK}/javascript/adminCommon.js.php"></script>

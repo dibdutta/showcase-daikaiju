@@ -170,9 +170,11 @@ if(isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT']
 if (APP_ENV === 'production') {
 	define ("ADMIN_IMAGE_LINK", "https://".$_SERVER['HTTP_HOST']."/admin_images");
 	define ("ADMIN_PAGE_LINK", "https://".$_SERVER['HTTP_HOST']."/admin");
+	define ("ADMIN_STATIC_LINK", $cdnBase."/admin");
 } else {
 	define ("ADMIN_IMAGE_LINK", "http://".$_SERVER['HTTP_HOST']."/admin_images");
 	define ("ADMIN_PAGE_LINK", "http://".$_SERVER['HTTP_HOST']."/admin");
+	define ("ADMIN_STATIC_LINK", "http://".$_SERVER['HTTP_HOST']."/admin");
 }
 
 define ("FULL_PATH", SITE_URL);

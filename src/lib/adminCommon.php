@@ -10,6 +10,7 @@
 	
 	$smarty->assign('actualPath', PAGE_LINK);
 	$smarty->assign('adminActualPath', ADMIN_PAGE_LINK);
+	$smarty->assign('adminStaticPath', ADMIN_STATIC_LINK);
 	$smarty->assign('adminImagePath', ADMIN_IMAGE_LINK);
 	$smarty->assign('actualImagePath', IMAGE_LINK);
 	
