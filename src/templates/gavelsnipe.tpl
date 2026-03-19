@@ -6,6 +6,7 @@
 	}
 </script>
 {/literal}
+
 <div id="inner-right-container">
             
             
