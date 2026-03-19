@@ -1,5 +1,6 @@
 <?php
 ob_start();
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 define ("INCLUDE_PATH", "./");
 require_once INCLUDE_PATH."lib/inc.php";
 
