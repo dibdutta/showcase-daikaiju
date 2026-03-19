@@ -426,7 +426,7 @@ function sendMail($toMail, $toName, $subject, $textContent) {
 
 	$client = new Aws\Ses\SesClient([
 				'version' => 'latest',
-				'region'  => 'us-west-2'//,
+				'region'  => 'us-east-1'//,
 				//'debug'   => true
 	]);
 	
@@ -437,7 +437,7 @@ function sendMail($toMail, $toName, $subject, $textContent) {
 	define('RECIPIENT', $toName.'<'.$toMail.'>');
 	
 	// Replace us-west-2 with the AWS region you're using for Amazon SES.
-	define('REGION','us-west-2');
+	define('REGION','us-east-1');
 	
 	define('SUBJECT',$subject);
 	define('BODY',$textContent);
@@ -1627,7 +1627,7 @@ function chkTimeOut(){}
 
 	$client = new Aws\Ses\SesClient([
 				'version' => 'latest',
-				'region'  => 'us-west-2'//,
+				'region'  => 'us-east-1'//,
 				//'debug'   => true
 	]);
 	
@@ -1638,7 +1638,7 @@ function chkTimeOut(){}
 	define('RECIPIENT', $toName.'<'.$toMail.'>');
 	
 	// Replace us-west-2 with the AWS region you're using for Amazon SES.
-	define('REGION','us-west-2');
+	define('REGION','us-east-1');
 	
 	define('SUBJECT',$subject);
 	define('BODY',$textContent);
