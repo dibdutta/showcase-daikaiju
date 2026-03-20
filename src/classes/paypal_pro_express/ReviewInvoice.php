@@ -40,6 +40,8 @@ and APIError.php.
 
 ********************************************/
 
+define("INCLUDE_PATH", "../../");
+require_once INCLUDE_PATH."lib/configures.php";
 require_once 'CallerService.php';
 
 session_start();
@@ -55,7 +57,6 @@ session_start();
 $token = $_REQUEST['token'];
 if(!isset($token)) {
     
-	define ("INCLUDE_PATH", "../../");
 	require_once INCLUDE_PATH."lib/inc.php";
 	require_once INCLUDE_PATH."lib/common.php";
 	
@@ -148,7 +149,6 @@ if(!isset($token)) {
 	
 	$shiptoAddress = "&SHIPTONAME=$personName&SHIPTOSTREET=$SHIPTOSTREET&SHIPTOCITY=$SHIPTOCITY&SHIPTOSTATE=$SHIPTOSTATE&SHIPTOCOUNTRYCODE=$SHIPTOCOUNTRYCODE&SHIPTOZIP=$SHIPTOZIP";
 	$nvpstr="&ADDRESSOVERRIDE=1".$shiptoAddress."&".$itemInfo."AMT=".$amt."&ITEMAMT=".$itemamt."&SHIPPINGAMT=".number_format($shipping_charges, 2, ".", "")."&SHIPDISCAMT=-".number_format($discount, 2, ".", "")."&TAXAMT=".number_format($_SESSION['invoice_'.$_REQUEST['invoice_id']]['shipping_info']['sale_tax_amount'], 2, ".", "")."&ReturnUrl=".$returnURL."&CANCELURL=".$cancelURL ."&CURRENCYCODE=USD&PAYMENTACTION=Sale";
-	$nvpstr = $nvpHeader.$nvpstr;
  	/* Make the call to PayPal to set the Express Checkout token
 	If the API call succeded, then redirect the buyer to PayPal
 	to begin to authorize payment.  If an error occured, show the
@@ -171,7 +171,7 @@ if(!isset($token)) {
 		//$location = "APIError.php";
 		//header("Location: $location");
 		$_SESSION['Err'] = "Payment failed. Please try again!"."<br/>"." Paypal Error Code:". $resArray['L_ERRORCODE0']."&nbsp;".$resArray['L_LONGMESSAGE0'];
-		header("location:".$_SERVER['HTTP_HOST']."/my_invoice.php?mode=do_express_checkout&invoice_id=".$invoice_id);
+		header("location:https://".$_SERVER['HTTP_HOST']."/my_invoice.php?mode=do_express_checkout&invoice_id=".$invoice_id);
 		exit;
 	}
 } else {
@@ -190,8 +190,6 @@ if(!isset($token)) {
 	ID to get the details on the payment authorization
 	*/
    $nvpstr="&TOKEN=".$token;
-
-   $nvpstr = $nvpHeader.$nvpstr;
 	/* Make the API call and store the results in an array.  If the
 	call was a success, show the authorization details, and provide
 	an action to complete the payment.  If failed, show the error
