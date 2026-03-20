@@ -189,7 +189,6 @@ class DBCommon{
 		   
 		   if(!$isUpdate){
 				$sql = "INSERT INTO $table SET $tableData";
-				echo $sql;
 				if(mysqli_query($GLOBALS['db_connect'], $sql)){
 					return mysqli_insert_id($GLOBALS['db_connect']);
 				}else{

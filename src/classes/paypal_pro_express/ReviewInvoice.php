@@ -163,7 +163,7 @@ if(!isset($token)) {
    	if($ack=="SUCCESS"){
 		// Redirect to paypal.com here
 		$token = urldecode($resArray["TOKEN"]);
-		$payPalURL = PAYPAL_URL.$token;
+		$payPalURL = PAYPAL_URL."?cmd=_express-checkout&token=".$token;
 		header("Location: ".$payPalURL);
 		exit;
 	} else {
