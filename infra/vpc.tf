@@ -93,27 +93,28 @@ resource "aws_instance" "nat" {
 
   user_data = <<-EOF
     #!/bin/bash
-    set -e
-    # Enable IP forwarding immediately and persist
+    # === STEP 1: IP forwarding - no dependencies, must succeed ===
     echo 1 > /proc/sys/net/ipv4/ip_forward
-    sysctl -w net.ipv4.ip_forward=1
     echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
 
-    # Install iptables and SSM agent
-    yum install -y iptables-services amazon-ssm-agent
+    # === STEP 2: iptables MASQUERADE - iptables is pre-installed on AL2023 ===
+    PRIMARY_IF=$(ip route show default | awk '/default/ {print $5; exit}')
+    iptables -t nat -A POSTROUTING -o "$PRIMARY_IF" -j MASQUERADE
 
-    # Enable and start services
-    systemctl enable iptables
-    systemctl start iptables
-    systemctl enable amazon-ssm-agent
-    systemctl start amazon-ssm-agent
+    # === STEP 3: Persist rules across reboots (best effort) ===
+    yum install -y iptables-services 2>&1 | tee /var/log/nat-setup.log
+    if systemctl list-unit-files iptables.service &>/dev/null; then
+      systemctl enable iptables
+      systemctl start iptables
+      iptables-save > /etc/sysconfig/iptables
+    fi
 
-    # Add MASQUERADE rule for NAT
-    PRIMARY_IF=$(ip -o link show | awk -F': ' '{print $2}' | grep -v lo | head -1)
-    iptables -t nat -A POSTROUTING -o $PRIMARY_IF -j MASQUERADE
-
-    # Persist iptables rules so they survive reboots
-    iptables-save > /etc/sysconfig/iptables
+    # === STEP 4: SSM agent for remote debugging (best effort, never blocks NAT) ===
+    yum install -y amazon-ssm-agent 2>&1 | tee -a /var/log/nat-setup.log || \
+      (curl -o /tmp/amazon-ssm-agent.rpm https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm && \
+       rpm -ivh /tmp/amazon-ssm-agent.rpm) || true
+    systemctl enable amazon-ssm-agent 2>/dev/null || true
+    systemctl start amazon-ssm-agent 2>/dev/null || true
   EOF
 
   tags = { Name = "${local.name_prefix}-nat-instance", ManagedBy = "terraform" }
