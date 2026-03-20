@@ -88,18 +88,31 @@ resource "aws_instance" "nat" {
   instance_type          = var.nat_instance_type
   subnet_id              = aws_subnet.public[0].id
   vpc_security_group_ids = [aws_security_group.nat.id]
+  iam_instance_profile   = "showcase-prod-nat-ssm-profile"
   source_dest_check      = false
 
   user_data = <<-EOF
     #!/bin/bash
-    yum install -y iptables-services
+    set -e
+    # Enable IP forwarding immediately and persist
+    echo 1 > /proc/sys/net/ipv4/ip_forward
+    sysctl -w net.ipv4.ip_forward=1
+    echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+
+    # Install iptables and SSM agent
+    yum install -y iptables-services amazon-ssm-agent
+
+    # Enable and start services
     systemctl enable iptables
     systemctl start iptables
-    echo 1 > /proc/sys/net/ipv4/ip_forward
-    echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-    # Auto-detect the primary network interface (works on all instance types)
+    systemctl enable amazon-ssm-agent
+    systemctl start amazon-ssm-agent
+
+    # Add MASQUERADE rule for NAT
     PRIMARY_IF=$(ip -o link show | awk -F': ' '{print $2}' | grep -v lo | head -1)
     iptables -t nat -A POSTROUTING -o $PRIMARY_IF -j MASQUERADE
+
+    # Persist iptables rules so they survive reboots
     iptables-save > /etc/sysconfig/iptables
   EOF
 
