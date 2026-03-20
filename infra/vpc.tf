@@ -116,7 +116,7 @@ resource "aws_instance" "nat" {
     iptables-save > /etc/sysconfig/iptables
   EOF
 
-  tags = { Name = "${local.name_prefix}-nat-instance" }
+  tags = { Name = "${local.name_prefix}-nat-instance", ManagedBy = "terraform" }
 }
 
 resource "aws_security_group" "nat" {
