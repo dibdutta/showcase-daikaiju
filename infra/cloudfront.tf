@@ -160,4 +160,11 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   tags = { Name = "${local.name_prefix}-cdn" }
+
+  # aliases and viewer_certificate are managed manually until DNS is transferred
+  # from the old AWS account. Remove this block once associate-alias DNS TXT
+  # records are added at the domain registrar and the alias is successfully moved.
+  lifecycle {
+    ignore_changes = [aliases, viewer_certificate]
+  }
 }
