@@ -70,3 +70,17 @@ variable "nat_instance_type" {
   type        = string
   default     = "t3.micro"
 }
+
+variable "usps_consumer_key" {
+  description = "USPS API OAuth consumer key"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "usps_consumer_secret" {
+  description = "USPS API OAuth consumer secret"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
