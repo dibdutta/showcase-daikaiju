@@ -104,9 +104,9 @@ resource "aws_instance" "nat" {
     # === STEP 3: Persist rules across reboots (best effort) ===
     yum install -y iptables-services 2>&1 | tee /var/log/nat-setup.log
     if systemctl list-unit-files iptables.service &>/dev/null; then
+      iptables-save > /etc/sysconfig/iptables
       systemctl enable iptables
       systemctl start iptables
-      iptables-save > /etc/sysconfig/iptables
     fi
 
     # === STEP 4: SSM agent for remote debugging (best effort, never blocks NAT) ===
