@@ -7,8 +7,8 @@ function USPSGetToken() {
         return $cached_token;
     }
 
-    $clientId     = getenv('USPS_CONSUMER_KEY');
-    $clientSecret = getenv('USPS_CONSUMER_SECRET');
+    $clientId     = "7qILcfTnmqqNGPsauLPZUG86Y04EZPjSk7UaZuLAD1X5zz6W";
+    $clientSecret = "liwUXyKGX0XzG9hPaVWSwG8uSqE2cKouRJXw8Ahwq9z6uIYzGSjv3cgmc9Aowyn8";
 
     $ch = curl_init('https://apis.usps.com/oauth2/v3/token');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -30,7 +30,7 @@ function USPSGetToken() {
 
 function USPSParcelRate($dest_zip, $width, $height, $length, $weight_lb, $weight_oz) {
     $orig_zip   = '27249';
-    $weightLbs  = (float)$weight_lb + ((float)$weight_oz / 16);
+    $weightLbs  = 1;//(float)$weight_lb + ((float)$weight_oz / 16);
 
     $token = USPSGetToken();
     if (empty($token)) {
