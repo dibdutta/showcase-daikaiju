@@ -103,21 +103,25 @@ resource "aws_instance" "nat" {
     echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
     echo "ip_forward=$(cat /proc/sys/net/ipv4/ip_forward)"
 
-    # === STEP 2: NAT via nftables (AL2023 native, more reliable than iptables) ===
+    # === STEP 2: Install iptables and nftables tools, then set up NAT ===
+    # AL2023 minimal does not ship nft or iptables-nft — install them first
+    yum install -y nftables iptables 2>&1
+    echo "Installed nftables and iptables"
+
     PRIMARY_IF=$(ip route show default | awk '/default/ {print $5; exit}')
     echo "Primary interface: $PRIMARY_IF"
+
+    # Use nft directly (AL2023 native)
     nft add table ip nat
     nft add chain ip nat postrouting '{ type nat hook postrouting priority srcnat ; }'
     nft add rule ip nat postrouting oifname "$PRIMARY_IF" masquerade
-    echo "nft rules after setup:"
+    echo "nft ruleset:"
     nft list ruleset
 
-    # === STEP 3: Persist nftables rules across reboots ===
+    # === STEP 3: Persist via nftables service ===
     nft list ruleset > /etc/nftables.conf
-    # Prepend flush to ensure clean restore
     sed -i '1s/^/flush ruleset\n/' /etc/nftables.conf
-    systemctl enable nftables
-    echo "nftables.conf saved and service enabled"
+    systemctl enable nftables && echo "nftables service enabled"
 
     # === STEP 4: SSM agent (best effort) ===
     yum install -y amazon-ssm-agent 2>&1 || true
