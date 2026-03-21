@@ -34,7 +34,7 @@ define('PROXY_PORT', '808');
 /**
 # Version: this is the API version in the request.
 */
-define('VERSION', '65.1');
+if (!defined('VERSION')) define('VERSION', '65.1');
 
 // Ack related constants
 define('ACK_SUCCESS', 'SUCCESS');

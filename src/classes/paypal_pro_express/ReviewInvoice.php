@@ -62,7 +62,7 @@ if(!isset($token)) {
 	
 	$invoice_id = $_REQUEST['invoice_id'];
 	$_SESSION['invoice_id']=$invoice_id;
-	//$objCommon = new Invoice();
+	$objCommon = new Invoice();
 	$invoiceData = $objCommon->selectData(TBL_INVOICE, array('*'), array('invoice_id' => $invoice_id));
 	$invoiceData[0]['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['auction_details'] );
 	$invoiceData[0]['auction_details'] = unserialize($invoiceData[0][auction_details]);
