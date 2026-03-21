@@ -44,13 +44,6 @@ define("INCLUDE_PATH", "../../");
 require_once INCLUDE_PATH."lib/configures.php";
 require_once 'CallerService.php';
 
-register_shutdown_function(function() {
-    $e = error_get_last();
-    if ($e && in_array($e['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR])) {
-        error_log("ReviewInvoice FATAL: [{$e['type']}] {$e['message']} in {$e['file']}:{$e['line']}");
-    }
-});
-
 session_start();
 
 /* An express checkout transaction starts with a token, that
@@ -69,17 +62,14 @@ if(!isset($token)) {
 
 	$invoice_id = $_REQUEST['invoice_id'];
 	$_SESSION['invoice_id']=$invoice_id;
-	error_log("ReviewInvoice: start invoice_id=$invoice_id");
 	$objCommon = new Invoice();
 	$invoiceData = $objCommon->selectData(TBL_INVOICE, array('*'), array('invoice_id' => $invoice_id));
-	error_log("ReviewInvoice: invoiceData count=".count($invoiceData));
 	$invoiceData[0]['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['auction_details'] ?? '' );
 	$invoiceData[0]['auction_details'] = unserialize($invoiceData[0]['auction_details']);
 	$invoiceData[0]['discounts'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['discounts'] ?? '' );
 	$invoiceData[0]['discounts'] = unserialize($invoiceData[0]['discounts'] ?: 'a:0:{}');
 	$invoiceData[0]['additional_charges'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['additional_charges'] ?? '' );
 	$invoiceData[0]['additional_charges'] = unserialize($invoiceData[0]['additional_charges'] ?: 'a:0:{}');
-	error_log("ReviewInvoice: unserialized ok, auction_details type=".gettype($invoiceData[0]['auction_details']));
 
 	$cartSubTotal = 0;
 	$itemNumber = 0;
@@ -164,9 +154,7 @@ if(!isset($token)) {
 	to begin to authorize payment.  If an error occured, show the
 	resulting errors
 	*/
-	error_log("ReviewInvoice: calling SetExpressCheckout nvpstr_len=".strlen($nvpstr));
    	$resArray=hash_call("SetExpressCheckout",$nvpstr);
-	error_log("ReviewInvoice: ACK=".($resArray["ACK"] ?? 'null')." ERR=".($resArray["L_ERRORCODE0"] ?? '')." MSG=".($resArray["L_LONGMESSAGE0"] ?? ''));
 
    	$_SESSION['invoice_'.$invoice_id]['reshash']=$resArray;
 
@@ -176,11 +164,9 @@ if(!isset($token)) {
 		// Redirect to paypal.com here
 		$token = urldecode($resArray["TOKEN"]);
 		$payPalURL = PAYPAL_URL."?cmd=_express-checkout&token=".$token;
-		error_log("ReviewInvoice: redirecting to PayPal token=$token");
 		header("Location: ".$payPalURL);
 		exit;
 	} else {
-		error_log("ReviewInvoice: PayPal FAILED ACK=$ack L_ERRORCODE0=".($resArray['L_ERRORCODE0'] ?? '')." L_LONGMESSAGE0=".($resArray['L_LONGMESSAGE0'] ?? ''));
 		$_SESSION['Err'] = "Payment failed. Please try again!"."<br/>"." Paypal Error Code:". $resArray['L_ERRORCODE0']."&nbsp;".$resArray['L_LONGMESSAGE0'];
 		header("location:https://".$_SERVER['HTTP_HOST']."/my_invoice.php?mode=do_express_checkout&invoice_id=".$invoice_id);
 		exit;
