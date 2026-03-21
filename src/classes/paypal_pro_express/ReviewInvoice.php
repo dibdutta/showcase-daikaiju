@@ -44,6 +44,13 @@ define("INCLUDE_PATH", "../../");
 require_once INCLUDE_PATH."lib/configures.php";
 require_once 'CallerService.php';
 
+register_shutdown_function(function() {
+    $e = error_get_last();
+    if ($e && in_array($e['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR])) {
+        error_log("ReviewInvoice FATAL: [{$e['type']}] {$e['message']} in {$e['file']}:{$e['line']}");
+    }
+});
+
 session_start();
 
 /* An express checkout transaction starts with a token, that
@@ -66,17 +73,18 @@ if(!isset($token)) {
 	$objCommon = new Invoice();
 	$invoiceData = $objCommon->selectData(TBL_INVOICE, array('*'), array('invoice_id' => $invoice_id));
 	error_log("ReviewInvoice: invoiceData count=".count($invoiceData));
-	$invoiceData[0]['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['auction_details'] );
-	$invoiceData[0]['auction_details'] = unserialize($invoiceData[0][auction_details]);
-	$invoiceData[0]['discounts'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['discounts'] );
-	$invoiceData[0]['discounts'] = unserialize($invoiceData[0]['discounts']);
-	$invoiceData[0]['additional_charges'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['additional_charges'] );
-	$invoiceData[0]['additional_charges'] = unserialize($invoiceData[0]['additional_charges']);
-	
+	$invoiceData[0]['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['auction_details'] ?? '' );
+	$invoiceData[0]['auction_details'] = unserialize($invoiceData[0]['auction_details']);
+	$invoiceData[0]['discounts'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['discounts'] ?? '' );
+	$invoiceData[0]['discounts'] = unserialize($invoiceData[0]['discounts'] ?: 'a:0:{}');
+	$invoiceData[0]['additional_charges'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['additional_charges'] ?? '' );
+	$invoiceData[0]['additional_charges'] = unserialize($invoiceData[0]['additional_charges'] ?: 'a:0:{}');
+	error_log("ReviewInvoice: unserialized ok, auction_details type=".gettype($invoiceData[0]['auction_details']));
+
 	$cartSubTotal = 0;
 	$itemNumber = 0;
 	$itemInfo = "";
-	
+
 	foreach($invoiceData[0]['auction_details'] as $key => $value){
 		$singleItemInfo = "L_NAME".$itemNumber."=".urlencode($value['poster_title'])."&L_AMT".$itemNumber."=".number_format($value['amount'], 2, ".", "")."&L_QTY".$itemNumber."=1";
         $itemInfo = $singleItemInfo."&".$itemInfo;
