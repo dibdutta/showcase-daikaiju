@@ -54,16 +54,18 @@ session_start();
    to PayPal to first authorize payment
    */
 
-$token = $_REQUEST['token'];
+$token = $_REQUEST['token'] ?? null;
 if(!isset($token)) {
-    
+
 	require_once INCLUDE_PATH."lib/inc.php";
 	require_once INCLUDE_PATH."lib/common.php";
-	
+
 	$invoice_id = $_REQUEST['invoice_id'];
 	$_SESSION['invoice_id']=$invoice_id;
+	error_log("ReviewInvoice: start invoice_id=$invoice_id");
 	$objCommon = new Invoice();
 	$invoiceData = $objCommon->selectData(TBL_INVOICE, array('*'), array('invoice_id' => $invoice_id));
+	error_log("ReviewInvoice: invoiceData count=".count($invoiceData));
 	$invoiceData[0]['auction_details'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['auction_details'] );
 	$invoiceData[0]['auction_details'] = unserialize($invoiceData[0][auction_details]);
 	$invoiceData[0]['discounts'] = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData[0]['discounts'] );
@@ -154,22 +156,23 @@ if(!isset($token)) {
 	to begin to authorize payment.  If an error occured, show the
 	resulting errors
 	*/
+	error_log("ReviewInvoice: calling SetExpressCheckout nvpstr_len=".strlen($nvpstr));
    	$resArray=hash_call("SetExpressCheckout",$nvpstr);
-   	
+	error_log("ReviewInvoice: ACK=".($resArray["ACK"] ?? 'null')." ERR=".($resArray["L_ERRORCODE0"] ?? '')." MSG=".($resArray["L_LONGMESSAGE0"] ?? ''));
+
    	$_SESSION['invoice_'.$invoice_id]['reshash']=$resArray;
 
-   	$ack = strtoupper($resArray["ACK"]);
+   	$ack = strtoupper($resArray["ACK"] ?? '');
 
    	if($ack=="SUCCESS"){
 		// Redirect to paypal.com here
 		$token = urldecode($resArray["TOKEN"]);
 		$payPalURL = PAYPAL_URL."?cmd=_express-checkout&token=".$token;
+		error_log("ReviewInvoice: redirecting to PayPal token=$token");
 		header("Location: ".$payPalURL);
 		exit;
 	} else {
-		//Redirecting to APIError.php to display errors.
-		//$location = "APIError.php";
-		//header("Location: $location");
+		error_log("ReviewInvoice: PayPal FAILED ACK=$ack L_ERRORCODE0=".($resArray['L_ERRORCODE0'] ?? '')." L_LONGMESSAGE0=".($resArray['L_LONGMESSAGE0'] ?? ''));
 		$_SESSION['Err'] = "Payment failed. Please try again!"."<br/>"." Paypal Error Code:". $resArray['L_ERRORCODE0']."&nbsp;".$resArray['L_LONGMESSAGE0'];
 		header("location:https://".$_SERVER['HTTP_HOST']."/my_invoice.php?mode=do_express_checkout&invoice_id=".$invoice_id);
 		exit;
