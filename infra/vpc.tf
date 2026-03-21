@@ -101,12 +101,13 @@ resource "aws_instance" "nat" {
     PRIMARY_IF=$(ip route show default | awk '/default/ {print $5; exit}')
     iptables -t nat -A POSTROUTING -o "$PRIMARY_IF" -j MASQUERADE
 
-    # === STEP 3: Persist rules across reboots (best effort) ===
+    # === STEP 3: Persist rules across reboots (save + enable, don't start now) ===
+    # Rule is already live in memory from step 2. Starting iptables-services
+    # would flush-and-restore, which can lose the rule. Just save and enable.
     yum install -y iptables-services 2>&1 | tee /var/log/nat-setup.log
     if systemctl list-unit-files iptables.service &>/dev/null; then
       iptables-save > /etc/sysconfig/iptables
       systemctl enable iptables
-      systemctl start iptables
     fi
 
     # === STEP 4: SSM agent for remote debugging (best effort, never blocks NAT) ===
