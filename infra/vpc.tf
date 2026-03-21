@@ -93,29 +93,38 @@ resource "aws_instance" "nat" {
 
   user_data = <<-EOF
     #!/bin/bash
-    # === STEP 1: IP forwarding - no dependencies, must succeed ===
+    LOG=/var/log/nat-setup.log
+    exec > >(tee -a $LOG) 2>&1
+    echo "=== NAT setup started at $(date) ==="
+
+    # === STEP 1: IP forwarding ===
     echo 1 > /proc/sys/net/ipv4/ip_forward
+    sysctl -w net.ipv4.ip_forward=1
     echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+    echo "ip_forward=$(cat /proc/sys/net/ipv4/ip_forward)"
 
-    # === STEP 2: iptables MASQUERADE - iptables is pre-installed on AL2023 ===
+    # === STEP 2: NAT via nftables (AL2023 native, more reliable than iptables) ===
     PRIMARY_IF=$(ip route show default | awk '/default/ {print $5; exit}')
-    iptables -t nat -A POSTROUTING -o "$PRIMARY_IF" -j MASQUERADE
+    echo "Primary interface: $PRIMARY_IF"
+    nft add table ip nat
+    nft add chain ip nat postrouting '{ type nat hook postrouting priority srcnat ; }'
+    nft add rule ip nat postrouting oifname "$PRIMARY_IF" masquerade
+    echo "nft rules after setup:"
+    nft list ruleset
 
-    # === STEP 3: Persist rules across reboots (save + enable, don't start now) ===
-    # Rule is already live in memory from step 2. Starting iptables-services
-    # would flush-and-restore, which can lose the rule. Just save and enable.
-    yum install -y iptables-services 2>&1 | tee /var/log/nat-setup.log
-    if systemctl list-unit-files iptables.service &>/dev/null; then
-      iptables-save > /etc/sysconfig/iptables
-      systemctl enable iptables
-    fi
+    # === STEP 3: Persist nftables rules across reboots ===
+    nft list ruleset > /etc/nftables.conf
+    # Prepend flush to ensure clean restore
+    sed -i '1s/^/flush ruleset\n/' /etc/nftables.conf
+    systemctl enable nftables
+    echo "nftables.conf saved and service enabled"
 
-    # === STEP 4: SSM agent for remote debugging (best effort, never blocks NAT) ===
-    yum install -y amazon-ssm-agent 2>&1 | tee -a /var/log/nat-setup.log || \
-      (curl -o /tmp/amazon-ssm-agent.rpm https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm && \
-       rpm -ivh /tmp/amazon-ssm-agent.rpm) || true
+    # === STEP 4: SSM agent (best effort) ===
+    yum install -y amazon-ssm-agent 2>&1 || true
     systemctl enable amazon-ssm-agent 2>/dev/null || true
     systemctl start amazon-ssm-agent 2>/dev/null || true
+
+    echo "=== NAT setup complete at $(date) ==="
   EOF
 
   tags = { Name = "${local.name_prefix}-nat-instance", ManagedBy = "terraform" }
