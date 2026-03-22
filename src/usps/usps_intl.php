@@ -1,8 +1,9 @@
 <?php
 include("usps_calculator_intl.php");
-define ("INCLUDE_PATH", "../");
+// INCLUDE_PATH already defined by usps_calculator_intl.php
 require_once INCLUDE_PATH."lib/inc.php";
 $totalPoster=$_REQUEST['totalPoster'];
+$DeleveryTime = "10-14 Business Days";
 /*if($_REQUEST['country_id']!='38'){
 $sql=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],"Select country_name from country_table where country_id=".$_REQUEST['country_id']));
 $dest=$sql['country_name']; 

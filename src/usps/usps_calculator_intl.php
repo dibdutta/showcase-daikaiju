@@ -1,5 +1,5 @@
 <?php
-define ("INCLUDE_PATH", "../");
+if (!defined('INCLUDE_PATH')) define("INCLUDE_PATH", "../");
 require_once INCLUDE_PATH."lib/inc.php";
 function USPSParcelRate($dest,$width, $height, $length, $weight_lb,$weight_oz)
 {
