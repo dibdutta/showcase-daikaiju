@@ -46,9 +46,10 @@
 	//$smarty->assign('imageHeight', IMAGE_HEIGHT);
 	
 	
-	if(isset($_SESSION['Err']) && $_SESSION['Err']=="" && isset($_REQUEST['msg']) && $_REQUEST['msg']!=""){
-		$_SESSION['Err'] = $_REQUEST['msg'];
+	if(isset($_SESSION['Err']) && $_SESSION['Err'] != ""){
 		$smarty->assign('errorMessage', $_SESSION['Err']);
+	} elseif(isset($_REQUEST['msg']) && $_REQUEST['msg'] != ""){
+		$smarty->assign('errorMessage', $_REQUEST['msg']);
 	}
 
 	
