@@ -18,7 +18,9 @@
                 'autoScale'		: false,
                 'transitionIn'	: 'none',
                 'transitionOut'	: 'none',
-                'closeBtn'		: true
+                'closeBtn'		: true,
+                'beforeShow'	: function(){ $('select').css('visibility','hidden'); },
+                'afterClose'	: function(){ $('select').css('visibility','visible'); }
             });
             return false;
         }
