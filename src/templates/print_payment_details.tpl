@@ -25,11 +25,6 @@ font-family:Calibri;
                             <form name="listFrom" id="listForm" action="" method="post">
                                 <table width="100%" border="1" cellspacing="0" cellpadding="2" style="border-collapse:collapse;" bordercolor="#000000">
                             
-                                    <tr>
-    								  <td  style="padding:10px;"><img src="{$smarty.const.CLOUD_STATIC}logo.png" width="142" height="189" border="0" />
-        								</td>
-        								<td  >&nbsp;</td>
-    								</tr>
                                     <tr class="printer" bgcolor="silver">
                                         <td width="33%" align="center"><strong>Sl No.</strong></td>
                                         <td width="33%" align="center"><strong>Paid Amount</strong></td>                                    

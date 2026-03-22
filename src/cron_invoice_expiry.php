@@ -27,12 +27,6 @@ define ('MAIL_BODY_TOP', '<html><head></head><body style="  padding:0px; margin:
 	<tr>
 		<td valign="middle" width="100%" style=" padding:10px;border-left:1px solid #dbd9da; border-right:1px solid #dbd9da; background-color:#f5f5f5; border-bottom:1px solid #dbd9da;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-			<tr>
-			<td width="260" valign="top">
-			<a href="'.FULL_PATH.'/index.php" target="_blank"><img src="'.CLOUD_STATIC.'logo.png" alt="logo" width="278" height="84" border="0"></a>
-			</td>
-			<td valign="middle" align="right">&nbsp;</td>
-			</tr>
 			</table>
 		</td>
 	</tr>

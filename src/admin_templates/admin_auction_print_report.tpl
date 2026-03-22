@@ -21,12 +21,7 @@ font-family:Calibri;
 								<input type="hidden" name="encoded_string" value="{$encoded_string}" />
 								<table align="center" width="96%" border="1" cellspacing="1" cellpadding="2" style="border-collapse:collapse;" bordercolor="#000000" >
 									<tbody>
-										<tr>
-    										<td  style="padding:10px;"><img src="{$smarty.const.CLOUD_STATIC}logo.png" width="278" height="84" border="0" />
-        									</td>
-        									<td colspan="7">&nbsp;</td>
-    									</tr>
-										<tr>
+											<tr>
 											<td colspan="7" align="center" class="printer"><b>{$search} Auction Report Manager {if $start_date!=''}From {$start_date|date_format:"%m-%d-%Y"} To {$end_date|date_format:"%m-%d-%Y"}{/if}</b></td>
 										</tr>
 										<tr class="header_bgcolor" height="26">

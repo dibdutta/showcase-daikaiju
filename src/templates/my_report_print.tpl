@@ -24,11 +24,6 @@ font-family:Calibri;
                             {if $errorMessage<>""}<div class="messageBox">{$errorMessage}</div>{/if}
                             <form name="listFrom" id="listForm" action="" method="post">
                                 <table width="100%" border="1" cellspacing="1" cellpadding="2" style="border-collapse:collapse;" bordercolor="#000000">
-                            		<tr>
-    								  <td  style="padding:10px;"><img src="{$smarty.const.CLOUD_STATIC}logo.png" width="142" height="189" border="0" />
-        								</td>
-        								<td align="right" valign="top" style="padding: 10px 10px 0;" colspan='5' class="printer"></td>
-    								</tr>
                                     
                                     <tr>
                                     	<td align="center" valign="top"  colspan='6' class="printer">

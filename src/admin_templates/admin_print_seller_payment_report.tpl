@@ -21,12 +21,7 @@ font-family:Calibri;
 								<input type="hidden" name="encoded_string" value="{$encoded_string}" />
 								<table align="center" width="96%" border="1" cellspacing="0" cellpadding="2" style="border-collapse:collapse;" bordercolor="#000000" >
 									<tbody>
-										<tr>
-    										<td  style="padding:10px;"><img src="{$smarty.const.CLOUD_STATIC}logo.png" width="278" height="84" border="0" />
-        									</td>
-        									<td >&nbsp;</td>
-    									</tr>
-										<tr>
+											<tr>
 											<td colspan="2" align="center" class="printer"><b>Seller&nbsp;:&nbsp;{$userRow[0].firstname}&nbsp;{$userRow[0].lastname}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Payment Report Manager {if $start_date!=''}From {$start_date|date_format:"%m-%d-%Y"} To {$end_date|date_format:"%m-%d-%Y"}{/if}</b></td>
 										</tr>
 										<tr class="header_bgcolor" height="26">

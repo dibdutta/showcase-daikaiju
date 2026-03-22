@@ -45,11 +45,7 @@ margin:0px;
 </style>
 {/literal}
 <table align="center" width="80%" class="forPrint-main" border="1"  bordercolor="#000000" cellpadding="0" cellspacing="0" style="border-collapse:collapse;{if $invoiceData[0].is_paid=='1'}background:url({$smarty.const.CLOUD_STATIC}paid-img.png){elseif $invoiceData[0].is_cancelled=='1'}background:url({$smarty.const.CLOUD_STATIC}cancelled-img.png){elseif $invoiceData[0].is_cancelled=='0' && $invoiceData[0].is_paid=='0' && $invoiceData[0].is_approved=='1' && $invoiceData[0].is_ordered=='0'}background:url({$smarty.const.CLOUD_STATIC}approved-img.png){elseif $invoiceData[0].is_paid=='0' && $invoiceData[0].is_ordered=='1'} background:url({$smarty.const.CLOUD_STATIC}payment-pending-img.png){/if} no-repeat center 80%; ">
-	<tr>
-    	<td style="padding:10px;"><img src="{$smarty.const.CLOUD_STATIC}logo.png" width="142" height="189" border="0" />
-        </td>
-    </tr>
-    <tr bordercolor="#000000" bordercolordark="#000000" bordercolorlight="#FFFFFF" height="26">
+	<tr bordercolor="#000000" bordercolordark="#000000" bordercolorlight="#FFFFFF" height="26">
     	<td colspan="2"  bgcolor="Silver"><b>&nbsp;Invoice Details</b></td>
     </tr>
     <tr bordercolor="#000000" bordercolordark="#000000" bordercolorlight="#FFFFFF" height="26">
