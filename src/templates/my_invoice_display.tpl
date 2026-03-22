@@ -10,14 +10,17 @@
             *   Examples - images
             */
         function fancy_images(i){
-            $("#various_"+i).fancybox({
-                'width'				: '90%',
-                'height'			: '100%',
-                'autoScale'			: false,
-                'transitionIn'		: 'none',
-                'transitionOut'		: 'none',
-                'type'				: 'iframe'
+            $.fancybox.open({
+                'href'			: $("#various_"+i).attr('href'),
+                'type'			: 'iframe',
+                'width'			: '90%',
+                'height'		: '100%',
+                'autoScale'		: false,
+                'transitionIn'	: 'none',
+                'transitionOut'	: 'none',
+                'closeBtn'		: true
             });
+            return false;
         }
         function combine_buyer_invoice(){
             var allVals = [];
@@ -236,15 +239,15 @@
                                       <td class="tar">${$invoiceData[counter].total_amount}</td>
                                         <td class="tac">
                                         {if $invoiceData[counter].is_cancelled == '1'}
-                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
+                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.png"></a>
                                         {elseif $invoiceData[counter].is_paid == '1'}
-                                        PAID &nbsp;<a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
+                                        PAID &nbsp;<a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.png"></a>
                                         {elseif $invoiceData[counter].is_paid == '0' && $invoiceData[counter].is_cancelled == '0' && $invoiceData[counter].is_ordered == '0'}
                                         <a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=order&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Pay Now" title="Pay Now" width="67" src="https://d2m46dmzqzklm5.cloudfront.net/images/pay_now.png" /></a>
                                         {elseif $invoiceData[counter].is_paid == '1' || $invoiceData[counter].is_cancelled == '1'}
-                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
+                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Print" title="Print" src="https://d2m46dmzqzklm5.cloudfront.net/images/print.png"></a>
                                         {elseif $invoiceData[counter].is_ordered == '1' && $invoiceData[counter].is_cancelled == '0'}
-										<a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Phone Order" title="Phone Order" src="https://d2m46dmzqzklm5.cloudfront.net/images/phn_order.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
+										<a id="various_{$smarty.section.counter.index}" href="{$actualPathJSCSS}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Phone Order" title="Phone Order" src="https://d2m46dmzqzklm5.cloudfront.net/images/phn_order.png"></a>
 										{/if}
                                         </td>
                                     </tr>
