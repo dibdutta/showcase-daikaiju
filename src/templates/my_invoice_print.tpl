@@ -151,7 +151,10 @@ margin:0px;
                     <td style="padding:4px;" align="left" >${$invoiceData[0].total_amount}</td>
                 </tr>
                 <tr>
-                	<td colspan="3" align="center"><input type="button" name="Approved" value="Print"  onclick="window.print();"></td>
+                	<td colspan="3" align="center">
+                		<input type="button" value="Print" onclick="window.print();" style="margin-right:10px;">
+                		<input type="button" value="Close" onclick="if(window.parent && window.parent.$.fancybox){ window.parent.$.fancybox.close(); } else { window.close(); }">
+                	</td>
                 </tr>
             </table>
         </td>

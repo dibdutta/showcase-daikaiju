@@ -3,6 +3,10 @@
 	<script type="text/javascript" src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery.mousewheel-3.0.6.pack.js"></script>
 	<script type="text/javascript" src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery.fancybox.js?v=2.1.5"></script>
 	<link rel="stylesheet" type="text/css" href="https://d2m46dmzqzklm5.cloudfront.net/css/jquery.fancybox.css?v=2.1.5" media="screen" />
+	<style type="text/css">
+	.fancybox-overlay { z-index: 200000 !important; }
+	.fancybox-wrap    { z-index: 200001 !important; }
+	</style>
  	{literal}
 	<script type="text/javascript">
         //$(document).ready(function() {
@@ -18,9 +22,7 @@
                 'autoScale'		: false,
                 'transitionIn'	: 'none',
                 'transitionOut'	: 'none',
-                'closeBtn'		: true,
-                'beforeShow'	: function(){ $('select').css('visibility','hidden'); },
-                'afterClose'	: function(){ $('select').css('visibility','visible'); }
+                'closeBtn'		: true
             });
             return false;
         }

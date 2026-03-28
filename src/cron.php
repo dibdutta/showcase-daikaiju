@@ -212,8 +212,15 @@ function updateBidCronJob(){
 	
 	$auction_week_id= fetchExpiredAuctions();
 	if($auction_week_id>1){
-			$sql_update_auction_week = "UPDATE tbl_auction_week  SET is_processing= '1' WHERE auction_week_id=".$auction_week_id;		   
+			$sql_update_auction_week = "UPDATE tbl_auction_week  SET is_processing= '1' WHERE auction_week_id=".$auction_week_id;
 			$sql_update_res_auction=mysqli_query($GLOBALS['db_connect'],$sql_update_auction_week);
+
+			$sql_update_week = "UPDATE tbl_auction_week  SET is_latest= '0' WHERE is_latest= '1' AND is_stills= '0' ";
+			mysqli_query($GLOBALS['db_connect'],$sql_update_week);
+
+			$sql_update_auction_week_latest = "UPDATE tbl_auction_week  SET is_latest= '1',is_closed= '1' WHERE auction_week_id=".$auction_week_id;
+			mysqli_query($GLOBALS['db_connect'],$sql_update_auction_week_latest);
+
 			//mail('dibyendu.dutta.mail@gmail.com', 'My Subject', 'dibyendu'.$auction_week_id);
 			$auction_ids=fetchExpiredAuctionDetails($auction_week_id);
 			$auctionItems=fetchExpiredAuctionDetailsList($auction_ids);
