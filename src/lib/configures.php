@@ -10,6 +10,7 @@ $GLOBALS['db_connect'] = $connect;
 // STRICT_TRANS_TABLES - allows INSERT without all required fields (uses defaults/empty)
 // NO_ZERO_DATE - allows '0000-00-00' dates
 mysqli_query($connect, "SET SESSION sql_mode='NO_ENGINE_SUBSTITUTION'");
+mysqli_query($connect, "SET time_zone = 'America/New_York'");
 //date_default_timezone_set('America/Los_Angeles');
 date_default_timezone_set('America/New_York');
 
