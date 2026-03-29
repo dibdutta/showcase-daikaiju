@@ -45,16 +45,11 @@ function dispmiddle(){
 				AND tpi.is_default='1'
 				GROUP BY a.auction_id ";
 	$rs = mysqli_query($GLOBALS['db_connect'],$sql);
-	$k=0;
 	while($row = mysqli_fetch_assoc($rs)){
+			   $row['big_image'] = $row['is_cloud']=='1'
+			       ? CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb']
+			       : "http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_big_slider/".$row['poster_thumb'];
 			   $dataArrSlider[] = $row;
-			   if($row['is_cloud']=='1'){
-			   	$dataArrSlider[$k]['big_image']=CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
-			   }else{
-			   	$dataArrSlider[$k]['big_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_big_slider/".$row['poster_thumb'];
-			   }
-			   
-			   $k++;
 		   }
 	
 	$sql="Select p.poster_title,tpi.poster_thumb,a.auction_id ,tpi.is_cloud 
