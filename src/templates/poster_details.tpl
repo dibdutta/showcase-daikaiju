@@ -356,7 +356,7 @@ function toggleDiv(id,flagit,type,track) {
 			}	
 		}); {/literal}" onblur="test_blur_for_bid(this.id)" /><div class="CurrencyDecimal">.00</div></td>
 										<td><!--<b>Start Price</b> ${$auctionDetails[0].auction_asked_price|number_format:2}-->
-										<input type="button" id="bid_bttn_{$auctionDetails[0].auction_id}" value="" onclick="postBid({$auctionDetails[0].auction_id}, '{$auctionDetails[0].fk_user_id}',{$auctionDetails[0].auction_buynow_price});" class="bidnow-hammer-btn"/>
+										<input type="button" id="bid_bttn_{$auctionDetails[0].auction_id}" value="Bid Now!!" onclick="postBid({$auctionDetails[0].auction_id}, '{$auctionDetails[0].fk_user_id}',{$auctionDetails[0].auction_buynow_price});" class="bidnow-hammer-btn"/>
 										</td>
                                      </tr>
                                      </table>
