@@ -271,12 +271,19 @@ function toggleDiv(id,flagit,type,track) {
 								{/if}
 								    <tr><td>
 								<div id="auction_data_{$auctionItems[counter].auction_id}">
-								{if $auctionItems[counter].last_bid_amount > 0}								   
+								{if $auctionItems[counter].bid_count > 0}
                                     <div class="auction-row">
-                                      
-                                    </div>								   	
-                                 {/if}
-								 </div> 
+                                        <div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:12px; color:#000;">Current Bid:</span></div>
+                                        <div class="buy-text offer_buyprice">${$auctionItems[counter].last_bid_amount}</div>
+                                        <div class="buy-text-detpstr">&nbsp;<b class="OfferBidNumber">{$auctionItems[counter].bid_count} Bid(s)</b></div>
+                                    </div>
+                                {else}
+                                    <div class="auction-row">
+                                        <div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:12px; color:#000;">Starting Bid:</span></div>
+                                        <div class="buy-text offer_buyprice">${$auctionItems[counter].auction_asked_price|number_format:2}</div>
+                                    </div>
+                                {/if}
+								 </div>
 								 </td></tr>
                               		 <tr><td>
                                  {if $is_expired=='0'}

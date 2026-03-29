@@ -148,7 +148,8 @@ class Auction extends DBCommon{
 						  u.username,
 						  pi.poster_thumb,
 						  pi.is_cloud,
-						  a.max_bid_amount AS last_bid_amount
+						  a.max_bid_amount AS last_bid_amount,
+						  a.bid_count
 						  FROM
 								".USER_TABLE." u,tbl_auction_live a INNER JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
 												  INNER JOIN tbl_poster_images_live pi ON a.fk_poster_id = pi.fk_poster_id											  
