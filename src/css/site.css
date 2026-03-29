@@ -8925,9 +8925,7 @@ li {
 	text-align:center;
 	display: none;
 	background-color: #000;
-	background-image: url(https://d2m46dmzqzklm5.cloudfront.net/images/slidebg.jpg);
-	background-repeat: no-repeat;
-	background-position: center center;
+	background-image: none;
 }
 
 .slides_container1, .slides_container2, .slides_container2a, .slides_container3, .slides_container4 {

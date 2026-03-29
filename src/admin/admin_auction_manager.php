@@ -1788,13 +1788,15 @@ function manage_invoice()
 			}
 	  }else{
 		  for($k=0;$k<count($invoiceData['auction_details']);$k++){
-			  $auction_sql = "Select taw.auction_week_title from  tbl_auction a , tbl_auction_week taw
-								WHERE a.auction_id= ".$invoiceData['auction_details'][$k]['auction_id'].
-								" AND a.fk_auction_week_id= taw.auction_week_id
-								   ";
-			  $resAuctionWeekSql=mysqli_query($GLOBALS['db_connect'],$auction_sql);
-			  $fetchAuctionWeekSql= mysqli_fetch_array($resAuctionWeekSql);
-			  $invoiceData['auction_details'][$k]['seller_username']= $fetchAuctionWeekSql['auction_week_title'];//substr($invoiceData['auction_details'][$k]['poster_sku'],0,1);
+			  $auction_id_k = intval($invoiceData['auction_details'][$k]['auction_id'] ?? 0);
+			  if($auction_id_k > 0){
+				  $auction_sql = "Select taw.auction_week_title from tbl_auction a, tbl_auction_week taw
+								WHERE a.auction_id= ".$auction_id_k."
+								AND a.fk_auction_week_id= taw.auction_week_id";
+				  $resAuctionWeekSql=mysqli_query($GLOBALS['db_connect'],$auction_sql);
+				  $fetchAuctionWeekSql= mysqli_fetch_array($resAuctionWeekSql);
+			  }
+			  $invoiceData['auction_details'][$k]['seller_username']= $fetchAuctionWeekSql['auction_week_title'] ?? '';
 		  }
 		  $sort = array();
 		  foreach($invoiceData['auction_details'] as $k=>$v) {
@@ -1874,13 +1876,15 @@ function manage_invoice_seller_print(){
 			}
 	  }else{
 		  for($k=0;$k<count($invoiceData['auction_details']);$k++){
-			  $auction_sql = "Select taw.auction_week_title from  tbl_auction a , tbl_auction_week taw
-								WHERE a.auction_id= ".$invoiceData['auction_details'][$k]['auction_id'].
-								" AND a.fk_auction_week_id= taw.auction_week_id
-								   ";
-			  $resAuctionWeekSql=mysqli_query($GLOBALS['db_connect'],$auction_sql);
-			  $fetchAuctionWeekSql= mysqli_fetch_array($resAuctionWeekSql);
-			  $invoiceData['auction_details'][$k]['seller_username']= $fetchAuctionWeekSql['auction_week_title'];//substr($invoiceData['auction_details'][$k]['poster_sku'],0,1);
+			  $auction_id_k = intval($invoiceData['auction_details'][$k]['auction_id'] ?? 0);
+			  if($auction_id_k > 0){
+				  $auction_sql = "Select taw.auction_week_title from tbl_auction a, tbl_auction_week taw
+								WHERE a.auction_id= ".$auction_id_k."
+								AND a.fk_auction_week_id= taw.auction_week_id";
+				  $resAuctionWeekSql=mysqli_query($GLOBALS['db_connect'],$auction_sql);
+				  $fetchAuctionWeekSql= mysqli_fetch_array($resAuctionWeekSql);
+			  }
+			  $invoiceData['auction_details'][$k]['seller_username']= $fetchAuctionWeekSql['auction_week_title'] ?? '';
 		  }
 		  $sort = array();
 		  foreach($invoiceData['auction_details'] as $k=>$v) {

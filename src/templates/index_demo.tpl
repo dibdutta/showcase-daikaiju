@@ -65,8 +65,7 @@ document.getElementById("frm1").submit();
 				<a href="#" class="prev"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
 				<a href="#" class="next"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
 			</div>
-			<img src="https://d2m46dmzqzklm5.cloudfront.net/images/example-frame.png" alt="Example Frame" name="frame" width="739" height="500" id="frame">
-		</div>
+			</div>
         </div>
             </div>
             
