@@ -56,13 +56,16 @@ function sendMailSES($toMail, $toName, $subject, $textContent) {
     ]);
     $request = [];
     $request['Source'] = SITE_EMAIL_SENDER;
-    $request['Destination']['ToAddresses'] = [$toName . '<' . $toMail . '>'];
+    $request['Destination']['ToAddresses'] = [$toName . ' <' . $toMail . '>'];
     $request['Message']['Subject']['Data'] = $subject;
     $request['Message']['Subject']['Charset'] = 'utf-8';
     $request['Message']['Body']['Html']['Data'] = $textContent;
     $request['Message']['Body']['Html']['Charset'] = 'utf-8';
-    // Fire-and-forget: do not block bid response waiting for SES
-    $client->sendEmailAsync($request);
+    // Fire-and-forget: promise resolved after bid response is returned to client
+    $promise = $client->sendEmailAsync($request);
+    register_shutdown_function(function() use ($promise) {
+        try { $promise->wait(); } catch (Exception $e) { error_log("SES outbid error: " . $e->getMessage()); }
+    });
 }
 
 function increment_amount($buy_now){
