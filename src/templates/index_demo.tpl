@@ -170,7 +170,7 @@ document.getElementById("frm1").submit();
     </div>
 <form name="listFrom" id="listFrom"><input type="hidden" name="mode" value="select_watchlist" />
 <input type="hidden" name="is_track" id="is_track" value="" />	
-{if $totWeekly > 1}    
+{if $totWeekly > 0}
 <div class="home_fi">
 <h2>Featured Auction Items</h2>
 
