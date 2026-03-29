@@ -83,6 +83,9 @@ $GLOBALS['db_connect'] = $connect;
 // Disable strict SQL modes for MySQL 8 compatibility with legacy queries
 mysqli_query($connect, "SET SESSION sql_mode='NO_ENGINE_SUBSTITUTION'");
 
+// Align MySQL session timezone with PHP timezone so UNIX_TIMESTAMP() comparisons are consistent
+mysqli_query($connect, "SET time_zone = 'America/New_York'");
+
 date_default_timezone_set('America/New_York');
 
 
