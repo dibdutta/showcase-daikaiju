@@ -111,6 +111,26 @@ define ("ADMIN_EMAIL_ADDRESS", $row[CONFIG_ADMIN_EMAIL]);
 process_offers();
 updateBidCronJob();
 
+function sendMailCron($toMail, $toName, $subject, $textContent) {
+    require_once __DIR__ . '/lib/AWS/aws-autoloader.php';
+    $client = new Aws\Ses\SesClient([
+        'version' => 'latest',
+        'region'  => 'us-east-1',
+    ]);
+    $request = [];
+    $request['Source'] = SITE_EMAIL_SENDER;
+    $request['Destination']['ToAddresses'] = [$toName . '<' . $toMail . '>'];
+    $request['Message']['Subject']['Data'] = $subject;
+    $request['Message']['Subject']['Charset'] = 'utf-8';
+    $request['Message']['Body']['Html']['Data'] = $textContent;
+    $request['Message']['Body']['Html']['Charset'] = 'utf-8';
+    try {
+        $client->sendEmail($request);
+    } catch (Exception $e) {
+        echo "SES error: " . $e->getMessage() . "\n";
+    }
+}
+
 function process_offers()
 {
     $sql = "SELECT * FROM ".TBL_OFFER." ofr WHERE ofr.offer_is_accepted = '0' AND ADDDATE(ofr.post_date, INTERVAL 3 DAY) < now()";
@@ -201,7 +221,7 @@ function sendOfferMailCron($row, $status)
 	//$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
 	//$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
 	
-	//mail('"'.$toName.'" <'.$toMail.'>', $subject, $textContent, $headers);
+	sendMailCron($toMail, $toName, $subject, $textContent);
 }
 
 
@@ -303,7 +323,7 @@ function updateBidCronJob(){
 							//$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
 							//$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
 		
-							//mail('"'.$toName.'" <'.$toMail.'>', $subject, $textContent, $headers);	
+							sendMailCron($toMail, $toName, $subject, $textContent);
 							processExpiredAuction($auctionItems[$i]['auction_id'], $last_bid_id);	
 							
 					   }elseif($auctionItems[$i]['max_bid_amount'] > $auctionItems[$i]['bid_amount_from_bid']){
@@ -568,8 +588,7 @@ function processExpiredAuction($auction_id, $bid_id)
         //$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
         //$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
 
-        //mail('"'.$toName.'" <'.$toMail.'>', $subject, $textContent, $headers);
-
+        sendMailCron($toMail, $toName, $subject, $textContent);
 
         $sql_SellerMail="Select u.email,u.firstname,u.lastname,p.poster_title from tbl_poster p,user_table u ,tbl_auction a
                          where a.auction_id= '".$auction_id."'  and a.fk_poster_id=p.poster_id and p.fk_user_id=u.user_id ";
@@ -599,7 +618,7 @@ function processExpiredAuction($auction_id, $bid_id)
         //$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
         //$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
 
-        //mail('"'.$toNameSeller.'" <'.$toMailSeller.'>', $subject, $textContentSeller, $headers);
+        sendMailCron($toMailSeller, $toNameSeller, $subject, $textContentSeller);
 
         ########  Admin mail for sold poster #####
 
@@ -620,7 +639,7 @@ function processExpiredAuction($auction_id, $bid_id)
         //$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
         //$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
 
-        //mail('"'.ADMIN_NAME.'" <'.ADMIN_EMAIL_ADDRESS.'>', $subject, $textContentAdmin, $headers);
+        sendMailCron(ADMIN_EMAIL_ADDRESS, ADMIN_NAME, $subject, $textContentAdmin);
      }
 }
 
