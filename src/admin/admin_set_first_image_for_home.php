@@ -157,11 +157,11 @@ function updateSliderForAuction(){
 }
 function update_auction_for_home(){
     $actionId = $_REQUEST['actionId'] ?? '';
-    $deleteExistingSliderStatus = "UPDATE tbl_auction_live SET slider_first_position_status = '0'
+    $deleteExistingSliderStatus = "UPDATE tbl_auction_live SET slider_first_position_status = '0', is_set_for_home_big_slider = '0'
          WHERE
          fk_auction_type_id  = '2' AND auction_is_approved = '1' AND auction_is_sold = '0'" ;
     mysqli_query($GLOBALS['db_connect'],$deleteExistingSliderStatus);
-    $updateNewSliderStatus = "UPDATE tbl_auction_live SET slider_first_position_status = '1'
+    $updateNewSliderStatus = "UPDATE tbl_auction_live SET slider_first_position_status = '1', is_set_for_home_big_slider = '1'
          WHERE
          fk_auction_type_id  = '2' AND auction_is_approved = '1' AND auction_is_sold = '0' AND auction_id ='$actionId' " ;
     mysqli_query($GLOBALS['db_connect'],$updateNewSliderStatus);
