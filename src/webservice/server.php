@@ -181,10 +181,6 @@ function get_auction_details($id){
 			$game[0]['poster_size']= $row['cat_value'];
 		}elseif($row['fk_cat_type_id']=='2'){
 			$game[0]['genre']= $row['cat_value'];
-		}elseif($row['fk_cat_type_id']=='3'){
-			$game[0]['decade']= $row['cat_value'];
-		}elseif($row['fk_cat_type_id']=='4'){
-			$game[0]['country']= $row['cat_value'];
 		}elseif($row['fk_cat_type_id']=='5'){
 			$game[0]['condition']= $row['cat_value'];
 		}

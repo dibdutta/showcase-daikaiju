@@ -235,38 +235,9 @@ textarea
                                                 </select>
                                                 <div class="list-err">{$genre_err}</div>
                                             </td>
-											<td valign="top">
-                                                <select name="decade" class="formlisting-txtfield required">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 3}
-                                                        <option value="{$catRows[counter].cat_id}" {if $decade == $catRows[counter].cat_id} selected {/if}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                                </select>
-                                                <div class="disp-err">{$decade_err}</div>
-                                            </td>
-                                        </tr>
-                                        <tr>                                          
-                                            <td><label>Country<span class="red-star">*</span></label></td>
-                                            <td><label>Condition<span class="red-star">*</span></label></td>
-											<td valign="top"><label>Ask Price<span class="red-star">*</span></label></td>
                                         </tr>
                                         <tr>
                                         	
-                                            <td valign="top">
-                                                <select name="country" class="formlisting-txtfield required">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 4}
-                                                        <option value="{$catRows[counter].cat_id}" {if $country == $catRows[counter].cat_id} selected {/if}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                                </select>
-                                                <div class="disp-err">{$country_err}</div>
-                                            </td>
                                             <td valign="top">
                                             <div  class="FAQCondition">
                                                 <select name="condition" class="formlisting-txtfield required">

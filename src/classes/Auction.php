@@ -127,7 +127,6 @@ class Auction extends DBCommon{
 				$sql = "SELECT
 						   c.cat_value AS poster_size,
 						   c1.cat_value AS genre,
-						   c2.cat_value AS decade,
 						   poster_size_auction(p.poster_id) AS country,
 						   cond_auction(p.poster_id) AS cond,
 						   tw.watching_id AS watch_indicator,
@@ -166,11 +165,6 @@ class Auction extends DBCommon{
 															  AND c1.fk_cat_type_id = 2)
 												  ON a.fk_poster_id = ptc1.fk_poster_id
 	
-												  INNER JOIN (tbl_poster_to_category_live ptc2
-														RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-															  AND c2.fk_cat_type_id = 3)
-												  ON a.fk_poster_id = ptc2.fk_poster_id
-	
 														  WHERE pi.is_default = '1'
 														  AND a.auction_is_approved = '1'
 														  AND a.in_cart <> '1' 
@@ -181,7 +175,6 @@ class Auction extends DBCommon{
 				$sql = "SELECT
 						   c.cat_value AS poster_size,
 						   c1.cat_value AS genre,
-						   c2.cat_value AS decade,
 						   poster_size(p.poster_id) AS country,
 						   cond(p.poster_id) AS cond,
 						   tw.watching_id AS watch_indicator,
@@ -223,11 +216,6 @@ class Auction extends DBCommon{
 														RIGHT JOIN tbl_category c1 ON ptc1.fk_cat_id = c1.cat_id
 															  AND c1.fk_cat_type_id = 2)
 												  ON a.fk_poster_id = ptc1.fk_poster_id
-	
-												  INNER JOIN (tbl_poster_to_category ptc2
-														RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-															  AND c2.fk_cat_type_id = 3)
-												  ON a.fk_poster_id = ptc2.fk_poster_id
 	
 														  WHERE pi.is_default = '1'
 														  AND a.auction_is_approved = '1'
@@ -1079,7 +1067,6 @@ class Auction extends DBCommon{
 				
 				$sql = "SELECT c.cat_value AS poster_size,
 						   c1.cat_value AS genre,
-						   c2.cat_value AS decade,
 						   poster_size_auction(p.poster_id) AS country,
 						   cond_auction(p.poster_id) AS cond,
 						   tw.watching_id AS watch_indicator,
@@ -1105,10 +1092,6 @@ class Auction extends DBCommon{
 															  AND c1.fk_cat_type_id = 2)
 												  ON a.fk_poster_id = ptc1.fk_poster_id
 
-												  INNER JOIN (tbl_poster_to_category_live ptc2
-														RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-															  AND c2.fk_cat_type_id = 3)
-												  ON a.fk_poster_id = ptc2.fk_poster_id
 					WHERE pi.is_default = '1'
 					AND a.fk_poster_id IN (".$poster_ids.")
 					AND a.auction_is_approved = '1'
@@ -1118,7 +1101,6 @@ class Auction extends DBCommon{
 			}else{
 				$sql = "SELECT c.cat_value AS poster_size,
 						   c1.cat_value AS genre,
-						   c2.cat_value AS decade,
 						   poster_size(p.poster_id) AS country,
 						   cond(p.poster_id) AS cond,
 						   tw.watching_id AS watch_indicator,
@@ -1144,10 +1126,6 @@ class Auction extends DBCommon{
 															  AND c1.fk_cat_type_id = 2)
 												  ON a.fk_poster_id = ptc1.fk_poster_id
 
-												  INNER JOIN (tbl_poster_to_category ptc2
-														RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-															  AND c2.fk_cat_type_id = 3)
-												  ON a.fk_poster_id = ptc2.fk_poster_id
 					WHERE pi.is_default = '1'
 					AND a.fk_poster_id IN (".$poster_ids.")
 					AND a.auction_is_approved = '1'
@@ -1244,7 +1222,6 @@ class Auction extends DBCommon{
         $sql = "SELECT
 	 	        c.cat_value AS poster_size,
                 c1.cat_value AS genre,
-                c2.cat_value AS decade,
                 poster_size(p.poster_id) AS country,
                 cond(p.poster_id) AS cond,
                 count(tw.watching_id) AS watch_indicator,
@@ -1268,10 +1245,6 @@ class Auction extends DBCommon{
 														  AND c1.fk_cat_type_id = 2)
 											  ON a.fk_poster_id = ptc1.fk_poster_id
 
-											  LEFT JOIN (tbl_poster_to_category ptc2
-											  		RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-														  AND c2.fk_cat_type_id = 3)
-											  ON a.fk_poster_id = ptc2.fk_poster_id
 				WHERE pi.is_default = '1' AND a.auction_is_approved = '1' AND a.auction_is_sold = '0' AND
 				a.auction_actual_start_datetime > now()
 				AND a.fk_poster_id IN (".$poster_ids.")
@@ -1447,7 +1420,6 @@ class Auction extends DBCommon{
 					$sql = "SELECT
 					c.cat_value AS poster_size,
 				   c1.cat_value AS genre,
-				   c2.cat_value AS decade,
 				   poster_size(p.poster_id) AS country,
 				   cond(p.poster_id) AS cond,
 				   tw.watching_id AS watch_indicator,
@@ -1472,10 +1444,6 @@ class Auction extends DBCommon{
 															  AND c1.fk_cat_type_id = 2)
 												  ON a.fk_poster_id = ptc1.fk_poster_id
 	
-												  INNER JOIN (tbl_poster_to_category_live ptc2
-														RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-															  AND c2.fk_cat_type_id = 3)
-												  ON a.fk_poster_id = ptc2.fk_poster_id
 					WHERE pi.is_default = '1' AND a.auction_is_approved = '1' AND a.in_cart = '0' AND u.user_id = p.fk_user_id ";
 				
 				}else{
@@ -1483,7 +1451,6 @@ class Auction extends DBCommon{
 					$sql = "SELECT
 					c.cat_value AS poster_size,
 				   c1.cat_value AS genre,
-				   c2.cat_value AS decade,
 				   poster_size(p.poster_id) AS country,
 				   cond(p.poster_id) AS cond,
 				   tw.watching_id AS watch_indicator,
@@ -1508,10 +1475,6 @@ class Auction extends DBCommon{
 															  AND c1.fk_cat_type_id = 2)
 												  ON a.fk_poster_id = ptc1.fk_poster_id
 	
-												  INNER JOIN (tbl_poster_to_category ptc2
-														RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-															  AND c2.fk_cat_type_id = 3)
-												  ON a.fk_poster_id = ptc2.fk_poster_id
 					WHERE pi.is_default = '1' AND a.auction_is_approved = '1' AND a.in_cart = '0' AND u.user_id = p.fk_user_id ";
             
 				}
@@ -1870,7 +1833,6 @@ class Auction extends DBCommon{
 			$sql = "SELECT 
 				c.cat_value AS poster_size,
   				c1.cat_value AS genre,
-  				c2.cat_value AS decade,
   				poster_size_auction(p.poster_id) AS country,
   				cond_auction(p.poster_id) AS cond,
 				count(tw.watching_id) AS watch_indicator,a.auction_id,a.fk_poster_id,a.auction_is_approved, a.fk_auction_type_id, a.auction_asked_price, a.auction_reserve_offer_price,
@@ -1892,17 +1854,12 @@ class Auction extends DBCommon{
 							  AND c1.fk_cat_type_id = 2)
 				  ON a.fk_poster_id = ptc1.fk_poster_id			  
 							  
-				  LEFT JOIN (tbl_poster_to_category ptc2 
-				  		RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id 
-							  AND c2.fk_cat_type_id = 3)
-				  ON a.fk_poster_id = ptc2.fk_poster_id	
 				WHERE pi.is_default = '1'";
 		
 		}else{
 			$sql = "SELECT 
 				c.cat_value AS poster_size,
   				c1.cat_value AS genre,
-  				c2.cat_value AS decade,
   				poster_size(p.poster_id) AS country,
   				cond(p.poster_id) AS cond,
 				count(tw.watching_id) AS watch_indicator,a.auction_id,a.fk_poster_id,a.auction_is_approved, a.fk_auction_type_id, a.auction_asked_price, a.auction_reserve_offer_price,
@@ -1926,10 +1883,6 @@ class Auction extends DBCommon{
 							  AND c1.fk_cat_type_id = 2)
 				  ON a.fk_poster_id = ptc1.fk_poster_id			  
 							  
-				  LEFT JOIN (tbl_poster_to_category ptc2 
-				  		RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id 
-							  AND c2.fk_cat_type_id = 3)
-				  ON a.fk_poster_id = ptc2.fk_poster_id	
 				WHERE pi.is_default = '1'";
 		}
 		if($user_id != ""){
@@ -2928,7 +2881,6 @@ class Auction extends DBCommon{
 			$sql = "SELECT 
 				c.cat_value AS poster_size,
   				c1.cat_value AS genre,
-  				c2.cat_value AS decade,
   				poster_size(p.poster_id) AS country,
   				cond(p.poster_id) AS cond,
 				count(tw.watching_id) AS watch_indicator,
@@ -2958,17 +2910,12 @@ class Auction extends DBCommon{
 							  AND c1.fk_cat_type_id = 2)
 				  ON a.fk_poster_id = ptc1.fk_poster_id			  
 							  
-				  LEFT JOIN (tbl_poster_to_category ptc2 
-				  		RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id 
-							  AND c2.fk_cat_type_id = 3)
-				  ON a.fk_poster_id = ptc2.fk_poster_id	
 				WHERE pi.is_default = '1' and a.auction_id IN (".$auction_id.") and u.user_id=p.fk_user_id ";
 		
 		}else{
 			$sql = "SELECT 
 				c.cat_value AS poster_size,
   				c1.cat_value AS genre,
-  				c2.cat_value AS decade,
   				poster_size_auction(p.poster_id) AS country,
   				cond_auction(p.poster_id) AS cond,
 				count(tw.watching_id) AS watch_indicator,
@@ -2997,10 +2944,6 @@ class Auction extends DBCommon{
 							  AND c1.fk_cat_type_id = 2)
 				  ON a.fk_poster_id = ptc1.fk_poster_id			  
 							  
-				  LEFT JOIN (tbl_poster_to_category_live ptc2 
-				  		RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id 
-							  AND c2.fk_cat_type_id = 3)
-				  ON a.fk_poster_id = ptc2.fk_poster_id	
 				WHERE pi.is_default = '1' and a.auction_id IN (".$auction_id.") and u.user_id=p.fk_user_id";
 
 			
@@ -4424,7 +4367,6 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
          $sql = "SELECT
 	 	        c.cat_value AS poster_size,
                 c1.cat_value AS genre,
-                c2.cat_value AS decade,
                 poster_size(p.poster_id) AS country,
                 cond(p.poster_id) AS cond,
             	a.auction_id,a.fk_poster_id,a.auction_is_approved, a.fk_auction_type_id, a.auction_asked_price, a.auction_reserve_offer_price,
@@ -4446,10 +4388,6 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 														  AND c1.fk_cat_type_id = 2)
 											  ON a.fk_poster_id = ptc1.fk_poster_id
 
-											  LEFT JOIN (tbl_poster_to_category ptc2
-											  		RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-														  AND c2.fk_cat_type_id = 3)
-											  ON a.fk_poster_id = ptc2.fk_poster_id
 				WHERE pi.is_default = '1' AND a.auction_is_approved = '1' AND a.auction_is_sold = '0' AND
 				a.auction_actual_start_datetime > now() ";
 				
@@ -4520,7 +4458,6 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 		$sql = "SELECT 
 					   c.cat_value AS poster_size,
   					   c1.cat_value AS genre,
-  					   c2.cat_value AS decade,
   					   poster_size(p.poster_id) AS country,
   					   cond(p.poster_id) AS cond,
 					   count(tw.watching_id) AS watch_indicator,
@@ -4549,8 +4486,6 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
   							tbl_category c,
   							tbl_poster_to_category ptc1,
   							tbl_category c1,
-  							tbl_poster_to_category ptc2,
-  							tbl_category c2,
 							".TBL_AUCTION." a LEFT JOIN ".TBL_POSTER." p ON a.fk_poster_id = p.poster_id
 											  LEFT JOIN ".TBL_POSTER_IMAGES." pi ON a.fk_poster_id = pi.fk_poster_id
 											  LEFT JOIN ".TBL_EVENT." e ON a.fk_event_id = e.event_id
@@ -4564,10 +4499,7 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 													  AND c.fk_cat_type_id = 1 
 													  AND ptc1.fk_poster_id = p.poster_id 
 													  AND ptc1.fk_cat_id = c1.cat_id 
-													  AND c1.fk_cat_type_id = 2 
-													  AND ptc2.fk_poster_id = p.poster_id 
-													  AND ptc2.fk_cat_id = c2.cat_id 
-													  AND c2.fk_cat_type_id = 3 
+													  AND c1.fk_cat_type_id = 2
 													 ";
 			
 		if($fetch == 'fixed'){
@@ -4782,9 +4714,6 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 				ON c.cat_id = ptc.fk_cat_id AND c.fk_cat_type_id = 1
 			LEFT JOIN tbl_category c1
 				ON c1.cat_id = ptc.fk_cat_id AND c1.fk_cat_type_id = 2
-			LEFT JOIN tbl_category c2
-				ON c2.cat_id = ptc.fk_cat_id AND c2.fk_cat_type_id = 3
-
 			WHERE a.auction_is_approved = '1'
 			AND a.auction_is_sold = '1'
 			";
@@ -4976,7 +4905,6 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
                 $sql = "SELECT
 				c.cat_value AS poster_size,
 			    c1.cat_value AS genre,
-			    c2.cat_value AS decade,
 			    poster_size(p.poster_id) AS country,
 			    cond(p.poster_id) AS cond,
 			   	a.auction_id, a.is_reopened, a.fk_auction_type_id, a.auction_asked_price, a.auction_reserve_offer_price,
@@ -4999,10 +4927,6 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 														  AND c1.fk_cat_type_id = 2)
 											  ON a.fk_poster_id = ptc1.fk_poster_id
 
-											  INNER JOIN (tbl_poster_to_category ptc2
-											  		RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-														  AND c2.fk_cat_type_id = 3)
-											  ON a.fk_poster_id = ptc2.fk_poster_id
 				WHERE pi.is_default = '1' AND a.auction_is_approved = '1'  ";
             }else{
 				
@@ -5354,7 +5278,6 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
         if($view_mode=='list'){
             $sql = "SELECT c.cat_value AS poster_size,
   					   c1.cat_value AS genre,
-  					   c2.cat_value AS decade,
   					   poster_size(p.poster_id) AS country,
   					   cond(p.poster_id) AS cond,
 					   a.auction_id, a.is_reopened, a.fk_auction_type_id, a.auction_asked_price, a.auction_reserve_offer_price,
@@ -5377,10 +5300,6 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 														  AND c1.fk_cat_type_id = 2)
 											  ON a.fk_poster_id = ptc1.fk_poster_id
 
-											  INNER JOIN (tbl_poster_to_category ptc2
-											  		RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-														  AND c2.fk_cat_type_id = 3)
-											  ON a.fk_poster_id = ptc2.fk_poster_id
 				WHERE pi.is_default = '1'
 				AND a.fk_poster_id IN (".$poster_ids.")
 				AND a.auction_is_approved = '1'
@@ -6281,7 +6200,6 @@ function fetchStillsLiveAuctions($view_mode=''){
             $sql = "SELECT
 					   c.cat_value AS poster_size,
   					   c1.cat_value AS genre,
-  					   c2.cat_value AS decade,
   					   poster_size(p.poster_id) AS country,
   					   cond(p.poster_id) AS cond,
 					   tw.watching_id AS watch_indicator,
@@ -6315,11 +6233,6 @@ function fetchStillsLiveAuctions($view_mode=''){
 											  		RIGHT JOIN tbl_category c1 ON ptc1.fk_cat_id = c1.cat_id
 														  AND c1.fk_cat_type_id = 2)
 											  ON a.fk_poster_id = ptc1.fk_poster_id
-
-											  INNER JOIN (tbl_poster_to_category ptc2
-											  		RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-														  AND c2.fk_cat_type_id = 3)
-											  ON a.fk_poster_id = ptc2.fk_poster_id
 
 													  WHERE pi.is_default = '1'
 													  AND a.auction_is_approved = '1'
@@ -6908,7 +6821,6 @@ function fetchStillsLiveAuctions($view_mode=''){
 				$sql = "SELECT
 						   c.cat_value AS poster_size,
 						   c1.cat_value AS genre,
-						   c2.cat_value AS decade,
 						   poster_size(p.poster_id) AS country,
 						   cond(p.poster_id) AS cond,
 						   tw.watching_id AS watch_indicator,
@@ -6938,11 +6850,6 @@ function fetchStillsLiveAuctions($view_mode=''){
 														RIGHT JOIN tbl_category c1 ON ptc1.fk_cat_id = c1.cat_id
 															  AND c1.fk_cat_type_id = 2)
 												  ON a.fk_poster_id = ptc1.fk_poster_id
-	
-												  INNER JOIN (tbl_poster_to_category ptc2
-														RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-															  AND c2.fk_cat_type_id = 3)
-												  ON a.fk_poster_id = ptc2.fk_poster_id
 	
 														  WHERE pi.is_default = '1'
 														  AND a.auction_is_approved = '1'
@@ -7109,7 +7016,6 @@ function fetchStillsLiveAuctions($view_mode=''){
 					$sql = "SELECT
 					c.cat_value AS poster_size,
 				    c1.cat_value AS genre,
-				    c2.cat_value AS decade,
 				    poster_size(p.poster_id) AS country,
 				    cond(p.poster_id) AS cond,
 					a.auction_id,  a.fk_auction_type_id, a.auction_asked_price, a.imdb_link,
@@ -7131,10 +7037,6 @@ function fetchStillsLiveAuctions($view_mode=''){
 															  AND c1.fk_cat_type_id = 2)
 												  ON a.fk_poster_id = ptc1.fk_poster_id
 	
-												  INNER JOIN (tbl_poster_to_category_live ptc2
-														RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-															  AND c2.fk_cat_type_id = 3)
-												  ON a.fk_poster_id = ptc2.fk_poster_id
 					WHERE pi.is_default = '1' AND a.auction_is_approved = '1' AND a.in_cart = '0' AND u.user_id = p.fk_user_id ";
 				
 				}else{
@@ -7142,7 +7044,6 @@ function fetchStillsLiveAuctions($view_mode=''){
 					$sql = "SELECT
 					c.cat_value AS poster_size,
 				   c1.cat_value AS genre,
-				   c2.cat_value AS decade,
 				   poster_size(p.poster_id) AS country,
 				   cond(p.poster_id) AS cond,
 					a.auction_id, a.is_reopened, a.fk_auction_type_id, a.auction_asked_price, a.auction_reserve_offer_price,a.imdb_link,
@@ -7164,10 +7065,6 @@ function fetchStillsLiveAuctions($view_mode=''){
 															  AND c1.fk_cat_type_id = 2)
 												  ON a.fk_poster_id = ptc1.fk_poster_id
 	
-												  INNER JOIN (tbl_poster_to_category ptc2
-														RIGHT JOIN tbl_category c2 ON ptc2.fk_cat_id = c2.cat_id
-															  AND c2.fk_cat_type_id = 3)
-												  ON a.fk_poster_id = ptc2.fk_poster_id
 					WHERE pi.is_default = '1' AND a.auction_is_approved = '1' AND a.in_cart = '0' AND u.user_id = p.fk_user_id ";
             
 				}

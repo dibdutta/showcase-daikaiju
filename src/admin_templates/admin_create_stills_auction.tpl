@@ -192,40 +192,6 @@ if(radList[i].checked) radList[i].checked = false;
                                                 </td>
 											</tr>
                                             <tr class="tr_bgcolor">
-												<td class="bold_text" valign="top"><span class="err">*</span>Decade :</td>
-												<td class="smalltext">
-                                                <select name="dacade" class="look">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 3}
-                                                        {if $catRows[counter].cat_id == $dacade}
-                                                            {assign var="selected" value="selected"}
-                                                        {/if}
-                                                        <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            	</select><br /><span class="err">{$dacade_err}</span>
-                                                </td>
-											</tr>
-											<tr class="tr_bgcolor">
-												<td class="bold_text" valign="top"><span class="err">*</span>Country :</td>
-												<td class="smalltext">
-                                                <select name="country" class="look">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 4}
-                                                        {if $catRows[counter].cat_id == $country}
-                                                            {assign var="selected" value="selected"}
-                                                        {/if}
-                                                        <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            	</select><br /><span class="err">{$country_err}</span>
-                                                </td>
-											</tr>
-                                            <tr class="tr_bgcolor">
 												<td class="bold_text" valign="top"><span class="err">*</span>Condition :</td>
 												<td class="smalltext">
                                                 <select name="condition" class="look">

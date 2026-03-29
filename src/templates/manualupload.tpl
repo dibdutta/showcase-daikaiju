@@ -88,30 +88,6 @@ function setAuction(id, postfix)
 												<div class="disp-err">{$poster_err[uploader].genre_err}</div>
 											</div>
 											<div class="per-field">
-												<label>Released Year<span class="red-star">*</span></label>
-												<select name="released_yr_{$smarty.section.uploader.index}" class="input_textbox required">
-													<option value="" selected="selected">Select</option>
-													{section name=counter loop=$catRows}
-													{if $catRows[counter].fk_cat_type_id == 3}
-														<option value="{$catRows[counter].cat_id}" {if $poster_val[uploader].released_yr == $catRows[counter].cat_id} selected {/if}>{$catRows[counter].cat_value}</option>
-													{/if}
-													{/section}
-												</select>
-												<div class="disp-err">{$poster_err[uploader].released_yr_err}</div>
-											</div>
-											<div class="per-field">
-												<label>Country<span class="red-star">*</span></label>
-												<select name="poster_country_{$smarty.section.uploader.index}" class="input_textbox required">
-													<option value="" selected="selected">Select</option>
-													{section name=counter loop=$catRows}
-													{if $catRows[counter].fk_cat_type_id == 4}
-													<option value="{$catRows[counter].cat_id}" {if $poster_val[uploader].poster_country == $catRows[counter].cat_id} selected {/if}>{$catRows[counter].cat_value}</option>
-													{/if}
-													{/section}
-												</select>
-												<div class="disp-err">{$poster_err[uploader].poster_country_err}</div>
-											</div>
-											<div class="per-field">
 												<label>Description</label>
 												<input type="text" name="poster_desc_{$smarty.section.uploader.index}" value="{$poster_val[uploader].poster_desc}" class="input_textbox required" /><div class="disp-err">{$poster_err[uploader].poster_desc_err}</div>
 											</div>

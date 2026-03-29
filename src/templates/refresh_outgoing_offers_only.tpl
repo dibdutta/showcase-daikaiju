@@ -20,10 +20,6 @@
                                 <b>Size : </b> {$auctionRows[counter].categories[catCounter].cat_value}<br />
                                 {elseif $auctionRows[counter].categories[catCounter].fk_cat_type_id == 2}
                                 <b>Genre : </b> {$auctionRows[counter].categories[catCounter].cat_value}<br />
-                                {elseif $auctionRows[counter].categories[catCounter].fk_cat_type_id == 3}
-                                <b>Decade : </b> {$auctionRows[counter].categories[catCounter].cat_value}<br />
-                                {elseif $auctionRows[counter].categories[catCounter].fk_cat_type_id == 4}
-                                <b>Country : </b> {$auctionRows[counter].categories[catCounter].cat_value}<br />
                                 {elseif $auctionRows[counter].categories[catCounter].fk_cat_type_id == 5}
                                 <b>Condition : </b> {$auctionRows[counter].categories[catCounter].cat_value}<br />
                             {/if}

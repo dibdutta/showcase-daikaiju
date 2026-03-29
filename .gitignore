@@ -13,3 +13,7 @@
 # Files
 src/templates_c
 src/admin_templates_c
+
+# Terraform
+infra/.terraform/
+infra/.terraform.lock.hcl

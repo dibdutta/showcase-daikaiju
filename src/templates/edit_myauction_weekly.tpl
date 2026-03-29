@@ -249,69 +249,9 @@ textarea
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td valign="top"><label>Decade<span class="red-star">*</span></label></td>
-                                            <td valign="top"><label>Country<span class="red-star">*</span></label></td>
                                             <td valign="top"><label>Condition<span class="red-star">*</span></label></td>
                                         </tr>                                        
                                         <tr>
-                                            <td valign="top">
-											{if $auctionRow[0].auction_is_approved=='1'}
-                                                {section name=counter loop=$catRows}                                                  {if $catRows[counter].fk_cat_type_id == 3} 
-												  {section name=posterCatCounter loop=$posterCategoryRows}
-												  {if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}     
-                                                    <input type="hidden" name="decade" value="{$posterCategoryRows[posterCatCounter].fk_cat_id}" />
-                                                    <input type="text" name="decade_val" value="{$catRows[counter].cat_value}" class="formlisting-txtfield required" readonly="readonly" />
-													{/if}
-													{/section}
-													{/if}
-                                                {/section}
-												{else}
-                                                <select name="decade" class="formlisting-txtfield required">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                            {if $catRows[counter].fk_cat_type_id == 3}
-                                                                {section name=posterCatCounter loop=$posterCategoryRows}
-                                                                    {if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                                        {assign var="selected" value="selected"}
-                                                                    {/if}
-                                                                {/section}
-                                                                <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-                                                                {assign var="selected" value=""}
-                                                            {/if}
-                                                            {/section}
-                                                </select>
-												{/if}
-                                                <div class="disp-err">{$decade_err}</div>
-                                            </td>
-                                            <td valign="top">
-												{if $auctionRow[0].auction_is_approved=='1'}
-                                                {section name=counter loop=$catRows}                                                  {if $catRows[counter].fk_cat_type_id == 4} 
-												  {section name=posterCatCounter loop=$posterCategoryRows}
-												  {if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}     
-                                                    <input type="hidden" name="country" value="{$posterCategoryRows[posterCatCounter].fk_cat_id}" />
-                                                    <input type="text" name="decade_val" value="{$catRows[counter].cat_value}" class="formlisting-txtfield required" readonly="readonly" />
-													{/if}
-													{/section}
-													{/if}
-                                                {/section}
-												{else}
-                                                <select name="country" class="formlisting-txtfield required">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                        {if $catRows[counter].fk_cat_type_id == 4}
-                                                            {section name=posterCatCounter loop=$posterCategoryRows}
-                                                                {if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                                    {assign var="selected" value="selected"}
-                                                                {/if}
-                                                            {/section}
-                                                            <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-                                                            {assign var="selected" value=""}
-                                                        {/if}
-                                                        {/section}
-                                                </select>
-												{/if}
-                                                <div class="disp-err">{$country_err}</div>
-                                            </td>
                                             <td valign="top">
 											<div  class="FAQCondition">
 												{if $auctionRow[0].auction_is_approved=='1'}

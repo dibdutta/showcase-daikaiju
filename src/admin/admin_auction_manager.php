@@ -605,14 +605,6 @@ function validateFixedForm(){
 		$GLOBALS['genre_err'] = "Please select Genre.";
 		$errCounter++;	
 	}
-	if(($_POST['dacade'] ?? '') == ""){
-		$GLOBALS['dacade_err'] = "Please select Decade.";
-		$errCounter++;	
-	}
-	if(($_POST['country'] ?? '') == ""){
-		$GLOBALS['country_err'] = "Please select Country.";
-		$errCounter++;	
-	}
 	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select a Condition.";
 		$errCounter++;	
@@ -748,8 +740,6 @@ function update_fixed()
 	$obj->deleteData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id));	
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
-	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $dacade));
-	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $country));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
 
 	//////////////Added By Sourav banerjee////////////////////
@@ -1076,14 +1066,6 @@ function validateWeeklyForm(){
 		$GLOBALS['genre_err'] = "Please select Genre.";
 		$errCounter++;	
 	}
-	if(($_POST['dacade'] ?? '') == ""){
-		$GLOBALS['dacade_err'] = "Please select Decade.";
-		$errCounter++;	
-	}
-	if(($_POST['country'] ?? '') == ""){
-		$GLOBALS['country_err'] = "Please select Country.";
-		$errCounter++;	
-	}
 	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select Condition.";
 		$errCounter++;	
@@ -1204,8 +1186,6 @@ function update_weekly(){
 	$obj->deleteData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id));	
 	$obj->updateData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
 	$obj->updateData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
-	$obj->updateData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id, "fk_cat_id" => $dacade));
-	$obj->updateData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id, "fk_cat_id" => $country));
 	$obj->updateData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
 	
 	//////////////Added By Sourav banerjee////////////////////
@@ -1478,14 +1458,6 @@ function validateMonthlyForm(){
 		$GLOBALS['genre_err'] = "Please select Genre.";
 		$errCounter++;	
 	}
-	if(($_POST['dacade'] ?? '') == ""){
-		$GLOBALS['dacade_err'] = "Please select Decade.";
-		$errCounter++;	
-	}
-	if(($_POST['country'] ?? '') == ""){
-		$GLOBALS['country_err'] = "Please select Country.";
-		$errCounter++;	
-	}
 	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select Condition.";
 		$errCounter++;	
@@ -1596,8 +1568,6 @@ function update_monthly(){
 	$obj->deleteData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id));	
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
-	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $dacade));
-	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $country));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
 
 	//////////////Added By Sourav banerjee////////////////////
@@ -2372,8 +2342,6 @@ function delete_invoice_charge(){
 				 $obj->deleteData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id));	
 					$obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $new_poster_id, "fk_cat_id" => $poster_size));
 					$obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $new_poster_id, "fk_cat_id" => $genre));
-					$obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $new_poster_id, "fk_cat_id" => $dacade));
-					$obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $new_poster_id, "fk_cat_id" => $country));
 					$obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $new_poster_id, "fk_cat_id" => $condition));
 
                  $obj->updateData("tbl_auction_live", $auctionData);
@@ -2721,14 +2689,6 @@ if(!$_POST)
 		$GLOBALS['genre_err'] = "Please select Genre.";
 		$errCounter++;	
 	}
-	if(($_POST['dacade'] ?? '') == ""){
-		$GLOBALS['dacade_err'] = "Please select Decade.";
-		$errCounter++;	
-	}
-	if(($_POST['country'] ?? '') == ""){
-		$GLOBALS['country_err'] = "Please select Country.";
-		$errCounter++;	
-	}
 	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select Condition.";
 		$errCounter++;	
@@ -2895,13 +2855,7 @@ if(!$_POST)
         $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
     }
 	
-    if($dacade != ""){
-        $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $dacade));
-    }
 
-    if($country != ""){
-        $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $country)); 
-    }
 
     if($condition != ""){
         $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
@@ -3084,8 +3038,6 @@ function parseCSVFile($pathOfCsvFile,$path,$fileName) {
 		$conditionId = '';
 		$sizeId = '';
 		$genreId = '';
-		$decadeId = '';
-		$countryId = '';
 		
 			
 			
@@ -3093,15 +3045,11 @@ function parseCSVFile($pathOfCsvFile,$path,$fileName) {
 			$condition = strtolower(str_replace($replaceArr, '', $data2DArray[$c][4]));
 			$size = strtolower(str_replace($replaceArr, '', $data2DArray[$c][5]));
 			$genre = strtolower(str_replace($replaceArr, '', $data2DArray[$c][6]));
-			$decade = strtolower(str_replace($replaceArr, '', decade_calculator($data2DArray[$c][7])));
-			$country = strtolower(str_replace($replaceArr, '', $data2DArray[$c][8]));
 
 			
 			$conditionId = fetchCategoryId($condition,5);
 			$sizeId = fetchCategoryId($size,1);
 			$genreId = fetchCategoryId($genre,2);
-			$decadeId = fetchCategoryId($decade,3);
-			$countryId = fetchCategoryId($country,4);
 			$is_consider=strtolower(str_replace($replaceArr, '', $data2DArray[$c][10])); 
 			
     	if(!empty($data2DArray[$c][3]))	{
@@ -3163,12 +3111,6 @@ function parseCSVFile($pathOfCsvFile,$path,$fileName) {
 		}elseif(isEmpty($genreId)){// Checking for Poster Category Genre
 			$errCounter++;
 			$posterLog .= "Poster {$c}: Invalid poster genre.<br />";
-		}elseif(isEmpty($decadeId)){// Checking for Poster Category Decade
-			$errCounter++;
-			$posterLog .= "Poster {$c}: Invalid poster decade.<br />";
-		}elseif(isEmpty($countryId)){// Checking for Poster Category Country
-			$errCounter++;
-			$posterLog .= "Poster {$c}: Invalid poster country.<br />";	
 		}elseif((isEmpty($data2DArray[$c][9]) || check_int($data2DArray[$c][9]) == 0)){// Checking for Ask Price
 			$errCounter++;
 			$posterLog .= "Poster {$c}: Invalid ask price.<br />";
@@ -3186,7 +3128,7 @@ function parseCSVFile($pathOfCsvFile,$path,$fileName) {
 				$objUser = new User();
 				$arrUser= $objUser->selectData(USER_TABLE,array("user_id"),array("username"=>$data2DArray[$c][1]));
 				$user_new_id=$arrUser[0]['user_id'];
-				$auctionID = insertRecord($data2DArray[$c], array($conditionId, $sizeId, $genreId, $decadeId, $countryId),$data2DArray[$c][$innerElement] ,$pathOfCsvFile, $user_new_id, $auctionWeekId, $auctionWeekStartDate, $auctionWeekEndDate, $eventId, $eventStartDate, $eventEndDate);
+				$auctionID = insertRecord($data2DArray[$c], array($conditionId, $sizeId, $genreId),$data2DArray[$c][$innerElement] ,$pathOfCsvFile, $user_new_id, $auctionWeekId, $auctionWeekStartDate, $auctionWeekEndDate, $eventId, $eventStartDate, $eventEndDate);
 				
 				if($auctionID > 0){
 					$successCounter++;
@@ -3813,14 +3755,6 @@ if(!$_POST)
 		$GLOBALS['genre_err'] = "Please select Genre.";
 		$errCounter++;	
 	}
-	if(($_POST['dacade'] ?? '') == ""){
-		$GLOBALS['dacade_err'] = "Please select Decade.";
-		$errCounter++;	
-	}
-	if(($_POST['country'] ?? '') == ""){
-		$GLOBALS['country_err'] = "Please select Country.";
-		$errCounter++;	
-	}
 	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select Condition.";
 		$errCounter++;	
@@ -3986,13 +3920,7 @@ function save_new_stills(){
         $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
     }
 	
-    if($dacade != ""){
-        $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $dacade));
-    }
 
-    if($country != ""){
-        $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $country)); 
-    }
 
     if($condition != ""){
         $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
@@ -4146,8 +4074,6 @@ if(!$_POST)
 	$obj->deleteData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id));	
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
-	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $dacade));
-	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $country));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
 
 	//////////////Added By Sourav banerjee////////////////////
@@ -4491,13 +4417,7 @@ if(!$_POST)
         $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
     }
 	
-    if($dacade != ""){
-        $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $dacade));
-    }
 
-    if($country != ""){
-        $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $country)); 
-    }
 
     if($condition != ""){
         $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
@@ -4573,14 +4493,6 @@ if(!$_POST)
 	}
 	if(($_POST['genre'] ?? '') == ""){
 		$GLOBALS['genre_err'] = "Please select Genre.";
-		$errCounter++;	
-	}
-	if(($_POST['dacade'] ?? '') == ""){
-		$GLOBALS['dacade_err'] = "Please select Decade.";
-		$errCounter++;	
-	}
-	if(($_POST['country'] ?? '') == ""){
-		$GLOBALS['country_err'] = "Please select Country.";
 		$errCounter++;	
 	}
 	if(($_POST['condition'] ?? '') == ""){
@@ -4784,8 +4696,6 @@ ob_start();
 	$obj->deleteData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id));	
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
-	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $dacade));
-	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $country));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
 
 	//////////////Added By Sourav banerjee////////////////////
@@ -4851,14 +4761,6 @@ function validateEditStillsAuctionForm(){
 	}
 	if(($_POST['genre'] ?? '') == ""){
 		$GLOBALS['genre_err'] = "Please select Genre.";
-		$errCounter++;	
-	}
-	if(($_POST['dacade'] ?? '') == ""){
-		$GLOBALS['dacade_err'] = "Please select Decade.";
-		$errCounter++;	
-	}
-	if(($_POST['country'] ?? '') == ""){
-		$GLOBALS['country_err'] = "Please select Country.";
 		$errCounter++;	
 	}
 	if(($_POST['condition'] ?? '') == ""){

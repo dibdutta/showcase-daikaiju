@@ -146,10 +146,6 @@ function fancy_images(i){
                                                 <div class="desp-txt"><b>Size : </b> {$auction[counter].categories[catCounter].cat_value}</div>
                                                 {elseif $auction[counter].categories[catCounter].fk_cat_type_id == 2}
                                                 <div class="desp-txt"><b>Genre : </b> {$auction[counter].categories[catCounter].cat_value}</div>
-                                                {elseif $auction[counter].categories[catCounter].fk_cat_type_id == 3}
-                                                <div class="desp-txt"><b>Decade : </b> {$auction[counter].categories[catCounter].cat_value}</div>
-                                                {elseif $auction[counter].categories[catCounter].fk_cat_type_id == 4}
-                                                <div class="desp-txt"><b>Country : </b> {$auction[counter].categories[catCounter].cat_value}</div>
                                                 {elseif $auction[counter].categories[catCounter].fk_cat_type_id == 5}
                                                 <div class="desp-txt"><b>Condition : </b> {$auction[counter].categories[catCounter].cat_value}</div>
                                                 {/if}

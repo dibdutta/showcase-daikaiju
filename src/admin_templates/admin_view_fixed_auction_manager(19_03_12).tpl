@@ -76,44 +76,6 @@
                                                 </td>
 											</tr>
 											<tr class="tr_bgcolor">
-												<td class="bold_text" valign="top"><span class="err">*</span>Decade :</td>
-												<td class="smalltext">
-                                                
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 3}
-                                                    	{section name=posterCatCounter loop=$posterCategoryRows}
-                                                        	{if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                            	{assign var="selected" value="selected"}
-                                                            	{$catRows[counter].cat_value}
-                                                            {/if}
-                                                        {/section}
-                                                        
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            	
-                                                </td>
-											</tr>
-											<tr class="tr_bgcolor">
-												<td class="bold_text" valign="top"><span class="err">*</span>Country :</td>
-												<td class="smalltext">
-                                                
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 4}
-                                                    	{section name=posterCatCounter loop=$posterCategoryRows}
-                                                        	{if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                            	{assign var="selected" value="selected"}
-                                                            	{$catRows[counter].cat_value}
-                                                            {/if}
-                                                        {/section}
-                                                        
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            	
-                                                </td>
-											</tr>
-											<tr class="tr_bgcolor">
 												<td class="bold_text" valign="top"><span class="err">*</span>Description :</td>
 												<td class="smalltext">{$posterRow[0].poster_desc}<br /><span class="err">{$poster_desc_err}</span></td>
 											</tr>

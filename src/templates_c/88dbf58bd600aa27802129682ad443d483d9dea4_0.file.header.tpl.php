@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.47, created on 2026-02-22 11:23:07
+/* Smarty version 3.1.47, created on 2026-03-28 14:28:04
   from '/var/www/html/templates/header.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.47',
-  'unifunc' => 'content_699b2d6b8a6553_91933293',
+  'unifunc' => 'content_69c81db4b90f32_34124092',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '88dbf58bd600aa27802129682ad443d483d9dea4' => 
     array (
       0 => '/var/www/html/templates/header.tpl',
-      1 => 1771776335,
+      1 => 1774722393,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_699b2d6b8a6553_91933293 (Smarty_Internal_Template $_smarty_tpl) {
+function content_69c81db4b90f32_34124092 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -342,8 +342,7 @@ function showTimer1(list,id){
 				<input type="hidden" name="auction_week_id" value="<?php echo $_REQUEST['auction_week_id'];?>
 " />
          </form>
-                 <div id="logopanel" style="width:165px; min-height:93px; display:flex; align-items:center; justify-content:center;"><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/index" title="Home"><img src="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/logo/3bb4d422-bdd7-43a5-8462-a3f81cde183b.png/:/rs=w:98,h:80,cg:true,m/cr=w:98,h:80/qt=q:95" alt="Logo" title="Home" width="98" height="80"/></a></div>
+                 <div id="logopanel" style="width:165px; min-height:93px; display:flex; align-items:center; justify-content:center;"></div>
         <!--Header Top navigation Starts-->
         <div id="mainnavigation" class="innerbg">
           <ul class="menu">

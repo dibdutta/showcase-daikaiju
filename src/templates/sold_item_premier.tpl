@@ -100,10 +100,6 @@ function show_text(){
                                                     <div class="desp-txt"><b>Size : </b> {$dataJstFinishedAuction[counter].categories[catCounter].cat_value}</div>
                                                     {elseif $dataJstFinishedAuction[counter].categories[catCounter].fk_cat_type_id == 2}
                                                     <div class="desp-txt"><b>Genre : </b> {$dataJstFinishedAuction[counter].categories[catCounter].cat_value}</div>
-                                                    {elseif $dataJstFinishedAuction[counter].categories[catCounter].fk_cat_type_id == 3}
-                                                    <div class="desp-txt"><b>Decade : </b> {$dataJstFinishedAuction[counter].categories[catCounter].cat_value}</div>
-                                                    {elseif $dataJstFinishedAuction[counter].categories[catCounter].fk_cat_type_id == 4}
-                                                    <div class="desp-txt"><b>Country : </b> {$dataJstFinishedAuction[counter].categories[catCounter].cat_value}</div>
                                                     {elseif $dataJstFinishedAuction[counter].categories[catCounter].fk_cat_type_id == 5}
                                                     <div class="desp-txt"><b>Condition : </b> {$dataJstFinishedAuction[counter].categories[catCounter].cat_value}</div>
                                                     {/if}

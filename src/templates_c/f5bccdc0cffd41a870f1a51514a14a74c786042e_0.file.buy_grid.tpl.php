@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.47, created on 2026-01-28 09:22:41
+/* Smarty version 3.1.47, created on 2026-02-12 22:23:59
   from '/var/www/html/templates/buy_grid.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.47',
-  'unifunc' => 'content_697a1bb1470607_87724984',
+  'unifunc' => 'content_698e994fed82a7_23030303',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f5bccdc0cffd41a870f1a51514a14a74c786042e' => 
     array (
       0 => '/var/www/html/templates/buy_grid.tpl',
-      1 => 1769443627,
+      1 => 1770892643,
       2 => 'file',
     ),
   ),
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:foot.tpl' => 1,
   ),
 ),false)) {
-function content_697a1bb1470607_87724984 (Smarty_Internal_Template $_smarty_tpl) {
+function content_698e994fed82a7_23030303 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 <link href="https://d2m46dmzqzklm5.cloudfront.net/css/jquery.countdown.css" rel="stylesheet" type="text/css"/>
@@ -37,7 +37,7 @@ $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_sm
 .popDiv_Auction { position:absolute; min-width:120px; list-style-type:none; background-color:#881318 ;color:white; z-index:1000;font-size:12px; padding:6px; outline:4px solid #881318; border: 1px solid #a3595c; margin-left:150px; margin-top:45px;visibility:hidden;}
 
 #track-btn-id:hover {
-	background-image: url(https://c4808190.ssl.cf2.rackcdn.com/watchthisitem_btn.png);
+	background: #7a3050;
 }
 
 </style>
@@ -69,39 +69,39 @@ $_smarty_tpl->_subTemplateRender("file:header.tpl", $_smarty_tpl->cache_id, $_sm
 				<div class="tabbed-inner-nav-left">
 					<ul class="menu">
 												<li <?php if ($_REQUEST['list'] == 'fixed') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?list=fixed"><span>Poster Shop</span></a></li>
+/buy?list=fixed"><span>Poster Shop</span></a></li>
 						<?php if ($_smarty_tpl->tpl_vars['live_count']->value <= 1) {?>
                     	<li <?php if ($_REQUEST['list'] == 'weekly' && $_REQUEST['track_is_expired'] != '1') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?list=weekly"><span><?php if ($_smarty_tpl->tpl_vars['totalLiveWeekly']->value > 0) {
+/buy?list=weekly"><span><?php if ($_smarty_tpl->tpl_vars['totalLiveWeekly']->value > 0) {
 echo $_smarty_tpl->tpl_vars['auctionWeeksData']->value[0]['auction_week_title'];
 } else {
 echo $_smarty_tpl->tpl_vars['latestEndedAuction']->value;?>
  Results<?php }?></span></a></li>
                     	                    	<?php if ($_smarty_tpl->tpl_vars['upcomingTotal']->value > 0) {?>
                     		<li <?php if ($_REQUEST['list'] == 'upcoming') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
+/buy?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
 						<?php } else { ?>
 							<li <?php if ($_REQUEST['track_is_expired'] == '1') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?list=weekly&track_is_expired=1"><span> <?php echo $_smarty_tpl->tpl_vars['latestEndedAuction']->value;?>
+/buy?list=weekly&track_is_expired=1"><span> <?php echo $_smarty_tpl->tpl_vars['latestEndedAuction']->value;?>
  Results</span></a></li>
 						<?php }?>
 						<?php } elseif ($_smarty_tpl->tpl_vars['live_count']->value > 1) {?>
 							<li <?php if ($_REQUEST['auction_week_id'] == $_smarty_tpl->tpl_vars['auctionWeeksData']->value[0]['auction_week_id']) {?> class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?list=weekly&auction_week_id=<?php echo $_smarty_tpl->tpl_vars['auctionWeeksData']->value[0]['auction_week_id'];?>
+/buy?list=weekly&auction_week_id=<?php echo $_smarty_tpl->tpl_vars['auctionWeeksData']->value[0]['auction_week_id'];?>
 "><span><?php echo $_smarty_tpl->tpl_vars['auctionWeeksData']->value[0]['auction_week_title'];?>
 </span></a></li>
 							<li <?php if ($_REQUEST['auction_week_id'] == $_smarty_tpl->tpl_vars['auctionWeeksData']->value[1]['auction_week_id']) {?> class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?list=weekly&auction_week_id=<?php echo $_smarty_tpl->tpl_vars['auctionWeeksData']->value[1]['auction_week_id'];?>
+/buy?list=weekly&auction_week_id=<?php echo $_smarty_tpl->tpl_vars['auctionWeeksData']->value[1]['auction_week_id'];?>
 "><span><?php echo $_smarty_tpl->tpl_vars['auctionWeeksData']->value[1]['auction_week_title'];?>
 </span></a></li>	
 						<?php }?>
 						<?php if ($_smarty_tpl->tpl_vars['extendedAuction']->value != '') {?>					    
 							<li <?php if ($_REQUEST['list'] == 'extended') {?> class="active" <?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?list=extended&view_mode=grid"><span>Extended Auction <?php echo $_smarty_tpl->tpl_vars['extendedAuction']->value;?>
+/buy?list=extended&view_mode=grid"><span>Extended Auction <?php echo $_smarty_tpl->tpl_vars['extendedAuction']->value;?>
 </span></a></li>
 						<?php }?>
 					    <li <?php if ($_REQUEST['list'] == 'alternative') {?> class="active" <?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
+/buy?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
 					</ul>
                      
 				</div>	
@@ -147,7 +147,7 @@ echo $_smarty_tpl->tpl_vars['latestEndedAuction']->value;?>
  :</div>
                                     <ul class="menu">
 									<?php if ($_REQUEST['keyword'] != '' && $_REQUEST['mode'] == 'key_search') {?>
-										<li class="list"><a href="buy.php?view_mode=list&list=<?php echo $_REQUEST['list'];?>
+										<li class="list"><a href="buy?view_mode=list&list=<?php echo $_REQUEST['list'];?>
 &mode=key_search&keyword=<?php echo urlencode($_REQUEST['keyword']);?>
 &search_type=<?php echo $_REQUEST['search_type'];?>
 &is_expired=<?php echo $_smarty_tpl->tpl_vars['is_expired']->value;?>
@@ -155,7 +155,7 @@ echo $_smarty_tpl->tpl_vars['latestEndedAuction']->value;?>
 &auction_week_id=<?php echo $_REQUEST['auction_week_id'];?>
 "></a> </li>
 									<?php } elseif ($_REQUEST['mode'] == 'search' || $_REQUEST['mode'] == 'dorefinesrc') {?>
-										<li class="list"><a href="buy.php?view_mode=list&list=<?php echo $_REQUEST['list'];?>
+										<li class="list"><a href="buy?view_mode=list&list=<?php echo $_REQUEST['list'];?>
 &mode=<?php echo $_REQUEST['mode'];?>
 &poster_size_id=<?php echo $_REQUEST['poster_size_id'];?>
 &genre_id=<?php echo $_REQUEST['genre_id'];?>
@@ -165,12 +165,12 @@ echo $_smarty_tpl->tpl_vars['latestEndedAuction']->value;?>
 &auction_week_id=<?php echo $_REQUEST['auction_week_id'];?>
 "></a></li>	
 									<?php } elseif ($_REQUEST['mode'] == 'key_search_global') {?>
-										<li class="list"><a href="buy.php?view_mode=list&list=<?php echo $_REQUEST['list'];?>
+										<li class="list"><a href="buy?view_mode=list&list=<?php echo $_REQUEST['list'];?>
 &mode=<?php echo $_REQUEST['mode'];?>
 &is_expired=0&auction_week_id=&is_expired_stills=&keyword=<?php echo urlencode($_REQUEST['keyword']);?>
 "></a></li>	
 									<?php } else { ?>
-                                        <li class="list"><a href="buy.php?view_mode=list&list=<?php echo $_REQUEST['list'];?>
+                                        <li class="list"><a href="buy?view_mode=list&list=<?php echo $_REQUEST['list'];?>
 &auction_week_id=<?php echo $_REQUEST['auction_week_id'];?>
 "></a> </li>
 									<?php }?>	
@@ -229,7 +229,7 @@ echo $_smarty_tpl->tpl_vars['latestEndedAuction']->value;?>
 										
                                         <div style="float:left; padding:0px; margin:0px;">
 										<?php if ($_SESSION['sessUserID'] <> '') {?>
-                                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="" />
+                                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="Place All Bids" />
 										<?php } else { ?>	
 										  &nbsp;
 										<?php }?>	
@@ -264,27 +264,27 @@ for ($__section_counter_0_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
 ?>	
                                
                                     <div>							
-                                    <div <?php if ($_SESSION['sessUserID'] == '') {?> class="grid-view-main gridMrgn" <?php } else { ?> class="grid-view-main " <?php }?>>
-                                    
+                                    <div <?php if ($_SESSION['sessUserID'] == '') {?> class="grid-view-main gridMrgn" <?php } else { ?> class="grid-view-main " <?php }?> style="padding:4px 0;">
+
                                         <div class="poster-area">
                                              <div class="inner-cntnt-each-poster">
                                                 <div id="gallery_<?php echo (isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null);?>
 " class="image-hldr">
-                                                     <div class="buygridtb">
-                                       					<div>
+                                                     <div class="buygridtb" style="padding:2px; text-align:center; height:170px;">
+                                       					<div style="padding:2px; margin-bottom:2px;">
 														<?php if ($_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['fk_auction_type_id'] == '1') {?>
 															<a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+/buy?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 &fixed=1"><img  class="image-brdr"  src="<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['image_path'];?>
 "   /></a>
 														<?php } elseif ($_REQUEST['list'] == 'extended') {?>
 															<a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+/buy?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 &extended=true"><img  class="image-brdr"  src="<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['image_path'];?>
 "   /></a>
 														<?php } else { ?>
 															<a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+/buy?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 "><img  class="image-brdr"  src="<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['image_path'];?>
 "   /></a>
 														<?php }?>
@@ -293,48 +293,48 @@ for ($__section_counter_0_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
                                                       </div>
                                                         <?php if (($_REQUEST['list'] == 'alternative' || $_REQUEST['list'] == '') && $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['fk_auction_type_id'] == 6) {?>
                                                         <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+/buy?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 " style="cursor:pointer;" ><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['poster_title'];?>
 </a></h3></div>
 														 <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+/buy?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 " style="cursor:pointer;" ><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['artist'];?>
 </a></h3></div>	
 														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+/buy?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 " style="cursor:pointer;" ><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['poster_size'];?>
 </a></h3></div>
 														<?php if ($_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['field_1'] <> '') {?>
 														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+/buy?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 " style="cursor:pointer;" ><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['field_1'];?>
 </a></h3></div>
 														<?php }?>
 														<?php if ($_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['field_2'] <> '') {?>
 														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+/buy?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 " style="cursor:pointer;" ><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['field_2'];?>
 </a></h3></div>
 														<?php }?>
 														<?php if ($_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['field_3'] <> '') {?>
 														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+/buy?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 " style="cursor:pointer;" ><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['field_3'];?>
 </a></h3></div>
 														<?php }?>
 														<?php } elseif ($_REQUEST['list'] == 'fixed') {?>
 															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+/buy?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 &fixed=1" style="cursor:pointer;" ><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['poster_title'];?>
 </a></h3></div>
 														<?php } elseif ($_REQUEST['list'] == 'extended') {?>
 															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+/buy?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 &extended=true" style="cursor:pointer;" ><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['poster_title'];?>
 </a></h3></div>
 														<?php } else { ?>
 															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+/buy?mode=poster_details&auction_id=<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 " style="cursor:pointer;" ><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['poster_title'];?>
 </a></h3></div>
 														<?php }?>	
@@ -347,7 +347,7 @@ for ($__section_counter_0_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
 																	<div class="timerwrapper" style="float:right">
 																 	<!-- <div class="timer-left"></div>-->
 																  	<div class="text-timer" id="timer_<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
-"><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_countdown'];?>
+" style="background:#003878; background-image:none; color:#fff; border-radius:3px;"><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_countdown'];?>
 </div>
 																  	<!--<div class="timer-right"></div>-->
 																  	</div>
@@ -359,11 +359,11 @@ for ($__section_counter_0_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
 																	<div class="timerwrapper" style="float:right">
 																 	<!-- <div class="timer-left"></div>-->
 																  		<div class="text-timer" id="timer_<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
-"><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_countdown'];?>
+" style="background:#003878; background-image:none; color:#fff; border-radius:3px;"><?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_countdown'];?>
 </div>
 																  		<!--<div class="timer-right"></div>-->
 																  	</div>
-																	<input type="button" value="Watching" style="width:60px;" onclick="redirect_watchlist(<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+																	<input type="button" value="Watching" style="width:80px;" onclick="redirect_watchlist(<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 );" class="track-btn"  />
 													
 																<?php }?>
@@ -412,7 +412,7 @@ for ($__section_counter_0_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
                                                         </div>
                                                         <div class="left-side fll">
 														<input type="button" id="bid_bttn_<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
-" value="" onclick="postBid(<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
+" value="Bid Now" onclick="postBid(<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['auction_id'];?>
 , '<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[(isset($_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index']) ? $_smarty_tpl->tpl_vars['__smarty_section_counter']->value['index'] : null)]['fk_user_id'];?>
 ');" class="bidnow-hammer-btn2" /></div>
                                                     </div>
@@ -519,14 +519,14 @@ for ($__section_counter_0_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
                                     <div class="dis">View as :</div>
                                     <ul class="menu">
 									<?php if ($_REQUEST['keyword'] != '') {?>
-										<li class="list"><a href="buy.php?view_mode=list&list=<?php echo $_REQUEST['list'];?>
+										<li class="list"><a href="buy?view_mode=list&list=<?php echo $_REQUEST['list'];?>
 &mode=key_search&keyword=<?php echo urlencode($_REQUEST['keyword']);?>
 &search_type=<?php echo $_REQUEST['search_type'];?>
 &is_expired=<?php echo $_smarty_tpl->tpl_vars['is_expired']->value;?>
 &auction_week_id=<?php echo $_REQUEST['auction_week_id'];?>
 "></a> </li>
 									<?php } elseif ($_REQUEST['mode'] == 'search' || $_REQUEST['mode'] == 'dorefinesrc') {?>
-										<li class="list"><a href="buy.php?view_mode=list&list=<?php echo $_REQUEST['list'];?>
+										<li class="list"><a href="buy?view_mode=list&list=<?php echo $_REQUEST['list'];?>
 &mode=<?php echo $_REQUEST['mode'];?>
 &poster_size_id=<?php echo $_REQUEST['poster_size_id'];?>
 &genre_id=<?php echo $_REQUEST['genre_id'];?>
@@ -536,7 +536,7 @@ for ($__section_counter_0_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
 &auction_week_id=<?php echo $_REQUEST['auction_week_id'];?>
 "></a></li>	
 									<?php } else { ?>
-                                        <li class="list"><a href="buy.php?view_mode=list&list=<?php echo $_REQUEST['list'];?>
+                                        <li class="list"><a href="buy?view_mode=list&list=<?php echo $_REQUEST['list'];?>
 &auction_week_id=<?php echo $_REQUEST['auction_week_id'];?>
 "></a> </li>
 									<?php }?>	
@@ -592,7 +592,7 @@ for ($__section_counter_0_iteration = 1, $_smarty_tpl->tpl_vars['__smarty_sectio
                                <?php if (($_REQUEST['list'] == "weekly" || $_REQUEST['list'] == "extended") && ($_smarty_tpl->tpl_vars['is_expired']->value == '0' && $_smarty_tpl->tpl_vars['is_expired_stills']->value != '1')) {?>
                                     <div class="inner-grey SelectionBtnPanel">
                                         <div style="float:left; padding:0px; margin:0px;">
-                                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);"  />
+                                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="Place All Bids" />
                                         </div>
 
                                         <div class="time_auction" id="auction_<?php echo $_smarty_tpl->tpl_vars['auctionItems']->value[1]['auction_id'];?>
@@ -726,14 +726,14 @@ function toggleDiv(id,flagit,type,track) {
 		var is_expired = $('#is_expired').val();
 		var is_expired_stills = $('#is_expired_stills').val();
 		var auction_week_id = $('#auction_week_id').val();
-		window.location.href="buy.php?list="+list+"&mode=key_search&is_expired="+is_expired+"&is_expired_stills="+is_expired_stills+"&auction_week_id="+auction_week_id+"&keyword="+encodeURIComponent(search_text);
+		window.location.href="buy?list="+list+"&mode=key_search&is_expired="+is_expired+"&is_expired_stills="+is_expired_stills+"&auction_week_id="+auction_week_id+"&keyword="+encodeURIComponent(search_text);
 	}
 	function key_search_buy(list){
 		var search_text= $('#search_buy_items').val();
 		var is_expired = $('#is_expired').val();
 		var is_expired_stills = $('#is_expired_stills').val();
 		var auction_week_id = $('#auction_week_id').val();
-		window.location.href="buy.php?list="+list+"&mode=key_search&is_expired="+is_expired+"&is_expired_stills="+is_expired_stills+"&auction_week_id="+auction_week_id+"&keyword="+encodeURIComponent(search_text);
+		window.location.href="buy?list="+list+"&mode=key_search&is_expired="+is_expired+"&is_expired_stills="+is_expired_stills+"&auction_week_id="+auction_week_id+"&keyword="+encodeURIComponent(search_text);
 		return false;
 	}
 	function key_search_buy_clear(){

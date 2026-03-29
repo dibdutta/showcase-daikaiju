@@ -649,16 +649,6 @@ function validateNewWeeklyForm()
         $errCounter++;  
     }
     
-    if($_POST['dacade'] == ""){
-        $GLOBALS['dacade_err'] = "Please select a Decade.";
-        $errCounter++;  
-    }
-    
-    if($_POST['country'] == ""){
-        $GLOBALS['country_err'] = "Please select Country.";
-        $errCounter++;  
-    }
-    
     if($_POST['condition'] == ""){
         $GLOBALS['condition_err'] = "Please select Condition.";
         $errCounter++; 
@@ -764,14 +754,6 @@ function validateNewWeeklyForm()
         $obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
     }
 
-    if($dacade != ""){
-        $obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $poster_id, "fk_cat_id" => $dacade));
-    }
-
-    if($country != ""){
-        $obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $poster_id, "fk_cat_id" => $country)); 
-    }
-    
     if($condition != ""){
         $obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
     }

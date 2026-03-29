@@ -69,8 +69,6 @@ $(document).ready(function() {
                                         <tr>
                                             <td class="search-heading" width="180px" valign="top"><label>Size{*<span class="red-star">*</span>*}</label></td>
                                             <td class="search-heading" width="180px" valign="top"><label>Genre{*<span class="red-star">*</span>*}</label></td>
-                                            <td class="search-heading" width="180px" valign="top"><label>Decade{*<span class="red-star">*</span>*}</label></td>
-                                            <td class="search-heading" width="180px" valign="top"><label>Country{*<span class="red-star">*</span>*}</label></td>
                                         </tr>
                                         <tr>
                                             <td valign="top" style="padding-top:10px;">
@@ -87,25 +85,6 @@ $(document).ready(function() {
                                                     {section name=counter loop=$catRows}
                                                         {if $catRows[counter].fk_cat_type_id == 2}
                                                         <input type="checkbox" name="genre_id" value="{$catRows[counter].cat_id}" />&nbsp;{$catRows[counter].cat_value}<br />
-                                                        {/if}
-                                                    {/section}
-                                                </div>
-                                            </td>
-                                             <td valign="top" style="padding-top:10px;">
-                                                <div class="refine-srch-box">
-                                                    {section name=counter loop=$catRows}
-                                                        {if $catRows[counter].fk_cat_type_id == 3}
-                                                        <input type="checkbox" name="decade_id" value="{$catRows[counter].cat_id}" />&nbsp;{$catRows[counter].cat_value}<br />
-                                                        {/if}
-                                                    {/section}
-                                                </div>
-                                            </td>
-                                            <td valign="top" style="padding-top:10px;">
-                                                <div class="refine-srch-box">
-                                                    {section name=counter loop=$catRows}
-                                                        {if $catRows[counter].fk_cat_type_id == 4}
-                                                        <input type="checkbox" name="country_id" value="{$catRows[counter].cat_id}" />&nbsp;{$catRows[counter].cat_value}<br />
-                                                        {assign var="selected" value=""}
                                                         {/if}
                                                     {/section}
                                                 </div>

@@ -233,10 +233,6 @@ $(document).ready(function(){
                           <div class="desp-txt"><b>Size : </b> {$auctionItems[counter].categories[catCounter].cat_value}</div>
                           {elseif $auctionItems[counter].categories[catCounter].fk_cat_type_id == 2}
                           <div class="desp-txt"><b>Genre : </b> {$auctionItems[counter].categories[catCounter].cat_value}</div>
-                          {elseif $auctionItems[counter].categories[catCounter].fk_cat_type_id == 3}
-                          <div class="desp-txt"><b>Decade : </b> {$auctionItems[counter].categories[catCounter].cat_value}</div>
-                          {elseif $auctionItems[counter].categories[catCounter].fk_cat_type_id == 4}
-                          <div class="desp-txt"><b>Country : </b> {$auctionItems[counter].categories[catCounter].cat_value}</div>
                           {elseif $auctionItems[counter].categories[catCounter].fk_cat_type_id == 5}
                           <div class="desp-txt"><b>Condition : </b> {$auctionItems[counter].categories[catCounter].cat_value}</div>
                           {/if}

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.47, created on 2026-01-26 21:52:40
+/* Smarty version 3.1.47, created on 2026-02-22 11:23:08
   from '/var/www/html/templates/foot.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.47',
-  'unifunc' => 'content_697828788e5247_20018863',
+  'unifunc' => 'content_699b2d6c2e19a1_45084541',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ca5febabbc4089b55ecf7b06835a4cb13380abdf' => 
     array (
       0 => '/var/www/html/templates/foot.tpl',
-      1 => 1769443627,
+      1 => 1771776310,
       2 => 'file',
     ),
   ),
@@ -20,8 +20,10 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_697828788e5247_20018863 (Smarty_Internal_Template $_smarty_tpl) {
-?><div class="push"></div>
+function content_699b2d6c2e19a1_45084541 (Smarty_Internal_Template $_smarty_tpl) {
+$_smarty_tpl->_checkPlugins(array(0=>array('file'=>'/var/www/html/libs/plugins/modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
+?>
+<div class="push"></div>
 </div>
 <!--Footer Starts-->
 <div class="footer">
@@ -31,32 +33,33 @@ function content_697828788e5247_20018863 (Smarty_Internal_Template $_smarty_tpl)
     <div class="fll"><table width="138" border="0" cellspacing="0" cellpadding="0" style="border:0;">
   <tr>
     <td><img src="https://d2m46dmzqzklm5.cloudfront.net/images/followus.png" width="78" height="45" /></td>
-    <td><a href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Fwww.movieposterexchange.com%2Findex.php&amp;region=follow_link&amp;screen_name=MoviePosterExch&amp;source=followbutton&amp;variant=2.0" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/followus_tweter.png" alt="Follow us on Tweeter" width="30" height="45" /></a></td>
-    <td><a href="https://www.facebook.com/pages/MoviePosterExchangecom/105014962910848" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/followus_fb.png" alt="Follow us on Facebook" width="30" height="45" /></a></td>
+    <td><img src="https://d2m46dmzqzklm5.cloudfront.net/images/followus_tweter.png" alt="Follow us on Twitter" width="30" height="45" /></td>
+    <td><img src="https://d2m46dmzqzklm5.cloudfront.net/images/followus_fb.png" alt="Follow us on Facebook" width="30" height="45" /></td>
   </tr>
 </table>
 </div>
-    <img src="https://d2m46dmzqzklm5.cloudfront.net/images/paypal_logos.jpg" alt="Movie Poster Exchange" title="Movie Poster Exchange" width="333" height="45"/></div>
+    <img src="https://d2m46dmzqzklm5.cloudfront.net/images/paypal_logos.jpg" alt="Accepted Payment Methods" title="Accepted Payment Methods" width="333" height="45"/></div>
     	<div id="footernavigator" <?php if ((defined('PHP_SELF') ? constant('PHP_SELF') : null) == '/index.php' || (defined('PHP_SELF') ? constant('PHP_SELF') : null) == '') {?> <?php } else { ?>style="border:none;"<?php }?>>
         	<div class="left">
             	<ul class="menu">
                 	<li <?php if ((defined('PHP_SELF') ? constant('PHP_SELF') : null) == '' || (defined('PHP_SELF') ? constant('PHP_SELF') : null) == '/index.php') {?>class="active"<?php }?>><a <?php if ($_SESSION['sessUserID'] != '') {?>href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/index.php"<?php } else { ?>href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/index.php"<?php }?> title="Home">Home</a>&nbsp;|&nbsp;</li>                    
+/index"<?php } else { ?>href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
+/index"<?php }?> title="Home">Home</a>&nbsp;|&nbsp;</li>                    
                     <?php if ($_SESSION['sessUserID'] != '') {?><li <?php if ((defined('PHP_SELF') ? constant('PHP_SELF') : null) == '/myaccount.php') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/myaccount.php" title="My Account">My Dashboard</a>&nbsp;|&nbsp;</li><?php }?>
+/myaccount" title="My Account">My Dashboard</a>&nbsp;|&nbsp;</li><?php }?>
                     <li <?php if ((defined('PHP_SELF') ? constant('PHP_SELF') : null) == '/buy.php' && $_REQUEST['mode'] == 'refinesrc') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/buy.php?mode=refinesrc" title="Advanced Search">Advanced Search</a>&nbsp;|&nbsp;</li>
+/buy?mode=refinesrc" title="Advanced Search">Advanced Search</a>&nbsp;|&nbsp;</li>
                     <li <?php if ((defined('PHP_SELF') ? constant('PHP_SELF') : null) == '/siteurl.php') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/siteurl.php" title="Sitemap">Sitemap</a>&nbsp;|&nbsp;</li>
+/siteurl" title="Sitemap">Sitemap</a>&nbsp;|&nbsp;</li>
                     <li <?php if ((defined('PHP_SELF') ? constant('PHP_SELF') : null) == '/contactus.php') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/contactus.php" title="Contact Us">Contact Us</a>&nbsp;|&nbsp;</li>
+/contactus" title="Contact Us">Contact Us</a>&nbsp;|&nbsp;</li>
                                         <li <?php if ((defined('PHP_SELF') ? constant('PHP_SELF') : null) == '/privacypolicy.php') {?>class="active"<?php }?>><a href="<?php echo $_smarty_tpl->tpl_vars['actualPath']->value;?>
-/user_agreement.php" title="User Agreement and policies">User Agreement and Policies</a></li>
+/user_agreement" title="User Agreement and policies">User Agreement and Policies</a></li>
                                     </ul>
             </div>            
             <div class="right">
-            	<p><span>&copy; 2011 - 2013. Movie Poster Exchange.</span></p>                
+            	<p><span>&copy; 2011 - <?php echo smarty_modifier_date_format(time(),"%Y");?>
+. All rights reserved.</span></p>                
             </div>            
         </div> 
         

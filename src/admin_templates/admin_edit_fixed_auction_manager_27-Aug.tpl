@@ -115,44 +115,6 @@ $(document).ready(function() {
                                                 </td>
 											</tr>
                                             <tr class="tr_bgcolor">
-												<td class="bold_text" valign="top"><span class="err">*</span>Dacade :</td>
-												<td class="smalltext">
-                                                <select name="dacade" class="look">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 3}
-                                                    	{section name=posterCatCounter loop=$posterCategoryRows}
-                                                        	{if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                            	{assign var="selected" value="selected"}
-                                                            {/if}
-                                                        {/section}
-                                                        <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            	</select><br /><span class="err">{$dacade_err}</span>
-                                                </td>
-											</tr>
-											<tr class="tr_bgcolor">
-												<td class="bold_text" valign="top"><span class="err">*</span>Country :</td>
-												<td class="smalltext">
-                                                <select name="country" class="look">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 4}
-                                                    	{section name=posterCatCounter loop=$posterCategoryRows}
-                                                        	{if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                            	{assign var="selected" value="selected"}
-                                                            {/if}
-                                                        {/section}
-                                                        <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            	</select><br /><span class="err">{$country_err}</span>
-                                                </td>
-											</tr>
-                                            <tr class="tr_bgcolor">
 												<td class="bold_text" valign="top"><span class="err">*</span>Condition :</td>
 												<td class="smalltext">
                                                 <select name="condition" class="look">

@@ -135,10 +135,6 @@ function toggleDiv(id,flagit,type,track) {
 												<div class="desp-txt"><b>Size : </b> {$mywantlist_array[counter].categories[catCounter].cat_value}</div>
 												{elseif $mywantlist_array[counter].categories[catCounter].fk_cat_type_id == 2}
 												<div class="desp-txt"><b>Genre : </b> {$mywantlist_array[counter].categories[catCounter].cat_value}</div>
-												{elseif $mywantlist_array[counter].categories[catCounter].fk_cat_type_id == 3}
-												<div class="desp-txt"><b>Decade : </b> {$mywantlist_array[counter].categories[catCounter].cat_value}</div>
-												{elseif $mywantlist_array[counter].categories[catCounter].fk_cat_type_id == 4}
-												<div class="desp-txt"><b>Country : </b> {$mywantlist_array[counter].categories[catCounter].cat_value}</div>
 												{elseif $mywantlist_array[counter].categories[catCounter].fk_cat_type_id == 5}
 												<div class="desp-txt"><b>Condition : </b> {$mywantlist_array[counter].categories[catCounter].cat_value}</div>
 												{/if}
