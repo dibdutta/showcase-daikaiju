@@ -85,7 +85,7 @@ function dispmiddle(){
         $smarty->assign("totFixed", $totFixed);
     }
     $dataArrWeekly=$objAuction->fetchLiveAuctionsHomePage('weekly');
-    if(!empty($dataArrWeekly) && count($dataArrWeekly) > 1 ){
+    if(!empty($dataArrWeekly) && count($dataArrWeekly) >= 1 ){
 
         $totWeekly=count($dataArrWeekly);
         for($i=0;$i<$totWeekly;$i++){

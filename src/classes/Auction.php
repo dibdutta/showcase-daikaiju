@@ -3645,15 +3645,7 @@ class Auction extends DBCommon{
 		$sql .= " GROUP BY a.auction_id, a.fk_auction_type_id, a.auction_asked_price, a.auction_buynow_price,
 				p.poster_id, p.poster_title, a.max_bid_amount";
 
-		// Efficient random selection using offset
-		$countQuery = "SELECT COUNT(*) as cnt FROM {$auctionTable} a
-					INNER JOIN {$posterImageTable} pi ON a.fk_poster_id = pi.fk_poster_id
-					WHERE pi.is_default = '1'";
-		$countResult = mysqli_query($GLOBALS['db_connect'], $countQuery);
-		$totalRows = mysqli_fetch_assoc($countResult)['cnt'];
-		$offset = rand(0, max(0, $totalRows - $to));
-
-		$sql .= " LIMIT {$offset}, {$to}";
+		$sql .= " ORDER BY RAND() LIMIT {$to}";
 
 		// Execute final query
 		$rs = mysqli_query($GLOBALS['db_connect'], $sql);
