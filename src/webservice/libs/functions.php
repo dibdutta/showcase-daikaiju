@@ -48,7 +48,24 @@ define ('MAIL_BODY_BOTTOM', '</td></tr>
 
 
 
-function increment_amount($buy_now){ 
+function sendMailSES($toMail, $toName, $subject, $textContent) {
+    require_once __DIR__ . '/../../lib/AWS/aws-autoloader.php';
+    $client = new Aws\Ses\SesClient([
+        'version' => 'latest',
+        'region'  => 'us-east-1',
+    ]);
+    $request = [];
+    $request['Source'] = SITE_EMAIL_SENDER;
+    $request['Destination']['ToAddresses'] = [$toName . '<' . $toMail . '>'];
+    $request['Message']['Subject']['Data'] = $subject;
+    $request['Message']['Subject']['Charset'] = 'utf-8';
+    $request['Message']['Body']['Html']['Data'] = $textContent;
+    $request['Message']['Body']['Html']['Charset'] = 'utf-8';
+    // Fire-and-forget: do not block bid response waiting for SES
+    $client->sendEmailAsync($request);
+}
+
+function increment_amount($buy_now){
  	if($buy_now < 10){
  		return 1;
  	}elseif(10 <= $buy_now && $buy_now <= 29){

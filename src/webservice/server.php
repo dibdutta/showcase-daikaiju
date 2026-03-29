@@ -823,6 +823,25 @@ function postBid($username, $password,$auction_id,$bid_amount) {
 					############### ends here ############################
 					if($out_bid_key=='outbid'){
 							$bid='outbid';
+							// Send outbid notification to displaced highest bidder
+							if($highest_user > 0){
+								$sql_outbid_user = "SELECT u.firstname, u.lastname, u.email, p.poster_title
+									FROM user_table u, tbl_auction_live a, tbl_poster_live p
+									WHERE u.user_id = '".$highest_user."'
+									AND a.auction_id = '".$auction_id."'
+									AND a.fk_poster_id = p.poster_id LIMIT 1";
+								$res_outbid = mysqli_query($GLOBALS['db_connect'], $sql_outbid_user);
+								$row_outbid = mysqli_fetch_assoc($res_outbid);
+								if($row_outbid){
+									$outbid_subject = "MPE::You have been outbid - " . $row_outbid['poster_title'];
+									$outbid_body  = 'Dear ' . $row_outbid['firstname'] . ' ' . $row_outbid['lastname'] . ',<br /><br />';
+									$outbid_body .= '<b>You have been outbid on: </b>' . $row_outbid['poster_title'] . '<br /><br />';
+									$outbid_body .= 'To increase your bid, click: <a href="http://' . HOST_NAME . '/buy.php?mode=poster_details&auction_id=' . $auction_id . '">View Item</a><br /><br />';
+									$outbid_body .= "Thanks & Regards,<br /><br />" . ADMIN_NAME . "<br />" . ADMIN_EMAIL_ADDRESS;
+									$outbid_body  = MAIL_BODY_TOP . $outbid_body . MAIL_BODY_BOTTOM;
+									sendMailSES($row_outbid['email'], $row_outbid['firstname'] . ' ' . $row_outbid['lastname'], $outbid_subject, $outbid_body);
+								}
+							}
 						}
 					if($bid > 0 && $bid!='outbid'){
 						return $userArr = array("post_bid_status"=>"You have successfully bid on this poster.");

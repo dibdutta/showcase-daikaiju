@@ -130,6 +130,22 @@ resource "aws_iam_role_policy" "ecs_task_efs" {
   })
 }
 
+resource "aws_iam_role_policy" "ecs_task_ses" {
+  name = "${local.name_prefix}-ses-access"
+  role = aws_iam_role.ecs_task.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = "ses:SendEmail"
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 ################################################################################
 # EventBridge Scheduler Role (for cron tasks)
 ################################################################################
