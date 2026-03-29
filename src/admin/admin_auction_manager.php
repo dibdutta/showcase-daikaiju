@@ -973,11 +973,23 @@ function view_weekly()
 	if($chkLive>0){
 		
 		$auctionRow = $auctionObj->selectData('tbl_auction_live', array('*'), array("auction_id" => $_REQUEST['auction_id']));
-		list($y, $m, $d) = explode('-', $auctionRow[0]['auction_start_date']);
-		$auctionRow[0]['auction_start_date'] = "$m/$d/$y";		
-		
-		list($y, $m, $d) = explode('-', $auctionRow[0]['auction_end_date']);
-		$auctionRow[0]['auction_end_date'] = "$m/$d/$y";
+		if (!empty($auctionRow[0]['auction_start_date'])) {
+			list($y, $m, $d) = explode('-', $auctionRow[0]['auction_start_date']);
+			$auctionRow[0]['auction_start_date'] = "$m/$d/$y";
+		} elseif (!empty($auctionRow[0]['auction_actual_start_datetime'])) {
+			list($dtPart) = explode(' ', $auctionRow[0]['auction_actual_start_datetime']);
+			list($y, $m, $d) = explode('-', $dtPart);
+			$auctionRow[0]['auction_start_date'] = "$m/$d/$y";
+		}
+
+		if (!empty($auctionRow[0]['auction_end_date'])) {
+			list($y, $m, $d) = explode('-', $auctionRow[0]['auction_end_date']);
+			$auctionRow[0]['auction_end_date'] = "$m/$d/$y";
+		} elseif (!empty($auctionRow[0]['auction_actual_end_datetime'])) {
+			list($dtPart) = explode(' ', $auctionRow[0]['auction_actual_end_datetime']);
+			list($y, $m, $d) = explode('-', $dtPart);
+			$auctionRow[0]['auction_end_date'] = "$m/$d/$y";
+		}
 	
 		$posterRow =  $auctionObj->selectData('tbl_poster_live', array('*'), array("poster_id" => $auctionRow[0]['fk_poster_id']));
 		$posterRow[0]['poster_desc']=strip_slashes($posterRow[0]['poster_desc']);
@@ -1006,11 +1018,23 @@ function view_weekly()
 		$auctionRow[0]['auction_actual_end_datetime'] = "$m/$d/$y";
 	}else{
 		$auctionRow = $auctionObj->selectData(TBL_AUCTION, array('*'), array("auction_id" => $_REQUEST['auction_id']));
-		list($y, $m, $d) = explode('-', $auctionRow[0]['auction_start_date']);
-		$auctionRow[0]['auction_start_date'] = "$m/$d/$y";
-		
-		list($y, $m, $d) = explode('-', $auctionRow[0]['auction_end_date']);
-		$auctionRow[0]['auction_end_date'] = "$m/$d/$y";
+		if (!empty($auctionRow[0]['auction_start_date'])) {
+			list($y, $m, $d) = explode('-', $auctionRow[0]['auction_start_date']);
+			$auctionRow[0]['auction_start_date'] = "$m/$d/$y";
+		} elseif (!empty($auctionRow[0]['auction_actual_start_datetime'])) {
+			list($dtPart) = explode(' ', $auctionRow[0]['auction_actual_start_datetime']);
+			list($y, $m, $d) = explode('-', $dtPart);
+			$auctionRow[0]['auction_start_date'] = "$m/$d/$y";
+		}
+
+		if (!empty($auctionRow[0]['auction_end_date'])) {
+			list($y, $m, $d) = explode('-', $auctionRow[0]['auction_end_date']);
+			$auctionRow[0]['auction_end_date'] = "$m/$d/$y";
+		} elseif (!empty($auctionRow[0]['auction_actual_end_datetime'])) {
+			list($dtPart) = explode(' ', $auctionRow[0]['auction_actual_end_datetime']);
+			list($y, $m, $d) = explode('-', $dtPart);
+			$auctionRow[0]['auction_end_date'] = "$m/$d/$y";
+		}
 	
 		$posterRow =  $auctionObj->selectData(TBL_POSTER, array('*'), array("poster_id" => $auctionRow[0]['fk_poster_id']));
 		$posterRow[0]['poster_desc']=strip_slashes($posterRow[0]['poster_desc']);

@@ -485,12 +485,6 @@ function toggleDiv(id,flagit,type,track) {
                                     <td colspan="3" class="descrp-area"><b>Genre:</b> {$auctionDetails[0].genre}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3" class="descrp-area"><b>Decade:</b> {$auctionDetails[0].decade}</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" class="descrp-area"><b>Country:</b> {$auctionDetails[0].country}</td>
-                                </tr>
-                                <tr>
                                     <td colspan="3" class="descrp-area"><b>Condition:</b> {$auctionDetails[0].cond}</td>
                                 </tr>
 								{else}
