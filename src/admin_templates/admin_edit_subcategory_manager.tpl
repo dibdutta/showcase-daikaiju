@@ -1,0 +1,61 @@
+{include file="admin_header.tpl"}
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td width="100%">
+			<table width="100%" border="0" cellspacing="0" cellpadding="2">
+				{if $errorMessage != ""}
+					<tr>
+						<td width="100%" align="center"><div class="messageBox">{$errorMessage}</div></td>
+					</tr>
+				{/if}
+				<tr>
+					<td width="100%" align="center">
+						<table width="60%" border="0" cellspacing="0" cellpadding="2">
+							<tr>
+								<td align="center">
+									<form action="" method="post" name="editSubcategory" id="editSubcategory">
+										<input type="hidden" name="mode" value="update_subcategory" />
+										<input type="hidden" name="subcat_id" value="{$subcat_id}" />
+										<input type="hidden" name="encoded_string" value="{$encoded_string}" />
+										<table border="0" cellpadding="2" cellspacing="1" class="header_bordercolor" width="100%">
+											<tr class="header_bgcolor" height="26">
+												<td colspan="2" class="headertext"><b>Edit Subcategory</b></td>
+											</tr>
+											<tr class="tr_bgcolor">
+												<td align="left" class="bold_text" width="36%" valign="top"><span class="err">*</span> Parent Genre :</td>
+												<td valign="top">
+													<select name="fk_cat_id" id="fk_cat_id" class="look">
+														<option value="">Select Genre</option>
+														{section name=pc loop=$parentCategories}
+															<option value="{$parentCategories[pc].cat_id}" {if $subcat.fk_cat_id == $parentCategories[pc].cat_id}selected="selected"{/if}>{$parentCategories[pc].cat_value}</option>
+														{/section}
+													</select>
+													<br /><span class="err">{$fk_cat_id_err}</span>
+												</td>
+											</tr>
+											<tr class="tr_bgcolor">
+												<td align="left" class="bold_text" width="36%" valign="top"><span class="err">*</span> Subcategory Name :</td>
+												<td valign="top">
+													<input type="text" class="look" name="subcat_value" id="subcat_value" value="{$subcat.subcat_value|escape}" size="45" />
+													<br /><span class="err">{$subcat_value_err}</span>
+												</td>
+											</tr>
+											<tr class="tr_bgcolor">
+												<td align="center" class="bold_text" colspan="2">
+													<input type="submit" name="submit" class="button" value="Save Subcategory" />&nbsp;&nbsp;&nbsp;
+													<input type="button" name="cancel" value="Cancel" class="button" onclick="javascript: location.href='{$adminActualPath}/admin_subcategory_manager.php';" />
+												</td>
+											</tr>
+										</table>
+									</form>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+{include file="admin_footer.tpl"}

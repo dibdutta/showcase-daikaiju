@@ -485,6 +485,9 @@ if(!$_POST)
 	$poster_desc = ob_get_contents();
 	ob_end_clean();	
 	$smarty->assign('poster_desc', $poster_desc);
+	$subcatObj = new Subcategory();
+	$smarty->assign('subcatJson', json_encode($subcatObj->fetchAllGrouped()));
+	$smarty->assign('selected_subcat_id', '');
 	$smarty->display('admin_create_event_wise_monthly_auction_manager.tpl');
 }
 
@@ -692,7 +695,11 @@ function save_monthly_auction()
 	if($condition != ""){
 		$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
 	}
-	
+	if(!empty($_POST['subcategory'])) {
+		$subcatObj_save = new Subcategory();
+		$subcatObj_save->savePosterSubcat($poster_id, (int)$_POST['subcategory'], false);
+	}
+
 	$row = $obj->selectData(TBL_EVENT, array('event_start_date', 'event_end_date'), array("event_id" => $event_id));
 
 //	if($_POST['auction_start_am_pm'] == 'am'){

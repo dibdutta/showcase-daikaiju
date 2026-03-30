@@ -798,6 +798,33 @@ class Auction extends DBCommon{
            }
         }
 
+        // Subcategory filter
+        if(isset($_REQUEST['subcategory_id']) && $_REQUEST['subcategory_id'] != '' && $_REQUEST['keyword'] == ''){
+            if($list=='weekly'){
+                $sql = "SELECT DISTINCT ptsc.fk_poster_id FROM tbl_poster_to_subcategory_live ptsc, tbl_poster_images_live pi, tbl_auction_live a
+                        WHERE ptsc.fk_poster_id = a.fk_poster_id
+                        AND pi.fk_poster_id = a.fk_poster_id
+                        AND pi.is_default='1'
+                        AND ptsc.fk_subcat_id = '".(int)$_REQUEST['subcategory_id']."'";
+                $sql .= $qry;
+                if($poster_ids != "") $sql .= " AND ptsc.fk_poster_id IN (".$poster_ids.")";
+                $rs = mysqli_query($GLOBALS['db_connect'],$sql);
+                while($row = mysqli_fetch_assoc($rs)) $subcat_poster_ids[] = $row['fk_poster_id'];
+                if(is_array($subcat_poster_ids)){ $poster_ids = implode(',', $subcat_poster_ids); $srcFlag = '1'; }else{ return; }
+            }else{
+                $sql = "SELECT DISTINCT ptsc.fk_poster_id FROM ".TBL_POSTER_TO_SUBCATEGORY." ptsc,".TBL_POSTER_IMAGES." pi, ".TBL_AUCTION." a
+                        WHERE ptsc.fk_poster_id = a.fk_poster_id
+                        AND pi.fk_poster_id = a.fk_poster_id
+                        AND pi.is_default='1'
+                        AND ptsc.fk_subcat_id = '".(int)$_REQUEST['subcategory_id']."'";
+                $sql .= $qry;
+                if($poster_ids != "") $sql .= " AND ptsc.fk_poster_id IN (".$poster_ids.")";
+                $rs = mysqli_query($GLOBALS['db_connect'],$sql);
+                while($row = mysqli_fetch_assoc($rs)) $subcat_poster_ids[] = $row['fk_poster_id'];
+                if(is_array($subcat_poster_ids)){ $poster_ids = implode(',', $subcat_poster_ids); $srcFlag = '1'; }else{ return; }
+            }
+        }
+
         if(isset($_REQUEST['decade_id']) && $_REQUEST['decade_id'] != '' &&  $_REQUEST['keyword'] == ''){
 			if($list=="weekly"){
 				
@@ -1009,7 +1036,7 @@ class Auction extends DBCommon{
 				}
 			}
 		}
-		if($_REQUEST['poster_size_id'] == '' && $_REQUEST['genre_id'] == '' && $_REQUEST['decade_id'] == '' && $_REQUEST['country_id'] == '' ){
+		if($_REQUEST['poster_size_id'] == '' && $_REQUEST['genre_id'] == '' && ($_REQUEST['subcategory_id'] ?? '') == '' && $_REQUEST['decade_id'] == '' && $_REQUEST['country_id'] == '' ){
 			$split_stemmed = explode(" ",$keyword);
 				$qry .= " AND ( ";
 				

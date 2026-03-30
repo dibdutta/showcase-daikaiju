@@ -239,6 +239,14 @@ $(document).ready(function() {
                                                 </td>
 											</tr>
                                             <tr class="tr_bgcolor">
+												<td class="bold_text" valign="top">Subcategory :</td>
+												<td class="smalltext">
+													<select name="subcategory" id="subcategory" class="look">
+														<option value="">Select (optional)</option>
+													</select>
+												</td>
+											</tr>
+                                            <tr class="tr_bgcolor">
 												<td class="bold_text" valign="top"><span class="err">*</span>Condition :</td>
 												<td class="smalltext">
                                                 <select name="condition" class="look" onchange="add_text_desc(this.value)">
@@ -450,6 +458,27 @@ return xmlHttp;
 }
 </script>
 {/literal}
+<script type="text/javascript">
+var subcatData = {$subcatJson|default:'{}'};
+(function() {
+    var genreSelect = document.querySelector('select[name="genre"]');
+    var subcatSelect = document.getElementById('subcategory');
+    if (!genreSelect || !subcatSelect) return;
+    function populateSubcats(catId, selectedId) {
+        while (subcatSelect.options.length > 1) subcatSelect.remove(1);
+        var items = subcatData[catId] || [];
+        for (var i = 0; i < items.length; i++) {
+            var opt = document.createElement('option');
+            opt.value = items[i].subcat_id;
+            opt.text  = items[i].subcat_value;
+            if (selectedId && items[i].subcat_id == selectedId) opt.selected = true;
+            subcatSelect.appendChild(opt);
+        }
+    }
+    populateSubcats(genreSelect.value, '{$selected_subcat_id|default:""}');
+    genreSelect.addEventListener('change', function() { populateSubcats(this.value, ''); });
+})();
+</script>
 {include file="admin_footer.tpl"}
 <script type="text/javascript" src="{$actualPath}/javascript/plupload/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{$actualPath}/javascript/plupload/plupload.full.min.js"></script>

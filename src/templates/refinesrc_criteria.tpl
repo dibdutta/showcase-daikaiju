@@ -69,6 +69,7 @@ $(document).ready(function() {
                                         <tr>
                                             <td class="search-heading" width="180px" valign="top"><label>Size{*<span class="red-star">*</span>*}</label></td>
                                             <td class="search-heading" width="180px" valign="top"><label>Genre{*<span class="red-star">*</span>*}</label></td>
+                                            <td class="search-heading" width="220px" valign="top"><label>Subcategory</label></td>
                                         </tr>
                                         <tr>
                                             <td valign="top" style="padding-top:10px;">
@@ -84,10 +85,16 @@ $(document).ready(function() {
                                                 <div class="refine-srch-box">
                                                     {section name=counter loop=$catRows}
                                                         {if $catRows[counter].fk_cat_type_id == 2}
-                                                        <input type="checkbox" name="genre_id" value="{$catRows[counter].cat_id}" />&nbsp;{$catRows[counter].cat_value}<br />
+                                                        <input type="checkbox" name="genre_id" id="genre_cb_{$catRows[counter].cat_id}" value="{$catRows[counter].cat_id}" />&nbsp;{$catRows[counter].cat_value}<br />
                                                         {/if}
                                                     {/section}
                                                 </div>
+                                            </td>
+                                            <td valign="top" style="padding-top:10px;">
+                                                <select name="subcategory_id" id="subcategory_id" class="look">
+                                                    <option value="">All Subcategories</option>
+                                                </select>
+                                                <div style="font-size:11px;color:#888;margin-top:4px;">Select a Genre to filter</div>
                                             </td>
                                         </tr>
                                        
@@ -118,4 +125,32 @@ $(document).ready(function() {
     </div>
     </div>
 </div>
+{literal}
+<script type="text/javascript">
+var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
+(function() {
+    var subcatSelect = document.getElementById('subcategory_id');
+    if (!subcatSelect) return;
+
+    function populateSubcats(catId) {
+        while (subcatSelect.options.length > 1) subcatSelect.remove(1);
+        var items = subcatData[catId] || [];
+        for (var i = 0; i < items.length; i++) {
+            var opt = document.createElement('option');
+            opt.value = items[i].subcat_id;
+            opt.text  = items[i].subcat_value;
+            subcatSelect.appendChild(opt);
+        }
+    }
+
+    var checkboxes = document.querySelectorAll('input[name="genre_id"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener('change', function() {
+            var checked = document.querySelector('input[name="genre_id"]:checked');
+            populateSubcats(checked ? checked.value : '');
+        });
+    }
+})();
+</script>
+{/literal}
 {include file="foot.tpl"}
