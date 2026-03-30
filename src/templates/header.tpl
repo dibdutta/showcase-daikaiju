@@ -482,22 +482,6 @@ function showTimer1(list,id){
                 </div>
             </div>
         </li>
-							{/if} 
-						{/section} 
-                        </ul>
-                    </div>    
-                    </div>
-                </div>
-            </div>
-        </li>
-						{/if}
-					{/section} 
-                        </ul>
-                    </div>    
-                    </div>
-                </div>
-            </div>
-        </li>
 		{else}
 			<li class="pr10 mr10 fll">
             <div class="features_menu_column mr10">

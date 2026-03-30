@@ -370,22 +370,6 @@
                 </div>
             </div>
         </li>
-							{/if} 
-						{/section} 
-                        </ul>
-                    </div>    
-                    </div>
-                </div>
-            </div>
-        </li>
-						{/if}
-					{/section} 
-                        </ul>
-                    </div>    
-                    </div>
-                </div>
-            </div>
-        </li>
         <li class="pr10 mr10 flr">
             <div class="features_menu_column2">
                 <div class="features_selector2">
