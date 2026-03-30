@@ -257,12 +257,12 @@ submit.look{
 
 input.button{
 	border: 1px solid #000000;
-	padding: 2px 3px 2px 3px;
+	padding: 2px 8px;
     font-weight: normal;
     font-size: 11px;
     font-family: tahoma, verdana, arial, helvetica, sans-serif;
-	color:#ffffff;
-	background: #ffffff url(http://c4922595.r95.cf2.rackcdn.com/button_bg.gif) repeat-x;
+	color: #ffffff;
+	background: #555555;
 	cursor: pointer;
 }
 
