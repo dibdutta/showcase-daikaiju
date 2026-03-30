@@ -42,6 +42,12 @@
 												</tr>
 												{php} } {/php}
 												<tr>
+													<td valign="middle" align="left" width="" height="29" class='off' onMouseOver="this.className='on';document.all.a_catmgr.style.color='{$smarty.const.ADMIN_MENU_TEXT_HOVER_COLOR}';" onMouseOut="this.className='off';document.all.a_catmgr.style.color='{$smarty.const.ADMIN_MENU_TEXT_COLOR}';" onclick="javascript: location.href='{$smarty.const.ADMIN_PAGE_LINK}/admin_category_manager.php'; return true;"><img src="spacer.gif" border=0 alt="" width="4" height="1" align="absmiddle"><img src="{$smarty.const.ADMIN_IMAGE_LINK}/bullet.jpg" align="absmiddle" border=0 alt=""><img src="spacer.gif" border=0 alt="" width="4" height="1" align="absmiddle"><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_category_manager.php" class="left_link" name="a_catmgr">Category Manager &raquo;</A></td>
+												</tr>
+												<tr>
+													<td valign="top" align="left" width="" height="1" background="{$smarty.const.ADMIN_IMAGE_LINK}/bg_top_line.jpg"><img src="#" border="0" alt="" height="0" width="0"></td>
+												</tr>
+												<tr>
 													<td valign="middle" align="left" width="" height="29" class='off' onMouseOver="this.className='on';document.all.a_subcatmgr.style.color='{$smarty.const.ADMIN_MENU_TEXT_HOVER_COLOR}';" onMouseOut="this.className='off';document.all.a_subcatmgr.style.color='{$smarty.const.ADMIN_MENU_TEXT_COLOR}';" onclick="javascript: location.href='{$smarty.const.ADMIN_PAGE_LINK}/admin_subcategory_manager.php'; return true;"><img src="spacer.gif" border=0 alt="" width="4" height="1" align="absmiddle"><img src="{$smarty.const.ADMIN_IMAGE_LINK}/bullet.jpg" align="absmiddle" border=0 alt=""><img src="spacer.gif" border=0 alt="" width="4" height="1" align="absmiddle"><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_subcategory_manager.php" class="left_link" name="a_subcatmgr">Subcategory Manager &raquo;</A></td>
 												</tr>
 												<tr>
