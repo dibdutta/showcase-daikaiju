@@ -370,20 +370,6 @@
                 </div>
             </div>
         </li>
-        <li class="pr10 mr10 fll">
-            <div class="features_menu_column mr10">
-                <div class="features_selector">
-                    <div class="trigger" id="trg">
-                    <a href="#" style="float: left; ">Search all Decades</a>
-                    <div>
-                        <ul style="z-index:100000;" id="selector_box">
-                        {section name=counter loop=$rightPanelCatRows}
-							{if $rightPanelCatRows[counter].fk_cat_type_id==3}
-							<li><a href="javascript:void(0);" onclick="refine_search('decade',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value|escape:'html'}</a>
-							{if $smarty.request.decade_id == $rightPanelCatRows[counter].cat_id}
-							<img class="srch-cnclbtn" src="https://d2m46dmzqzklm5.cloudfront.net/images/checked.png"  border="0" onclick="$('#decade_id').val('');$('#frm_refine').submit();" />
-							{/if}
-							</li>
 							{/if} 
 						{/section} 
                         </ul>
@@ -392,20 +378,6 @@
                 </div>
             </div>
         </li>
-        <li class="pr10 mr10 fll">
-            <div class="features_menu_column mr10">
-                <div class="features_selector">
-                    <div class="trigger" id="trg">
-                    <a href="#" style="float: left; ">Search Countries</a>
-                    <div>
-                        <ul style="z-index:100000;" id="selector_box">
-                        {section name=counter loop=$rightPanelCatRows}
-						{if $rightPanelCatRows[counter].fk_cat_type_id==4}
-						<li><a href="javascript:void(0);" onclick="refine_search('country',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value}</a>
-						{if $smarty.request.country_id == $rightPanelCatRows[counter].cat_id}
-						<img class="srch-cnclbtn" src="https://d2m46dmzqzklm5.cloudfront.net/images/checked.png"  border="0" onclick="$('#country_id').val('');$('#frm_refine').submit();" />
-						{/if}
-						</li>
 						{/if}
 					{/section} 
                         </ul>

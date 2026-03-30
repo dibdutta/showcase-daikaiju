@@ -482,17 +482,6 @@ function showTimer1(list,id){
                 </div>
             </div>
         </li>
-        	<li class="pr10 mr10 fll">
-            <div class="features_menu_column mr10">
-                <div class="features_selector">
-                    <div class="trigger" id="trg">
-                    <a href="#" style="float: left; ">Search all Decades</a>
-                    <div>
-                        <ul style="z-index:100000;" id="selector_box">
-                        {section name=counter loop=$rightPanelCatRows}
-							{if $rightPanelCatRows[counter].fk_cat_type_id==3}
-							<li ><a href="javascript:void(0);" onclick="refine_search('decade',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value|escape:'html'}</a>
-							</li>
 							{/if} 
 						{/section} 
                         </ul>
@@ -501,18 +490,6 @@ function showTimer1(list,id){
                 </div>
             </div>
         </li>
-		
-        	<li class="pr10 mr10 fll">
-            <div class="features_menu_column mr10">
-                <div class="features_selector">
-                    <div class="trigger" id="trg">
-                    <a href="#" style="float: left; ">Search Countries</a>
-                    <div>
-                        <ul style="z-index:100000;" id="selector_box">
-                        {section name=counter loop=$rightPanelCatRows}
-						{if $rightPanelCatRows[counter].fk_cat_type_id==4}
-						<li ><a href="javascript:void(0);" onclick="refine_search('country',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value}</a>					
-						</li>
 						{/if}
 					{/section} 
                         </ul>
