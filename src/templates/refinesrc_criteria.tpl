@@ -64,12 +64,13 @@ $(document).ready(function() {
                                             <td valign="top" colspan="4">&nbsp;</td>
                                         </tr>
                                         <tr>
-                                            <td valign="top" colspan="4"><label><span class="red-star">*</span> Choose any combination of categories but you may only click one box per category</label></td>
+                                            <td valign="top" colspan="5"><label><span class="red-star">*</span> Choose any combination of categories but you may only click one box per category</label></td>
                                         </tr>
                                         <tr>
-                                            <td class="search-heading" width="180px" valign="top"><label>Size{*<span class="red-star">*</span>*}</label></td>
-                                            <td class="search-heading" width="180px" valign="top"><label>Genre{*<span class="red-star">*</span>*}</label></td>
-                                            <td class="search-heading" width="220px" valign="top"><label>Subcategory</label></td>
+                                            <td class="search-heading" width="160px" valign="top"><label>Size</label></td>
+                                            <td class="search-heading" width="160px" valign="top"><label>Genre</label></td>
+                                            <td class="search-heading" width="200px" valign="top"><label>Category</label></td>
+                                            <td class="search-heading" width="200px" valign="top"><label>Subcategory</label></td>
                                         </tr>
                                         <tr>
                                             <td valign="top" style="padding-top:10px;">
@@ -81,20 +82,30 @@ $(document).ready(function() {
                                                     {/section}
                                                 </div>
                                             </td>
-                                             <td valign="top" style="padding-top:10px;">
+                                            <td valign="top" style="padding-top:10px;">
                                                 <div class="refine-srch-box">
                                                     {section name=counter loop=$catRows}
                                                         {if $catRows[counter].fk_cat_type_id == 2}
-                                                        <input type="checkbox" name="genre_id" id="genre_cb_{$catRows[counter].cat_id}" value="{$catRows[counter].cat_id}" />&nbsp;{$catRows[counter].cat_value}<br />
+                                                        <input type="checkbox" name="genre_id" value="{$catRows[counter].cat_id}" />&nbsp;{$catRows[counter].cat_value}<br />
                                                         {/if}
                                                     {/section}
+                                                </div>
+                                            </td>
+                                            <td valign="top" style="padding-top:10px;">
+                                                <div class="refine-srch-box">
+                                                    {section name=sc loop=$shopCatRows}
+                                                    <input type="radio" name="shop_cat_id" id="shopcat_{$shopCatRows[sc].shop_cat_id}" value="{$shopCatRows[sc].shop_cat_id}" />&nbsp;{$shopCatRows[sc].shop_cat_name}<br />
+                                                    {/section}
+                                                    {if $shopCatRows}
+                                                    <input type="radio" name="shop_cat_id" value="" id="shopcat_none" />&nbsp;<em>Clear</em><br />
+                                                    {/if}
                                                 </div>
                                             </td>
                                             <td valign="top" style="padding-top:10px;">
                                                 <select name="subcategory_id" id="subcategory_id" class="look">
                                                     <option value="">All Subcategories</option>
                                                 </select>
-                                                <div style="font-size:11px;color:#888;margin-top:4px;">Select a Genre to filter</div>
+                                                <div style="font-size:11px;color:#888;margin-top:4px;">Select a Category first</div>
                                             </td>
                                         </tr>
                                        
@@ -132,9 +143,9 @@ var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
     var subcatSelect = document.getElementById('subcategory_id');
     if (!subcatSelect) return;
 
-    function populateSubcats(catId) {
+    function populateSubcats(shopCatId) {
         while (subcatSelect.options.length > 1) subcatSelect.remove(1);
-        var items = subcatData[catId] || [];
+        var items = subcatData[shopCatId] || [];
         for (var i = 0; i < items.length; i++) {
             var opt = document.createElement('option');
             opt.value = items[i].subcat_id;
@@ -143,11 +154,10 @@ var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
         }
     }
 
-    var checkboxes = document.querySelectorAll('input[name="genre_id"]');
-    for (var i = 0; i < checkboxes.length; i++) {
-        checkboxes[i].addEventListener('change', function() {
-            var checked = document.querySelector('input[name="genre_id"]:checked');
-            populateSubcats(checked ? checked.value : '');
+    var radios = document.querySelectorAll('input[name="shop_cat_id"]');
+    for (var i = 0; i < radios.length; i++) {
+        radios[i].addEventListener('change', function() {
+            populateSubcats(this.value);
         });
     }
 })();

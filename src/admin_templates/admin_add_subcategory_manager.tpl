@@ -22,15 +22,15 @@
 												<td colspan="2" class="headertext"><b>Add Subcategory</b></td>
 											</tr>
 											<tr class="tr_bgcolor">
-												<td align="left" class="bold_text" width="36%" valign="top"><span class="err">*</span> Parent Genre :</td>
+												<td align="left" class="bold_text" width="36%" valign="top"><span class="err">*</span> Parent Category :</td>
 												<td valign="top">
-													<select name="fk_cat_id" id="fk_cat_id" class="look">
-														<option value="">Select Genre</option>
-														{section name=pc loop=$parentCategories}
-															<option value="{$parentCategories[pc].cat_id}" {if $fk_cat_id == $parentCategories[pc].cat_id}selected="selected"{/if}>{$parentCategories[pc].cat_value}</option>
+													<select name="fk_shop_cat_id" id="fk_shop_cat_id" class="look">
+														<option value="">Select Category</option>
+														{section name=sc loop=$shopCategories}
+															<option value="{$shopCategories[sc].shop_cat_id}" {if $fk_shop_cat_id == $shopCategories[sc].shop_cat_id}selected="selected"{/if}>{$shopCategories[sc].shop_cat_name}</option>
 														{/section}
 													</select>
-													<br /><span class="err">{$fk_cat_id_err}</span>
+													<br /><span class="err">{$fk_shop_cat_id_err}</span>
 												</td>
 											</tr>
 											<tr class="tr_bgcolor">

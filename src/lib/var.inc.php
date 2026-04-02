@@ -202,7 +202,9 @@ define ("TBL_MESSAGE", "tbl_messages");
 define ("TBL_POSTER", "tbl_poster");
 define ("TBL_POSTER_TO_CATEGORY", "tbl_poster_to_category");
 define ("TBL_SUBCATEGORY", "tbl_subcategory");
-define ("TBL_POSTER_TO_SUBCATEGORY", "tbl_poster_to_subcategory");
+define ("TBL_POSTER_TO_SUBCATEGORY",    "tbl_poster_to_subcategory");
+define ("TBL_SHOP_CATEGORY",              "tbl_shop_category");
+define ("TBL_POSTER_TO_SHOP_CATEGORY",    "tbl_poster_to_shop_category");
 define ("TBL_POSTER_IMAGES", "tbl_poster_images");
 
 define ("TBL_AUCTION", "tbl_auction");

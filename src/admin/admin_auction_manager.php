@@ -533,8 +533,11 @@ if(!$_POST)
 	$poster_desc = ob_get_contents();
 	ob_end_clean();
 	$smarty->assign('poster_desc', $poster_desc);
+	$shopCatObj = new ShopCategory();
+	$smarty->assign('shopCatRows', $shopCatObj->fetchAll());
 	$subcatObj = new Subcategory();
 	$smarty->assign('subcatJson', json_encode($subcatObj->fetchAllGrouped()));
+	$smarty->assign('selected_shop_cat_id', $shopCatObj->getPosterShopCatId($auctionRow[0]['fk_poster_id'] ?? 0, false));
 	$smarty->assign('selected_subcat_id', $subcatObj->getPosterSubcatId($auctionRow[0]['fk_poster_id'] ?? 0, false));
 	$smarty->display('admin_edit_fixed_auction_manager.tpl');
 	}
@@ -744,11 +747,13 @@ function update_fixed()
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
+	$shopCatObj_save = new ShopCategory();
+	$shopCatObj_save->savePosterShopCat($poster_id, (int)($_POST['shop_category'] ?? 0), false);
 	$subcatObj_save = new Subcategory();
 	$subcatObj_save->savePosterSubcat($poster_id, (int)($_POST['subcategory'] ?? 0), false);
 
 	//////////////Added By Sourav banerjee////////////////////
-	
+
 		
 	
 	if(isset($poster_images) || isset($_SESSION['img'])){
@@ -943,8 +948,11 @@ ob_start();
 	$poster_desc = ob_get_contents();
 	ob_end_clean();
 	$smarty->assign('poster_desc', $poster_desc);
+	$shopCatObj = new ShopCategory();
+	$smarty->assign('shopCatRows', $shopCatObj->fetchAll());
 	$subcatObj = new Subcategory();
 	$smarty->assign('subcatJson', json_encode($subcatObj->fetchAllGrouped()));
+	$smarty->assign('selected_shop_cat_id', $shopCatObj->getPosterShopCatId($auctionRow[0]['fk_poster_id'] ?? 0, true));
 	$smarty->assign('selected_subcat_id', $subcatObj->getPosterSubcatId($auctionRow[0]['fk_poster_id'] ?? 0, true));
 	$smarty->display('admin_edit_weekly_auction_manager.tpl');
 }
@@ -1219,9 +1227,11 @@ function update_weekly(){
 	$obj->updateData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
 	$obj->updateData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
 	$obj->updateData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
+	$shopCatObj_save = new ShopCategory();
+	$shopCatObj_save->savePosterShopCat($poster_id, (int)($_POST['shop_category'] ?? 0), true);
 	$subcatObj_save = new Subcategory();
 	$subcatObj_save->savePosterSubcat($poster_id, (int)($_POST['subcategory'] ?? 0), true);
-	
+
 	//////////////Added By Sourav banerjee////////////////////
 	if(isset($poster_images) || isset($_SESSION['img'])){
 	
@@ -1401,8 +1411,11 @@ if(!$_POST)
 	$poster_desc = ob_get_contents();
 	ob_end_clean();
 	$smarty->assign('poster_desc', $poster_desc);
+	$shopCatObj = new ShopCategory();
+	$smarty->assign('shopCatRows', $shopCatObj->fetchAll());
 	$subcatObj = new Subcategory();
 	$smarty->assign('subcatJson', json_encode($subcatObj->fetchAllGrouped()));
+	$smarty->assign('selected_shop_cat_id', $shopCatObj->getPosterShopCatId($auctionRow[0]['fk_poster_id'] ?? 0, false));
 	$smarty->assign('selected_subcat_id', $subcatObj->getPosterSubcatId($auctionRow[0]['fk_poster_id'] ?? 0, false));
 	$smarty->display('admin_edit_monthly_auction_manager.tpl');
 }
@@ -1606,6 +1619,8 @@ function update_monthly(){
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
+	$shopCatObj_save = new ShopCategory();
+	$shopCatObj_save->savePosterShopCat($poster_id, (int)($_POST['shop_category'] ?? 0), false);
 	$subcatObj_save = new Subcategory();
 	$subcatObj_save->savePosterSubcat($poster_id, (int)($_POST['subcategory'] ?? 0), false);
 
@@ -2688,8 +2703,11 @@ if(!$_POST)
 	$poster_desc = ob_get_contents();
 	ob_end_clean();
 	$smarty->assign('poster_desc', $poster_desc);
+	$shopCatObj = new ShopCategory();
+	$smarty->assign('shopCatRows', $shopCatObj->fetchAll());
 	$subcatObj = new Subcategory();
 	$smarty->assign('subcatJson', json_encode($subcatObj->fetchAllGrouped()));
+	$smarty->assign('selected_shop_cat_id', '');
 	$smarty->assign('selected_subcat_id', '');
 	$smarty->display('admin_create_fixed_auction.tpl');
 	
@@ -2902,6 +2920,8 @@ if(!$_POST)
     if($condition != ""){
         $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
     }
+    $shopCatObj_save = new ShopCategory();
+    $shopCatObj_save->savePosterShopCat($poster_id, (int)($_POST['shop_category'] ?? 0), false);
     if(!empty($_POST['subcategory'])) {
         $subcatObj_save = new Subcategory();
         $subcatObj_save->savePosterSubcat($poster_id, (int)$_POST['subcategory'], false);

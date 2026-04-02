@@ -608,8 +608,11 @@ function update_auction_week()
 	$poster_desc = ob_get_contents();
 	ob_end_clean();	
 	$smarty->assign('poster_desc', $poster_desc);
+	$shopCatObj = new ShopCategory();
+	$smarty->assign('shopCatRows', $shopCatObj->fetchAll());
 	$subcatObj = new Subcategory();
 	$smarty->assign('subcatJson', json_encode($subcatObj->fetchAllGrouped()));
+	$smarty->assign('selected_shop_cat_id', '');
 	$smarty->assign('selected_subcat_id', '');
 	$smarty->display('admin_create_weekly_auction.tpl');
 	
@@ -760,6 +763,8 @@ function validateNewWeeklyForm()
     if($condition != ""){
         $obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
     }
+    $shopCatObj_save = new ShopCategory();
+    $shopCatObj_save->savePosterShopCat($poster_id, (int)($_POST['shop_category'] ?? 0), true);
     if(!empty($_POST['subcategory'])) {
         $subcatObj_save = new Subcategory();
         $subcatObj_save->savePosterSubcat($poster_id, (int)$_POST['subcategory'], true);

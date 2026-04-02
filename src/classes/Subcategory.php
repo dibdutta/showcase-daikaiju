@@ -1,7 +1,4 @@
 <?php
-/**
- * Handles all functions related to the Subcategory module.
- */
 class Subcategory extends DBCommon {
 
     public function __construct() {
@@ -10,37 +7,28 @@ class Subcategory extends DBCommon {
         parent::__construct();
     }
 
-    /**
-     * Fetch all active subcategories for a given parent category.
-     */
-    function fetchByCategory($cat_id) {
-        $cat_id = (int)$cat_id;
+    function fetchByCategory($shop_cat_id) {
+        $shop_cat_id = (int)$shop_cat_id;
         $sql = "SELECT * FROM tbl_subcategory
-                WHERE fk_cat_id = '$cat_id' AND is_active = '1'
+                WHERE fk_shop_cat_id = '$shop_cat_id' AND is_active = '1'
                 ORDER BY LOWER(subcat_value) ASC";
         $dataArr = [];
         if ($rs = mysqli_query($GLOBALS['db_connect'], $sql)) {
-            while ($row = mysqli_fetch_assoc($rs)) {
-                $dataArr[] = $row;
-            }
+            while ($row = mysqli_fetch_assoc($rs)) { $dataArr[] = $row; }
         }
         return $dataArr;
     }
 
-    /**
-     * Fetch all active subcategories grouped by parent cat_id.
-     * Returns associative array: [ cat_id => [ [subcat_id, subcat_value], ... ] ]
-     */
     function fetchAllGrouped() {
-        $sql = "SELECT s.*, c.cat_value AS cat_name
+        $sql = "SELECT s.*, sc.shop_cat_name AS cat_name
                 FROM tbl_subcategory s
-                JOIN tbl_category c ON s.fk_cat_id = c.cat_id
+                JOIN tbl_shop_category sc ON s.fk_shop_cat_id = sc.shop_cat_id
                 WHERE s.is_active = '1'
-                ORDER BY c.cat_value ASC, LOWER(s.subcat_value) ASC";
+                ORDER BY sc.shop_cat_name ASC, LOWER(s.subcat_value) ASC";
         $grouped = [];
         if ($rs = mysqli_query($GLOBALS['db_connect'], $sql)) {
             while ($row = mysqli_fetch_assoc($rs)) {
-                $grouped[$row['fk_cat_id']][] = [
+                $grouped[$row['fk_shop_cat_id']][] = [
                     'subcat_id'    => $row['subcat_id'],
                     'subcat_value' => $row['subcat_value'],
                 ];
@@ -49,38 +37,30 @@ class Subcategory extends DBCommon {
         return $grouped;
     }
 
-    /**
-     * Fetch all subcategories (with parent name) for admin list view.
-     */
-    function fetchAllWithParent($filter_cat_id = '', $isOrdered = false, $isLimit = false) {
+    function fetchAllWithParent($filter_shop_cat_id = '', $isOrdered = false, $isLimit = false) {
         $where = "WHERE s.is_active = '1'";
-        if ($filter_cat_id != '') {
-            $where .= " AND s.fk_cat_id = '" . (int)$filter_cat_id . "'";
+        if ($filter_shop_cat_id != '') {
+            $where .= " AND s.fk_shop_cat_id = '" . (int)$filter_shop_cat_id . "'";
         }
-        $sql = "SELECT s.*, c.cat_value AS cat_name
+        $sql = "SELECT s.*, sc.shop_cat_name AS cat_name
                 FROM tbl_subcategory s
-                JOIN tbl_category c ON s.fk_cat_id = c.cat_id
+                JOIN tbl_shop_category sc ON s.fk_shop_cat_id = sc.shop_cat_id
                 $where
-                ORDER BY c.cat_value ASC, LOWER(s.subcat_value) ASC";
+                ORDER BY sc.shop_cat_name ASC, LOWER(s.subcat_value) ASC";
         if ($isLimit) {
             $sql .= " LIMIT " . $this->offset . "," . $this->toShow;
         }
         $dataArr = [];
         if ($rs = mysqli_query($GLOBALS['db_connect'], $sql)) {
-            while ($row = mysqli_fetch_assoc($rs)) {
-                $dataArr[] = $row;
-            }
+            while ($row = mysqli_fetch_assoc($rs)) { $dataArr[] = $row; }
         }
         return $dataArr;
     }
 
-    /**
-     * Count subcategories, optionally filtered by parent cat_id.
-     */
-    function countSubcategories($filter_cat_id = '') {
+    function countSubcategories($filter_shop_cat_id = '') {
         $where = "WHERE s.is_active = '1'";
-        if ($filter_cat_id != '') {
-            $where .= " AND s.fk_cat_id = '" . (int)$filter_cat_id . "'";
+        if ($filter_shop_cat_id != '') {
+            $where .= " AND s.fk_shop_cat_id = '" . (int)$filter_shop_cat_id . "'";
         }
         $sql = "SELECT COUNT(*) as total FROM tbl_subcategory s $where";
         if ($rs = mysqli_query($GLOBALS['db_connect'], $sql)) {
@@ -90,9 +70,6 @@ class Subcategory extends DBCommon {
         return 0;
     }
 
-    /**
-     * Check if a subcategory is used by any poster (live or archived).
-     */
     function isUsedByPoster($subcat_id) {
         $subcat_id = (int)$subcat_id;
         $sql = "SELECT COUNT(*) as total FROM tbl_poster_to_subcategory WHERE fk_subcat_id = '$subcat_id'";
@@ -108,9 +85,6 @@ class Subcategory extends DBCommon {
         return false;
     }
 
-    /**
-     * Get subcategory value string for a given subcat_id.
-     */
     function selectSubcategoryName($subcat_id) {
         $subcat_id = (int)$subcat_id;
         $sql = "SELECT subcat_value FROM tbl_subcategory WHERE subcat_id = '$subcat_id'";
@@ -121,10 +95,6 @@ class Subcategory extends DBCommon {
         return '';
     }
 
-    /**
-     * Get the poster's current subcategory id from mapping table.
-     * $live = true for weekly auctions (live table), false for fixed/monthly.
-     */
     function getPosterSubcatId($poster_id, $live = false) {
         $poster_id = (int)$poster_id;
         $tbl = $live ? 'tbl_poster_to_subcategory_live' : 'tbl_poster_to_subcategory';
@@ -136,9 +106,6 @@ class Subcategory extends DBCommon {
         return '';
     }
 
-    /**
-     * Save (replace) poster-to-subcategory mapping.
-     */
     function savePosterSubcat($poster_id, $subcat_id, $live = false) {
         $poster_id = (int)$poster_id;
         $subcat_id = (int)$subcat_id;
@@ -150,9 +117,6 @@ class Subcategory extends DBCommon {
         }
     }
 
-    /**
-     * Delete poster-to-subcategory mapping when poster is deleted.
-     */
     function deletePosterSubcat($poster_id, $live = false) {
         $poster_id = (int)$poster_id;
         $tbl = $live ? 'tbl_poster_to_subcategory_live' : 'tbl_poster_to_subcategory';

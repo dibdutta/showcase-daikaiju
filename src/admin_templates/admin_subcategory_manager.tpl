@@ -25,11 +25,11 @@
 					<td align="center">
 						<form method="get" action="">
 							<input type="hidden" name="encoded_string" value="{$encoded_string}" />
-							Filter by Genre:&nbsp;
-							<select name="filter_cat_id" class="look" onchange="this.form.submit()">
-								<option value="">All Genres</option>
-								{section name=pc loop=$parentCategories}
-									<option value="{$parentCategories[pc].cat_id}" {if $filter_cat_id == $parentCategories[pc].cat_id}selected="selected"{/if}>{$parentCategories[pc].cat_value}</option>
+							Filter by Category:&nbsp;
+							<select name="filter_shop_cat_id" class="look" onchange="this.form.submit()">
+								<option value="">All Categories</option>
+								{section name=sc loop=$shopCategories}
+									<option value="{$shopCategories[sc].shop_cat_id}" {if $filter_shop_cat_id == $shopCategories[sc].shop_cat_id}selected="selected"{/if}>{$shopCategories[sc].shop_cat_name}</option>
 								{/section}
 							</select>
 						</form>
@@ -41,7 +41,7 @@
 							<table align="center" width="80%" border="0" cellspacing="1" cellpadding="2" class="header_bordercolor">
 								<tbody>
 									<tr class="header_bgcolor" height="26">
-										<td align="center" class="headertext" width="35%">Parent Genre</td>
+										<td align="center" class="headertext" width="35%">Parent Category</td>
 										<td align="center" class="headertext" width="45%">Subcategory</td>
 										<td align="center" class="headertext" width="20%">Action</td>
 									</tr>

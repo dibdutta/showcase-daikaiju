@@ -239,6 +239,17 @@ $(document).ready(function() {
                                                 </td>
 											</tr>
                                             <tr class="tr_bgcolor">
+												<td class="bold_text" valign="top">Category :</td>
+												<td class="smalltext">
+													<select name="shop_category" id="shop_category" class="look">
+														<option value="">Select (optional)</option>
+														{section name=sc loop=$shopCatRows}
+														<option value="{$shopCatRows[sc].shop_cat_id}" {if $selected_shop_cat_id == $shopCatRows[sc].shop_cat_id}selected="selected"{/if}>{$shopCatRows[sc].shop_cat_name}</option>
+														{/section}
+													</select>
+												</td>
+											</tr>
+                                            <tr class="tr_bgcolor">
 												<td class="bold_text" valign="top">Subcategory :</td>
 												<td class="smalltext">
 													<select name="subcategory" id="subcategory" class="look">
@@ -458,15 +469,17 @@ return xmlHttp;
 }
 </script>
 {/literal}
+{literal}
 <script type="text/javascript">
-var subcatData = {$subcatJson|default:'{}'};
+var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
 (function() {
-    var genreSelect = document.querySelector('select[name="genre"]');
-    var subcatSelect = document.getElementById('subcategory');
-    if (!genreSelect || !subcatSelect) return;
-    function populateSubcats(catId, selectedId) {
+    var shopCatSelect = document.getElementById('shop_category');
+    var subcatSelect  = document.getElementById('subcategory');
+    if (!shopCatSelect || !subcatSelect) return;
+
+    function populateSubcats(shopCatId, selectedId) {
         while (subcatSelect.options.length > 1) subcatSelect.remove(1);
-        var items = subcatData[catId] || [];
+        var items = subcatData[shopCatId] || [];
         for (var i = 0; i < items.length; i++) {
             var opt = document.createElement('option');
             opt.value = items[i].subcat_id;
@@ -475,10 +488,11 @@ var subcatData = {$subcatJson|default:'{}'};
             subcatSelect.appendChild(opt);
         }
     }
-    populateSubcats(genreSelect.value, '{$selected_subcat_id|default:""}');
-    genreSelect.addEventListener('change', function() { populateSubcats(this.value, ''); });
+    populateSubcats(shopCatSelect.value, '{/literal}{$selected_subcat_id|default:""}{literal}');
+    shopCatSelect.addEventListener('change', function() { populateSubcats(this.value, ''); });
 })();
 </script>
+{/literal}
 {include file="admin_footer.tpl"}
 <script type="text/javascript" src="{$actualPath}/javascript/plupload/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{$actualPath}/javascript/plupload/plupload.full.min.js"></script>

@@ -82,7 +82,8 @@
                             	{section name=counter loop=$commonCatTypes}
                                 <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_category_manager.php?cat_type_id={$commonCatTypes[counter].cat_type_id}">{$commonCatTypes[counter].cat_type}</a></li>
                                 {/section}
-                                <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_subcategory_manager.php">Subcategory Manager</a></li>
+                                <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_shop_category_manager.php">Shop Category</a></li>
+                                <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_subcategory_manager.php">Subcategory</a></li>
                             </ul>
                         </li>
                         <li><a href="#">MESSAGE</a>

@@ -798,6 +798,35 @@ class Auction extends DBCommon{
            }
         }
 
+        // Shop Category filter
+        if(isset($_REQUEST['shop_cat_id']) && $_REQUEST['shop_cat_id'] != '' && $_REQUEST['keyword'] == ''){
+            if($list=='weekly'){
+                $sql = "SELECT DISTINCT ptsc.fk_poster_id FROM tbl_poster_to_shop_category_live ptsc, tbl_poster_images_live pi, tbl_auction_live a
+                        WHERE ptsc.fk_poster_id = a.fk_poster_id
+                        AND pi.fk_poster_id = a.fk_poster_id
+                        AND pi.is_default='1'
+                        AND ptsc.fk_shop_cat_id = '".(int)$_REQUEST['shop_cat_id']."'";
+                $sql .= $qry;
+                if($poster_ids != "") $sql .= " AND ptsc.fk_poster_id IN (".$poster_ids.")";
+                $rs = mysqli_query($GLOBALS['db_connect'],$sql);
+                $shopcat_poster_ids = [];
+                while($row = mysqli_fetch_assoc($rs)) $shopcat_poster_ids[] = $row['fk_poster_id'];
+                if(is_array($shopcat_poster_ids) && count($shopcat_poster_ids)){ $poster_ids = implode(',', $shopcat_poster_ids); $srcFlag = '1'; }else{ return; }
+            }else{
+                $sql = "SELECT DISTINCT ptsc.fk_poster_id FROM tbl_poster_to_shop_category ptsc, ".TBL_POSTER_IMAGES." pi, ".TBL_AUCTION." a
+                        WHERE ptsc.fk_poster_id = a.fk_poster_id
+                        AND pi.fk_poster_id = a.fk_poster_id
+                        AND pi.is_default='1'
+                        AND ptsc.fk_shop_cat_id = '".(int)$_REQUEST['shop_cat_id']."'";
+                $sql .= $qry;
+                if($poster_ids != "") $sql .= " AND ptsc.fk_poster_id IN (".$poster_ids.")";
+                $rs = mysqli_query($GLOBALS['db_connect'],$sql);
+                $shopcat_poster_ids = [];
+                while($row = mysqli_fetch_assoc($rs)) $shopcat_poster_ids[] = $row['fk_poster_id'];
+                if(is_array($shopcat_poster_ids) && count($shopcat_poster_ids)){ $poster_ids = implode(',', $shopcat_poster_ids); $srcFlag = '1'; }else{ return; }
+            }
+        }
+
         // Subcategory filter
         if(isset($_REQUEST['subcategory_id']) && $_REQUEST['subcategory_id'] != '' && $_REQUEST['keyword'] == ''){
             if($list=='weekly'){
@@ -1036,7 +1065,7 @@ class Auction extends DBCommon{
 				}
 			}
 		}
-		if($_REQUEST['poster_size_id'] == '' && $_REQUEST['genre_id'] == '' && ($_REQUEST['subcategory_id'] ?? '') == '' && $_REQUEST['decade_id'] == '' && $_REQUEST['country_id'] == '' ){
+		if($_REQUEST['poster_size_id'] == '' && $_REQUEST['genre_id'] == '' && ($_REQUEST['shop_cat_id'] ?? '') == '' && ($_REQUEST['subcategory_id'] ?? '') == '' && $_REQUEST['decade_id'] == '' && $_REQUEST['country_id'] == '' ){
 			$split_stemmed = explode(" ",$keyword);
 				$qry .= " AND ( ";
 				
