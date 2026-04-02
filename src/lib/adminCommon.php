@@ -38,7 +38,10 @@
 	}
 	
 	$commonCatsObj = new Category();
-	$commonCatTypes = $commonCatsObj->selectData(TBL_CATEGORY_TYPE);
+	$commonCatTypes = array_values(array_filter(
+		$commonCatsObj->selectData(TBL_CATEGORY_TYPE),
+		fn($t) => !in_array($t['cat_type_id'], [3, 4])
+	));
 	$smarty->assign('commonCatTypes', $commonCatTypes);
 	
 	
