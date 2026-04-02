@@ -33,8 +33,9 @@ RUN { \
 # Copy application source
 COPY src/ /var/www/html/
 
-# Ensure writable directories exist
-RUN mkdir -p /var/www/html/sessions \
+# Clear and recreate Smarty compile dirs so no stale compiled templates are served
+RUN rm -rf /var/www/html/templates_c/* /var/www/html/admin_templates_c/* \
+    && mkdir -p /var/www/html/sessions \
     /var/www/html/templates_c \
     /var/www/html/admin_templates_c \
     /var/www/html/poster_photo \
