@@ -92,14 +92,12 @@ $(document).ready(function() {
                                                 </div>
                                             </td>
                                             <td valign="top" style="padding-top:10px;">
-                                                <div class="refine-srch-box">
+                                                <select name="shop_cat_id" id="shop_cat_id" class="look">
+                                                    <option value="">All Categories</option>
                                                     {section name=sc loop=$shopCatRows}
-                                                    <input type="radio" name="shop_cat_id" id="shopcat_{$shopCatRows[sc].shop_cat_id}" value="{$shopCatRows[sc].shop_cat_id}" />&nbsp;{$shopCatRows[sc].shop_cat_name}<br />
+                                                    <option value="{$shopCatRows[sc].shop_cat_id}">{$shopCatRows[sc].shop_cat_name}</option>
                                                     {/section}
-                                                    {if $shopCatRows}
-                                                    <input type="radio" name="shop_cat_id" value="" id="shopcat_none" />&nbsp;<em>Clear</em><br />
-                                                    {/if}
-                                                </div>
+                                                </select>
                                             </td>
                                             <td valign="top" style="padding-top:10px;">
                                                 <select name="subcategory_id" id="subcategory_id" class="look">
@@ -154,9 +152,9 @@ var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
         }
     }
 
-    var radios = document.querySelectorAll('input[name="shop_cat_id"]');
-    for (var i = 0; i < radios.length; i++) {
-        radios[i].addEventListener('change', function() {
+    var shopCatSelect = document.getElementById('shop_cat_id');
+    if (shopCatSelect) {
+        shopCatSelect.addEventListener('change', function() {
             populateSubcats(this.value);
         });
     }
