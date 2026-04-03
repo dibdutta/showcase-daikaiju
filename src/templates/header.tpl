@@ -160,7 +160,7 @@ function refine_search(type,id){
 $(document).ready(function() {
     var currentShopCat = $('#shop_cat_id').val();
     if (currentShopCat) { populateSubcatNav(currentShopCat); }
-});{/literal}
+});
 function hidelogin(){
 		$('#login-modal-box').hide();
 		$('#login-modal-overlay').hide();
