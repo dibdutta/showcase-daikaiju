@@ -85,7 +85,7 @@ function check_session(){
 	var actualPath=' {/literal}{$actualPath}{literal}';
 		$(location).attr('href',actualPath+'/register');
 }
-var subcatData = {literal}{/literal}{$subcatJson|default:'{}'}{literal};
+var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
 function populateSubcatNav(shopCatId) {
     var navItem = document.getElementById('subcat-nav-item');
     var navItem2 = document.getElementById('subcat-nav-item2');
