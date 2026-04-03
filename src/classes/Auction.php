@@ -1118,6 +1118,7 @@ class Auction extends DBCommon{
 	
 	function fetchSearchLiveAuctions($poster_ids,$view_mode='',$list='')
 	{
+        if($poster_ids === null || $poster_ids === '') return [];
         if(!isset($_SESSION['sessUserID'])){
             $user_id='';
         }else{

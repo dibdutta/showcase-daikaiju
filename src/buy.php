@@ -841,10 +841,10 @@ function displayDoRefineSearch()
 	}else{
 		$smarty->assign('user_id', 0);	
 	}
-    if(isset($_REQUEST['list'])){
-		$_REQUEST['list'] =$_REQUEST['poster_type'];
-    }else{
-        $_REQUEST['list']='';
+    if(isset($_REQUEST['poster_type']) && $_REQUEST['poster_type'] != ''){
+		$_REQUEST['list'] = $_REQUEST['poster_type'];
+    }elseif(!isset($_REQUEST['list'])){
+        $_REQUEST['list'] = '';
     }
 	if(isset($_REQUEST['auction_week_id'])){
         $auction_week_id = $_REQUEST['auction_week_id'];
