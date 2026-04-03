@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', '1');
+error_reporting(E_ALL);
 define("INCLUDE_PATH", "../");
 ob_start();
 require_once INCLUDE_PATH."lib/inc.php";
