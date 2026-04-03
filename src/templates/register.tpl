@@ -260,7 +260,7 @@ function shipsame(form){
                                     </tr>
                                     <tr>
                                         <td width="50%">
-                                        <img src="{$actualPath}/securimage/securimage_show.php?sid={php} echo md5(uniqid(time())); {/php}" alt="CAPTCHA code" align="middle" id="image" /><a href="{$actualPath}/securimage/securimage_play.php"><img src="{$actualPath}/securimage/images/audio_icon.gif" alt="Listen to security code" border="0" /></a><a href="#" onclick="document.getElementById('image').src = 'securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="{$actualPath}/securimage/images/refresh.gif" alt="Refresh security code" border="0" /></a>
+                                        <img src="{$actualPath}/securimage/securimage_show.php?sid={$captchaSid}" alt="CAPTCHA code" align="middle" id="image" /><a href="{$actualPath}/securimage/securimage_play.php"><img src="{$actualPath}/securimage/images/audio_icon.gif" alt="Listen to security code" border="0" /></a><a href="#" onclick="document.getElementById('image').src = 'securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="{$actualPath}/securimage/images/refresh.gif" alt="Refresh security code" border="0" /></a>
                                         </td>
                                         <td><input type="text" name="code" value="" class="input_textbox required" equalTo='' /><div class="disp-err">{$code_err}</div></td>
                                     </tr>

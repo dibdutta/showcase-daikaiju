@@ -56,6 +56,7 @@ function dispmiddle(){
     
     $smarty->assign('agree_err', $GLOBALS['agree_err']);
 	$smarty->assign('us_states', $us_states);
+	$smarty->assign('captchaSid', md5(uniqid(time())));
 
     $smarty->display("register.tpl");
 }
