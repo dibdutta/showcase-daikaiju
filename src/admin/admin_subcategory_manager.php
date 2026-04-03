@@ -158,7 +158,6 @@ function update_subcategory() {
 }
 
 function del_subcategory() {
-    require_once INCLUDE_PATH."lib/adminCommon.php";
     $subcat_id = (int)($_REQUEST['subcat_id'] ?? 0);
     $obj = new Subcategory();
     if ($obj->isUsedByPoster($subcat_id)) {
