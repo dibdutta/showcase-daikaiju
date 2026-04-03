@@ -106,23 +106,34 @@
 			$('#poster_size_id').val('');
 			$('#genre_id').val('');
 			$('#country_id').val('');
+			$('#shop_cat_id').val('');
 		}
 		if(type=='poster_size'){
 			$('#poster_size_id').val(id);
 			$('#decade_id').val('');
 			$('#genre_id').val('');
 			$('#country_id').val('');
+			$('#shop_cat_id').val('');
 		}
 		if(type=='country'){
 			$('#poster_size_id').val('');
 			$('#decade_id').val('');
 			$('#genre_id').val('');
 			$('#country_id').val(id);
+			$('#shop_cat_id').val('');
 		}
 		if(type=='genre'){
 			$('#poster_size_id').val('');
 			$('#decade_id').val('');
 			$('#genre_id').val(id);
+			$('#country_id').val('');
+			$('#shop_cat_id').val('');
+		}
+		if(type=='shop_cat'){
+			$('#shop_cat_id').val(id);
+			$('#poster_size_id').val('');
+			$('#decade_id').val('');
+			$('#genre_id').val('');
 			$('#country_id').val('');
 		}
 		$('#frm_refine').submit();
@@ -166,6 +177,7 @@
                 <input type="hidden" name="genre_id" id="genre_id" value="{$smarty.request.genre_id}" />
                 <input type="hidden" name="decade_id" id="decade_id" value="{$smarty.request.decade_id}" />
                 <input type="hidden" name="country_id" id="country_id" value="{$smarty.request.country_id}" />
+                <input type="hidden" name="shop_cat_id" id="shop_cat_id" value="{$smarty.request.shop_cat_id}" />
                 {if $smarty.request.mode!='refinesrcStills'}
                   <input type="hidden" name="list" id="list" value="{$smarty.request.list}" />
 				{else} 
@@ -344,6 +356,26 @@
                        
                         </ul>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="pr10 mr10 fll">
+            <div class="features_menu_column mr10">
+                <div class="features_selector">
+                    <div class="trigger" id="trg">
+                    <a href="#" style="float: left; ">Shop</a>
+                    <div>
+                        <ul style="z-index:100000;" id="selector_box">
+                        {section name=sc loop=$shopCatRows}
+                        <li><a href="javascript:void(0);" onclick="refine_search('shop_cat',{$shopCatRows[sc].shop_cat_id})">{$shopCatRows[sc].shop_cat_name}</a>
+                        {if $smarty.request.shop_cat_id == $shopCatRows[sc].shop_cat_id}
+                        <img class="srch-cnclbtn" src="https://d2m46dmzqzklm5.cloudfront.net/images/checked.png" border="0" onclick="$('#shop_cat_id').val('');$('#frm_refine').submit();" />
+                        {/if}
+                        </li>
+                        {/section}
+                        </ul>
+                    </div>
                     </div>
                 </div>
             </div>

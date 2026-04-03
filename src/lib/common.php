@@ -203,6 +203,8 @@
 	$where = "fk_cat_type_id <> '5'";
 	$rightPanelCatRows = $rightPanelObj->selectDataCategoryStills(TBL_CATEGORY, array('cat_id','cat_value','is_stills'));
 	$smarty->assign('rightPanelCatRows', $rightPanelCatRows);
+	$shopCatObj = new ShopCategory();
+	$smarty->assign('shopCatRows', $shopCatObj->fetchAll());
 	if($_SERVER['REQUEST_URI']!='/myselling.php?mode=bulkupload'){
 		$_SESSION['err_cntr']=0;
 	}
