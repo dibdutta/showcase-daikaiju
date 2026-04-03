@@ -416,9 +416,17 @@ class Securimage {
    * </code>
    *
    */
+  function __construct()
+  {
+    if ( session_id() == '' ) {
+      session_start();
+    }
+  }
+
+  // kept for backward compatibility (PHP 4 style — not called in PHP 8)
   function Securimage()
   {
-    if ( session_id() == '' ) { // no session has been started yet, which is needed for validation
+    if ( session_id() == '' ) {
       session_start();
     }
   }
