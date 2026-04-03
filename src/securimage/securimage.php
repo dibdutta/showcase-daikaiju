@@ -649,9 +649,9 @@ class Securimage {
           $g = substr($colors[$idx], 3, 2);
           $b = substr($colors[$idx], 5, 2);
           if($this->use_transparent_text == true) {
-            $font_color = imagecolorallocatealpha($this->im, "0x$r", "0x$g", "0x$b", $alpha);
+            $font_color = imagecolorallocatealpha($this->im, hexdec($r), hexdec($g), hexdec($b), $alpha);
           } else {
-            $font_color = imagecolorallocate($this->im, "0x$r", "0x$g", "0x$b");
+            $font_color = imagecolorallocate($this->im, hexdec($r), hexdec($g), hexdec($b));
           }
         }
         @imagettftext($this->im, $this->font_size, $angle, $x, $y, $font_color, $this->ttf_file, $this->code[$i]);
