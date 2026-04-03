@@ -694,7 +694,7 @@ class Securimage {
     $code = '';
 
     for($i = 1, $cslen = strlen($this->charset); $i <= $len; ++$i) {
-      $code .= strtoupper( $this->charset{rand(0, $cslen - 1)} );
+      $code .= strtoupper( $this->charset[rand(0, $cslen - 1)] );
     }
     return $code;
   }
