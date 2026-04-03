@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', '1');
-error_reporting(E_ALL);
 define("INCLUDE_PATH", "../");
 ob_start();
 require_once INCLUDE_PATH."lib/inc.php";
@@ -83,10 +81,12 @@ function checkSubcategory() {
                 WHERE fk_shop_cat_id = '" . (int)$fk_shop_cat_id . "'
                 AND subcat_value = '" . mysqli_real_escape_string($GLOBALS['db_connect'], $subcat_value) . "'";
         $rs = mysqli_query($GLOBALS['db_connect'], $sql);
-        $row = mysqli_fetch_assoc($rs);
-        if ((int)$row['total'] > 0) {
-            $GLOBALS['subcat_value_err'] = "This subcategory already exists under the selected category.";
-            $errCounter++;
+        if ($rs) {
+            $row = mysqli_fetch_assoc($rs);
+            if ((int)$row['total'] > 0) {
+                $GLOBALS['subcat_value_err'] = "This subcategory already exists under the selected category.";
+                $errCounter++;
+            }
         }
     }
     return $errCounter == 0;
@@ -134,10 +134,12 @@ function checkUpdateSubcategory() {
                 AND subcat_value = '" . mysqli_real_escape_string($GLOBALS['db_connect'], $subcat_value) . "'
                 AND subcat_id != '" . (int)$subcat_id . "'";
         $rs = mysqli_query($GLOBALS['db_connect'], $sql);
-        $row = mysqli_fetch_assoc($rs);
-        if ((int)$row['total'] > 0) {
-            $GLOBALS['subcat_value_err'] = "This subcategory already exists under the selected category.";
-            $errCounter++;
+        if ($rs) {
+            $row = mysqli_fetch_assoc($rs);
+            if ((int)$row['total'] > 0) {
+                $GLOBALS['subcat_value_err'] = "This subcategory already exists under the selected category.";
+                $errCounter++;
+            }
         }
     }
     return $errCounter == 0;
