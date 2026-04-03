@@ -335,7 +335,7 @@ function displaySearch()
 			$objCategory = new Category();
 			$cat_value = $objCategory->selectCategoryName($_REQUEST['poster_size_id']);
 			$smarty->assign('cat_value', $cat_value);
-			
+
 	  }elseif($_REQUEST['country_id']!=''){
 			$objCategory = new Category();
 			$cat_value = $objCategory->selectCategoryName($_REQUEST['country_id']);
@@ -343,6 +343,21 @@ function displaySearch()
 	  }elseif($_REQUEST['decade_id']!=''){
 			$objCategory = new Category();
 			$cat_value = $objCategory->selectCategoryName($_REQUEST['decade_id']);
+			$smarty->assign('cat_value', $cat_value);
+	  }elseif(($_REQUEST['shop_cat_id'] ?? '')!=''){
+			$shopCatObj = new ShopCategory();
+			$shopCatRows = $shopCatObj->fetchAll();
+			$cat_value = '';
+			foreach($shopCatRows as $sc){
+				if($sc['shop_cat_id'] == $_REQUEST['shop_cat_id']){ $cat_value = $sc['shop_cat_name']; break; }
+			}
+			if(($_REQUEST['subcategory_id'] ?? '')!=''){
+				$subcatObj = new Subcategory();
+				$subcats = $subcatObj->fetchAllWithParent($_REQUEST['shop_cat_id']);
+				foreach($subcats as $s){
+					if($s['subcat_id'] == $_REQUEST['subcategory_id']){ $cat_value .= ' > '.$s['subcat_value']; break; }
+				}
+			}
 			$smarty->assign('cat_value', $cat_value);
 	  }
 	//$posterObj = new Poster();
