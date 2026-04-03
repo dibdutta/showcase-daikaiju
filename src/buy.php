@@ -876,10 +876,10 @@ function displayDoRefineSearch()
 	##########################    Overlapping New Add  ##########################
 	
 	
-    $poster_ids = $objAuction->searchPosterIds($_REQUEST['poster_type'],$auction_week_id);
-	
+    $poster_ids = $objAuction->searchPosterIds($_REQUEST['list'],$auction_week_id);
+
     $total = $objAuction->countSearchLiveAuctions($poster_ids);
-    $auctionItems = $objAuction->fetchSearchLiveAuctions($poster_ids,$_SESSION['sessAuctionView'],$_REQUEST['poster_type']);
+    $auctionItems = $objAuction->fetchSearchLiveAuctions($poster_ids,$_SESSION['sessAuctionView'],$_REQUEST['list']);
 	
 	$totalLiveWeekly = $objAuction->countLiveWeeklyAuctions();
 	$smarty->assign('totalLiveWeekly', $totalLiveWeekly);
