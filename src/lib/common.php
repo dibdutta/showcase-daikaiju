@@ -205,6 +205,8 @@
 	$smarty->assign('rightPanelCatRows', $rightPanelCatRows);
 	$shopCatObj = new ShopCategory();
 	$smarty->assign('shopCatRows', $shopCatObj->fetchAll());
+	$subcatObj = new Subcategory();
+	$smarty->assign('subcatJson', json_encode($subcatObj->fetchAllGrouped()));
 	if($_SERVER['REQUEST_URI']!='/myselling.php?mode=bulkupload'){
 		$_SESSION['err_cntr']=0;
 	}

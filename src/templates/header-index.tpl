@@ -100,6 +100,24 @@
 		$('#login-modal-box').show();
 		$('#username').focus();
 	}
+	var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
+	function populateSubcatNav(shopCatId) {
+		var navItem = document.getElementById('subcat-nav-item');
+		var list = document.getElementById('subcat-nav-list');
+		var subcats = subcatData[shopCatId] || [];
+		if (!navItem) return;
+		if (subcats.length === 0) { navItem.style.display = 'none'; return; }
+		navItem.style.display = '';
+		list.innerHTML = '<li><a href="javascript:void(0);" onclick="$(\"#subcategory_id\").val(\"\");$(\"#frm_refine\").submit();">All Subcategories</a></li>';
+		subcats.forEach(function(sc) {
+			var li = document.createElement('li');
+			var a = document.createElement('a');
+			a.href = 'javascript:void(0);';
+			a.textContent = sc.subcat_value;
+			a.onclick = (function(sid) { return function() { $('#subcategory_id').val(sid); $('#frm_refine').submit(); }; })(sc.subcat_id);
+			li.appendChild(a); list.appendChild(li);
+		});
+	}
 	function refine_search(type,id){
 		if(type=='decade'){
 			$('#decade_id').val(id);
@@ -107,6 +125,7 @@
 			$('#genre_id').val('');
 			$('#country_id').val('');
 			$('#shop_cat_id').val('');
+			$('#subcategory_id').val('');
 		}
 		if(type=='poster_size'){
 			$('#poster_size_id').val(id);
@@ -114,6 +133,7 @@
 			$('#genre_id').val('');
 			$('#country_id').val('');
 			$('#shop_cat_id').val('');
+			$('#subcategory_id').val('');
 		}
 		if(type=='country'){
 			$('#poster_size_id').val('');
@@ -121,6 +141,7 @@
 			$('#genre_id').val('');
 			$('#country_id').val(id);
 			$('#shop_cat_id').val('');
+			$('#subcategory_id').val('');
 		}
 		if(type=='genre'){
 			$('#poster_size_id').val('');
@@ -128,16 +149,22 @@
 			$('#genre_id').val(id);
 			$('#country_id').val('');
 			$('#shop_cat_id').val('');
+			$('#subcategory_id').val('');
 		}
 		if(type=='shop_cat'){
 			$('#shop_cat_id').val(id);
+			$('#subcategory_id').val('');
 			$('#poster_size_id').val('');
 			$('#decade_id').val('');
 			$('#genre_id').val('');
 			$('#country_id').val('');
 		}
 		$('#frm_refine').submit();
- }
+	}
+	$(document).ready(function() {
+		var currentShopCat = $('#shop_cat_id').val();
+		if (currentShopCat) { populateSubcatNav(currentShopCat); }
+	});
  	function check_session(){
     $.post('ajax', {mode : 'delete_session'}, function(){
 
@@ -178,6 +205,7 @@
                 <input type="hidden" name="decade_id" id="decade_id" value="{$smarty.request.decade_id}" />
                 <input type="hidden" name="country_id" id="country_id" value="{$smarty.request.country_id}" />
                 <input type="hidden" name="shop_cat_id" id="shop_cat_id" value="{$smarty.request.shop_cat_id}" />
+                <input type="hidden" name="subcategory_id" id="subcategory_id" value="{$smarty.request.subcategory_id}" />
                 {if $smarty.request.mode!='refinesrcStills'}
                   <input type="hidden" name="list" id="list" value="{$smarty.request.list}" />
 				{else} 
@@ -367,7 +395,7 @@
                     <a href="#" style="float: left; ">Shop</a>
                     <div>
                         <ul style="z-index:100000;" id="selector_box">
-                        <li><a href="javascript:void(0);" onclick="$('#shop_cat_id').val('');$('#frm_refine').submit();">All Categories</a></li>
+                        <li><a href="javascript:void(0);" onclick="$('#shop_cat_id').val('');$('#subcategory_id').val('');$('#frm_refine').submit();">All Categories</a></li>
                         {section name=sc loop=$shopCatRows}
                         <li><a href="javascript:void(0);" onclick="refine_search('shop_cat',{$shopCatRows[sc].shop_cat_id})">{$shopCatRows[sc].shop_cat_name}</a>
                         {if $smarty.request.shop_cat_id == $shopCatRows[sc].shop_cat_id}
@@ -375,6 +403,19 @@
                         {/if}
                         </li>
                         {/section}
+                        </ul>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li id="subcat-nav-item" class="pr10 mr10 fll" style="display:none;">
+            <div class="features_menu_column mr10">
+                <div class="features_selector">
+                    <div class="trigger" id="trg">
+                    <a href="#" style="float: left; ">Subcategory</a>
+                    <div>
+                        <ul style="z-index:100000;" id="subcat-nav-list">
                         </ul>
                     </div>
                     </div>
