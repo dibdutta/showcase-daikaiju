@@ -525,7 +525,7 @@ function showTimer1(list,id){
                         {section name=sc loop=$shopCatRows}
                         <li><a href="javascript:void(0);" onclick="refine_search('shop_cat',{$shopCatRows[sc].shop_cat_id})">{$shopCatRows[sc].shop_cat_name}</a>
                         {if $smarty.request.shop_cat_id == $shopCatRows[sc].shop_cat_id}
-                        <img class="srch-cnclbtn" src="https://d2m46dmzqzklm5.cloudfront.net/images/checked.png" border="0" onclick="$('#shop_cat_id').val('');$('#frm_refine').submit();" />
+                        <span style="color:#cc0000;font-weight:bold;margin-left:4px;">&#10003;</span>
                         {/if}
                         </li>
                         {/section}
@@ -581,7 +581,7 @@ function showTimer1(list,id){
                         {section name=sc loop=$shopCatRows}
                         <li><a href="javascript:void(0);" onclick="refine_search('shop_cat',{$shopCatRows[sc].shop_cat_id})">{$shopCatRows[sc].shop_cat_name}</a>
                         {if $smarty.request.shop_cat_id == $shopCatRows[sc].shop_cat_id}
-                        <img class="srch-cnclbtn" src="https://d2m46dmzqzklm5.cloudfront.net/images/checked.png" border="0" onclick="$('#shop_cat_id').val('');$('#frm_refine').submit();" />
+                        <span style="color:#cc0000;font-weight:bold;margin-left:4px;">&#10003;</span>
                         {/if}
                         </li>
                         {/section}
