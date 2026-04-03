@@ -97,7 +97,7 @@ function save_subcategory() {
     $obj = new Subcategory();
     $chk = $obj->updateData(TBL_SUBCATEGORY, [
         'fk_shop_cat_id' => (int)$fk_shop_cat_id,
-        'subcat_value'   => trim($subcat_value),
+        'subcat_value'   => mysqli_real_escape_string($GLOBALS['db_connect'], trim($subcat_value)),
         'is_active'      => 1,
     ]);
     $_SESSION['adminErr'] = $chk ? "Subcategory created successfully." : "Failed to create subcategory.";
@@ -150,7 +150,7 @@ function update_subcategory() {
     $obj = new Subcategory();
     $chk = $obj->updateData(TBL_SUBCATEGORY, [
         'fk_shop_cat_id' => (int)$fk_shop_cat_id,
-        'subcat_value'   => trim($subcat_value),
+        'subcat_value'   => mysqli_real_escape_string($GLOBALS['db_connect'], trim($subcat_value)),
     ], ['subcat_id' => (int)$subcat_id], true);
     $_SESSION['adminErr'] = $chk ? "Subcategory updated successfully." : "Failed to update subcategory.";
     header("location: " . PHP_SELF);
