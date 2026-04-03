@@ -44,14 +44,21 @@ if(isset($_REQUEST['view_mode']) && $_REQUEST['view_mode'] =='listing') {
 }else if(isset($_REQUEST['mode']) && $_REQUEST['mode'] =='refinesrcStills'){
 	displayRefineSearchStills();
 }else if(isset($_REQUEST['mode']) && $_REQUEST['mode'] =='dorefinesrc'){
-    if($_REQUEST['keyword'] == '' && $_REQUEST['poster_size_id'] == '' && $_REQUEST['genre_id'] == '' && ($_REQUEST['shop_cat_id'] ?? '') == '' && ($_REQUEST['subcategory_id'] ?? '') == '' ){
-		$_SESSION['Err'] = "Please enter atleast one search criteria!!";
-		header("location: buy.php?mode=refinesrc");
-		exit;
-	}else{
-		displayDoRefineSearch();
-	}
- }else if(isset($_REQUEST['mode']) && $_REQUEST['mode'] =='dorefinesrcStills'){
+    $hasFilter = ($_REQUEST['keyword'] ?? '') != ''
+        || ($_REQUEST['poster_size_id'] ?? '') != ''
+        || ($_REQUEST['genre_id'] ?? '') != ''
+        || ($_REQUEST['shop_cat_id'] ?? '') != ''
+        || ($_REQUEST['subcategory_id'] ?? '') != ''
+        || ($_REQUEST['poster_type'] ?? '') != ''
+        || ($_REQUEST['list'] ?? '') != '';
+    if(!$hasFilter){
+        $_SESSION['Err'] = "Please enter atleast one search criteria!!";
+        header("location: buy.php?mode=refinesrc");
+        exit;
+    }else{
+        displayDoRefineSearch();
+    }
+}else if(isset($_REQUEST['mode']) && $_REQUEST['mode'] =='dorefinesrcStills'){
     if($_REQUEST['keyword'] == '' && $_REQUEST['poster_size_id'] == '' && $_REQUEST['genre_id'] == '' && $_REQUEST['decade_id'] == '' && $_REQUEST['country_id'] == '' ){
 		$_SESSION['Err'] = "Please enter atleast one search criteria!!";
 		header("location: buy.php?mode=refinesrcStills");
