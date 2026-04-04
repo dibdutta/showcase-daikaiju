@@ -1,32 +1,30 @@
 {include file="admin_header.tpl"}
 
 {literal}
-<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/4.25.1-lts/standard/ckeditor.js"></script>
 <script>
-function initBlogEditor() {
+window.addEventListener('load', function() {
     if (typeof CKEDITOR === 'undefined') return;
     CKEDITOR.replace('content', {
         height: 450,
-        filebrowserImageUploadUrl: '/admin/blog_image_upload.php',
-        uploadUrl: '/admin/blog_image_upload.php',
+        baseHref: window.location.protocol + '//' + window.location.host + '/',
+        filebrowserImageUploadUrl: '/admin/blog_image_upload.php?type=Image',
+        imageUploadUrl: '/admin/blog_image_upload.php?type=Image',
         extraPlugins: 'uploadimage',
-        imageUploadUrl: '/admin/blog_image_upload.php',
         toolbar: [
-            { name: 'document',   items: ['Source'] },
-            { name: 'clipboard',  items: ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'] },
-            { name: 'editing',    items: ['Find','Replace','-','SelectAll'] },
+            { name: 'document',    items: ['Source'] },
+            { name: 'clipboard',   items: ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'] },
             '/',
-            { name: 'basicstyles', items: ['Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat'] },
-            { name: 'paragraph',  items: ['NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
-            { name: 'links',      items: ['Link','Unlink','Anchor'] },
-            { name: 'insert',     items: ['Image','Table','HorizontalRule','SpecialChar'] },
+            { name: 'basicstyles', items: ['Bold','Italic','Underline','Strike','-','RemoveFormat'] },
+            { name: 'paragraph',   items: ['NumberedList','BulletedList','-','Blockquote','-','JustifyLeft','JustifyCenter','JustifyRight'] },
+            { name: 'links',       items: ['Link','Unlink'] },
+            { name: 'insert',      items: ['Image','Table','HorizontalRule','SpecialChar'] },
             '/',
-            { name: 'styles',     items: ['Styles','Format','Font','FontSize'] },
-            { name: 'colors',     items: ['TextColor','BGColor'] }
+            { name: 'styles',      items: ['Format','Font','FontSize'] },
+            { name: 'colors',      items: ['TextColor','BGColor'] }
         ]
     });
-}
-window.addEventListener('load', initBlogEditor);
+});
 </script>
 {/literal}
 
