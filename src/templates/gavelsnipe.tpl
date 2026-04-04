@@ -86,5 +86,13 @@
 			   {/literal} 
               <div class="bannersidebarbottombg"></div>
              
-             <div class=" pb12"><a href="http://www.learnaboutmovieposters.com/" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://d2m46dmzqzklm5.cloudfront.net/images/29150.jpg"  /></a></div>
+             <div style="padding:6px 0;" class="dashboard-main">
+             <div class="dashblock mr24" style="margin-left:-20px; width:230px;">
+                 <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                     <tr>
+                         <th width="80%" align="left" valign="top" class="tal" style="background-color:#bd1a21; color:#FFFFFF;">Featured Articles</th>
+                     </tr>
+                 </table>
+             </div>
+             </div>
 </div>
