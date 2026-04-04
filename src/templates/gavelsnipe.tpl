@@ -74,8 +74,6 @@
                                     </div>
 			 </div>
 			 <div class="clear"></div>
-             <div class=" pb12"><a href="http://www.gavelsnipe.com/" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/banner_gavel_s.png" width="218" height="64" /></a></div>
-             <div class="clear"></div>
              <div class="bannersidebartopbg"></div>
               {literal}
 			  <script type="text/javascript" data-pp-pubid="6767a20954" data-pp-placementtype="234x60"> (function (d, t) {
