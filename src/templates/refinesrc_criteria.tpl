@@ -92,18 +92,21 @@ $(document).ready(function() {
                                                 </div>
                                             </td>
                                             <td valign="top" style="padding-top:10px;">
-                                                <select name="shop_cat_id" id="refine_shop_cat_id" class="look">
-                                                    <option value="">All Categories</option>
-                                                    {section name=sc loop=$shopCatRows}
-                                                    <option value="{$shopCatRows[sc].shop_cat_id}">{$shopCatRows[sc].shop_cat_name}</option>
-                                                    {/section}
-                                                </select>
+                                                <div class="refine-srch-box" style="height:auto; width:190px;">
+                                                    <select name="shop_cat_id" id="refine_shop_cat_id" style="width:100%; border:none; font-size:11px; padding:3px 2px; background:#fff;">
+                                                        <option value="">All Categories</option>
+                                                        {section name=sc loop=$shopCatRows}
+                                                        <option value="{$shopCatRows[sc].shop_cat_id}">{$shopCatRows[sc].shop_cat_name}</option>
+                                                        {/section}
+                                                    </select>
+                                                </div>
                                             </td>
                                             <td valign="top" style="padding-top:10px;">
-                                                <select name="subcategory_id" id="refine_subcategory_id" class="look">
-                                                    <option value="">All Subcategories</option>
-                                                </select>
-                                                <div style="font-size:11px;color:#888;margin-top:4px;">Select a Category first</div>
+                                                <div class="refine-srch-box" style="height:auto; width:190px;">
+                                                    <select name="subcategory_id" id="refine_subcategory_id" style="width:100%; border:none; font-size:11px; padding:3px 2px; background:#fff;">
+                                                        <option value="">All Subcategories</option>
+                                                    </select>
+                                                </div>
                                             </td>
                                         </tr>
                                        
