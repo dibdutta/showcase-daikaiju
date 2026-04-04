@@ -7,6 +7,7 @@ define ("HOST_NAME", $_SERVER['HTTP_HOST']);
 //define ("LOCAL_HOST_NAME", "localhost:100");
 
 define ("MULTIUSER_ADMIN", false);
+define ("MULTILINGUAL", true);
 
 define ("FIXED_PAGE_CREATION", true);
 define ("CUSTOM_PAGE_CREATION", false);
