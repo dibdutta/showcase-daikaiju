@@ -3,11 +3,10 @@
     <tr>
         <td width="100%">
             <table width="100%" border="0" cellspacing="0" cellpadding="2">
-                {if $smarty.session.adminErr != ""}
+                {if $errorMessage != ""}
                     <tr>
-                        <td width="100%" align="center"><div class="messageBox">{$smarty.session.adminErr}</div></td>
+                        <td width="100%" align="center"><div class="messageBox">{$errorMessage}</div></td>
                     </tr>
-                    {php} unset($_SESSION['adminErr']); {/php}
                 {/if}
                 <tr>
                     <td align="center">

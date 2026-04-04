@@ -12,11 +12,10 @@
                         </a>
                     </td>
                 </tr>
-                {if $smarty.session.adminErr != ""}
+                {if $errorMessage != ""}
                     <tr>
-                        <td width="100%" align="center"><div class="messageBox">{$smarty.session.adminErr}</div></td>
+                        <td width="100%" align="center"><div class="messageBox">{$errorMessage}</div></td>
                     </tr>
-                    {php} unset($_SESSION['adminErr']); {/php}
                 {/if}
                 {if $total > 0}
                 <tr>

@@ -24,23 +24,22 @@ class Blog {
     function __construct() {
         $this->postIP    = $_SERVER['REMOTE_ADDR'];
         $this->status    = 1;
-        $this->offset    = $GLOBALS['offset']     ?? 0;
-        $this->toShow    = $GLOBALS['toshow']     ?? 20;
-        $this->orderBy   = $GLOBALS['order_by']   ?? 'b.post_date';
-        $this->orderType = $GLOBALS['order_type'] ?? 'DESC';
+        $this->offset    = (isset($GLOBALS['offset']) && $GLOBALS['offset'] !== '') ? (int)$GLOBALS['offset'] : 0;
+        $this->toShow    = (isset($GLOBALS['toshow']) && $GLOBALS['toshow'] !== '') ? (int)$GLOBALS['toshow'] : 20;
+        $this->orderBy   = (isset($GLOBALS['order_by']) && $GLOBALS['order_by'] !== '') ? $GLOBALS['order_by'] : 'b.post_date';
+        $this->orderType = (isset($GLOBALS['order_type']) && $GLOBALS['order_type'] !== '') ? $GLOBALS['order_type'] : 'DESC';
     }
 
-    // ── Helpers ─────────────────────────────────────────────────────────────
+    // ── Helpers ──────────────────────────────────────────────────────────────
 
-    private function db() {
+    function db() {
         return $GLOBALS['db_connect'];
     }
 
     function makeSlug($title) {
-        $slug = strtolower(trim($title));
-        $slug = preg_replace('/[^a-z0-9]+/', '-', $slug);
-        $slug = trim($slug, '-');
-        // ensure unique
+        $slug  = strtolower(trim($title));
+        $slug  = preg_replace('/[^a-z0-9]+/', '-', $slug);
+        $slug  = trim($slug, '-');
         $base  = $slug;
         $i     = 1;
         $check = $slug;
@@ -50,6 +49,7 @@ class Blog {
                 $sql .= " AND blog_id != '" . (int)$this->blogID . "'";
             }
             $res = mysqli_query($this->db(), $sql);
+            if (!$res) return $check;
             $row = mysqli_fetch_array($res);
             if ($row['cnt'] == 0) {
                 return $check;
@@ -58,7 +58,7 @@ class Blog {
         }
     }
 
-    // ── Blog CRUD ────────────────────────────────────────────────────────────
+    // ── Blog CRUD ─────────────────────────────────────────────────────────────
 
     function totalBlogs($status = null) {
         $sql = "SELECT COUNT(blog_id) AS cnt FROM tbl_blog WHERE 1";
@@ -66,18 +66,21 @@ class Blog {
             $sql .= " AND status = " . (int)$status;
         }
         $res = mysqli_query($this->db(), $sql);
+        if (!$res) return 0;
         $row = mysqli_fetch_array($res);
-        return (int)$row['cnt'];
+        return (int)($row['cnt'] ?? 0);
     }
 
     function fetchBlogs($status = null) {
+        $orderBy   = $this->orderBy   ?: 'post_date';
+        $orderType = $this->orderType ?: 'DESC';
         $sql = "SELECT * FROM tbl_blog WHERE 1";
         if ($status !== null) {
             $sql .= " AND status = " . (int)$status;
         }
-        $sql .= " ORDER BY {$this->orderBy} {$this->orderType}
-                  LIMIT {$this->offset}, {$this->toShow}";
+        $sql .= " ORDER BY {$orderBy} {$orderType} LIMIT {$this->offset}, {$this->toShow}";
         $res = mysqli_query($this->db(), $sql);
+        if (!$res) return [];
         $result = [];
         while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
             $result[] = $row;
@@ -88,14 +91,16 @@ class Blog {
     function fetchBlogByID() {
         $sql = "SELECT * FROM tbl_blog WHERE blog_id = " . (int)$this->blogID;
         $res = mysqli_query($this->db(), $sql);
-        return mysqli_fetch_array($res, MYSQLI_ASSOC);
+        if (!$res) return [];
+        return mysqli_fetch_array($res, MYSQLI_ASSOC) ?: [];
     }
 
     function fetchBlogBySlug($slug) {
         $slug = mysqli_real_escape_string($this->db(), $slug);
         $sql  = "SELECT * FROM tbl_blog WHERE slug = '{$slug}' AND status = 1";
         $res  = mysqli_query($this->db(), $sql);
-        return mysqli_fetch_array($res, MYSQLI_ASSOC);
+        if (!$res) return [];
+        return mysqli_fetch_array($res, MYSQLI_ASSOC) ?: [];
     }
 
     function createBlog() {
@@ -133,10 +138,10 @@ class Blog {
     function toggleStatus() {
         $sql = "SELECT status FROM tbl_blog WHERE blog_id = " . (int)$this->blogID;
         $res = mysqli_query($this->db(), $sql);
+        if (!$res) return 0;
         $row = mysqli_fetch_array($res);
         $new = ($row['status'] == 1) ? 0 : 1;
-        $upd = "UPDATE tbl_blog SET status = {$new}, update_date = NOW() WHERE blog_id = " . (int)$this->blogID;
-        mysqli_query($this->db(), $upd);
+        mysqli_query($this->db(), "UPDATE tbl_blog SET status = {$new}, update_date = NOW() WHERE blog_id = " . (int)$this->blogID);
         return $new;
     }
 
@@ -145,7 +150,7 @@ class Blog {
         return (bool)mysqli_query($this->db(), "DELETE FROM tbl_blog WHERE blog_id = " . (int)$this->blogID);
     }
 
-    // ── Comments ─────────────────────────────────────────────────────────────
+    // ── Comments ──────────────────────────────────────────────────────────────
 
     function totalComments($blogID = null, $status = null) {
         $sql = "SELECT COUNT(comment_id) AS cnt FROM tbl_blog_comments WHERE 1";
@@ -156,8 +161,9 @@ class Blog {
             $sql .= " AND status = " . (int)$status;
         }
         $res = mysqli_query($this->db(), $sql);
+        if (!$res) return 0;
         $row = mysqli_fetch_array($res);
-        return (int)$row['cnt'];
+        return (int)($row['cnt'] ?? 0);
     }
 
     function fetchComments($blogID, $status = null) {
@@ -167,6 +173,7 @@ class Blog {
         }
         $sql .= " ORDER BY post_date ASC";
         $res = mysqli_query($this->db(), $sql);
+        if (!$res) return [];
         $result = [];
         while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
             $result[] = $row;
@@ -175,12 +182,14 @@ class Blog {
     }
 
     function fetchAllComments() {
+        $orderType = $this->orderType ?: 'DESC';
         $sql = "SELECT c.*, b.title AS blog_title
                 FROM tbl_blog_comments c
                 LEFT JOIN tbl_blog b ON b.blog_id = c.blog_id
-                ORDER BY c.post_date DESC
+                ORDER BY c.post_date {$orderType}
                 LIMIT {$this->offset}, {$this->toShow}";
         $res = mysqli_query($this->db(), $sql);
+        if (!$res) return [];
         $result = [];
         while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
             $result[] = $row;
