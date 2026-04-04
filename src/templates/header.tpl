@@ -87,19 +87,9 @@ function check_session(){
 }
 var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
 function populateSubcatNav(shopCatId) {
-    var navItem = document.getElementById('subcat-nav-item');
-    var navItem2 = document.getElementById('subcat-nav-item2');
     var list = document.getElementById('subcat-nav-list');
     var list2 = document.getElementById('subcat-nav-list2');
     var subcats = subcatData[shopCatId] || [];
-    if (!navItem) return;
-    if (subcats.length === 0) {
-        navItem.style.display = 'none';
-        if (navItem2) navItem2.style.display = 'none';
-        return;
-    }
-    navItem.style.display = '';
-    if (navItem2) navItem2.style.display = '';
     [list, list2].forEach(function(ul) {
         if (!ul) return;
         ul.innerHTML = '<li><a href="javascript:void(0);" onclick="$(\'#subcategory_id\').val(\'\');$(\'#frm_refine\').submit();">All Subcategories</a></li>';
@@ -495,7 +485,7 @@ function showTimer1(list,id){
             <div class="features_menu_column mr10">
                 <div class="features_selector">
                     <div class="trigger" id="trg">
-                    <a href="#" style="float: left; ">Shop</a>
+                    <a href="#" style="float: left; ">Category</a>
                     <div>
                         <ul style="z-index:100000;" id="selector_box">
                         <li><a href="javascript:void(0);" onclick="$('#shop_cat_id').val('');$('#frm_refine').submit();">All Categories</a>
@@ -513,7 +503,7 @@ function showTimer1(list,id){
                 </div>
             </div>
         </li>
-        <li id="subcat-nav-item" class="pr10 mr10 fll" style="display:none;">
+        <li id="subcat-nav-item" class="pr10 mr10 fll">
             <div class="features_menu_column mr10">
                 <div class="features_selector">
                     <div class="trigger" id="trg">
@@ -531,7 +521,7 @@ function showTimer1(list,id){
             <div class="features_menu_column mr10">
                 <div class="features_selector">
                     <div class="trigger" id="trg">
-                    <a href="#" style="float: left; ">Shop</a>
+                    <a href="#" style="float: left; ">Category</a>
                     <div>
                         <ul style="z-index:100000;" id="selector_box">
                         <li><a href="javascript:void(0);" onclick="$('#shop_cat_id').val('');$('#frm_refine').submit();">All Categories</a>
@@ -549,7 +539,7 @@ function showTimer1(list,id){
                 </div>
             </div>
         </li>
-        <li id="subcat-nav-item2" class="pr10 mr10 fll" style="display:none;">
+        <li id="subcat-nav-item2" class="pr10 mr10 fll">
             <div class="features_menu_column mr10">
                 <div class="features_selector">
                     <div class="trigger" id="trg">

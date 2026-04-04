@@ -102,12 +102,9 @@
 	}
 	var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
 	function populateSubcatNav(shopCatId) {
-		var navItem = document.getElementById('subcat-nav-item');
 		var list = document.getElementById('subcat-nav-list');
+		if (!list) return;
 		var subcats = subcatData[shopCatId] || [];
-		if (!navItem) return;
-		if (subcats.length === 0) { navItem.style.display = 'none'; return; }
-		navItem.style.display = '';
 		list.innerHTML = '<li><a href="javascript:void(0);" onclick="$(\"#subcategory_id\").val(\"\");$(\"#frm_refine\").submit();">All Subcategories</a></li>';
 		subcats.forEach(function(sc) {
 			var li = document.createElement('li');
@@ -367,7 +364,7 @@
             <div class="features_menu_column mr10">
                 <div class="features_selector">
                     <div class="trigger" id="trg">
-                    <a href="#" style="float: left; ">Shop</a>
+                    <a href="#" style="float: left; ">Category</a>
                     <div>
                         <ul style="z-index:100000;" id="selector_box">
                         <li><a href="javascript:void(0);" onclick="$('#shop_cat_id').val('');$('#subcategory_id').val('');$('#frm_refine').submit();">All Categories</a></li>
@@ -384,7 +381,7 @@
                 </div>
             </div>
         </li>
-        <li id="subcat-nav-item" class="pr10 mr10 fll" style="display:none;">
+        <li id="subcat-nav-item" class="pr10 mr10 fll">
             <div class="features_menu_column mr10">
                 <div class="features_selector">
                     <div class="trigger" id="trg">
