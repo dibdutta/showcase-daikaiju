@@ -83,7 +83,7 @@ document.getElementById("frm1").submit();
 				<!--<input type="submit" name="go" value="Go" class="submit" style="font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; font-size:10pt;">-->
 			</form>
              </div>
-            <!-- <div class="clear"></div>
+             <div class="clear"></div>
              <div class="bannersidebar pb12"><table width="315" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td class="bannersidebartopbg"></td>
@@ -98,7 +98,7 @@ document.getElementById("frm1").submit();
     <td class="bannersidebarbottombg"></td>
   </tr>
              </table>
-</div>-->
+</div>
 <div class="clear"></div>
 			 <div style="padding:6px 0;" class="dashboard-main">
 			 <div class="dashblock mr24" style="margin-left:-15px; width:300px;">
