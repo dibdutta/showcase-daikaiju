@@ -314,7 +314,7 @@ function showTimer1(list,id){
           <ul class="menu">
                 <li {if $smarty.const.PHP_SELF == '' || $smarty.const.PHP_SELF == '/index.php'}class="active homeover"{/if}><a href="{$actualPath}/index" title="HOME"><span>HOME</span></a></li>
                 <li {if $smarty.request.list == 'weekly' || $smarty.request.list == 'extended'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly" title="BUY"><span>AUCTIONS</span></a></li>
-                <li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy?list=fixed" title="POSTER SHOP"><span>POSTER SHOP</span></a></li>
+                <li {if $smarty.request.list == 'fixed'}class="active"{/if}><a href="{$actualPath}/buy?list=fixed" title="SHOP NOW"><span>SHOP NOW</span></a></li>
                 <li {if $smarty.const.PHP_SELF == '/sell.php'}class="active"{/if}><a href="{$actualPath}/sell" title="SELL"><span>SELL</span></a></li>
                 <li {if $smarty.const.PHP_SELF == '/faq.php'}class="active"{/if}><a href="{$actualPath}/faq" title="FAQ"><span>FAQ</a></span></li>
                 <li {if $smarty.const.PHP_SELF == '/contactus.php'}class="active"{/if}><a href="{$actualPath}/contactus" title="CONTACT"><span>CONTACT</span></a></li>
