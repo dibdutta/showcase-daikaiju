@@ -4,6 +4,7 @@ ob_start();
 
 define('INCLUDE_PATH', '../');
 require_once INCLUDE_PATH . 'lib/inc.php';
+require_once INCLUDE_PATH . 'FCKeditor/fckeditor.php';
 require_once INCLUDE_PATH . 'classes/Blog.php';
 
 if (!isset($_SESSION['adminLoginID'])) {
@@ -79,7 +80,16 @@ function show_form($blogID = null) {
         $data['status'] = 1;
     }
 
-    $smarty->assign('editor_content', $data['content'] ?? '');
+    ob_start();
+    $oFCK = new FCKeditor('content');
+    $oFCK->BasePath = '../FCKeditor/';
+    $oFCK->Value    = $data['content'] ?? '';
+    $oFCK->Width    = '100%';
+    $oFCK->Height   = '500';
+    $oFCK->Create();
+    $editorHTML = ob_get_clean();
+
+    $smarty->assign('editor', $editorHTML);
     $smarty->assign('blog', $data);
     $smarty->assign('blog_id', $blogID);
     $smarty->assign('mode', $blogID ? 'save_edit' : 'save_create');

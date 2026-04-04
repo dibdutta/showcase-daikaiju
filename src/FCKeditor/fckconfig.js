@@ -32,7 +32,7 @@ FCKConfig.ToolbarComboPreviewCSS = '' ;
 
 FCKConfig.DocType = '' ;
 
-FCKConfig.BaseHref = '' ;
+FCKConfig.BaseHref = window.location.protocol + '//' + window.location.host + '/' ;
 
 FCKConfig.FullPage = false ;
 
