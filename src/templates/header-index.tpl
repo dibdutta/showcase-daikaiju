@@ -367,31 +367,6 @@
             <div class="features_menu_column mr10">
                 <div class="features_selector">
                     <div class="trigger" id="trg">
-                    <a href="#" style="float: left; ">CATEGORY / GENRE</a>
-                    <div>
-                    
-                        <ul style="z-index:100000;" id="selector_box">
-						{section name=counter loop=$rightPanelCatRows}
-						{if $rightPanelCatRows[counter].fk_cat_type_id==2 && $rightPanelCatRows[counter].is_stills==0}
-						<li><a href="javascript:void(0);" onclick="refine_search('genre',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value}</a>
-						{if $smarty.request.genre_id == $rightPanelCatRows[counter].cat_id}
-						<img class="srch-cnclbtn" src="https://d2m46dmzqzklm5.cloudfront.net/images/checked.png"  border="0" onclick="$('#genre_id').val('');$('#frm_refine').submit();" />
-						{/if}
-						</li>
-						{/if}
-            			{/section} 
-                        
-                       
-                        </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="pr10 mr10 fll">
-            <div class="features_menu_column mr10">
-                <div class="features_selector">
-                    <div class="trigger" id="trg">
                     <a href="#" style="float: left; ">Shop</a>
                     <div>
                         <ul style="z-index:100000;" id="selector_box">
@@ -418,28 +393,6 @@
                         <ul style="z-index:100000;" id="subcat-nav-list">
                         </ul>
                     </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="pr10 mr10 fll">
-            <div class="features_menu_column mr10">
-                <div class="features_selector">
-                    <div class="trigger" id="trg">
-                    <a href="#" style="float: left; ">Search All Sizes</a>
-                    <div>
-                        <ul style="z-index:100000;" id="selector_box">
-                       {section name=counter loop=$rightPanelCatRows}
-						{if $rightPanelCatRows[counter].fk_cat_type_id==1 && $rightPanelCatRows[counter].cat_id !='34'}
-						<li><a href="javascript:void(0);" onclick="refine_search('poster_size',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value|escape:'html'}</a>
-						{if $smarty.request.poster_size_id == $rightPanelCatRows[counter].cat_id}
-						<img class="srch-cnclbtn" src="https://d2m46dmzqzklm5.cloudfront.net/images/checked.png"  border="0" onclick="$('#poster_size_id').val('');$('#frm_refine').submit();" />
-						{/if}
-						</li>
-						{/if} 
-						{/section} 
-                        </ul>
-                     </div>
                     </div>
                 </div>
             </div>

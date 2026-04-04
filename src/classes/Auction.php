@@ -829,14 +829,19 @@ class Auction extends DBCommon{
             }
         }
 
-        // Subcategory filter
-        if(isset($_REQUEST['subcategory_id']) && $_REQUEST['subcategory_id'] != '' && $_REQUEST['keyword'] == ''){
+        // Subcategory filter (supports single value or array from multi-select checkboxes)
+        $raw_subcat = $_REQUEST['subcategory_id'] ?? '';
+        $subcat_ids = is_array($raw_subcat)
+            ? array_values(array_filter(array_map('intval', $raw_subcat)))
+            : (($raw_subcat !== '') ? [(int)$raw_subcat] : []);
+        if(count($subcat_ids) > 0 && $_REQUEST['keyword'] == ''){
+            $subcat_in = implode(',', $subcat_ids);
             if($list=='weekly'){
                 $sql = "SELECT DISTINCT ptsc.fk_poster_id FROM tbl_poster_to_subcategory_live ptsc, tbl_poster_images_live pi, tbl_auction_live a
                         WHERE ptsc.fk_poster_id = a.fk_poster_id
                         AND pi.fk_poster_id = a.fk_poster_id
                         AND pi.is_default='1'
-                        AND ptsc.fk_subcat_id = '".(int)$_REQUEST['subcategory_id']."'";
+                        AND ptsc.fk_subcat_id IN (".$subcat_in.")";
                 $sql .= $qry;
                 if($poster_ids != "") $sql .= " AND ptsc.fk_poster_id IN (".$poster_ids.")";
                 $rs = mysqli_query($GLOBALS['db_connect'],$sql);
@@ -849,7 +854,7 @@ class Auction extends DBCommon{
                         WHERE ptsc.fk_poster_id = a.fk_poster_id
                         AND pi.fk_poster_id = a.fk_poster_id
                         AND pi.is_default='1'
-                        AND ptsc.fk_subcat_id = '".(int)$_REQUEST['subcategory_id']."'";
+                        AND ptsc.fk_subcat_id IN (".$subcat_in.")";
                 $sql .= $qry;
                 if($poster_ids != "") $sql .= " AND ptsc.fk_poster_id IN (".$poster_ids.")";
                 $rs = mysqli_query($GLOBALS['db_connect'],$sql);
@@ -1071,7 +1076,9 @@ class Auction extends DBCommon{
 				}
 			}
 		}
-		if($_REQUEST['poster_size_id'] == '' && $_REQUEST['genre_id'] == '' && ($_REQUEST['shop_cat_id'] ?? '') == '' && ($_REQUEST['subcategory_id'] ?? '') == '' && $_REQUEST['decade_id'] == '' && $_REQUEST['country_id'] == '' ){
+		$_subcat_check = $_REQUEST['subcategory_id'] ?? '';
+		$_subcat_empty = is_array($_subcat_check) ? count(array_filter($_subcat_check)) === 0 : $_subcat_check === '';
+		if($_REQUEST['poster_size_id'] == '' && $_REQUEST['genre_id'] == '' && ($_REQUEST['shop_cat_id'] ?? '') == '' && $_subcat_empty && $_REQUEST['decade_id'] == '' && $_REQUEST['country_id'] == '' ){
 			$split_stemmed = explode(" ",$keyword);
 				$qry .= " AND ( ";
 				

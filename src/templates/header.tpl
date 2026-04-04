@@ -491,28 +491,6 @@ function showTimer1(list,id){
             <div id="mainnav" style="z-index:100000; width:995px;" >
         <ul style="margin-left:8px; width:972px;">
 		{if $smarty.request.list!='stills' && $smarty.request.mode!='refinesrcStills'}
-        	<li class="pr10 mr10 fll">
-            <div class="features_menu_column mr10">
-                <div class="features_selector">
-                    <div class="trigger" id="trg">
-                    <a href="#" style="float: left;" >CATEGORY / GENRE</a>
-                    <div>
-                    
-                        <ul style="z-index:100000;" id="selector_box">
-						{section name=counter loop=$rightPanelCatRows}
-						{if $rightPanelCatRows[counter].fk_cat_type_id==2 && $rightPanelCatRows[counter].is_stills==0}
-						<li ><a href="javascript:void(0);" onclick="refine_search('genre',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value}</a>
-						</li>
-						{/if}
-            			{/section} 
-                        
-                       
-                        </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
         <li class="pr10 mr10 fll">
             <div class="features_menu_column mr10">
                 <div class="features_selector">
@@ -544,26 +522,6 @@ function showTimer1(list,id){
                         <ul style="z-index:100000;" id="subcat-nav-list">
                         </ul>
                     </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        	<li class="pr10 mr10 fll">
-            <div class="features_menu_column mr10">
-                <div class="features_selector">
-                    <div class="trigger" id="trg">
-                    <a href="#" style="float: left; ">Search All Sizes</a>
-                    <div>
-                        <ul style="z-index:100000;" id="selector_box">
-                       {section name=counter loop=$rightPanelCatRows}
-						{if $rightPanelCatRows[counter].fk_cat_type_id==1 && $rightPanelCatRows[counter].cat_id !='34'}
-						<li ><a href="javascript:void(0);" onclick="refine_search('poster_size',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value|escape:'html'}</a>
-						
-						</li>
-						{/if} 
-						{/section} 
-                        </ul>
-                     </div>
                     </div>
                 </div>
             </div>
@@ -604,25 +562,6 @@ function showTimer1(list,id){
                 </div>
             </div>
         </li>
-		<li class="pr10 mr10 fll">
-            <div class="features_menu_column mr10">
-                <div class="features_selector">
-                    <div class="trigger" id="trg">
-                    <a href="#" style="float: left; ">Search Genre/Category</a>
-                    <div>
-                        <ul style="z-index:100000;" id="selector_box">
-						{section name=counter loop=$rightPanelCatRows}
-						{if $rightPanelCatRows[counter].fk_cat_type_id==2}
-						<li ><a href="javascript:void(0);" onclick="refine_search('genre',{$rightPanelCatRows[counter].cat_id})">{$rightPanelCatRows[counter].cat_value}</a>
-						</li>
-						{/if}
-            			{/section} 
-                        </ul>
-                        </div>    
-                    </div>
-                </div>
-            </div>
-          </li>
 		{/if}
         <li class="pr10 mr10 flr">
             <div class="features_menu_column2">
