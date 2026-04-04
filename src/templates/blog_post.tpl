@@ -65,7 +65,7 @@
                                     {* ── Comment form ───────────────────────────── *}
                                     <div style="margin-top:20px; background:#f9f9f9; border:1px solid #e8e8e8; padding:16px;">
                                         <h4 style="color:#444; margin:0 0 12px 0; font-size:13px; text-transform:uppercase; letter-spacing:1px;">Leave a Comment</h4>
-                                        <form method="post" action="{$smarty.const.DOMAIN_PATH}/blog.php">
+                                        <form method="post" action="/blog.php">
                                             <input type="hidden" name="mode" value="post_comment" />
                                             <input type="hidden" name="blog_id" value="{$post.blog_id}" />
                                             <input type="hidden" name="slug" value="{$post.slug}" />

@@ -26,7 +26,7 @@ function dispmiddle() {
         // Single post view
         $post = $blog->fetchBlogBySlug($slug);
         if (!$post) {
-            header('Location: ' . DOMAIN_PATH . '/blog.php');
+            header('Location: ' . 'https://' . $_SERVER['HTTP_HOST'] . '/blog.php');
             exit;
         }
         $comments = $blog->fetchComments($post['blog_id'], 1); // approved only
@@ -81,7 +81,7 @@ function post_comment() {
         $_SESSION['comment_ok'] = 'Thank you! Your comment has been submitted and is awaiting approval.';
     }
 
-    header('Location: ' . DOMAIN_PATH . '/blog.php?slug=' . urlencode($slug));
+    header('Location: ' . 'https://' . $_SERVER['HTTP_HOST'] . '/blog.php?slug=' . urlencode($slug));
     exit;
 }
 ?>
