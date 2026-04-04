@@ -106,25 +106,14 @@ function show_form($blogID = null) {
 
 function save_blog($isEdit) {
     $title   = trim($_POST['title'] ?? '');
-    $content = $_POST['content'] ?? '';
+    $content = trim($_POST['content'] ?? '');
     $status  = (int)($_POST['status'] ?? 1);
     $blogID  = (int)($_POST['blog_id'] ?? 0);
 
-    $errCount = 0;
     if ($title === '') {
-        $GLOBALS['title_err'] = 'Please enter a title.';
-        $errCount++;
-    }
-    if (strip_tags($content) === '') {
-        $GLOBALS['content_err'] = 'Please enter content.';
-        $errCount++;
-    }
-
-    if ($errCount > 0) {
-        $GLOBALS['title_val']   = $title;
-        $GLOBALS['content_val'] = $content;
-        $GLOBALS['status_val']  = $status;
-        show_form($isEdit ? $blogID : null);
+        $_SESSION['adminErr'] = 'Please enter a title.';
+        $qs = $isEdit ? '?mode=edit&blog_id=' . $blogID : '?mode=create';
+        redirect_admin('admin_blog_manager.php' . $qs);
         return;
     }
 
