@@ -1,4 +1,35 @@
 {include file="admin_header.tpl"}
+
+{literal}
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+<script>
+function initBlogEditor() {
+    if (typeof CKEDITOR === 'undefined') return;
+    CKEDITOR.replace('content', {
+        height: 450,
+        filebrowserImageUploadUrl: '/admin/blog_image_upload.php',
+        uploadUrl: '/admin/blog_image_upload.php',
+        extraPlugins: 'uploadimage',
+        imageUploadUrl: '/admin/blog_image_upload.php',
+        toolbar: [
+            { name: 'document',   items: ['Source'] },
+            { name: 'clipboard',  items: ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'] },
+            { name: 'editing',    items: ['Find','Replace','-','SelectAll'] },
+            '/',
+            { name: 'basicstyles', items: ['Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat'] },
+            { name: 'paragraph',  items: ['NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
+            { name: 'links',      items: ['Link','Unlink','Anchor'] },
+            { name: 'insert',     items: ['Image','Table','HorizontalRule','SpecialChar'] },
+            '/',
+            { name: 'styles',     items: ['Styles','Format','Font','FontSize'] },
+            { name: 'colors',     items: ['TextColor','BGColor'] }
+        ]
+    });
+}
+window.addEventListener('load', initBlogEditor);
+</script>
+{/literal}
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
         <td width="100%">
@@ -18,7 +49,7 @@
                             </tr>
                             <tr>
                                 <td align="center">
-                                    <form method="post" action="" enctype="multipart/form-data">
+                                    <form method="post" action="" enctype="multipart/form-data" id="blogForm">
                                         <input type="hidden" name="mode" value="{$mode}">
                                         <input type="hidden" name="blog_id" value="{$blog_id}">
                                         <input type="hidden" name="encoded_string" value="{$encoded_string}">
@@ -31,7 +62,7 @@
                                             <tr class="tr_bgcolor">
                                                 <td width="18%" class="bold_text" valign="top"><span class="err">*</span> Title :</td>
                                                 <td>
-                                                    <input type="text" name="title" value="{$blog.title}" class="look" style="width:98%;" />
+                                                    <input type="text" name="title" value="{$blog.title|escape}" class="look" style="width:98%;" />
                                                     {if $title_err != ""}<br /><span class="err">{$title_err}</span>{/if}
                                                 </td>
                                             </tr>
@@ -50,18 +81,17 @@
                                                 <td class="bold_text" valign="top">Featured Image :</td>
                                                 <td>
                                                     {if $blog.featured_image != ""}
-                                                        <img src="{$smarty.const.DOMAIN_PATH}blog_images/{$blog.featured_image}" style="max-height:80px; display:block; margin-bottom:6px;" /><br />
+                                                        <img src="http://{$smarty.server.HTTP_HOST}/blog_images/{$blog.featured_image}" style="max-height:80px; display:block; margin-bottom:6px; border:1px solid #ddd;" /><br />
                                                     {/if}
                                                     <input type="file" name="featured_image" class="look" accept="image/*" />
-                                                    <br /><small>JPG, PNG, GIF or WebP. Leave blank to keep existing image.</small>
+                                                    <br /><small>JPG, PNG, GIF or WebP. Leave blank to keep existing.</small>
                                                 </td>
                                             </tr>
 
                                             <tr class="tr_bgcolor">
                                                 <td class="bold_text" valign="top"><span class="err">*</span> Content :</td>
                                                 <td>
-                                                    {$editor}
-                                                    {if $content_err != ""}<br /><span class="err">{$content_err}</span>{/if}
+                                                    <textarea name="content" id="content" style="width:100%; height:450px;">{$editor_content|escape}</textarea>
                                                 </td>
                                             </tr>
 
