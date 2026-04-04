@@ -225,8 +225,18 @@
 	}
 	
 	$sqlTemp = "Select * from  tbl_auction_calender WHERE id=1 ";
-	$ressql= mysqli_query($GLOBALS['db_connect'], $sqlTemp); 
+	$ressql= mysqli_query($GLOBALS['db_connect'], $sqlTemp);
 	$rowtemp= mysqli_fetch_assoc($ressql);
-	//echo "<pre>".print_r($rowtemp)."</pre>";	
+	//echo "<pre>".print_r($rowtemp)."</pre>";
 	$smarty->assign('calenderArray', $rowtemp);
+
+	$blogSql = "SELECT blog_id, title, slug, post_date FROM tbl_blog WHERE status = 1 ORDER BY post_date DESC LIMIT 5";
+	$blogRes = mysqli_query($GLOBALS['db_connect'], $blogSql);
+	$featuredArticles = [];
+	if ($blogRes) {
+		while ($blogRow = mysqli_fetch_assoc($blogRes)) {
+			$featuredArticles[] = $blogRow;
+		}
+	}
+	$smarty->assign('featuredArticles', $featuredArticles);
 ?>

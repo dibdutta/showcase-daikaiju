@@ -93,6 +93,19 @@
                          <th width="80%" align="left" valign="top" class="tal" style="background-color:#bd1a21; color:#FFFFFF;">Featured Articles</th>
                      </tr>
                  </table>
+                 <div class="scrollable" style="width:230px;">
+                 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px; color:blue;">
+                     {if $featuredArticles}
+                         {foreach from=$featuredArticles item=article}
+                         <tr>
+                             <td width="100%"><b><i><u><a href="{$smarty.const.DOMAIN_PATH}/blog.php?slug={$article.slug}" style="color:blue; font-size:13px;">{$article.title}</a></u></i></b></td>
+                         </tr>
+                         {/foreach}
+                     {else}
+                         <tr><td style="font-size:11px; color:#888; padding:4px 0;">No articles yet.</td></tr>
+                     {/if}
+                 </table>
+                 </div>
              </div>
              </div>
 </div>
