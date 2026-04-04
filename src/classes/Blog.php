@@ -26,7 +26,7 @@ class Blog {
         $this->status    = 1;
         $this->offset    = (isset($GLOBALS['offset']) && $GLOBALS['offset'] !== '') ? (int)$GLOBALS['offset'] : 0;
         $this->toShow    = (isset($GLOBALS['toshow']) && $GLOBALS['toshow'] !== '') ? (int)$GLOBALS['toshow'] : 20;
-        $this->orderBy   = (isset($GLOBALS['order_by']) && $GLOBALS['order_by'] !== '') ? $GLOBALS['order_by'] : 'b.post_date';
+        $this->orderBy   = (isset($GLOBALS['order_by']) && $GLOBALS['order_by'] !== '') ? $GLOBALS['order_by'] : 'post_date';
         $this->orderType = (isset($GLOBALS['order_type']) && $GLOBALS['order_type'] !== '') ? $GLOBALS['order_type'] : 'DESC';
     }
 

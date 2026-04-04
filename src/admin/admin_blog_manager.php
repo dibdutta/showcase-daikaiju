@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 define('PAGE_HEADER_TEXT', 'Blog / Articles Manager');
 ob_start();
 
