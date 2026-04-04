@@ -136,7 +136,31 @@ document.getElementById("frm1").submit();
              <div class="clear"></div>
              <div class=" pb05"><a href="http://www.gavelsnipe.com/" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/banner_gavel.png" width="315" height="42" /></a></div>
              <div class="clear"></div>
-             <div>            
+             <div style="padding:6px 0;" class="dashboard-main">
+             <div class="dashblock mr24" style="margin-left:-15px; width:300px;">
+                 <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                     <tr>
+                         <th width="80%" align="left" valign="top" class="tal" style="background-color:#bd1a21; color:#FFFFFF;">Featured Articles</th>
+                     </tr>
+                 </table>
+                 <div class="scrollable" style="width:300px;">
+                 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px; color:blue;">
+                     {if $featuredArticles}
+                         {foreach from=$featuredArticles item=article}
+                         <tr>
+                             <td width="100%"><b><i><u><a href="{$smarty.const.DOMAIN_PATH}/blog.php?slug={$article.slug}" style="color:blue; font-size:14px;">{$article.title}</a></u></i></b></td>
+                         </tr>
+                         {/foreach}
+                     {else}
+                         <tr><td style="font-size:11px; color:#888; padding:4px 0;">No articles yet.</td></tr>
+                     {/if}
+                 </table>
+                 </div>
+                 <div class="dashboard-main_shadow" style="width:300px;"></div>
+             </div>
+             </div>
+             <div class="clear"></div>
+             <div>
 			<table cellspacing="0" cellpadding="0" border="0" width="310" height="280">
 				<tbody>
 					<tr>

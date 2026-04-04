@@ -80,8 +80,7 @@ function tipsy(id){
     <!--Header themepanel Starts-->
       {include file="search-login.tpl"}
     <!--Header themepanel Ends-->
-    {include file="gavelsnipe.tpl"}
-    <div id="auctionboxes" style="width:970px; clear:none;">
+    <div id="auctionboxes">
     <form name="listFrom" id="listFrom">
            <input type="hidden" name="mode" value="select_watchlist" /> 
            <input type="hidden" name="is_track" id="is_track" value="" />
@@ -221,6 +220,6 @@ function tipsy(id){
 
     </form>
     </div>
-    <div style="clear:both;"></div>
+    <div class="clear"></div>
 </div>
 {include file="foot.tpl"}
