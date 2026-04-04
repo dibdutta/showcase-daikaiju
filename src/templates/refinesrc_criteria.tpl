@@ -92,7 +92,7 @@ $(document).ready(function() {
                                                 </div>
                                             </td>
                                             <td valign="top" style="padding-top:10px;">
-                                                <select name="shop_cat_id" id="shop_cat_id" class="look">
+                                                <select name="shop_cat_id" id="refine_shop_cat_id" class="look">
                                                     <option value="">All Categories</option>
                                                     {section name=sc loop=$shopCatRows}
                                                     <option value="{$shopCatRows[sc].shop_cat_id}">{$shopCatRows[sc].shop_cat_name}</option>
@@ -100,7 +100,7 @@ $(document).ready(function() {
                                                 </select>
                                             </td>
                                             <td valign="top" style="padding-top:10px;">
-                                                <select name="subcategory_id" id="subcategory_id" class="look">
+                                                <select name="subcategory_id" id="refine_subcategory_id" class="look">
                                                     <option value="">All Subcategories</option>
                                                 </select>
                                                 <div style="font-size:11px;color:#888;margin-top:4px;">Select a Category first</div>
@@ -138,7 +138,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
 (function() {
-    var subcatSelect = document.getElementById('subcategory_id');
+    var subcatSelect = document.getElementById('refine_subcategory_id');
     if (!subcatSelect) return;
 
     function populateSubcats(shopCatId) {
@@ -152,7 +152,7 @@ var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
         }
     }
 
-    var shopCatSelect = document.getElementById('shop_cat_id');
+    var shopCatSelect = document.getElementById('refine_shop_cat_id');
     if (shopCatSelect) {
         shopCatSelect.addEventListener('change', function() {
             populateSubcats(this.value);
