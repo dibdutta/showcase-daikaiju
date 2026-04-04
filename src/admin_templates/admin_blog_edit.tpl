@@ -1,33 +1,4 @@
 {include file="admin_header.tpl"}
-
-{literal}
-<script src="https://cdn.ckeditor.com/4.25.1-lts/standard/ckeditor.js"></script>
-<script>
-window.addEventListener('load', function() {
-    if (typeof CKEDITOR === 'undefined') return;
-    CKEDITOR.replace('content', {
-        height: 450,
-        baseHref: window.location.protocol + '//' + window.location.host + '/',
-        filebrowserImageUploadUrl: '/admin/blog_image_upload.php?type=Image',
-        imageUploadUrl: '/admin/blog_image_upload.php?type=Image',
-        extraPlugins: 'uploadimage',
-        toolbar: [
-            { name: 'document',    items: ['Source'] },
-            { name: 'clipboard',   items: ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'] },
-            '/',
-            { name: 'basicstyles', items: ['Bold','Italic','Underline','Strike','-','RemoveFormat'] },
-            { name: 'paragraph',   items: ['NumberedList','BulletedList','-','Blockquote','-','JustifyLeft','JustifyCenter','JustifyRight'] },
-            { name: 'links',       items: ['Link','Unlink'] },
-            { name: 'insert',      items: ['Image','Table','HorizontalRule','SpecialChar'] },
-            '/',
-            { name: 'styles',      items: ['Format','Font','FontSize'] },
-            { name: 'colors',      items: ['TextColor','BGColor'] }
-        ]
-    });
-});
-</script>
-{/literal}
-
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
         <td width="100%">
@@ -89,6 +60,7 @@ window.addEventListener('load', function() {
                                             <tr class="tr_bgcolor">
                                                 <td class="bold_text" valign="top"><span class="err">*</span> Content :</td>
                                                 <td>
+                                                    <div id="ckeditor-status" style="font-size:11px; color:#888; margin-bottom:4px;">Loading editor...</div>
                                                     <textarea name="content" id="content" style="width:100%; height:450px;">{$editor_content|escape}</textarea>
                                                 </td>
                                             </tr>
@@ -111,4 +83,44 @@ window.addEventListener('load', function() {
         </td>
     </tr>
 </table>
+
+{literal}
+<script>
+(function() {
+    var status = document.getElementById('ckeditor-status');
+    var script = document.createElement('script');
+    script.src = 'https://cdn.ckeditor.com/4.25.1-lts/full/ckeditor.js';
+
+    script.onload = function() {
+        status.style.display = 'none';
+        CKEDITOR.replace('content', {
+            height: 450,
+            baseHref: window.location.protocol + '//' + window.location.host + '/',
+            filebrowserImageUploadUrl: '/admin/blog_image_upload.php?type=Image',
+            imageUploadUrl: '/admin/blog_image_upload.php?type=Image',
+            extraPlugins: 'uploadimage',
+            toolbar: [
+                { name: 'document',    items: ['Source'] },
+                { name: 'clipboard',   items: ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'] },
+                '/',
+                { name: 'basicstyles', items: ['Bold','Italic','Underline','Strike','-','RemoveFormat'] },
+                { name: 'paragraph',   items: ['NumberedList','BulletedList','-','Blockquote','-','JustifyLeft','JustifyCenter','JustifyRight'] },
+                { name: 'links',       items: ['Link','Unlink'] },
+                { name: 'insert',      items: ['Image','Table','HorizontalRule','SpecialChar'] },
+                '/',
+                { name: 'styles',      items: ['Format','Font','FontSize'] },
+                { name: 'colors',      items: ['TextColor','BGColor'] }
+            ]
+        });
+    };
+
+    script.onerror = function() {
+        status.innerHTML = '<span style="color:red;">CKEditor CDN blocked. Using plain text editor.</span>';
+    };
+
+    document.body.appendChild(script);
+})();
+</script>
+{/literal}
+
 {include file="admin_footer.tpl"}
