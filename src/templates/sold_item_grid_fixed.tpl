@@ -145,7 +145,7 @@ function show_text(){
                                     </div>
                                     </div>
                                     {if ($smarty.section.counter.index) != 0}
-                                        {if (($smarty.section.counter.index +1) % 3) == 0} 
+                                        {if (($smarty.section.counter.index +1) % 4) == 0}
                                          <!--<img class="grid-divider" src="images/grid-divider.png" width="756" height="4" border="0" />-->
                                          <div class="btomgrey-bg"></div> {/if}
                                     {/if} 
