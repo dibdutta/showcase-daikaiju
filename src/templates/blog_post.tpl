@@ -86,8 +86,8 @@
                                                     <td><textarea name="comment_text" class="look" rows="5" style="width:98%;"></textarea></td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2" style="padding-top:6px;">
-                                                        <input type="submit" value="Submit Comment" class="button" />
+                                                    <td colspan="2" style="padding-top:10px;">
+                                                        <input type="submit" value="Submit Comment" style="background-color:#bd1a21; color:#fff; border:none; padding:10px 28px; font-size:13px; font-weight:bold; cursor:pointer; letter-spacing:0.5px; text-transform:uppercase;" onmouseover="this.style.backgroundColor='#9e1519';" onmouseout="this.style.backgroundColor='#bd1a21';" />
                                                     </td>
                                                 </tr>
                                             </table>
