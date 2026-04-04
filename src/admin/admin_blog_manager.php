@@ -130,7 +130,7 @@ function save_blog($isEdit) {
         $ext     = strtolower(pathinfo($_FILES['featured_image']['name'], PATHINFO_EXTENSION));
         $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         if (in_array($ext, $allowed)) {
-            $uploadDir = INCLUDE_PATH . 'blog_images/';
+            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/blog_images/';
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0755, true);
             }

@@ -1,0 +1,15 @@
+*
+!.gitignore
+!.gitkeep
+!image/
+!file/
+!flash/
+!media/
+image/*
+!image/.gitkeep
+file/*
+!file/.gitkeep
+flash/*
+!flash/.gitkeep
+media/*
+!media/.gitkeep
