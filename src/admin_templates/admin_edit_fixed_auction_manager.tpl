@@ -130,46 +130,6 @@ document.getElementById("cnt").value=countImage();
 												<td class="smalltext"><input type="text" name="poster_title" value="{$auctionRow[0].poster_title}"  style="background-color:#CCCCCC;" size="40" class="look"  style="background-color:#CCCCCC;" /><br /><span class="err">{$poster_title_err}</span></td>
 											</tr>
                                             <tr class="tr_bgcolor">
-												<td class="bold_text" valign="top"><span class="err">*</span>Size :</td>
-												<td class="smalltext">
-                                                <select name="poster_size" class="look" onchange="chkPosterSize(this.value)">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 1}
-                                                    	{section name=posterCatCounter loop=$posterCategoryRows}
-                                                        	{if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                            	{assign var="selected" value="selected"}
-                                                            {/if}
-                                                        {/section}
-                                                        <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            	</select>
-												
-												<br /><span class="err">{$poster_size_err}</span>
-                                                </td>
-											</tr>
-											<tr class="tr_bgcolor">
-												<td class="bold_text" valign="top"><span class="err">*</span>Genre :</td>
-												<td class="smalltext">
-                                                <select name="genre" class="look">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 2}
-                                                    	{section name=posterCatCounter loop=$posterCategoryRows}
-                                                        	{if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                            	{assign var="selected" value="selected"}
-                                                            {/if}
-                                                        {/section}
-                                                        <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            	</select><br /><span class="err">{$genre_err}</span>
-                                                </td>
-											</tr>
-                                            <tr class="tr_bgcolor">
 												<td class="bold_text" valign="top">Category :</td>
 												<td class="smalltext">
 													<select name="shop_category" id="shop_category" class="look">

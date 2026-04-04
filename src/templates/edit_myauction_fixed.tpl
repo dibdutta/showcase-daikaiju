@@ -201,50 +201,9 @@ textarea
                                      <table cellpadding="0" cellspacing="0" border="0" class="listbox">
                                      	<tr>
                                             <td><label>Poster Title<span class="red-star">*</span></label></td>
-                                            <td><label>Size<span class="red-star">*</span></label></td>
-                                            <td><label>Genre<span class="red-star">*</span></label></td>
                                         </tr>
                                         <tr>
                                             <td><input type="text" name="poster_title" value="{$posterRow[0].poster_title}" class="formlisting-txtfield required"  /><div class="disp-err">{$poster_title_err}</div></td>
-                                            <td>
-                                            	<select name="poster_size" class="formlisting-txtfield required"  onchange="chkPosterSize(this.value)">
-                                                   <option value="" selected="selected">Select</option>
-                                                        {section name=counter loop=$catRows}
-                                                        {if $catRows[counter].fk_cat_type_id == 1}
-                                                            {section name=posterCatCounter loop=$posterCategoryRows}
-                                                                {if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                                    {assign var="selected" value="selected"}
-                                                                {/if}
-                                                            {/section}
-															{if $catRows[counter].cat_value !='Stills/Photos'}
-                                                            <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-															{/if}
-                                                            {assign var="selected" value=""}
-                                                        {/if}
-                                                        {/section}
-                                                </select>
-                                               
-                                                <div class="disp-err">{$poster_size_err}</div>
-											</td>
-                                            <td>
-                                             <select name="genre" class="formlisting-txtfield required">
-                                               <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 2}
-                                                        {section name=posterCatCounter loop=$posterCategoryRows}
-                                                            {if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                                {assign var="selected" value="selected"}
-                                                            {/if}
-                                                        {/section}
-														{if $catRows[counter].cat_value !='Stills/Photos'}
-                                                        <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-														{/if}
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            </select>
-                                            <div class="disp-err">{$genre_err}</div>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td><label>Condition<span class="red-star">*</span></label></td>

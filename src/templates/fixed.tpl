@@ -202,44 +202,13 @@ textarea
                                 <input type="hidden" name="cnt" id="cnt" value="{$cnt}" />
 								<input type="hidden" name="random" id="folder" value="{$random}" />
 								<!--<input type="hidden" name="random" id="folder" value="{$random}" />-->
-                                <div class="formarea-listing"> 
-								<input type="hidden" id="no_sizes" name="no_sizes" value="{$no_sizes}" />
-                                                   
+                                <div class="formarea-listing">
                                      <table cellpadding="0" cellspacing="0" border="0" class="listbox">
                                         <tr>
                                             <td><label>Poster Title<span class="red-star">*</span></label></td>
-                                            <td><label>Size<span class="red-star">*</span></label></td>
-											<td><label>Genre<span class="red-star">*</span></label></td>
                                         </tr>
                                         <tr>
                                             <td valign="top"><input type="text" name="poster_title" id="poster_title" value="{$poster_title}" class="formlisting-txtfield required" /><div class="disp-err">{$poster_title_err}</div></td>
-                                            <td valign="top">
-                                            	<select name="poster_size" class="formlisting-txtfield required" onchange="chkPosterSize(this.value)">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                        {if $catRows[counter].fk_cat_type_id == 1}
-														 {if $catRows[counter].cat_value !='Stills/Photos'}
-                                                        <option value="{$catRows[counter].cat_id}" {if $poster_size == $catRows[counter].cat_id} selected {/if}>{$catRows[counter].cat_value}</option>
-														 {/if}
-                                                        {/if}
-                                                    {/section}
-                                                </select>                                            	
-                                            	<div class="disp-err">{$poster_size_err}</div>
-											</td>
-                                            <td valign="top">
-                                                <select name="genre" class="formlisting-txtfield required">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 2}
-														{if $catRows[counter].cat_value !='Stills/Photos'}
-                                                        <option value="{$catRows[counter].cat_id}" {if $genre == $catRows[counter].cat_id} selected {/if}>{$catRows[counter].cat_value}</option>
-														{/if}
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                                </select>
-                                                <div class="list-err">{$genre_err}</div>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td valign="top">

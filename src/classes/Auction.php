@@ -586,218 +586,6 @@ class Auction extends DBCommon{
 		if($auction_week_id!=''){
 				$qry .= " AND a.fk_auction_week_id ='".$auction_week_id."' ";
 			}
-		if(isset($_REQUEST['poster_size_id']) && $_REQUEST['poster_size_id'] != '' && $_REQUEST['keyword'] == ''){
-		    if($list=='weekly'){			
-			
-					$sql = "SELECT distinct(ptc.fk_poster_id) FROM tbl_poster_to_category_live ptc,tbl_poster_images_live pi, tbl_auction_live a
-							WHERE ptc.fk_poster_id = a.fk_poster_id
-							AND pi.fk_poster_id = a.fk_poster_id
-							AND pi.is_default='1'
-							AND ptc.fk_cat_id = '".$_REQUEST['poster_size_id']."'";
-					$sql .= $qry;
-					$rs = mysqli_query($GLOBALS['db_connect'],$sql);
-					while($row = mysqli_fetch_assoc($rs)){
-						$size_poster_ids[] = $row['fk_poster_id'];
-					}
-		
-					if(is_array($size_poster_ids)){
-						$poster_ids = implode(',', $size_poster_ids);
-						$srcFlag = '1';
-					}else{
-						return;
-					}
-				
-			}else{
-			
-					$sql = "SELECT distinct(ptc.fk_poster_id) FROM ".TBL_POSTER_TO_CATEGORY." ptc,".TBL_POSTER_IMAGES." pi, ".TBL_AUCTION." a
-							WHERE ptc.fk_poster_id = a.fk_poster_id
-							AND pi.fk_poster_id = a.fk_poster_id
-							AND pi.is_default='1'
-							AND ptc.fk_cat_id = '".$_REQUEST['poster_size_id']."'";
-					$sql .= $qry;
-					$rs = mysqli_query($GLOBALS['db_connect'],$sql);
-					while($row = mysqli_fetch_assoc($rs)){
-						$size_poster_ids[] = $row['fk_poster_id'];
-					}
-		
-					if(is_array($size_poster_ids)){
-						$poster_ids = implode(',', $size_poster_ids);
-						$srcFlag = '1';
-					}else{
-						return;
-					}
-				}
-        }elseif(isset($_REQUEST['poster_size_id']) && $_REQUEST['poster_size_id'] != '' && $_REQUEST['keyword'] != ''){
-		 	if($list=='weekly'){
-				
-				$sql = "SELECT distinct(ptc.fk_poster_id) FROM tbl_poster_to_category_live ptc,tbl_poster_live p,tbl_poster_images_live pi, tbl_auction_live a
-					WHERE ptc.fk_poster_id = a.fk_poster_id
-					AND  p.poster_id = a.fk_poster_id
-					AND  pi.fk_poster_id = a.fk_poster_id					
-					AND pi.is_default='1'  ";
-				$sql .= $qry;
-				$split_stemmed = explode(" ",$keyword);
-				$sql .= " AND ( ";
-				
-					
-				$sql .= " ( ptc.fk_cat_id = '".$_REQUEST['poster_size_id']."' OR p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$keyword)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$keyword)."%' ) OR";
-					
-				
-				$sql=substr($sql,0,(strLen($sql)-3));//this will eat the last OR
-				$sql.= " ) ";
-				$rs = mysqli_query($GLOBALS['db_connect'],$sql);
-				while($row = mysqli_fetch_assoc($rs)){
-					$size_poster_ids[] = $row['fk_poster_id'];
-				}
-	
-				if(is_array($size_poster_ids)){
-					$poster_ids = implode(',', $size_poster_ids);
-					$srcFlag = '1';
-				}else{
-					return;
-				}
-
-			
-			}else{
-				$sql = "SELECT distinct(ptc.fk_poster_id) FROM ".TBL_POSTER_TO_CATEGORY." ptc,".TBL_POSTER." p,".TBL_POSTER_IMAGES." pi, ".TBL_AUCTION." a
-					WHERE ptc.fk_poster_id = a.fk_poster_id
-					AND  p.poster_id = a.fk_poster_id
-					AND  pi.fk_poster_id = a.fk_poster_id	
-					AND pi.is_default='1'  ";
-				$sql .= $qry;
-				$split_stemmed = explode(" ",$keyword);
-				$sql .= " AND ( ";
-				
-				$sql .= " ( ptc.fk_cat_id = '".$_REQUEST['poster_size_id']."' OR p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$keyword)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$keyword)."%' ) OR";
-				
-				$sql=substr($sql,0,(strLen($sql)-3));//this will eat the last OR
-				$sql.= " ) ";
-				$rs = mysqli_query($GLOBALS['db_connect'],$sql);
-				while($row = mysqli_fetch_assoc($rs)){
-					$size_poster_ids[] = $row['fk_poster_id'];
-				}
-	
-				if(is_array($size_poster_ids)){
-					$poster_ids = implode(',', $size_poster_ids);
-					$srcFlag = '1';
-				}else{
-					return;
-				}
-
-			}
-        }
-
-        if(isset($_REQUEST['genre_id']) && $_REQUEST['genre_id'] != '' && $_REQUEST['keyword'] == ''){
-			if($list=='weekly'){
-				$sql = "SELECT distinct(ptc.fk_poster_id) FROM tbl_poster_to_category_live ptc,tbl_poster_images_live pi, tbl_auction_live a
-						WHERE ptc.fk_poster_id = a.fk_poster_id
-						AND pi.fk_poster_id = a.fk_poster_id
-						AND pi.is_default='1'
-						AND ptc.fk_cat_id = '".$_REQUEST['genre_id']."'";
-				$sql .= $qry;
-				if($poster_ids != ""){
-					$sql .= " AND ptc.fk_poster_id IN (".$poster_ids.")";
-				}
-				$rs = mysqli_query($GLOBALS['db_connect'],$sql);
-				while($row = mysqli_fetch_assoc($rs)){
-					$genre_poster_ids[] = $row['fk_poster_id'];
-				}
-	
-				if(is_array($genre_poster_ids)){
-					$poster_ids = implode(',', $genre_poster_ids);
-					$srcFlag = '1';
-				}else{
-					return;
-				}
-
-			}else{
-				$sql = "SELECT distinct(ptc.fk_poster_id) FROM ".TBL_POSTER_TO_CATEGORY." ptc,".TBL_POSTER_IMAGES." pi, ".TBL_AUCTION." a
-						WHERE ptc.fk_poster_id = a.fk_poster_id
-						AND pi.fk_poster_id = a.fk_poster_id
-						AND pi.is_default='1'
-						AND ptc.fk_cat_id = '".$_REQUEST['genre_id']."'";
-				$sql .= $qry;
-				if($poster_ids != ""){
-					$sql .= " AND ptc.fk_poster_id IN (".$poster_ids.")";
-				}
-				
-				$rs = mysqli_query($GLOBALS['db_connect'],$sql);
-				while($row = mysqli_fetch_assoc($rs)){
-					$genre_poster_ids[] = $row['fk_poster_id'];
-				}
-	
-				if(is_array($genre_poster_ids)){
-					$poster_ids = implode(',', $genre_poster_ids);
-					$srcFlag = '1';
-				}else{
-					return;
-				}
-			}
-        }elseif(isset($_REQUEST['genre_id']) && $_REQUEST['genre_id'] != '' && $_REQUEST['keyword'] != ''){
-		  if($list=='weekly'){
-		  		$sql = "SELECT distinct(ptc.fk_poster_id) FROM tbl_poster_to_category_live ptc,tbl_poster_live p,tbl_poster_images_live pi, tbl_auction_live a
-					WHERE ptc.fk_poster_id = a.fk_poster_id
-					AND  p.poster_id = a.fk_poster_id
-					AND  pi.fk_poster_id = a.fk_poster_id
-					AND pi.is_default='1' ";
-				$sql .= $qry;
-				if($poster_ids != ""){
-					$sql .= " AND ptc.fk_poster_id IN (".$poster_ids.")";
-				}
-				$split_stemmed = explode(" ",$keyword);
-				$sql .= " AND ( ";
-				
-				$sql .= " ( ptc.fk_cat_id = '".$_REQUEST['genre_id']."' OR p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$keyword)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$keyword)."%' ) OR";
-					
-				
-				$sql=substr($sql,0,(strLen($sql)-3));//this will eat the last OR
-				$sql.= " ) ";
-				$rs = mysqli_query($GLOBALS['db_connect'],$sql);
-				while($row = mysqli_fetch_assoc($rs)){
-					$genre_poster_ids[] = $row['fk_poster_id'];
-				}
-	
-				if(is_array($genre_poster_ids)){
-					$poster_ids = implode(',', $genre_poster_ids);
-					$srcFlag = '1';
-				}else{
-					return;
-				}
-
-		  }else{
-		  		$sql = "SELECT distinct(ptc.fk_poster_id) FROM ".TBL_POSTER_TO_CATEGORY." ptc,".TBL_POSTER." p,".TBL_POSTER_IMAGES." pi, ".TBL_AUCTION." a
-					WHERE ptc.fk_poster_id = a.fk_poster_id
-					AND  p.poster_id = a.fk_poster_id
-					AND  pi.fk_poster_id = a.fk_poster_id
-					AND pi.is_default='1' ";
-				$sql .= $qry;
-				if($poster_ids != ""){
-					$sql .= " AND ptc.fk_poster_id IN (".$poster_ids.")";
-				}
-				$split_stemmed = explode(" ",$keyword);
-				$sql .= " AND ( ";
-				
-				$sql .= " ( ptc.fk_cat_id = '".$_REQUEST['genre_id']."' OR p.poster_title LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$keyword)."%' OR  p.poster_desc LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],$keyword)."%' ) OR";
-					
-				
-				$sql=substr($sql,0,(strLen($sql)-3));//this will eat the last OR
-				$sql.= " ) ";
-				
-				$rs = mysqli_query($GLOBALS['db_connect'],$sql);
-				while($row = mysqli_fetch_assoc($rs)){
-					$genre_poster_ids[] = $row['fk_poster_id'];
-				}
-	
-				if(is_array($genre_poster_ids)){
-					$poster_ids = implode(',', $genre_poster_ids);
-					$srcFlag = '1';
-				}else{
-					return;
-				}
-
-           }
-        }
-
         // Shop Category filter
         if(isset($_REQUEST['shop_cat_id']) && $_REQUEST['shop_cat_id'] != '' && $_REQUEST['keyword'] == ''){
             if($list=='weekly'){
@@ -2948,9 +2736,7 @@ class Auction extends DBCommon{
 			$count=$this->isLiveAuctionItem($auction_id);
 		}
 		if($count<1){
-			$sql = "SELECT 
-				c.cat_value AS poster_size,
-  				c1.cat_value AS genre,
+			$sql = "SELECT
   				poster_size(p.poster_id) AS country,
   				cond(p.poster_id) AS cond,
 				count(tw.watching_id) AS watch_indicator,
@@ -2969,23 +2755,10 @@ class Auction extends DBCommon{
 				LEFT JOIN ".TBL_POSTER_IMAGES." pim ON a.fk_poster_id = pim.fk_poster_id
 				LEFT JOIN ".TBL_AUCTION_WEEK." w ON a.fk_auction_week_id = w.auction_week_id
 				LEFT JOIN ".TBL_WATCHING." tw ON a.auction_id = tw.auction_id AND tw.user_id = '".$user_id."'
-				LEFT JOIN (tbl_poster_to_category ptc 
-		             RIGHT JOIN tbl_category c ON ptc.fk_cat_id = c.cat_id 
-					  AND c.fk_cat_type_id = 1 ) 
-		  		ON a.fk_poster_id = ptc.fk_poster_id
-		  		
-					   
-				  LEFT JOIN (tbl_poster_to_category ptc1 
-				  		RIGHT JOIN tbl_category c1 ON ptc1.fk_cat_id = c1.cat_id 
-							  AND c1.fk_cat_type_id = 2)
-				  ON a.fk_poster_id = ptc1.fk_poster_id			  
-							  
 				WHERE pi.is_default = '1' and a.auction_id IN (".$auction_id.") and u.user_id=p.fk_user_id ";
 		
 		}else{
-			$sql = "SELECT 
-				c.cat_value AS poster_size,
-  				c1.cat_value AS genre,
+			$sql = "SELECT
   				poster_size_auction(p.poster_id) AS country,
   				cond_auction(p.poster_id) AS cond,
 				count(tw.watching_id) AS watch_indicator,
@@ -3003,17 +2776,6 @@ class Auction extends DBCommon{
 				LEFT JOIN tbl_poster_images_live pim ON a.fk_poster_id = pim.fk_poster_id
 				LEFT JOIN ".TBL_AUCTION_WEEK." w ON a.fk_auction_week_id = w.auction_week_id
 				LEFT JOIN ".TBL_WATCHING." tw ON a.auction_id = tw.auction_id AND tw.user_id = '".$user_id."'
-				LEFT JOIN (tbl_poster_to_category_live ptc 
-		             RIGHT JOIN tbl_category c ON ptc.fk_cat_id = c.cat_id 
-					  AND c.fk_cat_type_id = 1 ) 
-		  		ON a.fk_poster_id = ptc.fk_poster_id
-		  		
-					   
-				  LEFT JOIN (tbl_poster_to_category_live ptc1 
-				  		RIGHT JOIN tbl_category c1 ON ptc1.fk_cat_id = c1.cat_id 
-							  AND c1.fk_cat_type_id = 2)
-				  ON a.fk_poster_id = ptc1.fk_poster_id			  
-							  
 				WHERE pi.is_default = '1' and a.auction_id IN (".$auction_id.") and u.user_id=p.fk_user_id";
 
 			

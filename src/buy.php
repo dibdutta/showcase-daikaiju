@@ -45,8 +45,6 @@ if(isset($_REQUEST['view_mode']) && $_REQUEST['view_mode'] =='listing') {
 	displayRefineSearchStills();
 }else if(isset($_REQUEST['mode']) && $_REQUEST['mode'] =='dorefinesrc'){
     $hasFilter = ($_REQUEST['keyword'] ?? '') != ''
-        || ($_REQUEST['poster_size_id'] ?? '') != ''
-        || ($_REQUEST['genre_id'] ?? '') != ''
         || ($_REQUEST['shop_cat_id'] ?? '') != ''
         || ($_REQUEST['subcategory_id'] ?? '') != ''
         || ($_REQUEST['poster_type'] ?? '') != ''
@@ -327,16 +325,7 @@ function displaySearch()
 	    $aucetionWeeks = $auctionWeekObj->fetchUpcomingWeeksWithItem();
         $smarty->assign('UpcomingAuctionWeeks', $aucetionWeeks);
     }
-	if($_REQUEST['genre_id']!=''){
-			$objCategory = new Category();
-			$cat_value = $objCategory->selectCategoryName($_REQUEST['genre_id']);
-			$smarty->assign('cat_value', $cat_value);
-	  }elseif($_REQUEST['poster_size_id']!=''){
-			$objCategory = new Category();
-			$cat_value = $objCategory->selectCategoryName($_REQUEST['poster_size_id']);
-			$smarty->assign('cat_value', $cat_value);
-
-	  }elseif($_REQUEST['country_id']!=''){
+	if($_REQUEST['country_id']!=''){
 			$objCategory = new Category();
 			$cat_value = $objCategory->selectCategoryName($_REQUEST['country_id']);
 			$smarty->assign('cat_value', $cat_value);

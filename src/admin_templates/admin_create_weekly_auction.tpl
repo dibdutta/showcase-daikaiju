@@ -205,40 +205,6 @@ $(document).ready(function() {
 												<td class="smalltext"><input type="text" name="poster_title" value="{$poster_title}" size="40" class="look" /><br /><span class="err">{$poster_title_err}</span></td>
 											</tr>
                                             <tr class="tr_bgcolor">
-												<td class="bold_text" valign="top"><span class="err">*</span>Size :</td>
-												<td class="smalltext">
-                                                <select name="poster_size" class="look" onchange="chkPosterSize(this.value)">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 1}
-                                                        {if $catRows[counter].cat_id == $poster_size}
-                                                            {assign var="selected" value="selected"}
-                                                        {/if}
-                                                        <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            	</select><br /><span class="err">{$poster_size_err}</span>
-                                                </td>
-											</tr>
-											<tr class="tr_bgcolor">
-												<td class="bold_text" valign="top"><span class="err">*</span>Genre :</td>
-												<td class="smalltext">
-                                                <select name="genre" class="look">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 2}
-                                                        {if $catRows[counter].cat_id == $genre}
-                                                            {assign var="selected" value="selected"}
-                                                        {/if}
-                                                        <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            	</select><br /><span class="err">{$genre_err}</span>
-                                                </td>
-											</tr>
-                                            <tr class="tr_bgcolor">
 												<td class="bold_text" valign="top">Category :</td>
 												<td class="smalltext">
 													<select name="shop_category" id="shop_category" class="look">

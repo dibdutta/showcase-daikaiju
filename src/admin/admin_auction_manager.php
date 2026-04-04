@@ -603,25 +603,17 @@ function validateFixedForm(){
 		$GLOBALS['poster_title_err'] = "Please enter Poster Title.";
 		$errCounter++;	
 	}
-	if(($_POST['poster_size'] ?? '') == ""){
-		$GLOBALS['poster_size_err'] = "Please select a Size.";
-		$errCounter++;
-	}
-	if(($_POST['genre'] ?? '') == ""){
-		$GLOBALS['genre_err'] = "Please select Genre.";
-		$errCounter++;	
-	}
 	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select a Condition.";
-		$errCounter++;	
+		$errCounter++;
 	}
 	if(($_POST['poster_desc'] ?? '') == ""){
 		$GLOBALS['poster_desc_err'] = "Please enter Description.";
-		$errCounter++;	
+		$errCounter++;
 	}
 	if(($_POST['is_default'] ?? '') == ""){
 		$GLOBALS['is_default_err'] = "Please select atleast one image as default.";
-		$errCounter++;	
+		$errCounter++;
 	}
 	if(($_POST['asked_price'] ?? '') == ""){
 		$GLOBALS['asked_price_err'] = "Please enter Asked Price.";
@@ -744,8 +736,6 @@ function update_fixed()
 	$obj->updateData(TBL_POSTER, $posterData, $posterWhere, true);
 	
 	$obj->deleteData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id));
-	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
-	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
 	$shopCatObj_save = new ShopCategory();
 	$shopCatObj_save->savePosterShopCat($poster_id, (int)($_POST['shop_category'] ?? 0), false);
@@ -754,8 +744,8 @@ function update_fixed()
 
 	//////////////Added By Sourav banerjee////////////////////
 
-		
-	
+
+
 	if(isset($poster_images) || isset($_SESSION['img'])){
 	
 	    if(isset($_SESSION['img']))
@@ -1098,26 +1088,18 @@ function validateWeeklyForm(){
 		$GLOBALS['poster_title_err'] = "Please enter Poster Title.";
 		$errCounter++;	
 	}
-	if(($_POST['poster_size'] ?? '') == ""){
-		$GLOBALS['poster_size_err'] = "Please select a Size.";
-		$errCounter++;
-	}
-	if(($_POST['genre'] ?? '') == ""){
-		$GLOBALS['genre_err'] = "Please select Genre.";
-		$errCounter++;	
-	}
 	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select Condition.";
-		$errCounter++;	
+		$errCounter++;
 	}
 	if(($_POST['poster_desc'] ?? '') == ""){
 		$GLOBALS['poster_desc_err'] = "Please enter Poster Description.";
-		$errCounter++;	
+		$errCounter++;
 	}
-	
+
 	if(($_POST['is_default'] ?? '') == ""){
 		$GLOBALS['is_default_err'] = "Please select atleast one image as default.";
-		$errCounter++;	
+		$errCounter++;
 	}
 
 	/*if($_POST['start_date'] == ""){
@@ -1224,8 +1206,6 @@ function update_weekly(){
 	$obj->updateData('tbl_poster_live', $posterData, $posterWhere, true);
 	
 	$obj->deleteData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id));
-	$obj->updateData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
-	$obj->updateData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
 	$obj->updateData('tbl_poster_to_category_live', array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
 	$shopCatObj_save = new ShopCategory();
 	$shopCatObj_save->savePosterShopCat($poster_id, (int)($_POST['shop_category'] ?? 0), true);
@@ -1500,25 +1480,17 @@ function validateMonthlyForm(){
 		$GLOBALS['event_month_err'] = "Please enter Event Month.";
 		$errCounter++;	
 	}
-	if(($_POST['poster_size'] ?? '') == ""){
-		$GLOBALS['poster_size_err'] = "Please select a Size.";
-		$errCounter++;
-	}
-	if(($_POST['genre'] ?? '') == ""){
-		$GLOBALS['genre_err'] = "Please select Genre.";
-		$errCounter++;	
-	}
 	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select Condition.";
-		$errCounter++;	
+		$errCounter++;
 	}
 	if(($_POST['poster_desc'] ?? '') == ""){
 		$GLOBALS['poster_desc_err'] = "Please enter Poster Description.";
-		$errCounter++;	
+		$errCounter++;
 	}
 	if(($_POST['is_default'] ?? '') == ""){
 		$GLOBALS['is_default_err'] = "Please select atleast one image as default.";
-		$errCounter++;	
+		$errCounter++;
 	}
 
 	if(($_POST['asked_price'] ?? '') == ""){
@@ -1616,8 +1588,6 @@ function update_monthly(){
 	$obj->updateData(TBL_POSTER, $posterData, $posterWhere, true);
 	
 	$obj->deleteData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id));
-	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
-	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
 	$shopCatObj_save = new ShopCategory();
 	$shopCatObj_save->savePosterShopCat($poster_id, (int)($_POST['shop_category'] ?? 0), false);
@@ -2393,9 +2363,7 @@ function delete_invoice_charge(){
                      "auction_start_date" => $start_date, "auction_end_date" => $end_date,
                      "auction_actual_start_datetime" => $start_date, "auction_actual_end_datetime" => $end_date);
 					 
-				 $obj->deleteData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id));	
-					$obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $new_poster_id, "fk_cat_id" => $poster_size));
-					$obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $new_poster_id, "fk_cat_id" => $genre));
+				 $obj->deleteData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id));
 					$obj->updateData("tbl_poster_to_category_live", array("fk_poster_id" => $new_poster_id, "fk_cat_id" => $condition));
 
                  $obj->updateData("tbl_auction_live", $auctionData);
@@ -2741,25 +2709,17 @@ if(!$_POST)
 		$errCounter++;	
 	}
 
-	if(($_POST['poster_size'] ?? '') == ""){
-		$GLOBALS['poster_size_err'] = "Please select a Size.";
-		$errCounter++;
-	}
-	if(($_POST['genre'] ?? '') == ""){
-		$GLOBALS['genre_err'] = "Please select Genre.";
-		$errCounter++;	
-	}
 	if(($_POST['condition'] ?? '') == ""){
 		$GLOBALS['condition_err'] = "Please select Condition.";
-		$errCounter++;	
+		$errCounter++;
 	}
 	if(($_POST['poster_desc'] ?? '') == ""){
 		$GLOBALS['poster_desc_err'] = "Please enter Poster Description.";
-		$errCounter++;	
+		$errCounter++;
 	}
 	if(($_POST['is_default'] ?? '') == ""){
 		$GLOBALS['is_default_err'] = "Please select one image as default.";
-		$errCounter++;	
+		$errCounter++;
 	}
 
 	if(($_POST['asked_price'] ?? '') == ""){
@@ -2907,16 +2867,6 @@ if(!$_POST)
 		}
 	##### NEW FUNCTION FOR POSTER UPLOAD ends #####
     }
-    if($poster_size != ""){
-        $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
-    }
-	
-    if($genre != ""){
-        $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
-    }
-	
-
-
     if($condition != ""){
         $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
     }
@@ -3978,16 +3928,6 @@ function save_new_stills(){
 		}
 	##### NEW FUNCTION FOR POSTER UPLOAD ends #####
     }
-    if($poster_size != ""){
-        $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
-    }
-	
-    if($genre != ""){
-        $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
-    }
-	
-
-
     if($condition != ""){
         $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
     }
@@ -4475,16 +4415,6 @@ if(!$_POST)
 		}
 	##### NEW FUNCTION FOR POSTER UPLOAD ends #####
     }
-    if($poster_size != ""){
-        $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
-    }
-	
-    if($genre != ""){
-        $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
-    }
-	
-
-
     if($condition != ""){
         $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
     }

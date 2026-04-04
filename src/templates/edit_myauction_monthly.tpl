@@ -165,82 +165,9 @@ textarea
                                      <table width="100%" cellpadding="0" cellspacing="0" border="0" class="listbox" >
                                         <tr>
                                             <td valign="top"><label>Poster Title<span class="red-star">*</span></label></td>
-                                            <td valign="top"><label>Size<span class="red-star">*</span></label></td>
-                                            <td valign="top"><label>Genre<span class="red-star">*</span></label></td>
                                         </tr>
                                         <tr>
                                             <td valign="top"><input type="text" name="poster_title" id="poster_title" value="{$posterRow[0].poster_title}" class="formlisting-txtfield required" {if $auctionRow[0].auction_is_approved!='0'} readonly="readonly" {/if}/><div class="list-err">{$poster_title_err}</div></td>
-                                            <td valign="top">
-											{if $auctionRow[0].auction_is_approved=='1'}
-                                                {section name=counter loop=$catRows}                                                  {if $catRows[counter].fk_cat_type_id == 1} 
-												  {section name=posterCatCounter loop=$posterCategoryRows}
-												  {if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}     
-                                                    <input type="hidden" name="poster_size" value="{$posterCategoryRows[posterCatCounter].fk_cat_id}" />
-                                                    <input type="text" name="poster_size_val" value="{$catRows[counter].cat_value}" class="formlisting-txtfield required" readonly="readonly" />
-													{/if}
-													{/section}
-													{/if}
-                                                {/section}
-												{else}
-                                             <select name="poster_size" class="formlisting-txtfield required" {if $auctionRow[0].auction_is_sold != '0' } disabled="disabled" {/if} onchange="chkPosterSize(this.value)">
-                                               <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 1}
-                                                        {section name=posterCatCounter loop=$posterCategoryRows}
-                                                            {if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                                {assign var="selected" value="selected"}
-                                                            {/if}
-                                                        {/section}
-                                                        <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            </select>
-                                            	{section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 1}
-                                                        {section name=posterCatCounter loop=$posterCategoryRows}
-                                                            {if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                                {assign var="selected" value="selected"}
-                                                                {if $auctionRow[0].auction_is_sold != '0' } 
-                                                					<input type="hidden" name="poster_size" value="{$catRows[counter].cat_id}">
-																{/if}
-                                                            {/if}
-                                                        {/section}
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-												{/if}	
-                                            <div class="disp-err">{$poster_size_err}</div>
-                                            </td>
-                                            <td valign="top">
-											{if $auctionRow[0].auction_is_approved=='1'}
-                                                {section name=counter loop=$catRows}                                                  {if $catRows[counter].fk_cat_type_id == 2} 
-												  {section name=posterCatCounter loop=$posterCategoryRows}
-												  {if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}     
-                                                    <input type="hidden" name="genre" value="{$posterCategoryRows[posterCatCounter].fk_cat_id}" />
-                                                    <input type="text" name="genre_val" value="{$catRows[counter].cat_value}" class="formlisting-txtfield required" readonly="readonly" />
-													{/if}
-													{/section}
-													{/if}
-                                                {/section}
-												{else}
-                                             <select name="genre" class="formlisting-txtfield required">
-                                               <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 2}
-                                                        {section name=posterCatCounter loop=$posterCategoryRows}
-                                                            {if $catRows[counter].cat_id == $posterCategoryRows[posterCatCounter].fk_cat_id}
-                                                                {assign var="selected" value="selected"}
-                                                            {/if}
-                                                        {/section}
-                                                        <option value="{$catRows[counter].cat_id}" {$selected}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                            </select>
-											{/if}
-                                            <div class="list-err">{$genre_err}</div>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td valign="top"><label>Condition<span class="red-star">*</span></label></td>

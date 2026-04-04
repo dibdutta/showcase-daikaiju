@@ -118,42 +118,20 @@
 	function refine_search(type,id){
 		if(type=='decade'){
 			$('#decade_id').val(id);
-			$('#poster_size_id').val('');
-			$('#genre_id').val('');
-			$('#country_id').val('');
-			$('#shop_cat_id').val('');
-			$('#subcategory_id').val('');
-		}
-		if(type=='poster_size'){
-			$('#poster_size_id').val(id);
-			$('#decade_id').val('');
-			$('#genre_id').val('');
 			$('#country_id').val('');
 			$('#shop_cat_id').val('');
 			$('#subcategory_id').val('');
 		}
 		if(type=='country'){
-			$('#poster_size_id').val('');
 			$('#decade_id').val('');
-			$('#genre_id').val('');
 			$('#country_id').val(id);
-			$('#shop_cat_id').val('');
-			$('#subcategory_id').val('');
-		}
-		if(type=='genre'){
-			$('#poster_size_id').val('');
-			$('#decade_id').val('');
-			$('#genre_id').val(id);
-			$('#country_id').val('');
 			$('#shop_cat_id').val('');
 			$('#subcategory_id').val('');
 		}
 		if(type=='shop_cat'){
 			$('#shop_cat_id').val(id);
 			$('#subcategory_id').val('');
-			$('#poster_size_id').val('');
 			$('#decade_id').val('');
-			$('#genre_id').val('');
 			$('#country_id').val('');
 		}
 		$('#frm_refine').submit();
@@ -197,8 +175,6 @@
      <div id="header">
 	  <form name="frm_refine" id="frm_refine" method="get" action="{$actualPath}/buy">
                 <input type="hidden" name="mode" value="search" />
-                <input type="hidden" name="poster_size_id" id="poster_size_id" value="{$smarty.request.poster_size_id}" />
-                <input type="hidden" name="genre_id" id="genre_id" value="{$smarty.request.genre_id}" />
                 <input type="hidden" name="decade_id" id="decade_id" value="{$smarty.request.decade_id}" />
                 <input type="hidden" name="country_id" id="country_id" value="{$smarty.request.country_id}" />
                 <input type="hidden" name="shop_cat_id" id="shop_cat_id" value="{$smarty.request.shop_cat_id}" />
