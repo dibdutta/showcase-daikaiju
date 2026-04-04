@@ -133,9 +133,6 @@ document.getElementById("frm1").submit();
                                         <div class="dashboard-main_shadow" style="width:300px;"></div>
                                     </div>
 			 </div>
-             <div class="clear"></div>
-             <div class=" pb05"><a href="http://www.gavelsnipe.com/" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/banner_gavel.png" width="315" height="42" /></a></div>
-             <div class="clear"></div>
              <div style="padding:6px 0;" class="dashboard-main">
              <div class="dashblock mr24" style="margin-left:-15px; width:300px;">
                  <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -160,35 +157,7 @@ document.getElementById("frm1").submit();
              </div>
              </div>
              <div class="clear"></div>
-             <div>
-			<table cellspacing="0" cellpadding="0" border="0" width="310" height="280">
-				<tbody>
-					<tr>
-						<td>
-						<table cellspacing="0" cellpadding="0" border="0" width="310" class="npa">
-							<tbody>
-								<tr>
-									<td colspan="3" class="featuredposter_header" style="padding:8px;"><span><a href="{$dataArrSmall[0].home_link}">{$dataArrSmall[0].home_text}</a></span></td>
-								</tr>
-							</tbody>
-						</table>
-						</td>
-					</tr>
-					<tr>
-						<td>
-						<table cellspacing="0" cellpadding="0" border="0" width="310" id="npa" style="border:0;">
-							<tbody>
-								<tr>
-									<td width="148" class="tac vat pt10 pl10 pr10 pb10"><a href="{$dataArrSmall[0].home_link}"><img  src="{$dataArrSmall[0].image_path}" alt="" /></a></td>
-									
-								</tr>
-							</tbody>
-						</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-             </div>            
+                       
              </div>
             
     </div>
