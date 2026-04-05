@@ -4,7 +4,9 @@ session_start();
 //session_register("adminErr");
 //session_register("Err");
 
-define('PHP_SELF', $_SERVER['PHP_SELF']); 
+define('PHP_SELF', $_SERVER['PHP_SELF']);
+define('ASC', 'ASC');
+define('DESC', 'DESC');
 
 
 ////////////////  Smarty Variables  ///////////////////////////////////
