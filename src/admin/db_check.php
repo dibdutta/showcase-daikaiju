@@ -13,9 +13,11 @@ if (!$db) {
     die("DB connection failed: " . mysqli_connect_error());
 }
 mysqli_query($db, "SET time_zone = 'America/New_York'");
+$GLOBALS['db_connect'] = $db;
 
 header('Content-Type: text/plain');
 
+// --- Raw SQL checks ---
 $queries = [
     "Sold archive count" =>
         "SELECT COUNT(*) AS cnt FROM tbl_sold_archive",
@@ -39,7 +41,7 @@ $queries = [
          AND a.auction_is_sold IN ('1','2')",
 
     "Sample rows (up to 5)" =>
-        "SELECT a.auction_id, p.poster_title, tsa.soldamnt, a.auction_is_sold
+        "SELECT a.auction_id, p.poster_title, tsa.soldamnt, a.auction_is_sold, tsa.poster_thumb
          FROM tbl_auction a
          INNER JOIN tbl_sold_archive tsa ON a.auction_id = tsa.auction_id
          INNER JOIN tbl_poster p ON a.fk_poster_id = p.poster_id
@@ -58,6 +60,24 @@ foreach ($queries as $label => $sql) {
         echo implode(" | ", array_map(fn($k, $v) => "$k: $v", array_keys($row), $row)) . "\n";
     }
     echo "\n";
+}
+
+// --- Actual function call ---
+echo "=== homePageSoldSlider() function call ===\n";
+require_once INCLUDE_PATH . "classes/Auction.php";
+$objAuction = new Auction();
+$result = $objAuction->homePageSoldSlider();
+
+if ($result === false) {
+    echo "RETURNED: false (second query failed)\n";
+    echo "DB error: " . mysqli_error($db) . "\n";
+} elseif (empty($result)) {
+    echo "RETURNED: empty array\n";
+} else {
+    echo "RETURNED: " . count($result) . " rows\n";
+    foreach (array_slice($result, 0, 3) as $row) {
+        echo implode(" | ", array_map(fn($k, $v) => "$k: $v", array_keys($row), $row)) . "\n";
+    }
 }
 
 mysqli_close($db);
