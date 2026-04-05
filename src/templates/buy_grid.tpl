@@ -277,18 +277,7 @@
 														<input type="button" id="bid_bttn_{$auctionItems[counter].auction_id}" value="Bid Now" onclick="postBid({$auctionItems[counter].auction_id}, '{$auctionItems[counter].fk_user_id}');" class="bidnow-hammer-btn2" /></div>
                                                     </div>
 												<div id="auction_data_{$auctionItems[counter].auction_id}" >
-                                                    {if $auctionItems[counter].bid_count > 0}
-                                                        <div class="auction-row" style="padding:0px;">
-                                                            <div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Current Bid:</span></div>
-                                                            <div class="buy-text offer_buyprice" style="font-size:13px;">${$auctionItems[counter].last_bid_amount}</div>
-                                                            <div class="buy-text-detpstr">&nbsp;<b class="OfferBidNumber" style="font-size:13px;">{$auctionItems[counter].bid_count} Bid(s)</b></div>
-                                                        </div>
-                                                    {else}
-                                                        <div class="auction-row" style="padding:0px;">
-                                                            <div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Starting Bid:</span></div>
-                                                            <div class="buy-text offer_buyprice" style="font-size:13px;">${$auctionItems[counter].auction_asked_price|number_format:2}</div>
-                                                        </div>
-                                                    {/if}
+                                                    
                                                 </div>
 												
 												{if ($is_expired == '0' && $is_expired_stills!='1')}
