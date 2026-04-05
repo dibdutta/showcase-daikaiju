@@ -258,7 +258,7 @@ function toggleDiv(id,flagit,type,track) {
 										   </div>
 								 {if ($is_expired=='0' && $is_expired_stills !='1' )}			   								
 									 {if $auctionItems[counter].watch_indicator ==0}
-										<input type="button" value="Watch this item" class="track-btn" onclick="add_watchlist({$auctionItems[counter].auction_id});" id="watch_{$auctionItems[counter].auction_id}" />
+										<input type="button" value="Watch this item" class="track-btn" onclick="{if $smarty.session.sessUserID == ''}showlogin();{else}add_watchlist({$auctionItems[counter].auction_id});{/if}" id="watch_{$auctionItems[counter].auction_id}" />
 									 {else}
 										<input type="button" value="You are watching&nbsp;&nbsp;" onclick="redirect_watchlist({$auctionItems[counter].auction_id});" class="track-btn"  />
 									 {/if}
