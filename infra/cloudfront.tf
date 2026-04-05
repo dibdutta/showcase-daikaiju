@@ -25,10 +25,12 @@ resource "aws_cloudfront_distribution" "main" {
     origin_id   = "alb-dynamic"
 
     custom_origin_config {
-      http_port              = 80
-      https_port             = 443
-      origin_protocol_policy = var.domain_validated ? "https-only" : "http-only"
-      origin_ssl_protocols   = ["TLSv1.2"]
+      http_port                = 80
+      https_port               = 443
+      origin_protocol_policy   = var.domain_validated ? "https-only" : "http-only"
+      origin_ssl_protocols     = ["TLSv1.2"]
+      origin_read_timeout      = 60
+      origin_keepalive_timeout = 60
     }
   }
 
