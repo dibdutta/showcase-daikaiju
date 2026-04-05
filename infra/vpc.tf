@@ -187,6 +187,16 @@ resource "aws_route_table" "private" {
   tags = { Name = "${local.name_prefix}-private-rt" }
 }
 
+import {
+  to = aws_route_table_association.private[0]
+  id = "rtbassoc-0993bc4d024626b31"
+}
+
+import {
+  to = aws_route_table_association.private[1]
+  id = "rtbassoc-009cf2dac7da475ed"
+}
+
 resource "aws_route_table_association" "private" {
   count          = 2
   subnet_id      = aws_subnet.private[count.index].id
