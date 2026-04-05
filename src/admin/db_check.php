@@ -64,6 +64,7 @@ foreach ($queries as $label => $sql) {
 
 // --- Actual function call ---
 echo "=== homePageSoldSlider() function call ===\n";
+require_once INCLUDE_PATH . "classes/DBCommon.php";
 require_once INCLUDE_PATH . "classes/Auction.php";
 $objAuction = new Auction();
 $result = $objAuction->homePageSoldSlider();
