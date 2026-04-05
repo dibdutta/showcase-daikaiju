@@ -144,12 +144,12 @@ function dispmiddle(){
 	if(!empty($dataJstFinishedAuction)){
         //$posterObj->fetchPosterImages($dataJstFinishedAuction);
         //$dataJstFinishedAuction=$objAuction->fetchWinnerAndSoldPrice($dataJstFinishedAuction);
-        $imgBase = dirname(__FILE__) . '/poster_photo/thumb_buy_gallery/';
+        $imgBase = dirname(__FILE__) . '/poster_photo/thumb_buy/';
         $filtered = [];
         foreach($dataJstFinishedAuction as $row){
             if(!empty($row['poster_thumb']) && file_exists($imgBase . $row['poster_thumb'])){
-                $row['image_path'] = CLOUD_POSTER_THUMB_BUY_GALLERY . $row['poster_thumb'];
-                $row['large_image'] = CLOUD_POSTER_THUMB_BUY_GALLERY . $row['poster_thumb'];
+                $row['image_path'] = CLOUD_POSTER_THUMB_BUY . $row['poster_thumb'];
+                $row['large_image'] = CLOUD_POSTER_THUMB_BUY . $row['poster_thumb'];
                 $filtered[] = $row;
             }
         }
