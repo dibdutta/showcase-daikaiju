@@ -193,7 +193,7 @@ function toggleDiv(id,flagit,type,track) {
                                 </select>
                             </span>
 							{if $smarty.request.type==''}
-                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="" />
+                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="Place All Bids" />
 							{/if}
                             </div>
                            <div class="clear"></div> 
@@ -495,7 +495,7 @@ function toggleDiv(id,flagit,type,track) {
                             <option value="delete_all_watching">Delete </option>
                             </select></span>
 							{if $smarty.request.type ==''}
-                                <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="" />
+                                <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="Place All Bids" />
 							{/if}	
                             </div>
                             <div class="clear"></div>

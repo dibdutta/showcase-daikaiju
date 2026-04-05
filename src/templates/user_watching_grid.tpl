@@ -207,7 +207,7 @@ function toggleDiv(id,flagit,type,track) {
 										
                                         <div style="float:left; padding:0px; margin:0px;">
 										{if $smarty.session.sessUserID <> ""}
-                                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="" />
+                                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="Place All Bids" />
 										{else}	
 										  &nbsp;
 										{/if}	
@@ -290,7 +290,7 @@ function toggleDiv(id,flagit,type,track) {
 																<div class="CurrencyDecimal" style="font-size:15px;">.00</div>
 															</div>
 															<div class="left-side fll">
-															<input type="button" id="bid_bttn_{$watchingItems[counter].auction_id}" value="" onclick="postBid({$watchingItems[counter].auction_id}, '{$watchingItems[counter].fk_user_id}',{$watchingItems[counter].auction_buynow_price});" class="bidnow-hammer-btn2" /></div>
+															<input type="button" id="bid_bttn_{$watchingItems[counter].auction_id}" value="Bid Now" onclick="postBid({$watchingItems[counter].auction_id}, '{$watchingItems[counter].fk_user_id}',{$watchingItems[counter].auction_buynow_price});" class="bidnow-hammer-btn2" /></div>
 														</div>
 													</div>
 												</div>
@@ -386,7 +386,7 @@ function toggleDiv(id,flagit,type,track) {
 																<div class="CurrencyDecimal" style="font-size:15px;">.00</div>
 															</div>
 															<div class="left-side fll">
-															<input type="button" id="bid_bttn_{$watchingItems[counter].auction_id}" value="" onclick="postBid({$watchingItems[counter].auction_id}, '{$watchingItems[counter].fk_user_id}',{$watchingItems[counter].auction_buynow_price});" class="bidnow-hammer-btn2" /></div>
+															<input type="button" id="bid_bttn_{$watchingItems[counter].auction_id}" value="Bid Now" onclick="postBid({$watchingItems[counter].auction_id}, '{$watchingItems[counter].fk_user_id}',{$watchingItems[counter].auction_buynow_price});" class="bidnow-hammer-btn2" /></div>
 														</div>
 													<div id="auction_data_{$watchingItems[counter].auction_id}" >
 														{if $watchingItems[counter].bid_count > 0}
@@ -529,7 +529,7 @@ function toggleDiv(id,flagit,type,track) {
                                {if ($smarty.request.type == "")}
                                     <div class="inner-grey SelectionBtnPanel">
                                         <div style="float:left; padding:0px; margin:0px;">
-                                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);"  />
+                                            <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="Place All Bids" />
                                         </div>
 
                                         <div class="time_auction" id="auction_{$watchingItems[1].auction_id}">
