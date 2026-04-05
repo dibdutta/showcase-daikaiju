@@ -974,7 +974,7 @@ function select_watchlist()
 		$auction_week_id='';
 	}
 	if($_SESSION['sessUserID']!=''){
-		if(count($_REQUEST['auction_ids']) >0 && $_REQUEST['is_track']==''){
+		if(count($_REQUEST['auction_ids'] ?? []) >0 && $_REQUEST['is_track']==''){
 			foreach($_REQUEST['auction_ids'] as $val){
 				$obj = new DBCommon();
 				$obj->primaryKey = 'watching_id';
