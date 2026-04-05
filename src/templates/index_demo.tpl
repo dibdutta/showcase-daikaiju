@@ -303,7 +303,7 @@ document.getElementById("frm1").submit();
 <h2>Featured Sales Results</h2>
 
 <div id="slides_2" style="margin-top:25px; margin-bottom:-38px;">
-		<div class="slides_container2 slider2 slides_container" style="width:950px;">
+		<div class="slides_container2 slider2 slides_container" style="width:950px; display:block;">
 			
 			<div class="slide" style="width:970px;">			
 			 {section name=counter loop=$dataJstFinishedAuction}
