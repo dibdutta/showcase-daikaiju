@@ -224,7 +224,7 @@
 																  	<div class="text-timer" id="timer_{$auctionItems[counter].auction_id}" style="background:#003878; background-image:none; color:#fff; border-radius:3px;">{$auctionItems[counter].auction_countdown}</div>
 																  	<!--<div class="timer-right"></div>-->
 																  	</div>
-																	<input type="button" value="Watch" class="track-btn" style="width:60px;" onclick="{if $smarty.session.sessUserID == ''}showlogin();{else}add_watchlist_for_details({$auctionItems[counter].auction_id});{/if}" id="watch_{$auctionItems[counter].auction_id}" />
+																	<input type="button" value="Watch" class="track-btn" style="width:60px;" onclick="{if $smarty.session.sessUserID == ''}showLogIn();{else}add_watchlist_for_details({$auctionItems[counter].auction_id});{/if}" id="watch_{$auctionItems[counter].auction_id}" />
 																  {/if}
 																{else}
 																	<div class="timerwrapper" style="float:right">
