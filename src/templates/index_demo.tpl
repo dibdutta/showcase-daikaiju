@@ -14,7 +14,7 @@ $(function(){
 });
 $(function(){
 	$('#slides_2').slides({
-		preload: true,
+		preload: false,
 		generateNextPrev: true,
 		generatePagination: false
 	});
