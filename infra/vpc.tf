@@ -203,6 +203,16 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private.id
 }
 
+import {
+  to = aws_route_table_association.database[0]
+  id = "rtbassoc-05d1c7f8dc37de4b3"
+}
+
+import {
+  to = aws_route_table_association.database[1]
+  id = "rtbassoc-03cf340c98479a10d"
+}
+
 resource "aws_route_table_association" "database" {
   count          = 2
   subnet_id      = aws_subnet.database[count.index].id
