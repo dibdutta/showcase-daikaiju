@@ -187,31 +187,12 @@ resource "aws_route_table" "private" {
   tags = { Name = "${local.name_prefix}-private-rt" }
 }
 
-import {
-  to = aws_route_table_association.private[0]
-  id = "rtbassoc-0993bc4d024626b31"
-}
-
-import {
-  to = aws_route_table_association.private[1]
-  id = "rtbassoc-009cf2dac7da475ed"
-}
-
 resource "aws_route_table_association" "private" {
   count          = 2
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private.id
 }
 
-import {
-  to = aws_route_table_association.database[0]
-  id = "rtbassoc-05d1c7f8dc37de4b3"
-}
-
-import {
-  to = aws_route_table_association.database[1]
-  id = "rtbassoc-03cf340c98479a10d"
-}
 
 resource "aws_route_table_association" "database" {
   count          = 2
