@@ -6534,15 +6534,16 @@ function fetchStillsLiveAuctions($view_mode=''){
 		$limit = 12;
 
 		// --- First poster for slider ---
-		$firstPosterSql = "SELECT 
+		$firstPosterSql = "SELECT
 								a.auction_id,
 								p.poster_title,
 								tsa.soldamnt,
-								tsa.poster_thumb,
-								tsa.is_cloud
+								tpi.poster_thumb,
+								tpi.is_cloud
 							FROM tbl_auction a
 							INNER JOIN tbl_sold_archive tsa ON a.auction_id = tsa.auction_id
 							INNER JOIN tbl_poster p ON a.fk_poster_id = p.poster_id
+							INNER JOIN tbl_poster_images tpi ON p.poster_id = tpi.fk_poster_id AND tpi.is_default = '1'
 							WHERE a.slider_first_position_status = '1'
 							AND a.auction_is_sold IN ('1','2')
 							ORDER BY a.auction_id ASC
@@ -6560,6 +6561,7 @@ function fetchStillsLiveAuctions($view_mode=''){
 					FROM tbl_auction a
 					INNER JOIN tbl_sold_archive tsa ON a.auction_id = tsa.auction_id
 					INNER JOIN tbl_poster p ON a.fk_poster_id = p.poster_id
+					INNER JOIN tbl_poster_images tpi ON p.poster_id = tpi.fk_poster_id AND tpi.is_default = '1'
 					WHERE a.auction_is_sold IN ('1','2')
 						AND a.slider_first_position_status != '1'";
 
@@ -6567,15 +6569,16 @@ function fetchStillsLiveAuctions($view_mode=''){
 		$totalRows = mysqli_fetch_assoc($countResult)['cnt'];
 		$offset = rand(0, max(0, $totalRows - $limit));
 
-		$sql = "SELECT 
+		$sql = "SELECT
 					a.auction_id,
 					p.poster_title,
 					tsa.soldamnt,
-					tsa.poster_thumb,
-					tsa.is_cloud
+					tpi.poster_thumb,
+					tpi.is_cloud
 				FROM tbl_auction a
 				INNER JOIN tbl_sold_archive tsa ON a.auction_id = tsa.auction_id
 				INNER JOIN tbl_poster p ON a.fk_poster_id = p.poster_id
+				INNER JOIN tbl_poster_images tpi ON p.poster_id = tpi.fk_poster_id AND tpi.is_default = '1'
 				WHERE a.auction_is_sold IN ('1','2')
 				AND a.slider_first_position_status != '1'
 				ORDER BY a.auction_id ASC

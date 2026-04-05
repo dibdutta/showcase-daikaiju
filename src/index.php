@@ -144,13 +144,20 @@ function dispmiddle(){
 	if(!empty($dataJstFinishedAuction)){
         //$posterObj->fetchPosterImages($dataJstFinishedAuction);
         //$dataJstFinishedAuction=$objAuction->fetchWinnerAndSoldPrice($dataJstFinishedAuction);
-        $totJstFinished=count($dataJstFinishedAuction);
-        for($i=0;$i<$totJstFinished;$i++){
-			$dataJstFinishedAuction[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$dataJstFinishedAuction[$i]['poster_thumb'];
-            $dataJstFinishedAuction[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$dataJstFinishedAuction[$i]['poster_thumb'];
-		}
-        $smarty->assign("dataJstFinishedAuction", $dataJstFinishedAuction);
-        $smarty->assign("totJstFinished", $totJstFinished);
+        $imgBase = dirname(__FILE__) . '/poster_photo/thumb_buy_gallery/';
+        $filtered = [];
+        foreach($dataJstFinishedAuction as $row){
+            if(!empty($row['poster_thumb']) && file_exists($imgBase . $row['poster_thumb'])){
+                $row['image_path'] = CLOUD_POSTER_THUMB_BUY_GALLERY . $row['poster_thumb'];
+                $row['large_image'] = CLOUD_POSTER_THUMB_BUY_GALLERY . $row['poster_thumb'];
+                $filtered[] = $row;
+            }
+        }
+        if(!empty($filtered)){
+            $totJstFinished = count($filtered);
+            $smarty->assign("dataJstFinishedAuction", $filtered);
+            $smarty->assign("totJstFinished", $totJstFinished);
+        }
     }
 	
 	################ Closed for loading Issue #################
