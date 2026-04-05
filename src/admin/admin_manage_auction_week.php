@@ -645,16 +645,6 @@ function validateNewWeeklyForm()
         $errCounter++;  
     }
     
-    if($_POST['poster_size'] == ""){
-        $GLOBALS['poster_size_err'] = "Please select a Size.";
-        $errCounter++;
-    }
-    
-    if($_POST['genre'] == ""){
-        $GLOBALS['genre_err'] = "Please select Genre.";
-        $errCounter++;  
-    }
-    
     if($_POST['condition'] == ""){
         $GLOBALS['condition_err'] = "Please select Condition.";
         $errCounter++; 
