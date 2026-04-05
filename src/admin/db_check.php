@@ -81,4 +81,14 @@ if ($result === false) {
     }
 }
 
+// --- Check index.php dispmiddle flow ---
+echo "\n=== index.php dispmiddle() simulation ===\n";
+$dataJstFinishedAuction = $objAuction->homePageSoldSlider();
+echo "homePageSoldSlider() returned: " . (is_array($dataJstFinishedAuction) ? count($dataJstFinishedAuction) . " rows" : "false/null") . "\n";
+echo "empty() check: " . (empty($dataJstFinishedAuction) ? "true (will NOT assign)" : "false (WILL assign)") . "\n";
+if (!empty($dataJstFinishedAuction)) {
+    $totJstFinished = count($dataJstFinishedAuction);
+    echo "totJstFinished would be: $totJstFinished\n";
+}
+
 mysqli_close($db);
