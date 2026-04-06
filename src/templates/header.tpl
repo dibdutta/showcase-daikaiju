@@ -308,7 +308,7 @@ function showTimer1(list,id){
          {*<div style="position:absolute; left:167px; top:90px; background:#fff; height:15px;color:red;">
 		 <label>The site will be under maintainance for three(3) Hrs.sorry for the inconvenience caused</label>
 		 </div>*}
-        <div id="logopanel" style="width:165px; min-height:93px; display:flex; align-items:center; justify-content:center;"><a href="{$actualPath}/index" title="Home"><img src="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/logo/3bb4d422-bdd7-43a5-8462-a3f81cde183b.png/:/rs=w:98,h:80,cg:true,m/cr=w:98,h:80/qt=q:95" alt="Logo" title="Home" width="98" height="80"/></a></div>
+        <div id="logopanel" style="width:165px; min-height:93px; display:flex; align-items:center; justify-content:center;"><a href="{$actualPath}/index" title="Home"><picture><source srcset="https://d294w6g1afjpvs.cloudfront.net/images/kaiju_link_1x.webp 1x, https://d294w6g1afjpvs.cloudfront.net/images/kaiju_link_2x.webp 2x" type="image/webp" /><img src="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/logo/3bb4d422-bdd7-43a5-8462-a3f81cde183b.png/:/rs=w:98,h:80,cg:true,m/cr=w:98,h:80/qt=q:95" alt="Logo" title="Home" width="98" height="80" /></picture></a></div>
         <!--Header Top navigation Starts-->
         <div id="mainnavigation" class="innerbg">
           <ul class="menu">
