@@ -313,7 +313,7 @@ document.getElementById("frm1").submit();
                     <div class="fisdetails">
 					{if $smarty.session.sessUserID <> ""}
                     	<h2 class="pb10">${if $dataJstFinishedAuction[counter].soldamnt==''}0.00{else}{$dataJstFinishedAuction[counter].soldamnt}{/if}</h2>
-					{/if}	
+					{/if}
 					<a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" title="{$dataJstFinishedAuction[counter].poster_title}" id="tipsy_{$dataJstFinishedAuction[counter].auction_id}" onMouseOver="tipsy(this.id)" ><h3 class="pb10">{$dataJstFinishedAuction[counter].poster_title|substr:0:10}..</h3></a>                    
 					
                     </div>
