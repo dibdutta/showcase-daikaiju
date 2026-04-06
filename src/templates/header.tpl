@@ -20,10 +20,10 @@
 <link href="{$actualPath}/css/site.css" rel="stylesheet" type="text/css" />
 
 {if $smarty.const.PHP_SELF != '/myselling.php' && $smarty.const.PHP_SELF != '/edit_myauction.php'}
-	<script src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery-1.10.2.js"></script>
-	<script src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery-ui.js"></script>
+	<script src="https://d294w6g1afjpvs.cloudfront.net/js/jquery-1.10.2.js"></script>
+	<script src="https://d294w6g1afjpvs.cloudfront.net/js/jquery-ui.js"></script>
 {else}
-	<script src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery.min.js"></script>
+	<script src="https://d294w6g1afjpvs.cloudfront.net/js/jquery.min.js"></script>
 {/if}
 {* <script type="text/javascript" src="{$smarty.const.PAGE_LINK_SSL_CSSJS}/javascript/common.js.php"></script> *}
 <script type="text/javascript" src="{$actualPath}/javascript/common.js.php"></script>
@@ -60,7 +60,7 @@ function submitDetailsForm(){
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = 'https://d2m46dmzqzklm5.cloudfront.net/js/ga.js';
+    ga.src = 'https://d294w6g1afjpvs.cloudfront.net/js/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
@@ -335,7 +335,7 @@ function showTimer1(list,id){
         <div id="searchbar">
         <!--<div class="search-left-bg"></div>-->
             <div class="search-midrept-bg ">
-                <label><img src="https://d2m46dmzqzklm5.cloudfront.net/images/search-img.png" width="20" height="37" /></label>
+                <label><img src="https://d294w6g1afjpvs.cloudfront.net/images/search-img.png" width="20" height="37" /></label>
                 <form name="frm_keysearch" method="get" action="{$actualPath}/buy">
                     <!--<input type="hidden" name="list" value="{$smarty.request.list}" class="srchbox-txt" />-->
                      <input type="hidden" name="mode" {if $smarty.request.list!='upcoming'} value="key_search_global"{else} value="key_search_upcoming"{/if} class="srchbox-txt" />
@@ -383,7 +383,7 @@ function showTimer1(list,id){
     </ul>  
     	 </div>
         
-        <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
+        <div class="w02 fll pt14"><img src="https://d294w6g1afjpvs.cloudfront.net/images/divider.png" width="2" height="20" /></div>
         <div class="w60 fll pt18 pl14 scart"><a href="javascript:void(0)" onclick="check_session()">Join Us</a></div>
 		{elseif $smarty.session.sessUserID != ''}
         <div class="w60 fll pt07 pl122">
@@ -443,11 +443,11 @@ function showTimer1(list,id){
 </li> 
       </ul>  
     	 </div>
-         <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
+         <div class="w02 fll pt14"><img src="https://d294w6g1afjpvs.cloudfront.net/images/divider.png" width="2" height="20" /></div>
         <div class="w60 fll pt18 pl14 scart"><a href="javascript:void(0)" onclick="$(location).attr('href','{$actualPath}/myaccount?mode=logout');">Sign Out</a></div>
 		{/if}
-        <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
-        <div class="w24 fll pt18 pl14"><a href="{$actualPath}/cart"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/cart1-icon.png" width="24" height="15" /></a></div>
+        <div class="w02 fll pt14"><img src="https://d294w6g1afjpvs.cloudfront.net/images/divider.png" width="2" height="20" /></div>
+        <div class="w24 fll pt18 pl14"><a href="{$actualPath}/cart"><img src="https://d294w6g1afjpvs.cloudfront.net/images/cart1-icon.png" width="24" height="15" /></a></div>
     	<div class="w24 fll pt18 pl14 scart">({if $smarty.session.cart}{$smarty.session.cart|@count}{else}0{/if})</div>
        
     	  
@@ -593,14 +593,14 @@ function showTimer1(list,id){
    	
 	<div style="height:20px; text-align:center; padding:10px 0px; font-size:14px;">EXTENDED BIDDING SESSION STARTING NOW.<br/>
                                                                                   In this session a new bid placed will restart the countdown timer to 5 minutes. Thank you for bidding and good luck!<br/>
-    <img  src="https://d2m46dmzqzklm5.cloudfront.net/images/auctionendshow.gif"/><span id="timer1" style="display:none;">30</span>
+    <img  src="https://d294w6g1afjpvs.cloudfront.net/images/auctionendshow.gif"/><span id="timer1" style="display:none;">30</span>
     </div>
     <div align="right">
     </div>
 </div>
 <!--Page Ends-->
 {if $smarty.const.PHP_SELF != '/buy.php' && $smarty.const.PHP_SELF != '/user_watching.php'}
-    <script type="text/javascript" src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery-validate.js"></script>
+    <script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/jquery-validate.js"></script>
 {/if}
 <div id="dialog-confirm" >
 </div>

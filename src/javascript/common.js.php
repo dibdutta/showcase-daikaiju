@@ -531,9 +531,9 @@ function timeLeft(dataArr,list)
                             var winner='';
                             if(curr_user!=''){
                                if(curr_user==highest_user){
-                                 var winner= "<img src='https://d2m46dmzqzklm5.cloudfront.net/images/winning-bid-img.png' alt='Winner' title='Winner'>";
+                                 var winner= "<img src='https://d294w6g1afjpvs.cloudfront.net/images/winning-bid-img.png' alt='Winner' title='Winner'>";
                                }else{
-                                 //var winner= "<img src='https://d2m46dmzqzklm5.cloudfront.net/images/winning-bid-img.png' alt='Loosing' title='Loosing'>";
+                                 //var winner= "<img src='https://d294w6g1afjpvs.cloudfront.net/images/winning-bid-img.png' alt='Loosing' title='Loosing'>";
                                }
                             }
                             dispData = '<div class="auction-row" style="padding:0px;"><div class="buy-text bold"><span class="CurrentBidOffer"  style="font-size:12px; color:#000;">Current Bid:</span> </div><div class="buy-text offer_buyprice"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><input type="hidden" id="current_bid_'+bidDataArr[i]['auction_id']+'" value='+nextbid+' >$'+bidDataArr[i]['last_bid_amount']+'</div><div style="cursor:pointer;" class="buy-text-detpstr" onMouseOver="toggleDiv('+bidDataArr[i]['auction_id']+',1,0,1)" onMouseOut="toggleDiv('+bidDataArr[i]['auction_id']+',0,0,0)" >&nbsp;<b class="OfferBidNumber">'+bidDataArr[i]['bid_count']+'Bid(s)&nbsp;&nbsp;'+winner+'</b> </div><div class="buy-text-detpstr bold"><input type="hidden" id="auction_increment_'+bidDataArr[i]['auction_id']+'" value='+bidDataArr[i]['next_increment']+'><span class="nextbid">Next minimum bid needs to be $'+nextbid+'.00</span></div></div>';
@@ -655,9 +655,9 @@ function timeLeftGallery(dataArr,list)
                             var winner='';
                             if(curr_user!=''){
                                if(curr_user==highest_user){
-                                 var winner= "<img src='https://d2m46dmzqzklm5.cloudfront.net/images/winning-bid-img.png' alt='Winner' title='Winner'>";
+                                 var winner= "<img src='https://d294w6g1afjpvs.cloudfront.net/images/winning-bid-img.png' alt='Winner' title='Winner'>";
                                }else{
-                                 //var winner= "<img src='https://d2m46dmzqzklm5.cloudfront.net/images/winning-bid-img.png' alt='Loosing' title='Loosing'>";
+                                 //var winner= "<img src='https://d294w6g1afjpvs.cloudfront.net/images/winning-bid-img.png' alt='Loosing' title='Loosing'>";
                                }
                             }
                             dispData = '<div class="buygrid_cbid pb05 mt10">Current: <input type="hidden" id="seconds_left_'+bidDataArr[i]['auction_id']+'" value="'+bidDataArr[i]['seconds_left']+'" ><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><input type="hidden" id="current_bid_'+bidDataArr[i]['auction_id']+'" value='+nextbid+' >$'+bidDataArr[i]['last_bid_amount']+'</div><div style="cursor:pointer;" class="buygrid_cbid2 pb05 mt10" onMouseOver="toggleDiv('+bidDataArr[i]['auction_id']+',1,0,1)" onMouseOut="toggleDiv('+bidDataArr[i]['auction_id']+',0,0,0)"  ><strong>&nbsp;'+bidDataArr[i]['bid_count']+'Bid(s)&nbsp;&nbsp;</strong></div><div class="buygrid_cbid2 pb05 mt08 ">'+winner+'</div><input type="hidden" id="auction_increment_'+bidDataArr[i]['auction_id']+'" value='+bidDataArr[i]['next_increment']+'><div class="buygrid_cbid3 pb10">Next minimum needs to be <strong>$'+nextbid+'.00</strong></div>';
@@ -762,9 +762,9 @@ function timeLeftPosterDetails(dataArr)
                             var winner='';
                             if(curr_user!=''){
                                if(curr_user==highest_user){
-                                 var winner= "<img src='https://d2m46dmzqzklm5.cloudfront.net/images/winning-bid-img.png' alt='Winner' title='Winner'>";
+                                 var winner= "<img src='https://d294w6g1afjpvs.cloudfront.net/images/winning-bid-img.png' alt='Winner' title='Winner'>";
                                }else{
-                                 //var winner= "<img src='https://d2m46dmzqzklm5.cloudfront.net/images/winning-bid-img.png' alt='Loosing' title='Loosing'>";
+                                 //var winner= "<img src='https://d294w6g1afjpvs.cloudfront.net/images/winning-bid-img.png' alt='Loosing' title='Loosing'>";
                                }
                             }
                             dispData = '<div class="auction-row" style="position:relative; cursor:pointer;"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:12px; color:#000;">Current Bid:</span></div><div class="buy-text offer_buyprice"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><input type="hidden" id="current_bid_'+bidDataArr[i]['auction_id']+'" value='+nextbid+' >$'+bidDataArr[i]['last_bid_amount']+'</div><div class="buy-text-detpstr" onMouseOver="toggleDiv('+bidDataArr[i]['auction_id']+',1,0,1)" onMouseOut="toggleDiv('+bidDataArr[i]['auction_id']+',0,0,0)" ><b class="OfferBidNumber" >'+bidDataArr[i]['bid_count']+' Bid(s)&nbsp;&nbsp;'+winner+'</b></div><div class="buy-text-detpstr bold italics"><input type="hidden" id="auction_increment_'+bidDataArr[i]['auction_id']+'" value='+bidDataArr[i]['next_increment']+'><div class="nextbid">Next minimum bid needs to be $'+nextbid+'.00</div></div></div>';

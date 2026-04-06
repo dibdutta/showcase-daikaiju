@@ -13,14 +13,14 @@
             <table cellspacing="0" cellpadding="0" border="0" width="752" style="background-color:#ffffff;">
                 <tbody>
                     <tr>
-                        <td colspan="5"><img height="22" width="752" src="https://d2m46dmzqzklm5.cloudfront.net/images/img_001.jpg" alt="" /></td>
+                        <td colspan="5"><img height="22" width="752" src="https://d294w6g1afjpvs.cloudfront.net/images/img_001.jpg" alt="" /></td>
                     </tr>
                     <tr>
-                        <td width="136"><a href="{$smarty.const.SITE_URL}" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_002.jpg" width="136" height="60" /></a></td>
+                        <td width="136"><a href="{$smarty.const.SITE_URL}" target="_blank"><img src="https://d294w6g1afjpvs.cloudfront.net/images/img_002.jpg" width="136" height="60" /></a></td>
                         <td width="115">&nbsp;</td>
-                        <td width="309" style="background-image:url(https://d2m46dmzqzklm5.cloudfront.net/images/img_003.jpg); background-repeat:repeat-x; padding-left:10px;"><a style="color:#881318; font-family:Arial, Helvetica, sans-serif; text-decoration:none; font-size:15px;" target="_blank" href="{$banner_link}">{$banner_text}
+                        <td width="309" style="background-image:url(https://d294w6g1afjpvs.cloudfront.net/images/img_003.jpg); background-repeat:repeat-x; padding-left:10px;"><a style="color:#881318; font-family:Arial, Helvetica, sans-serif; text-decoration:none; font-size:15px;" target="_blank" href="{$banner_link}">{$banner_text}
                         </a></td>
-                        <td width="167"><a href="http://www.gavelsnipe.com/" target="_blank"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_004.jpg" width="167" height="60" /></a></td>
+                        <td width="167"><a href="http://www.gavelsnipe.com/" target="_blank"><img src="https://d294w6g1afjpvs.cloudfront.net/images/img_004.jpg" width="167" height="60" /></a></td>
                         <td width="25">&nbsp;</td>
                     </tr>
                     <tr>
@@ -38,10 +38,10 @@
                         <td style="padding-left:15px;">
                         <h4>&nbsp;<span style="color: rgb(255, 255, 255);"><strong>{$sub_banner_text}</strong></span></h4>
                         </td>
-                        <td width="65"><img height="49" width="65" src="https://d2m46dmzqzklm5.cloudfront.net/images/img_005.jpg" alt="" /></td>
-                        <td width="26"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_006.jpg" width="26" height="49" /></td>
-                        <td width="25"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/img_007.jpg" width="25" height="49" /></td>
-                        <td width="118"><img height="49" width="118" src="https://d2m46dmzqzklm5.cloudfront.net/images/img_008.jpg" alt="" /></td>
+                        <td width="65"><img height="49" width="65" src="https://d294w6g1afjpvs.cloudfront.net/images/img_005.jpg" alt="" /></td>
+                        <td width="26"><img src="https://d294w6g1afjpvs.cloudfront.net/images/img_006.jpg" width="26" height="49" /></td>
+                        <td width="25"><img src="https://d294w6g1afjpvs.cloudfront.net/images/img_007.jpg" width="25" height="49" /></td>
+                        <td width="118"><img height="49" width="118" src="https://d294w6g1afjpvs.cloudfront.net/images/img_008.jpg" alt="" /></td>
                     </tr>
                 </tbody>
             </table>
@@ -92,7 +92,7 @@
             </td>
         </tr>
         <tr>
-            <td style="background-color:#989693; background-image:url(https://d2m46dmzqzklm5.cloudfront.net/images/img_010.jpg); background-repeat:no-repeat; background-position:left bottom; text-align:center; color:#989693; padding:6px 0;"><a href="{$smarty.const.SITE_URL}/contactus.php" target="_blank" style="color:#989693; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #989693; font-size:12px;">Contact Customer Service</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{$smarty.const.SITE_URL}/user_agreement.php" target="_blank" style="color:#989693; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #989693; font-size:12px;">View our User Agreement</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{$smarty.const.SITE_URL}/faq.php" target="_blank" style="color:#989693; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #989693; font-size:12px;">FAQ</a></td>
+            <td style="background-color:#989693; background-image:url(https://d294w6g1afjpvs.cloudfront.net/images/img_010.jpg); background-repeat:no-repeat; background-position:left bottom; text-align:center; color:#989693; padding:6px 0;"><a href="{$smarty.const.SITE_URL}/contactus.php" target="_blank" style="color:#989693; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #989693; font-size:12px;">Contact Customer Service</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{$smarty.const.SITE_URL}/user_agreement.php" target="_blank" style="color:#989693; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #989693; font-size:12px;">View our User Agreement</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{$smarty.const.SITE_URL}/faq.php" target="_blank" style="color:#989693; font-family:Arial, Helvetica, sans-serif; text-decoration:none; border-bottom:1px dashed #989693; font-size:12px;">FAQ</a></td>
         </tr>
     </tbody>
 </table>

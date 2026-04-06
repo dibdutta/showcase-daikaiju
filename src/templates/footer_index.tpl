@@ -6,13 +6,13 @@
     <div class="paypal">
     <div class="fll"><table width="138" border="0" cellspacing="0" cellpadding="0" style="border:0;">
   <tr>
-    <td><img src="https://d2m46dmzqzklm5.cloudfront.net/images/followus.png" width="78" height="45" /></td>
-    <td><img src="https://d2m46dmzqzklm5.cloudfront.net/images/followus_tweter.png" alt="Follow us on Twitter" width="30" height="45" /></td>
-    <td><img src="https://d2m46dmzqzklm5.cloudfront.net/images/followus_fb.png" alt="Follow us on Facebook" width="30" height="45" /></td>
+    <td><img src="https://d294w6g1afjpvs.cloudfront.net/images/followus.png" width="78" height="45" /></td>
+    <td><img src="https://d294w6g1afjpvs.cloudfront.net/images/followus_tweter.png" alt="Follow us on Twitter" width="30" height="45" /></td>
+    <td><img src="https://d294w6g1afjpvs.cloudfront.net/images/followus_fb.png" alt="Follow us on Facebook" width="30" height="45" /></td>
   </tr>
 </table>
 </div>
-    <img src="https://d2m46dmzqzklm5.cloudfront.net/images/paypal_logos.jpg" alt="Accepted Payment Methods" title="Accepted Payment Methods" width="333" height="45"/></div>
+    <img src="https://d294w6g1afjpvs.cloudfront.net/images/paypal_logos.jpg" alt="Accepted Payment Methods" title="Accepted Payment Methods" width="333" height="45"/></div>
     	<div id="footernavigator" {if $smarty.const.PHP_SELF=='/index.php' || $smarty.const.PHP_SELF==''} {else}style="border:none;"{/if}>
         	<div class="left">
             	<ul class="menu">

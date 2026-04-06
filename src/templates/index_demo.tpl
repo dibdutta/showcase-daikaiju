@@ -62,8 +62,8 @@ document.getElementById("frm1").submit();
 			  {/section}				
 				
 			  </div>
-				<a href="#" class="prev"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
-				<a href="#" class="next"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
+				<a href="#" class="prev"><img src="https://d294w6g1afjpvs.cloudfront.net/images/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
+				<a href="#" class="next"><img src="https://d294w6g1afjpvs.cloudfront.net/images/arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
 			</div>
 			</div>
         </div>
@@ -344,9 +344,9 @@ document.getElementById("frm1").submit();
  </div>
  </div>
 {include file="footer_index.tpl"}
-<script type="text/javascript" src="https://d2m46dmzqzklm5.cloudfront.net/js/project.js"></script>
-<script type="text/javascript" src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery.tipsy.js"></script>
-<script type="text/javascript" src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery.metadata.js"></script>
+<script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/project.js"></script>
+<script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/jquery.tipsy.js"></script>
+<script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/jquery.metadata.js"></script>
 {if $smarty.const.PHP_SELF != '/index.php' && $smarty.const.PHP_SELF != ''}
-    <script type="text/javascript" src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/jquery.validate.js"></script>
 {/if}

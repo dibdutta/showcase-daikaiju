@@ -149,7 +149,7 @@ define ("ADMIN_INSTRUCTION", nl2br($row[CONFIG_ADMIN_INSTRUCTION]));
 //////////////////    Link Variables   //////////////////////
 
 if (APP_ENV === 'production') {
-	$cdnBase = getenv('CDN_STATIC_URL') ?: "https://d2m46dmzqzklm5.cloudfront.net";
+	$cdnBase = getenv('CDN_STATIC_URL') ?: "https://d294w6g1afjpvs.cloudfront.net";
 	define ("IMAGE_LINK", $cdnBase."/images");
 	define ("PAGE_LINK", "https://".$_SERVER['HTTP_HOST']);
 	define ("PAGE_LINK_CSSJS", $cdnBase."/");
@@ -195,11 +195,11 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 if($currentPage == "cart.php" || $currentPage == "my_invoice.php") {
 	//header("Location: default.php");
 	//exit;
-	define("CLOUD_STATIC","https://d2m46dmzqzklm5.cloudfront.net/images/");
-	define("CLOUD_STATIC_ADMIN","https://d2m46dmzqzklm5.cloudfront.net/images/");
+	define("CLOUD_STATIC","https://d294w6g1afjpvs.cloudfront.net/images/");
+	define("CLOUD_STATIC_ADMIN","https://d294w6g1afjpvs.cloudfront.net/images/");
 }else{
-	define("CLOUD_STATIC","https://d2m46dmzqzklm5.cloudfront.net/images/");
-	define("CLOUD_STATIC_ADMIN","https://d2m46dmzqzklm5.cloudfront.net/images/");
+	define("CLOUD_STATIC","https://d294w6g1afjpvs.cloudfront.net/images/");
+	define("CLOUD_STATIC_ADMIN","https://d294w6g1afjpvs.cloudfront.net/images/");
 }
 
 define("CLOUD_POSTER_CONTAINER","cloud_mpe_poster_original");

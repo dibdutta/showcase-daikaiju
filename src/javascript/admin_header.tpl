@@ -6,11 +6,11 @@
 		<meta name="history" content="">
 		<meta name="author" content="Verdana Core, phpdoc.net Inc.">
 		<title>{$smarty.const.ADMIN_PAGE_TITLE}</title>
-		<link href="https://d2m46dmzqzklm5.cloudfront.net/css/adminStyle.css" rel="stylesheet">
-        <link href="https://d2m46dmzqzklm5.cloudfront.net/css/dropdown_menu.css" rel="stylesheet">
-        <script type="text/javascript" src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery-1.4.2.js"></script>
-		<!--<script src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery-1.10.2.js"></script>-->
-        <script type="text/javascript" src="https://d2m46dmzqzklm5.cloudfront.net/js/dropdown_menu.js"></script>
+		<link href="https://d294w6g1afjpvs.cloudfront.net/css/adminStyle.css" rel="stylesheet">
+        <link href="https://d294w6g1afjpvs.cloudfront.net/css/dropdown_menu.css" rel="stylesheet">
+        <script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/jquery-1.4.2.js"></script>
+		<!--<script src="https://d294w6g1afjpvs.cloudfront.net/js/jquery-1.10.2.js"></script>-->
+        <script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/dropdown_menu.js"></script>
 		<script type="text/javascript" src="http://54.213.214.96/javascript/adminCommon.js.php"></script>
 	</head>
 	<body>

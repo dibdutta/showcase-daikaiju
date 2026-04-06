@@ -26,8 +26,8 @@
 
  <!-- Photogallery script  -->
 
-	<script src="https://d2m46dmzqzklm5.cloudfront.net/js/jquery.min.js"></script>
-	<script src="https://d2m46dmzqzklm5.cloudfront.net/js/slides.jquery.js"></script>
+	<script src="https://d294w6g1afjpvs.cloudfront.net/js/jquery.min.js"></script>
+	<script src="https://d294w6g1afjpvs.cloudfront.net/js/slides.jquery.js"></script>
     
     {literal}
 	<script>
@@ -215,7 +215,7 @@
         
         <div id="searchbar" style="background:#003878; width:100%; box-sizing:border-box;">
             <div class="search-midrept-bg ">
-                <label><img src="https://d2m46dmzqzklm5.cloudfront.net/images/search-img.png" width="20" height="37" /></label>
+                <label><img src="https://d294w6g1afjpvs.cloudfront.net/images/search-img.png" width="20" height="37" /></label>
                 <form name="frm_keysearch" method="get" action="{$actualPath}/buy">
                     <input type="hidden" name="list" value="{$smarty.request.list}" class="srchbox-txt" />
                     <input type="hidden" name="mode" value="key_search_global" class="srchbox-txt" />
@@ -262,7 +262,7 @@
     </ul>  
     	 </div>
         
-        <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
+        <div class="w02 fll pt14"><img src="https://d294w6g1afjpvs.cloudfront.net/images/divider.png" width="2" height="20" /></div>
         <div class="w60 fll pt18 pl14 scart"><a href="javascript:void(0)" onclick="check_session()">Join Us</a></div>
 		{elseif $smarty.session.sessUserID != ''}
         <div class="w60 fll pt07 pl122">
@@ -323,11 +323,11 @@
 </li> 
       </ul>  
     	 </div>
-         <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
+         <div class="w02 fll pt14"><img src="https://d294w6g1afjpvs.cloudfront.net/images/divider.png" width="2" height="20" /></div>
         <div class="w60 fll pt18 pl14 scart"><a href="javascript:void(0)" onclick="$(location).attr('href','{$actualPath}/myaccount?mode=logout');">Sign Out</a></div>
 		{/if}
-        <div class="w02 fll pt14"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/divider.png" width="2" height="20" /></div>
-        <div class="w24 fll pt18 pl14"><a href="{$actualPath}/cart"><img src="https://d2m46dmzqzklm5.cloudfront.net/images/cart1-icon.png" width="24" height="15" /></a></div>
+        <div class="w02 fll pt14"><img src="https://d294w6g1afjpvs.cloudfront.net/images/divider.png" width="2" height="20" /></div>
+        <div class="w24 fll pt18 pl14"><a href="{$actualPath}/cart"><img src="https://d294w6g1afjpvs.cloudfront.net/images/cart1-icon.png" width="24" height="15" /></a></div>
     	<div class="w24 fll pt18 pl14 scart">({$totalCartCount})</div>
        
     	  
