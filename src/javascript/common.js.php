@@ -522,6 +522,7 @@ function timeLeft(dataArr,list)
                     	<!-- dispData = '<div class="auction-row" style="padding:0px;"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Starting Bid:</span></div><div class="buy-text offer_buyprice" style="font-size:13px;">$'+parseFloat(bidDataArr[i]['auction_asked_price']).toFixed(2)+'</div></div>';
                         $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
                         $('#auction_data_'+bidDataArr[i]['auction_id']).show(); -->
+                        dispData = '';
                     }
                     else{
                         /* Auction data starts */
@@ -646,6 +647,7 @@ function timeLeftGallery(dataArr,list)
                     	<!-- dispData = '<div class="auction-row" style="padding:0px;"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Starting Bid:</span></div><div class="buy-text offer_buyprice" style="font-size:13px;">$'+parseFloat(bidDataArr[i]['auction_asked_price']).toFixed(2)+'</div></div>';
                         $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
                         $('#auction_data_'+bidDataArr[i]['auction_id']).show(); -->
+                        dispData = '';
                     }
                     else{
                         /* Auction data starts */
@@ -753,6 +755,7 @@ function timeLeftPosterDetails(dataArr)
                     	<!-- dispData = '<div class="auction-row" style="padding:0px;"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Starting Bid:</span></div><div class="buy-text offer_buyprice" style="font-size:13px;">$'+parseFloat(bidDataArr[i]['auction_asked_price']).toFixed(2)+'</div></div>';
                         $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
                         $('#auction_data_'+bidDataArr[i]['auction_id']).show(); -->
+                        dispData = '';
                     }
                     else{
                         /* Auction data starts */
