@@ -148,6 +148,11 @@ $(document).ready(function() {
 		var unqArr = Array.from(new Set(res)).filter(function(v){return v!==''});
 		var post_img=unqArr.join();
 		$("#poster_images").val(post_img);
+		// Auto-set is_default to first uploaded image if no radio button is checked
+		var checkedRadio = $("input[name='is_default']:checked");
+		if (checkedRadio.length === 0 && unqArr.length > 0) {
+			$("#is_default_hidden").val(unqArr[0]);
+		}
 		document.getElementById("configManager").submit();
 	}
 
@@ -177,6 +182,7 @@ $(document).ready(function() {
 							 <input type="hidden" name="cnt" id="cnt" value="{$cnt}" />
                             <input type="hidden" name="random" value="{$random}" />
                             <input type="hidden" name="poster_images" id="poster_images" />
+                            <input type="hidden" name="is_default" id="is_default_hidden" />
 							<input type="hidden" id="no_sizes" name="no_sizes" value="{$no_sizes}" />
 							<table width="100%" border="0" cellspacing="0" cellpadding="2">
 								<tr>
