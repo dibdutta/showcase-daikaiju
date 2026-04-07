@@ -266,11 +266,11 @@ function toggleDiv(id,flagit,type,track) {
                                         </tr>
                                     {/if}
 									{if $auctionDetails[0].auction_is_sold=='0' && $auctionDetails[0].fk_auction_type_id != 4}
-									<tr>
+									{*<tr>
 									<td><div ><div class="CurrencyDecimal">Seller : {$auctionDetails[0].username}</div>
-											
+
 									</div></td>
-									</tr>
+									</tr>*}
 									 {/if}
                                 {elseif $auctionDetails[0].auction_is_sold=='1'}
                                 <tr>
