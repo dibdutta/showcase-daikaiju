@@ -6641,8 +6641,8 @@ function fetchStillsLiveAuctions($view_mode=''){
     {
 		 $sql = "SELECT
 				  count(a.auction_id)as counter
-				FROM tbl_auction_live a 				  
-				WHERE a.auction_id = ".$auction_id." and a.fk_auction_type_id =2					
+				FROM tbl_auction_live a
+				WHERE a.auction_id = ".$auction_id."
 					 ";
         //exit;
 		if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
