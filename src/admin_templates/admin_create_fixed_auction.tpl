@@ -377,7 +377,7 @@ return xmlHttp;
 {literal}
 <script type="text/javascript">
 var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
-(function() {
+$(document).ready(function() {
     var shopCatSelect = document.getElementById('shop_category');
     var subcatSelect  = document.getElementById('subcategory');
     if (!shopCatSelect || !subcatSelect) return;
@@ -394,8 +394,8 @@ var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
         }
     }
     populateSubcats(shopCatSelect.value, '{/literal}{$selected_subcat_id|default:""}{literal}');
-    shopCatSelect.addEventListener('change', function() { populateSubcats(this.value, ''); });
-})();
+    $('#shop_category').on('change', function() { populateSubcats(this.value, ''); });
+});
 </script>
 {/literal}
 {include file="admin_footer.tpl"}
