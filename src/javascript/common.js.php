@@ -646,7 +646,7 @@ function timeLeftGallery(dataArr,list)
                         $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
                         $('#auction_data_'+bidDataArr[i]['auction_id']).show();
                         /* Offer data onds */
-                    }else if(parseInt(bidDataArr[i]['offer_count']) < 1 && parseInt(bidDataArr[i]['fk_auction_type_id']) == 1){
+                    }else if(parseInt(bidDataArr[i]['fk_auction_type_id']) == 1){
                     	dispData = '<input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0">';
                         $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
                         $('#auction_data_'+bidDataArr[i]['auction_id']).show();
