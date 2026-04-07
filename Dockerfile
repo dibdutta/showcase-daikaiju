@@ -47,3 +47,8 @@ RUN rm -rf /var/www/html/templates_c/* /var/www/html/admin_templates_c/* \
     /var/www/html/bulkupload
 
 EXPOSE 80
+
+# Entrypoint clears Smarty compile caches (EFS-mounted) on every container start
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
