@@ -38,6 +38,14 @@ class Cart extends DBCommon{
 			WHERE a.auction_id = '".$id."'";
 			$auctionRs = mysqli_query($GLOBALS['db_connect'],$sql);
 			$auctionRow = mysqli_fetch_assoc($auctionRs);
+			if(!$auctionRow){
+				$sql = "SELECT a.fk_auction_type_id, a.auction_asked_price,a.auction_buynow_price, a.auction_is_sold,
+				a.auction_actual_end_datetime, a.auction_actual_start_datetime, p.poster_title, p.poster_sku, p.flat_rolled, p.quantity
+				FROM tbl_auction_live a LEFT JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
+				WHERE a.auction_id = '".$id."'";
+				$auctionRs = mysqli_query($GLOBALS['db_connect'],$sql);
+				$auctionRow = mysqli_fetch_assoc($auctionRs);
+			}
 			
 			if($auctionRow['quantity']<=1 && $auctionRow['fk_auction_type_id']=='6'){
 				$sql_update = "Update ".TBL_AUCTION." SET in_cart = '1' WHERE auction_id = '".$id."' ";
@@ -87,6 +95,13 @@ class Cart extends DBCommon{
 					  FROM ".TBL_AUCTION." a LEFT JOIN ".TBL_POSTER." p ON a.fk_poster_id = p.poster_id
 					  WHERE a.auction_id =".$dataArr[$i]['auction_id'];
 				$resSql=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],$sql));
+				if(!$resSql){
+					$sql="SELECT a.auction_payment_is_done, a.fk_auction_type_id, a.auction_asked_price, a.auction_buynow_price,
+						  p.poster_title, p.poster_sku, a.auction_is_sold
+						  FROM tbl_auction_live a LEFT JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
+						  WHERE a.auction_id =".$dataArr[$i]['auction_id'];
+					$resSql=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],$sql));
+				}
 				if($resSql['auction_is_sold'] != '0'){
 					if($resSql['fk_auction_type_id'] == 1){
 						$_SESSION['sold_item'][] = array("auction_id" => $dataArr[$i]['auction_id'], "poster_title" => $resSql['poster_title'],
