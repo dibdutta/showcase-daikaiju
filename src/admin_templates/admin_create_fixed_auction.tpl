@@ -1,66 +1,58 @@
 {include file="admin_header.tpl"}
-<link rel="stylesheet" href="{$actualPath}/javascript/uploadify/uploadify.css" type="text/css" />
-<script type="text/javascript" src="{$actualPath}/javascript/uploadify/jquery.uploadify.js"></script>
+<link rel="stylesheet" href="{$actualPath}/javascript/plupload/jquery-ui.min.css" type="text/css" />
+<link rel="stylesheet" href="{$actualPath}/javascript/plupload/jquery.ui.plupload.css" type="text/css" />
 {literal}
 <script type="text/javascript">
 $(document).ready(function() {
-  try {
-	$("#fileUpload").fileUpload({
-		'uploader': '../javascript/uploadify/uploader.swf',
-		'cancelImg': '../javascript/uploadify/cancel.png',
-		'script': '../javascript/uploadify/upload.php',
-		'folder': '../poster_photo/temp/{/literal}{$random}{literal}',
-		'fileDesc': 'Image Files',
-		'sizeLimit':'2000000',
-		'fileExt': '*.jpg;*.jpeg;*.gif;*.png',
-		'auto': true,
-		'buttonText': 'Add Photo(s)',
-		'onComplete': function(event, ID, fileObj, response, data) {
-			$("#fileUploadQueue").show();
-			var fileLimit = parseInt({/literal}{$smarty.const.MAX_UPLOAD_POSTER}{literal});
-			var photosArr = $("#poster_images").val().split(',');
-			var flag = false;
-			var image = '{/literal}{$actualPath}/poster_photo/temp/{$random}/'+fileObj.name+'{literal}';
-			for(i=0;i<photosArr.length;i++){
-				if(photosArr[i] == fileObj.name){
-					flag = true;
-				}
-			}
-			
-			
-			if(!flag){
-				var cnt=document.getElementById("cnt").value;
-				cnt=Number(cnt)+1;
-				document.getElementById("cnt").value=cnt;
-				if(cnt == 1){
-				var radList = document.getElementsByName('is_default');
-for (var i = 0; i < radList.length; i++) {
-if(radList[i].checked) radList[i].checked = false;
-}
-					checked = 'checked';
-				}else{
-					checked = '';
-				}
-				var newDate = new Date;
-			    var randCount=newDate.getTime();
-			    
-				var html = '<div id="photo_'+randCount+'" style="float:left; width:110px; padding:0px 2px 0 1px; margin:0px;"><img style="border:3px solid #474644;" src="'+image+'" height="78" width="100" /><input type="radio" name="is_default" value="'+fileObj.name+'" '+checked+' /><br /><img src="{/literal}{$smarty.const.CLOUD_STATIC}delete-icon.png{literal}" onclick="deletePhoto(\'photo_'+randCount+'\', \''+fileObj.name+'\', \'new\')" /></div>';
-				$("#photos").append(html);
-				$("#poster_images").val($("#poster_images").val()+fileObj.name+",");
-			}
 
-			if(cnt==12){
-                $("#browse").hide();
-				$("#path").hide();
-            }else{
-                $("#browse").show();
-				$("#path").show();
-            }
-    	}
+	var uploader = $("#uploader").plupload({
+        // General settings
+        runtimes : 'html5,flash,silverlight,html4',
+        url : "../upload.php?random={/literal}{$random}{literal}",
+
+        // Maximum file size
+        max_file_size : '10mb',
+
+        chunk_size: '1mb',
+
+        // Resize images on clientside if we can
+        resize : {
+            width : 200,
+            height : 200,
+            quality : 90,
+            crop: true // crop to exact dimensions
+        },
+
+        // Specify what files to browse for
+        filters : [
+            {title : "Image files", extensions : "jpg,gif,png"},
+            {title : "Zip files", extensions : "zip,avi"}
+        ],
+
+        // Rename files by clicking on their titles
+        rename: true,
+
+        // Sort files
+        sortable: true,
+
+        // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
+        dragdrop: true,
+
+        // Views to activate
+        views: {
+            list: true,
+            thumbs: true, // Show thumbs
+            active: 'thumbs'
+        },
+
+        // Flash settings
+        flash_swf_url : '../plupload/js/Moxie.swf',
+
+        // Silverlight settings
+        silverlight_xap_url : '../plupload/js/Moxie.xap'
+    });
 	});
-  } catch(e) {}
-  });
-	function chkPosterSize(id){
+		function chkPosterSize(id){
 	    if(id!=""){
     	var url = "../bid_popup.php";
     	$.get(url, {mode : 'chkPosterSizeCount', id : id}, function(data){
@@ -77,16 +69,16 @@ if(radList[i].checked) radList[i].checked = false;
     					$("#rolled").show();
     					$("#rolled_selected")[0].checked = true;
     				}
-    				
+
     			}else if(newData[0]==2){
     				$("#flat_rolled").show();
     				$("#rolled").show();
     				$("#folded").show();
     			}
-    	 	});	
+    	 	});
 		}else{
 			$("#flat_rolled").hide();
-		}	
+		}
     }
 	function autocom(q){
 	var url = "../ajax.php?mode=autocomplete_admin&q=" + q;
@@ -110,22 +102,55 @@ if(radList[i].checked) radList[i].checked = false;
   	}
 	});
 	}
-	
+
 	function set_result(name,id){
 		document.getElementById('user').value=name;
 		document.getElementById('user_id').value=id;
 		$("#auto_load").hide();
 	}
-	
+	function add_text_desc(id){
+		var url = "../ajax.php?mode=get_cond_desc&id=" + id;
+		jQuery.ajax({
+		type : 'GET',
+		url : url,
+		data: {
+		 },
+		 beforeSend : function(){
+			//loading
+			},
+		 success : function(data){
+		  if(data!=''){
+			var dataHtml = data;
+			FCKeditorAPI.GetInstance('poster_desc').Focus() ;
+			FCKeditorAPI.GetInstance('poster_desc').InsertHtml("<p>&nbsp;"+dataHtml+"</p>")
+			}else{
+			FCKeditorAPI.GetInstance('poster_desc').Focus() ;
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+		}
+		});
+	}
+
 	function checkMinOffer(){
 		if ($('#is_consider').is(':checked')) {
-			//alert('checked');
 			$("#minOfferDiv").show();
 		} else {
-			// alert('unchecked');
 			$("#minOfferDiv").hide();
 		}
     }
+
+	function submitForm(){
+		var all = $(".plupload_file_name").map(function() {
+			return this.title;
+		}).get();
+		var res = all.join().split(",");
+		var unqArr = Array.from(new Set(res)).filter(function(v){return v!==''});
+		var post_img=unqArr.join();
+		$("#poster_images").val(post_img);
+		document.getElementById("configManager").submit();
+	}
+
 </script>
 {/literal}
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -149,8 +174,9 @@ if(radList[i].checked) radList[i].checked = false;
 					<td align="center">
 						<form method="post" action="" name="configManager" id="configManager">
 							<input type="hidden" name="mode" value="save_fixed_auction">
-							   <input type="hidden" name="cnt" id="cnt" value="{$cnt}" />
+							 <input type="hidden" name="cnt" id="cnt" value="{$cnt}" />
                             <input type="hidden" name="random" value="{$random}" />
+                            <input type="hidden" name="poster_images" id="poster_images" />
 							<input type="hidden" id="no_sizes" name="no_sizes" value="{$no_sizes}" />
 							<table width="100%" border="0" cellspacing="0" cellpadding="2">
 								<tr>
@@ -163,13 +189,13 @@ if(radList[i].checked) radList[i].checked = false;
 												<td class="bold_text" valign="top"><span class="err">*</span>User :</td>
 												<td class="smalltext">
                                                 <div class="UserNameSearch" style="position:relative;">
-												<div><input type="text" name="user" id="user"  class="look" value="{$user}"  onkeyup="autocom(this.value);"/></div>						
-                       						    <div id="auto_load" style="width:150px; position:absolute; z-index:100px; top:20px; left:0px; background-color:#CCCCCC; display:none;"></div>
+												<div><input type="text" name="user" id="user"  class="look" value="{$user}"  onkeyup="autocom(this.value);"/></div>
+                   						    <div id="auto_load" style="width:150px; position:absolute; z-index:100px; top:20px; left:0px; background-color:#CCCCCC; display:none;"></div>
 												<input type="hidden" name="user_id" id="user_id" value="{$user_id}"  class="look"/>
 												<br /><span class="err">{$user_id_err}</span>
                                                 </div>
                                                 </td>
-                                                
+
 											</tr>
 											<tr class="tr_bgcolor">
 												<td class="bold_text" valign="top" width="36%"><span class="err">*</span>Poster Title :</td>
@@ -197,7 +223,7 @@ if(radList[i].checked) radList[i].checked = false;
                                             <tr class="tr_bgcolor">
 												<td class="bold_text" valign="top"><span class="err">*</span>Condition :</td>
 												<td class="smalltext">
-                                                <select name="condition" class="look">
+                                                <select name="condition" class="look" onchange="add_text_desc(this.value)">
                                                     <option value="" selected="selected">Select</option>
                                                     {section name=counter loop=$catRows}
                                                     {if $catRows[counter].fk_cat_type_id == 5}
@@ -233,25 +259,12 @@ if(radList[i].checked) radList[i].checked = false;
                                             <tr class="tr_bgcolor">
 												<td align="center" colspan="2">
                                                 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+
                                                     	<tr>
-                                                        	<td align="center">
-                                                                <div id="browse" style="padding:5px 0px;{if $poster_images_arr|@sizeof  >= $smarty.const.MAX_UPLOAD_POSTER}display:none;{/if}">
-                                                                	<div id="fileUpload">You have a problem with your javascript</div>
-                                                                	<input type="hidden" name="poster_images" id="poster_images" value="{$poster_images}" class="validate required" />
-                                                                	<div class="err">{$poster_images_err}</div>
-                                                                    <div class="err">{$is_default_err}</div>
-                                                                    <div style="font-family:Arial, Helvetica, sans-serif; font-size:11px; width:300px;">Recommended photo size is minimum of 100KB<br/>(800 pixels longest side) to 1.26MB(2000 pixels longest side)</div>
-                                                                </div>
-                                                 <div id="path" {if $poster_images_arr|@sizeof >= $smarty.const.MAX_UPLOAD_POSTER} style="display:none;"{/if}>               
-																{*<strong>OR</strong>
-												<br clear="all" />
-												<div style=" margin-bottom:10px" >
-											<span style="margin-right:10px">Paste Image URL:</span><input type="text" class="formlisting-txtfield" id="imgurl" name="imgurl"  onchange="fetchimage(this.value)"   /><a href="javascript:void(0)"  style="margin-left:10px;"><img src="{$smarty.const.CLOUD_STATIC}uplink.png" title="Upload Image" /></a>
-											
-											
-											</div>*}
-											</div>
-											<div id="photos" style="width:700px; padding:10px; margin:0px; float:left;">
+															<div id="uploader"></div>
+
+
+												<div id="photos" style="width:700px; padding:10px; margin:0px; float:left;">
                                                                     {section name=counter loop=$poster_images_arr}
                                                                         {assign var="countID" value=$smarty.section.counter.index+1}
                                                                         <div id="photo_{$countID}" style="float:left; width:110px; padding:0px 2px 0 1px; margin:0px;"><img src="{$actualPath}/poster_photo/temp/{$random}/{$poster_images_arr[counter]}" height="78" width="100" /><br /><input type="radio" name="is_default" style=" margin-left:40px;" value="{$poster_images_arr[counter]}" {if $is_default == $poster_images_arr[counter]} checked="checked" {/if} /><br /><img src="{$smarty.const.CLOUD_STATIC}delete-icon.png" onclick="deletePhoto('photo_{$countID}', '{$poster_images_arr[counter]}', 'new')" style=" margin-left:30px;" /></div>
@@ -262,6 +275,10 @@ if(radList[i].checked) radList[i].checked = false;
                                                     </table>
                                                 </td>
 											</tr>
+											<tr class="tr_bgcolor" >
+												<td class="bold_text" valign="top">Note :</td>
+												<td class="smalltext"><span class="err">Please click on <b>Start Upload</b> before Submitting the Form.<br/>Make sure there shouldn't be any files <b>Queued</b></span></td>
+											</tr>
 											<tr class="header_bgcolor" height="24">
 												<td colspan="2" align="left" class="headertext">Auction Section</td>
 											</tr>
@@ -269,7 +286,7 @@ if(radList[i].checked) radList[i].checked = false;
 												<td class="bold_text" valign="top"><span class="err">*</span>Ask Price :</td>
 												<td class="smalltext"><input type="text" name="asked_price" value="{$asked_price}" maxlength="8" class="look-price" />.00<br /><span class="err">{$asked_price_err}</span></td>
 											</tr>
-                                           
+
 											<tr class="tr_bgcolor">
 												<td class="bold_text" valign="top">&nbsp;</td>
 												<td class="smalltext">
@@ -289,7 +306,7 @@ if(radList[i].checked) radList[i].checked = false;
 												<td class="smalltext"><input type="text" name="imdb_link" value=""  class="look" /><br /><span class="err">{$asked_price_err}</span></td>
 											</tr>
 											<tr height="28" class="tr_bgcolor">
-												<td align="center" colspan="2"><input type="submit" name="" value="Add" class="button" />&nbsp;&nbsp;&nbsp;<input type="button" name="cancel" value="Cancel" class="button" onclick="javascript: location.href='{$actualPath}{$decoded_string}'; " /></td>
+												<td align="center" colspan="2"><input type="submit" name="" value="Add" class="button" onclick="submitForm()" />&nbsp;&nbsp;&nbsp;<input type="button" name="cancel" value="Cancel" class="button" onclick="javascript: location.href='{$actualPath}{$decoded_string}'; " /></td>
 											</tr>
 										</table>
 									</td>
@@ -300,7 +317,7 @@ if(radList[i].checked) radList[i].checked = false;
 				</tr>
 			</table>
 		</td>
-	</tr>		
+	</tr>
 </table>
 {literal}
 <script type="text/javascript">
@@ -316,8 +333,6 @@ if (xmlHttp==null)
   }
 var url="fetchimg.php";
 url=url+"?imgurl="+image;
-//url=url+"&sid="+Math.random();
-//alert(url);
 xmlHttp.onreadystatechange=stateChanged2;
 xmlHttp.open("GET",url,true);
 xmlHttp.send(null);
@@ -328,7 +343,6 @@ function stateChanged2()
 if (xmlHttp.readyState==4 && xmlHttp.status==200)
 {
 var subcat_arr=xmlHttp.responseText;
-//document.getElementById("onlinephotos").innerHTML=subcat_arr;
 var ind=subcat_arr.indexOf("text/javascript");
 if(ind==-1){
 var cnt=document.getElementById("cnt").value;
@@ -337,12 +351,12 @@ if(Number(cnt) >=1)
 var radList = document.getElementsByName('is_default');
 for (var i = 0; i < radList.length; i++) {
 if(radList[i].checked) radList[i].checked = false;
-}	 
+}
 }
 cnt=Number(cnt)+1;
 document.getElementById("cnt").value=cnt;
 
-if(cnt==12)
+if(cnt==25)
 {
 $("#browse").hide();
 $("#path").hide();
@@ -379,7 +393,7 @@ return xmlHttp;
 {literal}
 <script type="text/javascript">
 var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
-$(document).ready(function() {
+(function() {
     var shopCatSelect = document.getElementById('shop_category');
     var subcatSelect  = document.getElementById('subcategory');
     if (!shopCatSelect || !subcatSelect) return;
@@ -396,8 +410,11 @@ $(document).ready(function() {
         }
     }
     populateSubcats(shopCatSelect.value, '{/literal}{$selected_subcat_id|default:""}{literal}');
-    $('#shop_category').on('change', function() { populateSubcats(this.value, ''); });
-});
+    shopCatSelect.addEventListener('change', function() { populateSubcats(this.value, ''); });
+})();
 </script>
 {/literal}
 {include file="admin_footer.tpl"}
+<script type="text/javascript" src="{$actualPath}/javascript/plupload/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{$actualPath}/javascript/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" src="{$actualPath}/javascript/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js"></script>
