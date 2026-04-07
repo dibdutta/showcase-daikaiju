@@ -4,6 +4,7 @@
 {literal}
 <script type="text/javascript">
 $(document).ready(function() {
+  try {
 	$("#fileUpload").fileUpload({
 		'uploader': '../javascript/uploadify/uploader.swf',
 		'cancelImg': '../javascript/uploadify/cancel.png',
@@ -57,6 +58,7 @@ if(radList[i].checked) radList[i].checked = false;
             }
     	}
 	});
+  } catch(e) {}
   });
 	function chkPosterSize(id){
 	    if(id!=""){
