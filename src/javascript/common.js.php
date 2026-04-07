@@ -519,10 +519,9 @@ function timeLeft(dataArr,list)
                         $('#auction_data_'+bidDataArr[i]['auction_id']).show();
                         /* Offer data onds */
                     }else if(parseInt(bidDataArr[i]['offer_count']) < 1 && (parseInt(bidDataArr[i]['fk_auction_type_id']) == 1 || parseInt(bidDataArr[i]['fk_auction_type_id']) == 4)){
-                    	<!-- dispData = '<div class="auction-row" style="padding:0px;"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Starting Bid:</span></div><div class="buy-text offer_buyprice" style="font-size:13px;">$'+parseFloat(bidDataArr[i]['auction_asked_price']).toFixed(2)+'</div></div>';
+                    	dispData = '<div class="auction-row" style="padding:0px;"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Starting Bid:</span></div><div class="buy-text offer_buyprice" style="font-size:13px;">$'+parseFloat(bidDataArr[i]['auction_asked_price']).toFixed(2)+'</div></div>';
                         $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
-                        $('#auction_data_'+bidDataArr[i]['auction_id']).show(); -->
-                        dispData = '';
+                        $('#auction_data_'+bidDataArr[i]['auction_id']).show();
                     }
                     else{
                         /* Auction data starts */
@@ -644,10 +643,10 @@ function timeLeftGallery(dataArr,list)
                         $('#auction_data_'+bidDataArr[i]['auction_id']).show();
                         /* Offer data onds */
                     }else if(parseInt(bidDataArr[i]['offer_count']) < 1 && (parseInt(bidDataArr[i]['fk_auction_type_id']) == 1 || parseInt(bidDataArr[i]['fk_auction_type_id']) == 4)){
-                    	<!-- dispData = '<div class="auction-row" style="padding:0px;"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Starting Bid:</span></div><div class="buy-text offer_buyprice" style="font-size:13px;">$'+parseFloat(bidDataArr[i]['auction_asked_price']).toFixed(2)+'</div></div>';
+                    	dispData = '<div class="auction-row" style="padding:0px;"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Starting Bid:</span></div><div class="buy-text offer_buyprice" style="font-size:13px;">$'+parseFloat(bidDataArr[i]['auction_asked_price']).toFixed(2)+'</div></div>';
                         $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
-                        $('#auction_data_'+bidDataArr[i]['auction_id']).show(); -->
-                        dispData = '';
+                        $('#auction_data_'+bidDataArr[i]['auction_id']).show();
+                    
                     }
                     else{
                         /* Auction data starts */
@@ -752,10 +751,9 @@ function timeLeftPosterDetails(dataArr)
                         $('#auction_data_'+bidDataArr[i]['auction_id']).show();
                         /* Offer data onds */
                     }else if(parseInt(bidDataArr[i]['offer_count']) < 1 && (parseInt(bidDataArr[i]['fk_auction_type_id']) == 1 || parseInt(bidDataArr[i]['fk_auction_type_id']) == 4)){
-                    	<!-- dispData = '<div class="auction-row" style="padding:0px;"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Starting Bid:</span></div><div class="buy-text offer_buyprice" style="font-size:13px;">$'+parseFloat(bidDataArr[i]['auction_asked_price']).toFixed(2)+'</div></div>';
+                    	dispData = '<div class="auction-row" style="padding:0px;"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Starting Bid:</span></div><div class="buy-text offer_buyprice" style="font-size:13px;">$'+parseFloat(bidDataArr[i]['auction_asked_price']).toFixed(2)+'</div></div>';
                         $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
-                        $('#auction_data_'+bidDataArr[i]['auction_id']).show(); -->
-                        dispData = '';
+                        $('#auction_data_'+bidDataArr[i]['auction_id']).show();
                     }
                     else{
                         /* Auction data starts */
