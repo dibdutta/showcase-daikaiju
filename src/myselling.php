@@ -1660,24 +1660,25 @@ function images_next(){
  	$page = new PageContent();
     $page->pageName = "faq.php";
     $row = $page->pageContentDetails();
-    
-    $GLOBALS["sslStatus"] = $row[PAGE_SSL_PERMISSION];
-    
-    if(SSL_URL ==  true && $GLOBALS["sslStatus"] == 1 && $_SERVER['HTTPS'] !="on"){
-        header("location: https://".HOST_NAME."/".basename($_SERVER['REQUEST_URI'])."");
-        exit();
-    }
-    elseif((SSL_URL == false or $GLOBALS["sslStatus"] == 0) && $_SERVER['HTTPS'] =="on"){
-        header("location: http://".HOST_NAME."/".basename($_SERVER['REQUEST_URI'])."");
-        exit();
+
+    if(is_array($row)){
+        $GLOBALS["sslStatus"] = $row[PAGE_SSL_PERMISSION];
+
+        if(SSL_URL ==  true && $GLOBALS["sslStatus"] == 1 && $_SERVER['HTTPS'] !="on"){
+            header("location: https://".HOST_NAME."/".basename($_SERVER['REQUEST_URI'])."");
+            exit();
+        }
+        elseif((SSL_URL == false or $GLOBALS["sslStatus"] == 0) && $_SERVER['HTTPS'] =="on"){
+            header("location: http://".HOST_NAME."/".basename($_SERVER['REQUEST_URI'])."");
+            exit();
+        }
+
+        $GLOBALS["pageTitle"] = $row[PAGE_TITLE];
+        $GLOBALS["pageHeaderName"] = $row[PAGE_HEADER_NAME];
+        $smarty->assign('pageContent', $row[PAGE_CONTENT]);
+        $smarty->assign('pageHeaderName', $row[PAGE_HEADER_NAME]);
     }
 
-    $GLOBALS["pageTitle"] = $row[PAGE_TITLE];
-    $GLOBALS["pageHeaderName"] = $row[PAGE_HEADER_NAME];
-    
-	$smarty->assign('pageContent', $row[PAGE_CONTENT]);
-	$smarty->assign('pageHeaderName', $row[PAGE_HEADER_NAME]);
-	
 	$smarty->display("user_faq.tpl");
  }
  function save_bulk_to_admin(){
