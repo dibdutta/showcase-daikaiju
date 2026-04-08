@@ -9,6 +9,7 @@ class Cart extends DBCommon{
 	function addToCart($id, $user_id)
 	{
 		$addToCart = false;
+		if(!isset($_SESSION['cart'])) $_SESSION['cart'] = array();
 		if(count($_SESSION['cart']) == 0 && $id != ''){
 			$addToCart = true;
 		}elseif(count($_SESSION['cart']) > 0 && $id != ''){
