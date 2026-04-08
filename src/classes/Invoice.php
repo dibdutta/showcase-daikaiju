@@ -1215,7 +1215,7 @@ class Invoice extends DBCommon{
 		}
 	}
 	function generate_buy_now_invoice($auction_ids,$cart){
-        $amount='';
+        $amount=0;
         $expiredate = date('Y-m-d');
 		$session_id = base64_encode($_SESSION['sessUserID']).session_id();
         $expiredate= $expiredate." 24:00:00";
