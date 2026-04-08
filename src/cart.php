@@ -1,9 +1,9 @@
 <?php
-ini_set('display_errors', '1');
-error_reporting(E_ALL);
 ob_start();
 define ("INCLUDE_PATH", "./");
 require_once INCLUDE_PATH."lib/inc.php";
+ini_set('display_errors', '1');
+error_reporting(E_ALL);
 if(!isset($_SESSION['sessUserID'])){
 	header("Location: index.php");
 	exit;
