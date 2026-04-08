@@ -168,6 +168,12 @@ function time_left()
 					$data[] = $row;
 				}
 			}
+			// SP only covers weekly items; fall back to fixed price table if no rows returned
+			if(empty($data)){
+				$auctionObj = new Auction();
+				$fixedData = $auctionObj->instantUpdateOfferAuction($ids, 'fixed');
+				if($fixedData !== false) $data = $fixedData;
+			}
 		}elseif($list=='stills'){
         $auctionObj = new Auction();
 	    $data = $auctionObj->instantUpdateOfferAuction($ids,$list);
