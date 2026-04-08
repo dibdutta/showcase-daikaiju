@@ -3,6 +3,7 @@ ob_start();
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 define ("INCLUDE_PATH", "./");
 require_once INCLUDE_PATH."lib/inc.php";
+ini_set('display_errors','1'); error_reporting(E_ALL);
 chkLoginNow();
 if(!isset($_SESSION['sessUserID'])){
     header("Location:index.php");
