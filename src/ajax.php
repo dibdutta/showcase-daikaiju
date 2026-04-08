@@ -5,7 +5,6 @@ header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 define ("INCLUDE_PATH", "");
 require_once INCLUDE_PATH."lib/inc.php";
-ini_set('display_errors','1'); error_reporting(E_ALL);
 
 if($_REQUEST['mode'] == "delete_poster"){
 	delete_poster();
@@ -196,9 +195,10 @@ function time_left()
 				$data[$i]['bid_is_won'] = 1;
 				$data[$i]['auction_is_closed']= 1;
 			}
-			$data[$i]['actual_end_time'] = date('h:i:s A', strtotime($data[$i]['auction_actual_end_datetime']));
-			$data[$i]['actual_end_day'] = date('l', strtotime($data[$i]['auction_actual_end_datetime']));
-			$data[$i]['actual_end_date'] = date('m/d/Y', strtotime($data[$i]['auction_actual_end_datetime']));
+			$_end_dt = $data[$i]['auction_actual_end_datetime'];
+			$data[$i]['actual_end_time'] = $_end_dt ? date('h:i:s A', strtotime($_end_dt)) : '';
+			$data[$i]['actual_end_day']  = $_end_dt ? date('l', strtotime($_end_dt)) : '';
+			$data[$i]['actual_end_date'] = $_end_dt ? date('m/d/Y', strtotime($_end_dt)) : '';
 			if(isset($data[$i]['bid_count']) && $data[$i]['bid_count']==0){
 				$data[$i]['next_increment']=increment_amount($data[$i]['auction_asked_price']);
 			}else{
