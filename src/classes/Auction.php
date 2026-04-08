@@ -2749,12 +2749,17 @@ class Auction extends DBCommon{
 				a.bid_count, a.max_bid_amount,
 				(UNIX_TIMESTAMP(a.auction_actual_end_datetime) - UNIX_TIMESTAMP()) AS seconds_left,
 				(UNIX_TIMESTAMP(a.auction_actual_start_datetime) - UNIX_TIMESTAMP()) AS seconds_left_to_start,
-				p.fk_user_id, p.poster_desc, pi.poster_thumb,pi.poster_image,pi.is_cloud,p.artist,p.quantity, p.field_1,p.field_2, p.field_3,u.username
+				p.fk_user_id, p.poster_desc, pi.poster_thumb,pi.poster_image,pi.is_cloud,p.artist,p.quantity, p.field_1,p.field_2, p.field_3,u.username,
+				sc.shop_cat_name, su.subcat_value
 				FROM ".USER_TABLE." u,".TBL_AUCTION." a LEFT JOIN ".TBL_POSTER." p ON a.fk_poster_id = p.poster_id
 				LEFT JOIN ".TBL_POSTER_IMAGES." pi ON a.fk_poster_id = pi.fk_poster_id
 				LEFT JOIN ".TBL_POSTER_IMAGES." pim ON a.fk_poster_id = pim.fk_poster_id
 				LEFT JOIN ".TBL_AUCTION_WEEK." w ON a.fk_auction_week_id = w.auction_week_id
 				LEFT JOIN ".TBL_WATCHING." tw ON a.auction_id = tw.auction_id AND tw.user_id = '".$user_id."'
+				LEFT JOIN ".TBL_POSTER_TO_SHOP_CATEGORY." ptsc ON a.fk_poster_id = ptsc.fk_poster_id
+				LEFT JOIN ".TBL_SHOP_CATEGORY." sc ON ptsc.fk_shop_cat_id = sc.shop_cat_id
+				LEFT JOIN ".TBL_POSTER_TO_SUBCATEGORY." ptsu ON a.fk_poster_id = ptsu.fk_poster_id
+				LEFT JOIN ".TBL_SUBCATEGORY." su ON ptsu.fk_subcat_id = su.subcat_id
 				WHERE pi.is_default = '1' and a.auction_id IN (".$auction_id.") and u.user_id=p.fk_user_id ";
 		
 		}else{
@@ -2770,12 +2775,17 @@ class Auction extends DBCommon{
 				a.auction_is_sold, a.auction_actual_end_datetime, p.poster_id, p.poster_title, p.poster_sku,a.max_bid_amount,a.bid_count,
 				(UNIX_TIMESTAMP(a.auction_actual_end_datetime) - UNIX_TIMESTAMP()) AS seconds_left,
 				(UNIX_TIMESTAMP(a.auction_actual_start_datetime) - UNIX_TIMESTAMP()) AS seconds_left_to_start,
-				p.fk_user_id, p.poster_desc, pi.poster_thumb,pi.poster_image,pi.is_cloud,p.artist,p.quantity, p.field_1,p.field_2, p.field_3,u.username
+				p.fk_user_id, p.poster_desc, pi.poster_thumb,pi.poster_image,pi.is_cloud,p.artist,p.quantity, p.field_1,p.field_2, p.field_3,u.username,
+				sc.shop_cat_name, su.subcat_value
 				FROM ".USER_TABLE." u,tbl_auction_live a LEFT JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
 				LEFT JOIN tbl_poster_images_live pi ON a.fk_poster_id = pi.fk_poster_id
 				LEFT JOIN tbl_poster_images_live pim ON a.fk_poster_id = pim.fk_poster_id
 				LEFT JOIN ".TBL_AUCTION_WEEK." w ON a.fk_auction_week_id = w.auction_week_id
 				LEFT JOIN ".TBL_WATCHING." tw ON a.auction_id = tw.auction_id AND tw.user_id = '".$user_id."'
+				LEFT JOIN tbl_poster_to_shop_category_live ptsc ON a.fk_poster_id = ptsc.fk_poster_id
+				LEFT JOIN ".TBL_SHOP_CATEGORY." sc ON ptsc.fk_shop_cat_id = sc.shop_cat_id
+				LEFT JOIN tbl_poster_to_subcategory_live ptsu ON a.fk_poster_id = ptsu.fk_poster_id
+				LEFT JOIN ".TBL_SUBCATEGORY." su ON ptsu.fk_subcat_id = su.subcat_id
 				WHERE pi.is_default = '1' and a.auction_id IN (".$auction_id.") and u.user_id=p.fk_user_id";
 
 			

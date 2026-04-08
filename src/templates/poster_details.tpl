@@ -476,14 +476,24 @@ function toggleDiv(id,flagit,type,track) {
                             <td class="pt10 pb10"><table width="100%" cellpadding="0" cellspacing="0" border="0" align="left">
                                 
                                 {if $auctionDetails[0].fk_auction_type_id!='6'}
-								<tr>
+                                {*<tr>
                                     <td colspan="3" class="descrp-area">
                                         <b>Size:</b> {$auctionDetails[0].poster_size}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="3" class="descrp-area"><b>Genre:</b> {$auctionDetails[0].genre}</td>
+                                </tr>*}
+                                {if $auctionDetails[0].shop_cat_name != ''}
+                                <tr>
+                                    <td colspan="3" class="descrp-area"><b>Category:</b> {$auctionDetails[0].shop_cat_name}</td>
                                 </tr>
+                                {/if}
+                                {if $auctionDetails[0].subcat_value != ''}
+                                <tr>
+                                    <td colspan="3" class="descrp-area"><b>Subcategory:</b> {$auctionDetails[0].subcat_value}</td>
+                                </tr>
+                                {/if}
                                 <tr>
                                     <td colspan="3" class="descrp-area"><b>Condition:</b> {$auctionDetails[0].cond}</td>
                                 </tr>
