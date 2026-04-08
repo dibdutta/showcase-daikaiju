@@ -3,7 +3,6 @@ ob_start();
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 define ("INCLUDE_PATH", "./");
 require_once INCLUDE_PATH."lib/inc.php";
-ini_set('display_errors','1'); error_reporting(E_ALL);
 chkLoginNow();
 if(!isset($_SESSION['sessUserID'])){
     header("Location:index.php");
@@ -1663,17 +1662,6 @@ function images_next(){
     $row = $page->pageContentDetails();
 
     if(is_array($row)){
-        $GLOBALS["sslStatus"] = $row[PAGE_SSL_PERMISSION];
-
-        if(SSL_URL ==  true && $GLOBALS["sslStatus"] == 1 && $_SERVER['HTTPS'] !="on"){
-            header("location: https://".HOST_NAME."/".basename($_SERVER['REQUEST_URI'])."");
-            exit();
-        }
-        elseif((SSL_URL == false or $GLOBALS["sslStatus"] == 0) && $_SERVER['HTTPS'] =="on"){
-            header("location: http://".HOST_NAME."/".basename($_SERVER['REQUEST_URI'])."");
-            exit();
-        }
-
         $GLOBALS["pageTitle"] = $row[PAGE_TITLE];
         $GLOBALS["pageHeaderName"] = $row[PAGE_HEADER_NAME];
         $smarty->assign('pageContent', $row[PAGE_CONTENT]);
