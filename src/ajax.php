@@ -168,6 +168,13 @@ function time_left()
 				while($row = mysqli_fetch_array($rs)){
 					$data[] = $row;
 				}
+				mysqli_free_result($rs);
+			}
+			// Consume any extra result sets left by the stored procedure
+			while(mysqli_more_results($GLOBALS['db_connect'])){
+				mysqli_next_result($GLOBALS['db_connect']);
+				$extra = mysqli_store_result($GLOBALS['db_connect']);
+				if($extra) mysqli_free_result($extra);
 			}
 			// SP only covers weekly items; fall back to fixed price table if no rows returned
 			if(empty($data)){
