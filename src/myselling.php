@@ -310,15 +310,7 @@ function validateFixedForm()
 	
     if($_POST['poster_title'] == ""){
         $GLOBALS['poster_title_err'] = "Please enter Poster Title.";
-        $errCounter++;  
-    }
-    if($_POST['poster_size'] == ""){
-        $GLOBALS['poster_size_err'] = "Please select Size.";
-        $errCounter++;  
-    }
-    if($_POST['genre'] == ""){
-        $GLOBALS['genre_err'] = "Please select Grene.";
-        $errCounter++;  
+        $errCounter++;
     }
     if($_POST['condition'] == ""){
         $GLOBALS['condition_err'] = "Please select Condition.";

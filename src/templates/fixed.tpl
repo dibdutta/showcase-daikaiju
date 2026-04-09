@@ -155,6 +155,10 @@ function checkMinOffer(){
 		var unqArr = Array.from(new Set(res)).filter(function(v){return v!==''});
 		var post_img=unqArr.join();
 		$("#poster_images").val(post_img);
+		var checkedRadio = $("input[name='is_default']:checked");
+		if (checkedRadio.length === 0 && unqArr.length > 0) {
+			$("#is_default_hidden").val(unqArr[0]);
+		}
 		document.getElementById("posterUpload").submit();
 	}
 </script>
@@ -298,7 +302,9 @@ textarea
 												<div id="uploader"></div>
                                                 <div  id="browse" style="text-align:center; margin:0 auto;"  {if $poster_images_arr|@sizeof >= $smarty.const.MAX_UPLOAD_POSTER} style="display:none;"{/if}>
                                                 
-                                                <input type="hidden" name="poster_images" id="poster_images" value="{$poster_images}" class="validate " /><div class="list-err">{$poster_images_err}</div>
+                                                <input type="hidden" name="poster_images" id="poster_images" value="{$poster_images}" class="validate " />
+                                <input type="hidden" name="is_default" id="is_default_hidden" />
+                                <div class="list-err">{$poster_images_err}</div>
                                                
                                                <div style="font-size:11px; width:300px; margin:0 auto;">Recommended photo size is minimum of 100KB<br/>(800 pixels longest side) to 1.26MB(2000 pixels longest side)</div>
                                                 
