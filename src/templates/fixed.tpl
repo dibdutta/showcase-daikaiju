@@ -204,159 +204,146 @@ textarea
                             <form name="posterUpload" id="posterUpload" action="" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="mode" value="fixed_upload" />
                                 <input type="hidden" name="cnt" id="cnt" value="{$cnt}" />
-								<input type="hidden" name="random" id="folder" value="{$random}" />
-								<!--<input type="hidden" name="random" id="folder" value="{$random}" />-->
-                                <div class="formarea-listing">
-                                     <table cellpadding="0" cellspacing="0" border="0" class="listbox">
-                                        <tr>
-                                            <td><label>Poster Title<span class="red-star">*</span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td valign="top"><input type="text" name="poster_title" id="poster_title" value="{$poster_title}" class="formlisting-txtfield required" /><div class="disp-err">{$poster_title_err}</div></td>
-                                        </tr>
-                                        <tr>
-                                            <td><label>Condition<span class="red-star">*</span></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td valign="top">
-                                            <div class="FAQCondition">
-                                                <select name="condition" class="formlisting-txtfield required">
-                                                    <option value="" selected="selected">Select</option>
-                                                    {section name=counter loop=$catRows}
-                                                    {if $catRows[counter].fk_cat_type_id == 5}
-                                                        <option value="{$catRows[counter].cat_id}" {if $condition == $catRows[counter].cat_id} selected {/if}>{$catRows[counter].cat_value}</option>
-                                                        {assign var="selected" value=""}
-                                                    {/if}
-                                                    {/section}
-                                                </select>
-												&nbsp;<a onclick="javascript:window.open('{$actualPath}/myselling.php?mode=faq','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" href="javascript:void(0)" class="FAQIcon"><img src="{$smarty.const.CLOUD_STATIC}faq_fixed.png"/></a>
-                                                <div class="disp-err">{$condition_err}</div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label>Category</label></td>
-                                        </tr>
-                                        <tr>
-                                            <td valign="top">
-                                                <select name="shop_category" id="shop_category" class="formlisting-txtfield">
-                                                    <option value="">Select (optional)</option>
-                                                    {section name=sc loop=$shopCatRows}
-                                                    <option value="{$shopCatRows[sc].shop_cat_id}" {if $selected_shop_cat_id == $shopCatRows[sc].shop_cat_id}selected="selected"{/if}>{$shopCatRows[sc].shop_cat_name}</option>
-                                                    {/section}
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label>Subcategory</label></td>
-                                        </tr>
-                                        <tr>
-                                            <td valign="top">
-                                                <select name="subcategory" id="subcategory" class="formlisting-txtfield">
-                                                    <option value="">Select (optional)</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" style="padding-top:30px;"><label><strong>Description<span class="red-star">*</span></strong></label>
-											<br clear="all" />
-											<p style="font-size:12px; margin:0px; padding:0px;">Please give a detailed description of your item<br />
- including any restoration / backing</p>
-											</td>
-											<td valign="top" style="padding-top:30px;"><label><strong>Ask Price<span class="red-star">*</span></strong></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" valign="top">
-                                                {*<div style="float:left; width:450px; padding:0px; margin:0px; display:block;">*}
-                                                <!--<div  style="top:10px;width:370px;height:100px;position:relative;">-->
-  <textarea class="wymeditor required" id="textDesc"  name="poster_desc"   style="left:0px;top:0px;position:absolute;padding:0px 0px 0px 0px;">{$poster_desc|stripslashes}</textarea>
-
-  <!--<div id="handleRight" style="height:95px;position:absolute;left:95px;top:0px;"></div>
-  <div id="handleCorner" style="position:absolute;cursor:se-resize;top:87px;left:357px;"></div>
-  <div id="handleBottom" style="height:0px;position:absolute;left:0px;top:95px; clear:both;"></div>-->
-<!--</div>-->
-<br clear="all" />
-<div class="disp-err" >{$poster_desc_err}</div>
-<div class="disp-err" htmlfor="textBox" generated="true"></div>
-{*</div>*}
-											</td>
-                                            <td valign="top">
-											<div style="height:100px;position:relative;">
-                                                <div class="text-price" style="width: 12px; float: left;" >$</div>
-                                                <div class="txtboxprice"><input type="text" name="asked_price" value="{$asked_price}" maxlength="8" class="formlisting-txtfield-price required number" /></div>
-                                                <div class="text-price">.00</div>
-                                                <div class="list-err">{$asked_price_err}</div>
-											</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2"><label><strong>Notes</strong> (Not viewable to public)<strong>:</strong></label></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" valign="top">
-											<div id="textDiv" style="width:370px;height:100px;position:relative;">
-  												<textarea id="textBox" class="bigfield" name="auction_note" style="width:370px;height:90px;left:0px;top:0px;position:absolute;padding:0px 0px 0px 0px; overflow-y:scroll;">{$auction_note}</textarea>
-  												<!--<div id="handleRight" style="height:95px;position:absolute;left:95px;top:0px;"></div>
-  												<div id="handleCorner" style="position:absolute;cursor:se-resize;top:87px;left:357px;"></div>
-  												<div id="handleBottom" style="height:5px;position:absolute;left:0px;top:95px;"></div>-->
-											</div>
-											</td>
-                                            <td><div><input type="checkbox" name="is_consider" {if $is_consider == 1} checked="checked" {/if} id="is_consider"  value="1" onclick="checkMinOffer()" ><label> I will consider offers</label></div>
-											<br/>											
-											<div id="minOfferDiv"  {if $is_consider != 1} style="display:none;" {/if}>
-                                               <div class="text-price" style="width: 12px; float: left;" >$</div>
-                                                <div class="txtboxprice"><input type="text" name="offer_price" value="{$offer_price}" maxlength="8" class="formlisting-txtfield-price " /></div>
-                                                <div class="text-price">.00</div>
-                                                <div class="list-err">{$offer_price_err}</div>
-											</div>
-											</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left" colspan="3">
-												<div id="flat_rolled" {if $flat_rolled==''} style="display:none;" {/if}>
-                                                <div id="folded" {if $flat_rolled=='rolled' && $no_sizes!='2'} style="display:none;"{/if}>
-												<input id="folded_selected" type="radio" name="flat_rolled" value="flat" checked="checked" /><label>&nbsp;Folded&nbsp;</label>
-												</div>
-                                                <div id="rolled" {if $flat_rolled=='flat' && $no_sizes!='2'} style="display:none;"{/if}>
-												<input id="rolled_selected"  type="radio" name="flat_rolled" value="rolled" {if $flat_rolled == 'rolled'} checked="checked" {/if} /><label>&nbsp;Rolled</label>
-												</div>
-												</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td align="center" colspan="3" width="100%" style="text-align:center;">
-												<div id="uploader"></div>
-                                                <div  id="browse" style="text-align:center; margin:0 auto;"  {if $poster_images_arr|@sizeof >= $smarty.const.MAX_UPLOAD_POSTER} style="display:none;"{/if}>
-                                                
-                                                <input type="hidden" name="poster_images" id="poster_images" value="{$poster_images}" class="validate " />
+                                <input type="hidden" name="random" id="folder" value="{$random}" />
+                                <input type="hidden" name="poster_images" id="poster_images" value="{$poster_images}" />
                                 <input type="hidden" name="is_default" id="is_default_hidden" />
-                                <div class="list-err">{$poster_images_err}</div>
-                                               
-                                               <div style="font-size:11px; width:300px; margin:0 auto;">Recommended photo size is minimum of 100KB<br/>(800 pixels longest side) to 1.26MB(2000 pixels longest side)</div>
-                                                
+
+                                <div style="max-width:780px; margin:0 auto; font-family:Arial,Helvetica,sans-serif; font-size:13px;">
+
+                                    <!-- Section: Poster Details -->
+                                    <div style="background:#fff; border:1px solid #ddd; border-radius:4px; margin-bottom:16px;">
+                                        <div style="background:#6b0000; color:#fff; font-weight:bold; font-size:13px; padding:8px 14px; border-radius:4px 4px 0 0;">Poster Details</div>
+                                        <div style="padding:16px;">
+
+                                            <div style="margin-bottom:14px;">
+                                                <label style="display:block; font-weight:bold; margin-bottom:4px;">Poster Title <span style="color:#c00;">*</span></label>
+                                                <input type="text" name="poster_title" id="poster_title" value="{$poster_title}" class="formlisting-txtfield required" style="width:100%; box-sizing:border-box;" />
+                                                <div class="disp-err">{$poster_title_err}</div>
+                                            </div>
+
+                                            <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:14px;">
+                                                <div style="flex:1; min-width:180px;">
+                                                    <label style="display:block; font-weight:bold; margin-bottom:4px;">Condition <span style="color:#c00;">*</span>
+                                                        &nbsp;<a onclick="javascript:window.open('{$actualPath}/myselling.php?mode=faq','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" href="javascript:void(0)" class="FAQIcon"><img src="{$smarty.const.CLOUD_STATIC}faq_fixed.png" style="vertical-align:middle;" /></a>
+                                                    </label>
+                                                    <select name="condition" class="formlisting-txtfield required" style="width:100%;">
+                                                        <option value="" selected="selected">Select</option>
+                                                        {section name=counter loop=$catRows}
+                                                        {if $catRows[counter].fk_cat_type_id == 5}
+                                                            <option value="{$catRows[counter].cat_id}" {if $condition == $catRows[counter].cat_id} selected {/if}>{$catRows[counter].cat_value}</option>
+                                                            {assign var="selected" value=""}
+                                                        {/if}
+                                                        {/section}
+                                                    </select>
+                                                    <div class="disp-err">{$condition_err}</div>
                                                 </div>
-                                   <div  id="path" {if $poster_images_arr|@sizeof >= $smarty.const.MAX_UPLOAD_POSTER} style="display:none;"{/if}>              
-								           
-											
-											</div>
-											<div class="disp-err">{$is_default_err}</div>
-											<div id="photos" style="width:100%; padding:10px; margin:0px; float:left;">
+                                                <div style="flex:1; min-width:180px;">
+                                                    <label style="display:block; font-weight:bold; margin-bottom:4px;">Category</label>
+                                                    <select name="shop_category" id="shop_category" class="formlisting-txtfield" style="width:100%;">
+                                                        <option value="">Select (optional)</option>
+                                                        {section name=sc loop=$shopCatRows}
+                                                        <option value="{$shopCatRows[sc].shop_cat_id}" {if $selected_shop_cat_id == $shopCatRows[sc].shop_cat_id}selected="selected"{/if}>{$shopCatRows[sc].shop_cat_name}</option>
+                                                        {/section}
+                                                    </select>
+                                                </div>
+                                                <div style="flex:1; min-width:180px;">
+                                                    <label style="display:block; font-weight:bold; margin-bottom:4px;">Subcategory</label>
+                                                    <select name="subcategory" id="subcategory" class="formlisting-txtfield" style="width:100%;">
+                                                        <option value="">Select (optional)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div style="margin-bottom:14px;">
+                                                <label style="display:block; font-weight:bold; margin-bottom:4px;">Description <span style="color:#c00;">*</span></label>
+                                                <p style="font-size:11px; color:#666; margin:0 0 6px 0;">Please give a detailed description of your item including any restoration / backing</p>
+                                                <textarea class="wymeditor required" id="textDesc" name="poster_desc" style="width:100%; box-sizing:border-box;">{$poster_desc|stripslashes}</textarea>
+                                                <div class="disp-err">{$poster_desc_err}</div>
+                                            </div>
+
+                                            <div id="flat_rolled" {if $flat_rolled==''} style="display:none;" {/if} style="margin-bottom:14px;">
+                                                <div id="folded" {if $flat_rolled=='rolled' && $no_sizes!='2'} style="display:none;"{/if}>
+                                                    <input id="folded_selected" type="radio" name="flat_rolled" value="flat" checked="checked" /><label>&nbsp;Folded&nbsp;</label>
+                                                </div>
+                                                <div id="rolled" {if $flat_rolled=='flat' && $no_sizes!='2'} style="display:none;"{/if}>
+                                                    <input id="rolled_selected" type="radio" name="flat_rolled" value="rolled" {if $flat_rolled == 'rolled'} checked="checked" {/if} /><label>&nbsp;Rolled</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Section: Pricing -->
+                                    <div style="background:#fff; border:1px solid #ddd; border-radius:4px; margin-bottom:16px;">
+                                        <div style="background:#6b0000; color:#fff; font-weight:bold; font-size:13px; padding:8px 14px; border-radius:4px 4px 0 0;">Pricing</div>
+                                        <div style="padding:16px;">
+
+                                            <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:14px;">
+                                                <div style="flex:1; min-width:160px;">
+                                                    <label style="display:block; font-weight:bold; margin-bottom:4px;">Ask Price <span style="color:#c00;">*</span></label>
+                                                    <div style="display:flex; align-items:center; gap:4px;">
+                                                        <span style="font-weight:bold;">$</span>
+                                                        <input type="text" name="asked_price" value="{$asked_price}" maxlength="8" class="formlisting-txtfield-price required number" style="width:120px;" />
+                                                        <span>.00</span>
+                                                    </div>
+                                                    <div class="list-err">{$asked_price_err}</div>
+                                                </div>
+                                                <div style="flex:2; min-width:200px;">
+                                                    <label style="display:block; font-weight:bold; margin-bottom:8px;">&nbsp;</label>
+                                                    <label style="cursor:pointer;">
+                                                        <input type="checkbox" name="is_consider" {if $is_consider == 1} checked="checked" {/if} id="is_consider" value="1" onclick="checkMinOffer()" />
+                                                        &nbsp;I will consider offers
+                                                    </label>
+                                                    <div id="minOfferDiv" style="margin-top:8px; {if $is_consider != 1}display:none;{/if}">
+                                                        <label style="display:block; font-weight:bold; margin-bottom:4px;">Min Offer Price</label>
+                                                        <div style="display:flex; align-items:center; gap:4px;">
+                                                            <span style="font-weight:bold;">$</span>
+                                                            <input type="text" name="offer_price" value="{$offer_price}" maxlength="8" class="formlisting-txtfield-price" style="width:120px;" />
+                                                            <span>.00</span>
+                                                        </div>
+                                                        <div class="list-err">{$offer_price_err}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <label style="display:block; font-weight:bold; margin-bottom:4px;">Notes <span style="color:#888; font-weight:normal;">(not viewable to public)</span></label>
+                                                <textarea name="auction_note" style="width:100%; height:80px; box-sizing:border-box; border:1px solid #ccc; padding:6px; font-size:12px; font-family:Arial,Helvetica,sans-serif;">{$auction_note}</textarea>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Section: Photos -->
+                                    <div style="background:#fff; border:1px solid #ddd; border-radius:4px; margin-bottom:16px;">
+                                        <div style="background:#6b0000; color:#fff; font-weight:bold; font-size:13px; padding:8px 14px; border-radius:4px 4px 0 0;">Photos</div>
+                                        <div style="padding:16px;">
+                                            <p style="font-size:11px; color:#666; margin:0 0 10px 0;">
+                                                Recommended photo size: minimum 100KB (800px longest side) to 1.26MB (2000px longest side).<br/>
+                                                <strong>Please click Start Upload before submitting. Ensure no files remain Queued.</strong>
+                                            </p>
+                                            <div id="uploader"></div>
+                                            <div class="list-err" style="margin-top:6px;">{$poster_images_err}</div>
+                                            <div class="disp-err">{$is_default_err}</div>
+                                            <div id="photos" style="padding:10px 0; overflow:hidden;">
                                                 {section name=counter loop=$poster_images_arr}
                                                     {assign var="countID" value=$smarty.section.counter.index+1}
-                                                    <div id="photo_{$countID}" style="float:left; width:110px; padding:0px 2px 0 1px; margin:0px;"><img src="{$actualPath}/poster_photo/temp/{$random}/{$poster_images_arr[counter]}" height="78" width="100" /><br /><input type="radio" name="is_default" value="{$poster_images_arr[counter]}" {if $is_default == $poster_images_arr[counter]} checked="checked" {/if} /><div class="list-err">{$is_default_err}</div><br /><img src="{$smarty.const.CLOUD_STATIC}delete-icon.png" onclick="deletePhoto('photo_{$countID}', '{$poster_images_arr[counter]}', 'new')" /></div>
-                                                    {/section}
-                                                </div>
-											
+                                                    <div id="photo_{$countID}" style="float:left; width:110px; padding:0 4px 4px 0; text-align:center;">
+                                                        <img src="{$actualPath}/poster_photo/temp/{$random}/{$poster_images_arr[counter]}" height="78" width="100" style="border:2px solid #ccc;" />
+                                                        <br /><input type="radio" name="is_default" value="{$poster_images_arr[counter]}" {if $is_default == $poster_images_arr[counter]} checked="checked" {/if} />
+                                                        <br /><img src="{$smarty.const.CLOUD_STATIC}delete-icon.png" onclick="deletePhoto('photo_{$countID}', '{$poster_images_arr[counter]}', 'new')" style="cursor:pointer; margin-top:4px;" />
+                                                    </div>
+                                                {/section}
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                            </td>                                                
-                                        </tr>
-                                     </table>
-                                     <div class="clear"></div>
-                                     <div class="btn-box">     
-                                        <input type="submit" value="Submit" class="submit-btn wymupdate" onclick="submitForm()" />
-                                        <input type="reset" value="Reset" class="submit-btn" />
-                                     </div>
-                                     <div class="clear"></div>
+                                    <!-- Submit -->
+                                    <div style="text-align:center; padding:8px 0 16px 0;">
+                                        <input type="submit" value="Submit Listing" class="submit-btn wymupdate" onclick="submitForm()" style="padding:8px 28px; font-size:14px; margin-right:10px;" />
+                                        <input type="reset" value="Reset" class="submit-btn" style="padding:8px 20px; font-size:14px;" />
+                                    </div>
+
                                 </div>
                             </form> 
 							
