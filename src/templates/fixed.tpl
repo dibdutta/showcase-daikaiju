@@ -339,9 +339,9 @@ textarea
                                     </div>
 
                                     <!-- Submit -->
-                                    <div style="text-align:center; padding:8px 0 16px 0;">
-                                        <input type="submit" value="Submit Listing" class="submit-btn wymupdate" onclick="submitForm()" style="padding:8px 28px; font-size:14px; margin-right:10px;" />
-                                        <input type="reset" value="Reset" class="submit-btn" style="padding:8px 20px; font-size:14px;" />
+                                    <div style="display:flex; justify-content:center; gap:10px; padding:8px 0 16px 0;">
+                                        <input type="submit" value="Submit Listing" class="submit-btn wymupdate" onclick="submitForm()" style="width:auto; padding:0 20px 3px 20px;" />
+                                        <input type="reset" value="Reset" class="submit-btn" style="width:auto; padding:0 20px 3px 20px;" />
                                     </div>
 
                                 </div>
