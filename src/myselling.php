@@ -127,6 +127,10 @@ if(!$_POST)
     $catRows = $obj->selectDataCategory(TBL_CATEGORY, array('*'),true,true);
     $smarty->assign('catRows', $catRows);
     $smarty->assign('poster_images_arr', array());
+    $shopCatObj = new ShopCategory();
+    $smarty->assign('shopCatRows', $shopCatObj->fetchAll());
+    $subcatObj = new Subcategory();
+    $smarty->assign('subcatJson', json_encode($subcatObj->fetchAllGrouped()));
 
         foreach ($_POST as $key => $value ) {
         
@@ -680,7 +684,15 @@ function save_fixed_auction()
     if($condition != ""){
         $obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
     }
-    
+
+    if(!empty($shop_category)){
+        $obj->updateData(TBL_POSTER_TO_SHOP_CATEGORY, array("fk_poster_id" => $poster_id, "fk_shop_cat_id" => $shop_category));
+    }
+
+    if(!empty($subcategory)){
+        $obj->updateData(TBL_POSTER_TO_SUBCATEGORY, array("fk_poster_id" => $poster_id, "fk_subcat_id" => $subcategory));
+    }
+
     $is_percentage = ($is_percentage == '')? '0' : '1';
     $is_considered = ($is_consider == '')? '0' : '1'; 
     if($is_considered=='0'){

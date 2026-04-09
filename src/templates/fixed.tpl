@@ -215,8 +215,11 @@ textarea
                                             <td valign="top"><input type="text" name="poster_title" id="poster_title" value="{$poster_title}" class="formlisting-txtfield required" /><div class="disp-err">{$poster_title_err}</div></td>
                                         </tr>
                                         <tr>
+                                            <td><label>Condition<span class="red-star">*</span></label></td>
+                                        </tr>
+                                        <tr>
                                             <td valign="top">
-                                            <div  class="FAQCondition">
+                                            <div class="FAQCondition">
                                                 <select name="condition" class="formlisting-txtfield required">
                                                     <option value="" selected="selected">Select</option>
                                                     {section name=counter loop=$catRows}
@@ -229,6 +232,29 @@ textarea
 												&nbsp;<a onclick="javascript:window.open('{$actualPath}/myselling.php?mode=faq','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" href="javascript:void(0)" class="FAQIcon"><img src="{$smarty.const.CLOUD_STATIC}faq_fixed.png"/></a>
                                                 <div class="disp-err">{$condition_err}</div>
                                                 </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Category</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="top">
+                                                <select name="shop_category" id="shop_category" class="formlisting-txtfield">
+                                                    <option value="">Select (optional)</option>
+                                                    {section name=sc loop=$shopCatRows}
+                                                    <option value="{$shopCatRows[sc].shop_cat_id}" {if $selected_shop_cat_id == $shopCatRows[sc].shop_cat_id}selected="selected"{/if}>{$shopCatRows[sc].shop_cat_name}</option>
+                                                    {/section}
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Subcategory</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="top">
+                                                <select name="subcategory" id="subcategory" class="formlisting-txtfield">
+                                                    <option value="">Select (optional)</option>
+                                                </select>
                                             </td>
                                         </tr>
                                         <tr>
@@ -355,6 +381,29 @@ textarea
     </div>
     <div class="clear"></div>
 </div>
+{literal}
+<script type="text/javascript">
+var subcatData = {/literal}{$subcatJson|default:'{}'}{literal};
+(function() {
+    var shopCatSelect = document.getElementById('shop_category');
+    var subcatSelect  = document.getElementById('subcategory');
+    if (!shopCatSelect || !subcatSelect) return;
+    function populateSubcats(shopCatId, selectedId) {
+        while (subcatSelect.options.length > 1) subcatSelect.remove(1);
+        var items = subcatData[shopCatId] || [];
+        for (var i = 0; i < items.length; i++) {
+            var opt = document.createElement('option');
+            opt.value = items[i].subcat_id;
+            opt.text  = items[i].subcat_value;
+            if (selectedId && items[i].subcat_id == selectedId) opt.selected = true;
+            subcatSelect.appendChild(opt);
+        }
+    }
+    populateSubcats(shopCatSelect.value, '');
+    shopCatSelect.addEventListener('change', function() { populateSubcats(this.value, ''); });
+})();
+</script>
+{/literal}
 {include file="foot.tpl"}
 
 <script type="text/javascript" src="{$actualPath}/javascript/plupload/plupload.full.min.js"></script>
