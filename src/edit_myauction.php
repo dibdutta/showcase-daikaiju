@@ -975,7 +975,7 @@ if(!$_POST)
 	}
 
 function update_fixed(){
-	
+
 	extract($_REQUEST);
 	$obj = new Auction();
 	$is_considered = ($is_consider == '')? '0' : '1';
@@ -985,18 +985,23 @@ function update_fixed(){
 	$auctionData = array("auction_asked_price" => $asked_price, "auction_reserve_offer_price" => $offer_price,
 						 "is_offer_price_percentage" => $is_percentage, "auction_note" => add_slashes($auction_note));
 	$auctionWhere = array("auction_id" => $auction_id);
-	$obj->updateData(TBL_AUCTION, $auctionData, $auctionWhere, true);	
+	$obj->updateData(TBL_AUCTION, $auctionData, $auctionWhere, true);
 
 	$posterData = array('poster_title' => add_slashes($poster_title), 'poster_desc' => mysqli_real_escape_string($GLOBALS['db_connect'],$poster_desc),'flat_rolled'=>$flat_rolled);
 	$posterWhere = array("poster_id" => $poster_id);
 	$obj->updateData(TBL_POSTER, $posterData, $posterWhere, true);
-	
-	$obj->deleteData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id));	
+
+	$obj->deleteData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $poster_size));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $genre));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $decade));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $country));
 	$obj->updateData(TBL_POSTER_TO_CATEGORY, array("fk_poster_id" => $poster_id, "fk_cat_id" => $condition));
+
+	$shopCatObj = new ShopCategory();
+	$shopCatObj->savePosterShopCat($poster_id, (int)$shop_category, false);
+	$subcatObj = new Subcategory();
+	$subcatObj->savePosterSubcat($poster_id, (int)$subcategory, false);
 
 	if(isset($poster_images) || isset($_SESSION['img'])){
 	
