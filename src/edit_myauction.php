@@ -688,6 +688,12 @@ function edit_fixed(){
 	$smarty->assign("existingImages", $existingImages);
 	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows)));
 	$smarty->assign("view_key", 0);
+	$shopCatObj = new ShopCategory();
+	$smarty->assign('shopCatRows', $shopCatObj->fetchAll());
+	$subcatObj = new Subcategory();
+	$smarty->assign('subcatJson', json_encode($subcatObj->fetchAllGrouped()));
+	$smarty->assign('selected_shop_cat_id', $shopCatObj->getPosterShopCatId($auctionRow[0]['fk_poster_id'] ?? 0, false));
+	$smarty->assign('selected_subcat_id', $subcatObj->getPosterSubcatId($auctionRow[0]['fk_poster_id'] ?? 0, false));
 	$smarty->display("edit_myauction_fixed.tpl");
 	
 
