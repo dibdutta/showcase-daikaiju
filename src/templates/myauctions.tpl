@@ -180,11 +180,13 @@ function clear_text(){
                                   <tr>
                                     <td class="pt10 pb10">
                                     	<div class="descrp-area">
-                                            <div class="desp-txt"><b>Size : </b> {$auction[counter].poster_size}</div>
-                                            <div class="desp-txt"><b>Genre : </b> {$auction[counter].genre}</div>
-                                            <div class="desp-txt"><b>Decade : </b> {$auction[counter].decade}</div>
-                                            <div class="desp-txt"><b>Country : </b> {$auction[counter].country}</div>
                                             <div class="desp-txt"><b>Condition : </b> {$auction[counter].cond}</div>
+                                            {if $auction[counter].shop_cat_name != ''}
+                                            <div class="desp-txt"><b>Category : </b> {$auction[counter].shop_cat_name}</div>
+                                            {/if}
+                                            {if $auction[counter].subcat_value != ''}
+                                            <div class="desp-txt"><b>Subcategory : </b> {$auction[counter].subcat_value}</div>
+                                            {/if}
 										</div>
                                     </td>
                                   </tr>
