@@ -340,8 +340,8 @@ textarea
 
                                     <!-- Submit -->
                                     <div style="display:flex; justify-content:center; gap:10px; padding:8px 0 16px 0;">
-                                        <input type="submit" value="Submit Listing" class="submit-btn wymupdate" onclick="submitForm()" style="width:auto; padding:0 20px 3px 20px;" />
-                                        <input type="reset" value="Reset" class="submit-btn" style="width:auto; padding:0 20px 3px 20px;" />
+                                        <input type="submit" value="Submit Listing" class="submit-btn wymupdate" onclick="submitForm()" style="width:auto; padding:6px 20px; background:#111; background-image:none; text-align:center;" />
+                                        <input type="reset" value="Reset" class="submit-btn" style="width:auto; padding:6px 20px; background:#111; background-image:none; text-align:center;" />
                                     </div>
 
                                 </div>
