@@ -219,12 +219,18 @@ if(!$_POST)
 	$smarty->assign("posterImageRows", $posterImageRows);
 	$smarty->assign("existingImages", $existingImages);
 	$smarty->assign("browse_count", (count($poster_images_arr) + count($posterImageRows)));
-	
+
 	if($_REQUEST['type']=='monthly'){
 		$smarty->display("edit_myauction_monthly.tpl");
 	}elseif($_REQUEST['type']=='weekly'){
 		$smarty->display("edit_myauction_weekly.tpl");
 	}elseif($_REQUEST['type']=='fixed'){
+		$shopCatObj = new ShopCategory();
+		$smarty->assign('shopCatRows', $shopCatObj->fetchAll());
+		$subcatObj = new Subcategory();
+		$smarty->assign('subcatJson', json_encode($subcatObj->fetchAllGrouped()));
+		$smarty->assign('selected_shop_cat_id', $shopCatObj->getPosterShopCatId($auctionRow[0]['fk_poster_id'] ?? 0, false));
+		$smarty->assign('selected_subcat_id', $subcatObj->getPosterSubcatId($auctionRow[0]['fk_poster_id'] ?? 0, false));
     	$smarty->display("edit_myauction_fixed.tpl");
 	}elseif($_REQUEST['type']=='stills'){
     	$smarty->display("edit_myauction_stills.tpl");
