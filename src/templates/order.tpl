@@ -235,8 +235,14 @@
 {literal}
 <style>
 td {
-
   vertical-align: top;
+}
+#forinnerpage-container, #wrapper {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+#inner-right-container {
+  overflow-x: hidden;
 }
 </style>
 {/literal}
