@@ -8,8 +8,9 @@
 $(document).ready(function(){
 	dataArr = {/literal}{$json_arr}{literal};
 	var mode= {/literal}{if $smarty.request.mode==''}''{else}'{$smarty.request.mode}'{/if}{literal};
-	if(mode==''){
-		//setInterval(function() { timeLeftGallery(dataArr,'weekly'); }, 2000);	
+	var type= {/literal}'{$smarty.request.type}'{literal};
+	if(mode=='' && type!='fixed'){
+		//setInterval(function() { timeLeftGallery(dataArr,'weekly'); }, 2000);
 		setTimeout(function() { timeLeftGallery(dataArr,'weekly'); }, 3000);
 	}				   
 })
@@ -18,7 +19,6 @@ $(document).ready(function(){
 </script>
 <script type="text/javascript">
 function toggleDiv(id,flagit,type,track) {
-	console.log(id);
  	 var url = "bid_popup";
 	 if(type==1 && track==1){
 	 	$.post(url, {mode : 'offer_popup', id : id}, function(data){
