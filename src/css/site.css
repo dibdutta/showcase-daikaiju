@@ -2815,12 +2815,12 @@ right: 144px;*/
 }
 
 .BuyNow {
-	color: #337e40;
+	color: #ffffff;
 	width: 101px;
 	margin: 0px 8px 0 0px;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/buynow.png);
-	background-repeat: no-repeat;
-	background-position: left top;
+	background: #c0392b;
+	background-image: none;
+	border-radius: 4px;
 }
 
 .bidnow-hammer-btn {
