@@ -82,7 +82,7 @@ function show_form($blogID = null) {
 
     ob_start();
     $oFCK = new FCKeditor('content');
-    $oFCK->BasePath = '/fckeditor/';
+    $oFCK->BasePath = '/FCKeditor/';
     $oFCK->Value    = $data['content'] ?? '';
     $oFCK->Width    = '100%';
     $oFCK->Height   = '500';
