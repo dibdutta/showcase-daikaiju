@@ -232,7 +232,7 @@ function toggleDiv(id,flagit,type,track) {
                                       <table width="260" cellspacing="0" cellpadding="0" border="0">
                                       <tr>
                                         <td valign="middle"><div><div class="CurrencyDecimal">${$auctionDetails[0].auction_asked_price|number_format:2}</div></div></td>
-                                        <td valign="top" colspan="2"><input type="button" id="buynow_bttn_{$auctionDetails[0].auction_id}" value="BUY NOW" onclick="redirect_to_cart({$auctionDetails[0].auction_id}, '{$auctionDetails[0].fk_user_id}')" class="bidnow-btn BuyNow" style="margin:1px 0 0 0;" /></td>
+                                        <td valign="top" colspan="2"><input type="button" id="buynow_bttn_{$auctionDetails[0].auction_id}" value="BUY NOW" onclick="redirect_to_cart({$auctionDetails[0].auction_id}, '{$auctionDetails[0].fk_user_id}')" class="bidnow-btn BuyNow" style="margin:1px 0 0 0; background:#c0392b !important; background-image:none !important;" /></td>
                                         </tr>
                                         </table>
                                         </div>
@@ -304,7 +304,7 @@ function toggleDiv(id,flagit,type,track) {
                                       <table width="260" cellspacing="0" cellpadding="0" border="0">
                                       <tr>
                                         <td valign="middle"><div><div class="CurrencyDecimal">${$auctionDetails[0].auction_asked_price|number_format:2}</div></div></td>
-                                        <td valign="top" colspan="2"><input type="button" id="buynow_bttn_{$auctionDetails[0].auction_id}" value="BUY NOW" onclick="redirect_to_cart({$auctionDetails[0].auction_id}, '{$auctionDetails[0].fk_user_id}')" class="bidnow-btn BuyNow" style="margin:1px 0 0 0;" /></td>
+                                        <td valign="top" colspan="2"><input type="button" id="buynow_bttn_{$auctionDetails[0].auction_id}" value="BUY NOW" onclick="redirect_to_cart({$auctionDetails[0].auction_id}, '{$auctionDetails[0].fk_user_id}')" class="bidnow-btn BuyNow" style="margin:1px 0 0 0; background:#c0392b !important; background-image:none !important;" /></td>
                                         </tr>
                                         </table>
                                         </div>
@@ -373,7 +373,7 @@ function toggleDiv(id,flagit,type,track) {
                                     {if $auctionDetails[0].auction_buynow_price > 0}
                                         <tr>
                                             <td valign="middle" class="text"><b>Buy Now</b> &nbsp;<span class="buynowprice">${$auctionDetails[0].auction_buynow_price|number_format:2}</span></td>
-                                            <td valign="top" colspan="2" class="text"><input type="button" id="buynow_bttn_{$auctionDetails[0].auction_id}" value="Buy Now!!" onclick="redirect_to_cart({$auctionDetails[0].auction_id},'{$auctionDetails[0].fk_user_id}')" class="bidnow-btn BuyNow" /></td>
+                                            <td valign="top" colspan="2" class="text"><input type="button" id="buynow_bttn_{$auctionDetails[0].auction_id}" value="Buy Now!!" onclick="redirect_to_cart({$auctionDetails[0].auction_id},'{$auctionDetails[0].fk_user_id}')" class="bidnow-btn BuyNow" style="background:#c0392b !important; background-image:none !important;" /></td>
                                         </tr>
                                     {/if}
                                 {/if}   
