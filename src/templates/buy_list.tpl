@@ -132,7 +132,6 @@ function toggleDiv(id,flagit,type,track) {
 					{if $extendedAuction != ""}					    
 						<li {if $smarty.request.list == 'extended'} class="active" {/if}><a href="{$actualPath}/buy?list=extended&view_mode=grid"><span>Extended Auction {$extendedAuction}</span></a></li>
 					{/if}
-                    <li {if $smarty.request.list == 'alternative'} class="active" {/if}><a href="{$actualPath}/buy?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
 					{*<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy?list=stills"><span>Fixed Stills</span></a></li>*}
 				  </ul>
                   
@@ -223,9 +222,7 @@ function toggleDiv(id,flagit,type,track) {
                             </div>
                             <!--<a href="#"><strong>How to Order?</strong></a>-->
 							
-                            {if $smarty.request.list == 'fixed'}
-                            <input type="button" class="place-all-offers-btn" onclick="placeAllBids(dataArr);" value=""/>
-                            {else}
+                            {if $smarty.request.list != 'fixed'}
                             <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="" />
                             {/if} </div>
                           <div class="clear"></div>
@@ -516,9 +513,7 @@ function toggleDiv(id,flagit,type,track) {
                             <input type="button" class="watch-slctd-btn" onclick="this.form.submit();" value="" />
                              </div>
                             {*<a href="#"><strong>How to Order?</strong></a>*}
-                            {if $smarty.request.list == 'fixed' }
-                            <input type="button" class="place-all-offers-btn" onclick="placeAllBids(dataArr);" value=""/>
-                            {else}
+                            {if $smarty.request.list != 'fixed'}
                             <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value=""/>
                             {/if} </div>
                           <div class="clear"></div>

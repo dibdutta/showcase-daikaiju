@@ -53,7 +53,6 @@
 						{if $extendedAuction != ""}					    
 							<li {if $smarty.request.list == 'extended'} class="active" {/if}><a href="{$actualPath}/buy?list=extended&view_mode=grid"><span>Extended Auction {$extendedAuction}</span></a></li>
 						{/if}
-					    <li {if $smarty.request.list == 'alternative'} class="active" {/if}><a href="{$actualPath}/buy?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
 					</ul>
                      
 				</div>	
@@ -146,7 +145,7 @@
                                     <div class="inner-grey SelectionBtnPanel" >
 										
                                         <div style="float:left; padding:0px; margin:0px;">
-										{if $smarty.session.sessUserID <> ""}
+										{if $smarty.session.sessUserID <> "" && $smarty.request.list != 'fixed'}
                                             <input type="button" class="place-all-bids-btn" onclick="placeAllBids(dataArr);" value="Place All Bids" />
 										{else}	
 										  &nbsp;
