@@ -30,13 +30,15 @@ global $Config;
 $Config ['Enabled'] = true;
 
 // Path to user files relative to the document root.
-$Config ['UserFilesPath'] = '/userfiles/';
+$Config ['UserFilesPath'] = '/blog_uploads/';
 
-// Fill the following value it you prefer to specify the absolute path for the
-// user files directory. Useful if you are using a virtual directory, symbolic
-// link or alias. Examples: 'C:\\MySite\\userfiles\\' or '/root/mysite/userfiles/'.
-// Attention: The above 'UserFilesPath' must point to the same directory.
-$Config ['UserFilesAbsolutePath'] = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/userfiles/';
+// Absolute path on the filesystem to the same directory.
+$Config ['UserFilesAbsolutePath'] = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/blog_uploads/';
+
+// Auto-create the directory if it doesn't exist
+if (!is_dir($Config['UserFilesAbsolutePath'])) {
+    mkdir($Config['UserFilesAbsolutePath'], 0755, true);
+}
 
 // Due to security issues with Apache modules, it is recommended to leave the
 // following setting enabled.

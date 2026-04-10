@@ -4,7 +4,7 @@ ob_start();
 
 define('INCLUDE_PATH', '../');
 require_once INCLUDE_PATH . 'lib/inc.php';
-require_once INCLUDE_PATH . 'fckeditor/fckeditor.php';
+require_once INCLUDE_PATH . 'FCKeditor/fckeditor.php';
 require_once INCLUDE_PATH . 'classes/Blog.php';
 
 if (!isset($_SESSION['adminLoginID'])) {
