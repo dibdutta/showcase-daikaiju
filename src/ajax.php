@@ -61,24 +61,36 @@ function delete_poster(){
 					$posterObj->updateData('tbl_poster_images_live',array("is_default" => 1),array("fk_poster_id" => $poster_id ,"poster_thumb"=>$resData[0]['poster_thumb']),true);
 					$posterThumb = "poster_photo/".$poster_image;
 					$posterLarge = "poster_photo/thumbnail/".$poster_image;
+					$posterThumbBuy = "poster_photo/thumb_buy/".$poster_image;
+					$posterThumbBuyGallery = "poster_photo/thumb_buy_gallery/".$poster_image;
+					$posterThumbBigSlider = "poster_photo/thumb_big_slider/".$poster_image;
 					@unlink($posterThumb);
 					@unlink($posterLarge);
+					@unlink($posterThumbBuy);
+					@unlink($posterThumbBuyGallery);
+					@unlink($posterThumbBigSlider);
 					echo "done";
 				}else{
 					echo "none";
 				}
-			}else{				
+			}else{
 				if($posterObj->deleteData(TBL_POSTER_IMAGES, array("poster_thumb" => $poster_image))){
 					$resDataposter = $posterObj->selectData(TBL_POSTER_IMAGES,array('poster_image_id'), array("fk_poster_id" => $poster_id,"is_default" => 1));
 					if(!empty($resDataposter)){
-						$posterObj->updateData(TBL_POSTER_IMAGES,array("is_default" => 0), array("fk_poster_id" => $poster_id ,"poster_image_id"=>$resDataposter[0]['poster_image_id']),true);	
+						$posterObj->updateData(TBL_POSTER_IMAGES,array("is_default" => 0), array("fk_poster_id" => $poster_id ,"poster_image_id"=>$resDataposter[0]['poster_image_id']),true);
 					}
 					$resData = $posterObj->selectData(TBL_POSTER_IMAGES,array('*'), array("fk_poster_id" => $poster_id));
 					$posterObj->updateData(TBL_POSTER_IMAGES,array("is_default" => 1),array("fk_poster_id" => $poster_id ,"poster_thumb"=>$resData[0]['poster_thumb']),true);
 					$posterThumb = "poster_photo/".$poster_image;
 					$posterLarge = "poster_photo/thumbnail/".$poster_image;
+					$posterThumbBuy = "poster_photo/thumb_buy/".$poster_image;
+					$posterThumbBuyGallery = "poster_photo/thumb_buy_gallery/".$poster_image;
+					$posterThumbBigSlider = "poster_photo/thumb_big_slider/".$poster_image;
 					@unlink($posterThumb);
 					@unlink($posterLarge);
+					@unlink($posterThumbBuy);
+					@unlink($posterThumbBuyGallery);
+					@unlink($posterThumbBigSlider);
 					echo "done";
 				}else{
 					echo "none";

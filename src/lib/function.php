@@ -426,36 +426,26 @@ function sendMail($toMail, $toName, $subject, $textContent) {
 
 	$client = new Aws\Ses\SesClient([
 				'version' => 'latest',
-				'region'  => 'us-east-1'//,
-				//'debug'   => true
+				'region'  => 'us-east-1',
+				'credentials' => Aws\Credentials\CredentialProvider::ini('ses-sender')
 	]);
-	
-	define('SENDER', SITE_EMAIL_SENDER);
 
-	// Replace recipient@example.com with a "To" address. If your account
-	// is still in the sandbox, this address must be verified.
-	define('RECIPIENT', $toName.'<'.$toMail.'>');
-	
-	// Replace us-west-2 with the AWS region you're using for Amazon SES.
-	define('REGION','us-east-1');
-	
-	define('SUBJECT',$subject);
-	define('BODY',$textContent);
-	
+	$ses_sender = SITE_EMAIL_SENDER;
+	$ses_recipient = $toName.'<'.$toMail.'>';
+
 	$request = array();
-	$request['Source'] = SENDER;
-	$request['Destination']['ToAddresses'] = array(RECIPIENT);
+	$request['Source'] = $ses_sender;
+	$request['Destination']['ToAddresses'] = array($ses_recipient);
 	$request['Message']['Subject']['Data'] = $subject;
 	$request['Message']['Subject']['Charset'] = 'utf-8';
-	$request['Message']['Body']['Html']['Data'] = BODY;
+	$request['Message']['Body']['Html']['Data'] = $textContent;
 	$request['Message']['Body']['Html']['Charset'] = 'utf-8';
-	//echo "<pre>".print_r($request)."</pre>";
 	try{
 		$result = $client->sendEmail($request);
 	}catch (Exception $e) {
-	
+
 	}
-	
+
 }
 
 ////////////// sendMail function END    ///////////////////////////////
@@ -1634,35 +1624,25 @@ function chkTimeOut(){}
 
 	$client = new Aws\Ses\SesClient([
 				'version' => 'latest',
-				'region'  => 'us-east-1'//,
-				//'debug'   => true
+				'region'  => 'us-east-1',
+				'credentials' => Aws\Credentials\CredentialProvider::ini('ses-sender')
 	]);
-	
-	define('SENDER', SITE_EMAIL_SENDER);
 
-	// Replace recipient@example.com with a "To" address. If your account
-	// is still in the sandbox, this address must be verified.
-	define('RECIPIENT', $toName.'<'.$toMail.'>');
-	
-	// Replace us-west-2 with the AWS region you're using for Amazon SES.
-	define('REGION','us-east-1');
-	
-	define('SUBJECT',$subject);
-	define('BODY',$textContent);
-	
+	$ses_sender = SITE_EMAIL_SENDER;
+	$ses_recipient = $toName.'<'.$toMail.'>';
+
 	$request = array();
-	$request['Source'] = SENDER;
-	$request['Destination']['ToAddresses'] = array(RECIPIENT);
+	$request['Source'] = $ses_sender;
+	$request['Destination']['ToAddresses'] = array($ses_recipient);
 	$request['Message']['Subject']['Data'] = $subject;
 	$request['Message']['Subject']['Charset'] = 'utf-8';
-	$request['Message']['Body']['Html']['Data'] = BODY;
+	$request['Message']['Body']['Html']['Data'] = $textContent;
 	$request['Message']['Body']['Html']['Charset'] = 'utf-8';
-	//echo "<pre>".print_r($request)."</pre>";
 	try{
 		$result = $client->sendEmail($request);
 	}catch (Exception $e) {
-	
+
 	}
- 
+
  }
 ?>

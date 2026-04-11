@@ -1266,17 +1266,21 @@ function update_weekly()
 				$posterThumb = "poster_photo/thumbnail/".$value['poster_thumb'];
 				$posterThumbBuy = "poster_photo/thumb_buy/".$value['poster_thumb'];
 				$posterThumbBuyGallery = "poster_photo/thumb_buy_gallery/".$value['poster_thumb'];
-								
+				$posterThumbBigSlider = "poster_photo/thumb_big_slider/".$value['poster_thumb'];
+
 				@unlink($posterLarge);
 				@unlink($posterThumb);
 				@unlink($posterThumbBuy);
 				@unlink($posterThumbBuyGallery);
-			
+				@unlink($posterThumbBigSlider);
+
 		}
-	
+
 		$auctionObj->deleteData(TBL_POSTER, array('poster_id' => $auctionData[0]['fk_poster_id']));
 		$auctionObj->deleteData(TBL_POSTER_IMAGES, array('fk_poster_id' => $auctionData[0]['fk_poster_id']));
 		$auctionObj->deleteData(TBL_POSTER_TO_CATEGORY, array('fk_poster_id' => $auctionData[0]['fk_poster_id']));
+		$auctionObj->deleteData(TBL_POSTER_TO_SHOP_CATEGORY, array('fk_poster_id' => $auctionData[0]['fk_poster_id']));
+		$auctionObj->deleteData(TBL_POSTER_TO_SUBCATEGORY, array('fk_poster_id' => $auctionData[0]['fk_poster_id']));
 	}
 	$auctionObj->deleteData(TBL_AUCTION, array('auction_id' => $auction_id));
 	$auctionObj->deleteData(TBL_CART_HISTORY, array('fk_auction_id' => $auction_id));
