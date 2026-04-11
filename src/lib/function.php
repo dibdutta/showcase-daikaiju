@@ -426,8 +426,7 @@ function sendMail($toMail, $toName, $subject, $textContent) {
 
 	$client = new Aws\Ses\SesClient([
 				'version' => 'latest',
-				'region'  => 'us-east-1',
-				'credentials' => Aws\Credentials\CredentialProvider::ini('ses-sender')
+				'region'  => 'us-east-1'
 	]);
 
 	$ses_sender = SITE_EMAIL_SENDER;
@@ -1624,8 +1623,7 @@ function chkTimeOut(){}
 
 	$client = new Aws\Ses\SesClient([
 				'version' => 'latest',
-				'region'  => 'us-east-1',
-				'credentials' => Aws\Credentials\CredentialProvider::ini('ses-sender')
+				'region'  => 'us-east-1'
 	]);
 
 	$ses_sender = SITE_EMAIL_SENDER;
