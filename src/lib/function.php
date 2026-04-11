@@ -422,7 +422,7 @@ function orderBy($linkname, $orderby, $imageshow=1, $class){
 //////////////  sendMail function START  /////////////////////////
 
 function sendMail($toMail, $toName, $subject, $textContent) {
-    require_once 'AWS/aws-autoloader.php';
+    require_once __DIR__ . '/AWS/aws-autoloader.php';
 
 	$client = new Aws\Ses\SesClient([
 				'version' => 'latest',
@@ -441,8 +441,9 @@ function sendMail($toMail, $toName, $subject, $textContent) {
 	$request['Message']['Body']['Html']['Charset'] = 'utf-8';
 	try{
 		$result = $client->sendEmail($request);
-	}catch (Exception $e) {
-
+	} catch (Exception $e) {
+		error_log('SES sendMail error: ' . $e->getMessage());
+		throw $e;
 	}
 
 }
@@ -1619,7 +1620,7 @@ function chkTimeOut(){}
  function chkLoginNow(){}
  
  function sendMailAWS($toMail, $toName, $subject, $textContent){
- 	require_once 'AWS/aws-autoloader.php';
+ 	require_once __DIR__ . '/AWS/aws-autoloader.php';
 
 	$client = new Aws\Ses\SesClient([
 				'version' => 'latest',
@@ -1638,8 +1639,9 @@ function chkTimeOut(){}
 	$request['Message']['Body']['Html']['Charset'] = 'utf-8';
 	try{
 		$result = $client->sendEmail($request);
-	}catch (Exception $e) {
-
+	} catch (Exception $e) {
+		error_log('SES sendMailAWS error: ' . $e->getMessage());
+		throw $e;
 	}
 
  }
