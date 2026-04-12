@@ -106,24 +106,6 @@
                                             <tr><td colspan="3">&nbsp;</td></tr>
 											{assign var="seller_username" value= '' }
                                             {section name=counter loop=$invoiceData[0].auction_details}
-											{if $chk_item_type=='1'}
-											
-											  {if $seller_username !=$invoiceData[0].auction_details[counter].seller_username}
-											  {if $seller_username!=''}	
-											  	<tr>
-                                                <td align="right" colspan="2" class="billbrdr">Shipping Charge:</td>
-                                                {if $invoiceData[0].shipping_address.shipping_country_name =='Canada' || $invoiceData[0].shipping_address.shipping_country_name =='United States'}
-                                                	<td align="left" class="billbrdr">$15.00</td>
-												{else}
-													<td align="left" class="billbrdr">$21.00</td>
-												{/if} 
-                                            	</tr>
-												{assign var="subTotalShipping" value=$subTotalShipping+15}
-											  {/if}
-                                            	<tr><td colspan="3" class="billbrdr">Seller : {$invoiceData[0].auction_details[counter].seller_username}</td></tr>
-											  
-											  {/if}
-											{/if}
                                             <tr>
                                              	<td class="billbrdr">{$smarty.section.counter.index+1}</td>
                                                 <td align="left" class="billbrdr">{$invoiceData[0].auction_details[counter].poster_title}</td>
@@ -132,27 +114,10 @@
                                             {assign var="subTotal" value=$subTotal+$invoiceData[0].auction_details[counter].amount}
 											{assign var="seller_username" value= $invoiceData[0].auction_details[counter].seller_username }
                                             {/section}
-											{if $chk_item_type=='1' || $chk_item_type=='4'}
-												<tr>
-                                                <td align="right" colspan="2" class="billbrdr">Shipping Charge:</td>
-                                                {if $invoiceData[0].shipping_address.shipping_country_name =='Canada' || $invoiceData[0].shipping_address.shipping_country_name =='United States'}
-                                                	<td align="left" class="billbrdr">$15.00</td>
-												{else}
-													<td align="left" class="billbrdr">$21.00</td>
-												{/if}
-                                            	</tr>
-												{assign var="subTotalShipping" value=$subTotalShipping+15}
-											{/if}
                                             <tr>
                                                 <td align="right" colspan="2" class="billbrdr">Subtotal</td>
                                                 <td align="left" class="billbrdr">${$subTotal|number_format:2}</td>
                                             </tr>
-											{if $chk_item_type=='1' || $chk_item_type=='4'}
-											<tr>
-                                                <td align="right" colspan="2" class="billbrdr">Shippping Charge Total:</td>
-                                                <td align="left" class="billbrdr">${$subTotalShipping|number_format:2}</td>
-                                            </tr>
-											{/if}
                                             {section name=counter loop=$invoiceData[0].additional_charges}
                                             <tr>
                                                 <td align="right" colspan="2" class="billbrdr">(+)&nbsp;{$invoiceData[0].additional_charges[counter].description}</td>
@@ -167,18 +132,13 @@
                                             </tr>
                                             {assign var="subTotal" value=$subTotal-$invoiceData[0].discounts[counter].amount}
                                             {/section}
-											{if $chk_item_type=='1' || $chk_item_type=='4'}
-												{assign var="subTotal" value=$subTotal+$subTotalShipping}
-											{/if}	
                                             <tr>
                                                 <td align="right" colspan="2" class="billbrdr">Total</td>
                                                 <td align="left" class="billbrdr">${$subTotal|number_format:2}</td>
                                             </tr>
-											{if $chk_item_type!='1' && $chk_item_type!='4'}
                                             <tr style="height:40px;">
                                             	<td class="billbrdr" align="left" colspan="3"><strong>NB: Shipping charges(and sales tax if you reside in GA or NC) will be applied at checkout. Please note that shipping charges may reflect the cost of separate packages(flat vs rolled).</strong></td>
                                             </tr>
-											{/if}
                                          </table>                                        
                                     </td>
                                 </tr>

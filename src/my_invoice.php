@@ -317,26 +317,6 @@ function shippingInfo()
 	foreach ($_POST as $key => $value){
 		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
 	}
-	if(isset($_REQUEST['invoice_key']) && $_REQUEST['invoice_key']!=''){
-		$seller_array=explode(',', base64_decode($_REQUEST['invoice_key']));
-		$seller_arr=array();
-		for($k=0;$k<count($seller_array);$k++){
-			if (in_array($seller_array[$k], $seller_arr)) {
-			  
-			} else {
-				if(is_numeric($seller_array[$k])){
-				array_push($seller_arr,$seller_array[$k]);
-				}
-			}
-		}
-		if($dataArr[0]['shipping_address']['shipping_country_name']!='Canada' || $dataArr[0]['shipping_address']['shipping_country_name']!='United States'){
-			$charge = count($seller_arr)*21;
-		}else{
-			$charge = count($seller_arr)*15;
-		}
-		$smarty->assign('count',$charge);
-		$smarty->assign('countTotal',count($seller_arr));
-	}
 	$smarty->assign('shipping_methods_err', $GLOBALS['shipping_methods_err']);
 	$smarty->assign('shipping_charge_err', $GLOBALS['shipping_charge_err']);
 	
@@ -514,15 +494,7 @@ function chooseOptionForPayment()
 			}
 		}elseif(substr($key, 0, 8) == 'shipping'){
 			if($key == 'shipping_charge'){
-			  if(isset($_POST['invoice_key']) && $_POST['invoice_key']!=''){
-				if($_POST['shipping_country_id'] == '230' || $_POST['shipping_country_id'] == '38'){
-					$_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info'][$key] = 15*$_POST['seller_count'];
-				}else{
-					$_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info'][$key] =	21*$_POST['seller_count'];
-				}
-			  }else{
-			  	$_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info'][$key] = $value;
-			  }
+				$_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info'][$key] = $value;
 			}else{
 				$_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info'][$key] = $value;
 			}

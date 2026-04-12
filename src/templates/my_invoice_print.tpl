@@ -93,23 +93,6 @@ margin:0px;
                 <tr><td colspan="3">&nbsp;</td></tr>
 				{assign var="seller_username" value= '' }
 				{section name=counter loop=$invoiceData[0].auction_details}
-				{if $chk_item_type=='1' }
-				
-				  {if $seller_username !=$invoiceData[0].auction_details[counter].seller_username}
-				  {if $seller_username!=''}	
-					<tr>
-					<td align="right" colspan="2" style="padding:4px;">Shipping Charge:</td>
-					{if $invoiceData[0].shipping_address.shipping_country_name =='Canada' || $invoiceData[0].shipping_address.shipping_country_name =='United States' || $invoiceData[0].is_old==1 }
-                            <td align="left" style="padding:4px;">$15.00</td>
-					{else}
-							<td align="left" style="padding:4px;">$21.00</td>
-					{/if} 
-					</tr>
-				  {/if}
-					<tr><td colspan="3" style="padding:4px;">Seller : {$invoiceData[0].auction_details[counter].seller_username}</td></tr>
-				  
-				  {/if}
-				{/if}
                 <tr  >
                     <td style="padding:4px;" align="left">{$smarty.section.counter.index+1}</td>
                     <td style="padding:4px;" align="left">{$invoiceData[0].auction_details[counter].poster_title}{if $invoiceData[0].is_buyers_copy=='0'}&nbsp;(#{$invoiceData[0].auction_details[counter].poster_sku}){/if}</td>
@@ -118,16 +101,6 @@ margin:0px;
                 {assign var="subTotal" value=$subTotal+$invoiceData[0].auction_details[counter].amount}
 				{assign var="seller_username" value= $invoiceData[0].auction_details[counter].seller_username }
                 {/section}
-				{if $chk_item_type=='1' || $chk_item_type=='4'}
-						<tr>
-						<td align="right" colspan="2" style="padding:4px;">Shipping Charge:</td>
-						{if $invoiceData[0].shipping_address.shipping_country_name =='Canada' || $invoiceData[0].shipping_address.shipping_country_name =='United States' || $invoiceData[0].is_old==1}
-                            <td align="left" style="padding:4px;">$15.00</td>
-						{else}
-							<td align="left" style="padding:4px;">$21.00</td>
-						{/if}
-						</tr>
-					{/if}
                 <tr>
                     <td style="padding:4px;" align="right" colspan="2"  >Subtotal</td>
                     <td style="padding:4px;" align="left"  >${$subTotal|number_format:2}</td>

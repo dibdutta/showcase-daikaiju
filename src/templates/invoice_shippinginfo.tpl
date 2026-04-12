@@ -223,7 +223,6 @@ function shipsame(form){
                                         <tr>
                                         	<td colspan="3" style="border-bottom:1px solid #cccccc;">&nbsp;</td>
                                         </tr>
-										{if $smarty.request.invoice_key==''}
                                         <tr>
                                         	<td colspan="3" align="left" style="padding-bottom:10px;">
                                                 <div class="per-field">
@@ -241,12 +240,6 @@ function shipsame(form){
                                             </td>
                                             <!--<td>&nbsp;</td>-->
                                         </tr>
-										{else}
-										<input type="hidden" name="shipping_methods" value="usps"  />
-										<input type="hidden" name="shipping_charge" id="shipping_charge" value="{$count}"  />
-										<input type="hidden" name="seller_count" id="seller_count" value="{$countTotal}"  />
-										
-										{/if}
 
                                      </table>
                                      </div>

@@ -87,19 +87,6 @@
                                             <tr><td colspan="3">&nbsp;</td></tr>
 											{assign var="seller_username" value= '' }
                                             {section name=counter loop=$dataArr[0].auction_details}
-											{if $chk_item_type=='1' }
-											
-											  {if $seller_username !=$dataArr[0].auction_details[counter].seller_username}
-											  {if $seller_username!=''}	
-											  	<tr>
-                                                <td align="right" colspan="2" class="billbrdr">Shipping Charge:</td>
-                                                <td align="left" class="billbrdr">$15</td>
-                                            	</tr>
-											  {/if}
-                                            	<tr><td colspan="3" class="billbrdr">Seller : {$dataArr[0].auction_details[counter].seller_username}</td></tr>
-											  
-											  {/if}
-											{/if}
                                             <tr>
                                                 <td align="left" class="billbrdr">{$smarty.section.counter.index+1}</td>
                                                 <td align="left" class="billbrdr">{$dataArr[0].auction_details[counter].poster_title}</td>
@@ -108,12 +95,6 @@
                                             {assign var="subTotal" value=$subTotal+$dataArr[0].auction_details[counter].amount}
 											{assign var="seller_username" value= $dataArr[0].auction_details[counter].seller_username }
                                             {/section}
-											{if $chk_item_type=='1' || $chk_item_type=='4'}
-												<tr>
-                                                <td align="right" colspan="2" class="billbrdr">Shipping Charge:</td>
-                                                <td align="left" class="billbrdr">$15</td>
-                                            	</tr>
-											{/if}
                                             <tr>
                                                 <td align="right" colspan="2" class="billbrdr">Subtotal</td>
                                                 <td align="left" class="billbrdr">${$subTotal|number_format:2}</td>
