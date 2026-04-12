@@ -8,5 +8,10 @@ echo "Clearing Smarty compiled template caches..."
 rm -rf /var/www/html/templates_c/* /var/www/html/admin_templates_c/* 2>/dev/null || true
 echo "Done."
 
-# Hand off to the default Apache entrypoint
-exec docker-php-entrypoint apache2-foreground "$@"
+# If a command was passed (e.g. from ECS task override), run it directly.
+# Otherwise start Apache as the default web server.
+if [ "$#" -gt 0 ]; then
+    exec "$@"
+else
+    exec docker-php-entrypoint apache2-foreground
+fi
