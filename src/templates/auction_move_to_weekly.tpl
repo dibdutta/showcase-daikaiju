@@ -57,11 +57,8 @@
   <img  class="image-brdr" src="{$auctionDetails[0].image_path}"  border="0"  style="cursor:default;" />
    </div>
     <div class="descrp-area-two movetoweeklypopup_desc">
-      <div class="desp-txt"><b>Size : </b>{$auctionDetails[0].categories[0].cat_value}</div>
-      <div class="desp-txt"><b>Genre : </b> {$auctionDetails[0].categories[1].cat_value}</div>
-      <div class="desp-txt"><b>Decade : </b> {$auctionDetails[0].categories[2].cat_value}</div>
-      <div class="desp-txt"><b>Country : </b> {$auctionDetails[0].categories[3].cat_value}</div>
-      <div class="desp-txt"><b>Condition : </b>{$auctionDetails[0].categories[4].cat_value}</div>
+      <div class="desp-txt"><b>Category : </b>{$auctionDetails[0].shop_cat_name}</div>
+      <div class="desp-txt"><b>Subcategory : </b>{$auctionDetails[0].subcat_value}</div>
     </div>
     <div class="list-auction-fixed-ask">
       <div class="auction-row">
