@@ -41,14 +41,14 @@
 </div>
              <div class="clear"></div>
 			 <div style="padding:6px 0;" class="dashboard-main">
-			 <div class="dashblock mr24" style="margin-left:-20px; width:230px;">
+			 <div class="dashblock mr24" style="width:100%;">
                                       
                   						<table width="100%" cellpadding="0" cellspacing="0" border="0"  >
                                         	<tr>
                                                 <th width="80%" align="left" valign="top" class="tal" style="background-color:#bd1a21; color:#FFFFFF;">Event Calendar</th>                                            
                                             </tr>
                                         </table>
-                                        <div class="scrollable" style="width:230px;">
+                                        <div class="scrollable" style="width:100%;">
                                         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:30px; color: blue;">                                            
                                             
                                             <tr>
@@ -70,7 +70,7 @@
                                         
                                       </div>
                                         
-                                        <div class="dashboard-main_shadow" style="width:230px;"></div>
+                                        <div class="dashboard-main_shadow" style="width:100%;"></div>
                                     </div>
 			 </div>
 			 <div class="clear"></div>
@@ -87,13 +87,13 @@
               <div class="bannersidebarbottombg"></div>
              
              <div style="padding:6px 0;" class="dashboard-main">
-             <div class="dashblock mr24" style="margin-left:-20px; width:230px;">
+             <div class="dashblock mr24" style="width:100%;">
                  <table width="100%" cellpadding="0" cellspacing="0" border="0">
                      <tr>
                          <th width="80%" align="left" valign="top" class="tal" style="background-color:#bd1a21; color:#FFFFFF;">Featured Articles</th>
                      </tr>
                  </table>
-                 <div class="scrollable" style="width:230px;">
+                 <div class="scrollable" style="width:100%;">
                  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px; color:blue;">
                      {if $featuredArticles}
                          {foreach from=$featuredArticles item=article}

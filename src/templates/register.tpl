@@ -87,7 +87,7 @@ function shipsame(form){
                 <div class="left-midbg"> 
                     <div class="right-midbg">
                 <div class="mid-rept-bg">                
-                    <div class="inner-area-general" style="margin:-30px 0 0 -45px;" >
+                    <div class="inner-area-general" style="margin:0;" >
                        <!-- <span>Fields marked <span class="red-star">*</span> are mandatory</span>     -->                   
                         <div class="formheading-area">
                             <div class="lefthdr">&nbsp;</div>
@@ -288,15 +288,13 @@ function shipsame(form){
             </div>
                 <!--Page Body Ends-->
             </div>        
-             </div></div></div>       
-            
-        </div> 
+             </div></div>
+
+        {include file="gavelsnipe.tpl"}
+        </div>
 		
     </div>
     
 </div>
-{include file="gavelsnipe.tpl"}   
-</div>
 <div class="clear"></div>
-</div>
 {include file="foot.tpl"}
