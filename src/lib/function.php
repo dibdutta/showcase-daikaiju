@@ -441,9 +441,10 @@ function sendMail($toMail, $toName, $subject, $textContent) {
 	$request['Message']['Body']['Html']['Charset'] = 'utf-8';
 	try{
 		$result = $client->sendEmail($request);
+		return true;
 	} catch (Exception $e) {
 		error_log('SES sendMail error: ' . $e->getMessage());
-		throw $e;
+		return false;
 	}
 
 }
@@ -1639,9 +1640,10 @@ function chkTimeOut(){}
 	$request['Message']['Body']['Html']['Charset'] = 'utf-8';
 	try{
 		$result = $client->sendEmail($request);
+		return true;
 	} catch (Exception $e) {
 		error_log('SES sendMailAWS error: ' . $e->getMessage());
-		throw $e;
+		return false;
 	}
 
  }
