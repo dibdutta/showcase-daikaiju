@@ -327,6 +327,7 @@ function closed(){
 	else{
 		$total = $objBid->countBidsArchive($_SESSION['sessUserID'],$type,'closed');
 		$dataBid = $objBid->fetchBidDetailsArchive($_SESSION['sessUserID'],$type,'closed');
+		if (!$dataBid) $dataBid = [];
         for($i=0;$i<count($dataBid);$i++){
             if ($dataBid[$i]['is_cloud']==1){
 				$dataBid[$i]['image_path']=CLOUD_POSTER_THUMB.$dataBid[$i]['poster_thumb'];

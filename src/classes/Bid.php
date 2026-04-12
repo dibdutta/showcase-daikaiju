@@ -313,16 +313,16 @@ class Bid extends DBCommon{
 	
 	    //echo $sql;
 		//$sql .= " GROUP BY a.auction_id ORDER BY b.post_date desc";
+		$dataArr = [];
 		if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $dataArr[] = $row;
 		   }
-		   return $dataArr;
 	   }
-	   return false;	 
+	   return $dataArr;
 	}
 	/**
-	 * 
+	 *
 	 * This function fetches bid details by user id and auction id.
 	 * @param $dataArr=>This parameter contains the array of auction details from which we will get the auction id.
 	 * @param $user_id=>This paramter defines the user id,means whoose bid details to be fetched. 
