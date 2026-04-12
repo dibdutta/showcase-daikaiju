@@ -1581,7 +1581,8 @@ function images_next(){
 	
 	$auctionData = array("fk_auction_type_id"=>'2',"fk_auction_week_id" => $auction_week, "auction_asked_price" => $asked_price, "auction_reserve_offer_price"=>'',
 						 "auction_start_date" => $start_date, "auction_end_date" => $end_date,
-						 "auction_actual_start_datetime" => $start_date, "auction_actual_end_datetime" => $end_date);
+						 "auction_actual_start_datetime" => $start_date, "auction_actual_end_datetime" => $end_date,
+						 "auction_is_approved" => '1');
 	$obj->updateData(TBL_AUCTION, $auctionData, array("auction_id" => $auction_id), true);
 	$obj->deleteData(TBL_OFFER, array('offer_fk_auction_id' => $auction_id));				 
  }
