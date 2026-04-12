@@ -289,10 +289,10 @@ function shipsame(form){
                 <!--Page Body Ends-->
             </div>
              </div></div></div>
+        </div>
 
         {include file="gavelsnipe.tpl"}
     </div>
-
 </div>
 <div class="clear"></div>
 {include file="foot.tpl"}
