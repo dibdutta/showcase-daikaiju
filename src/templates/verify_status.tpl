@@ -33,7 +33,7 @@
                                         Your account has been created successfully.<br />Please check your email to verify your account before logging in.
                                     </p>
                                     <br />
-                                    <a href="auth" style="display:inline-block; padding:11px 36px; background:#b30000; color:#ffffff; text-decoration:none; border-radius:4px; font-size:14px; font-weight:bold; letter-spacing:0.3px;">Go to Login</a>
+                                    <a href="javascript:void(0);" onclick="showLogIn();" style="display:inline-block; padding:11px 36px; background:#b30000; color:#ffffff; text-decoration:none; border-radius:4px; font-size:14px; font-weight:bold; letter-spacing:0.3px;">Go to Login</a>
 
                                     {else}
 
