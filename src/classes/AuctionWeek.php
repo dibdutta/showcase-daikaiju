@@ -183,11 +183,7 @@ class AuctionWeek extends DBCommon{
 	}
 	public function fetchUpcomingWeeksNewForAdmin()
     {
-        /*$sql = "SELECT * FROM ".TBL_AUCTION_WEEK."
-                  WHERE auction_week_start_date <= now() AND auction_week_end_date >= now()";*/
-        $sql = "SELECT * FROM ".TBL_AUCTION_WEEK." WHERE auction_week_start_date >= now() AND is_stills='0'  ";
-        $rs = mysqli_query($GLOBALS['db_connect'],$sql);
-        $row = mysqli_fetch_array($rs);
+        $sql = "SELECT * FROM ".TBL_AUCTION_WEEK." WHERE auction_week_end_date >= now() AND is_stills='0' ORDER BY auction_week_start_date ASC";
 
         if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
             while($row = mysqli_fetch_assoc($rs)){
