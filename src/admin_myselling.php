@@ -1575,16 +1575,86 @@ function images_next(){
  function move_fixed(){
  	extract($_REQUEST);
  	$obj = new Auction();
+	$db = $GLOBALS['db_connect'];
+
+	// Get auction week dates
 	$row = $obj->selectData(TBL_AUCTION_WEEK, array('auction_week_start_date', 'auction_week_end_date'), array("auction_week_id" => $auction_week));
 	$start_date = $row[0]['auction_week_start_date'];
     $end_date = $row[0]['auction_week_end_date'];
-	
+
+	// Update tbl_auction
 	$auctionData = array("fk_auction_type_id"=>'2',"fk_auction_week_id" => $auction_week, "auction_asked_price" => $asked_price, "auction_reserve_offer_price"=>'',
 						 "auction_start_date" => $start_date, "auction_end_date" => $end_date,
 						 "auction_actual_start_datetime" => $start_date, "auction_actual_end_datetime" => $end_date,
 						 "auction_is_approved" => '1');
 	$obj->updateData(TBL_AUCTION, $auctionData, array("auction_id" => $auction_id), true);
-	$obj->deleteData(TBL_OFFER, array('offer_fk_auction_id' => $auction_id));				 
+	$obj->deleteData(TBL_OFFER, array('offer_fk_auction_id' => $auction_id));
+
+	// Get poster_id and auction details
+	$auctionRow = mysqli_fetch_assoc(mysqli_query($db,
+		"SELECT a.*, p.fk_user_id, p.poster_title, p.poster_desc, p.poster_sku, p.flat_rolled,
+		        p.post_date, p.post_ip, p.artist, p.quantity, p.field_1, p.field_2, p.field_3,
+		        p.status
+		 FROM tbl_auction a JOIN tbl_poster p ON a.fk_poster_id = p.poster_id
+		 WHERE a.auction_id = ".(int)$auction_id));
+	if (!$auctionRow) return;
+	$poster_id = (int)$auctionRow['fk_poster_id'];
+
+	// 1. Copy poster to tbl_poster_live
+	$pt = $auctionRow['poster_title'];
+	$pd = $auctionRow['poster_desc'];
+	mysqli_query($db,
+		"INSERT INTO tbl_poster_live
+		 (fk_user_id, poster_title, poster_desc, poster_sku, flat_rolled, artist, quantity,
+		  field_1, field_2, field_3, post_date, up_date, status, post_ip)
+		 SELECT fk_user_id, poster_title, poster_desc, poster_sku, flat_rolled, artist, quantity,
+		        field_1, field_2, field_3, post_date, up_date, status, post_ip
+		 FROM tbl_poster WHERE poster_id = $poster_id");
+	$poster_live_id = mysqli_insert_id($db);
+	if (!$poster_live_id) return;
+
+	// 2. Copy images to tbl_poster_images_live
+	mysqli_query($db,
+		"INSERT INTO tbl_poster_images_live
+		 (fk_poster_id, poster_thumb, poster_image, is_default, FileExtention, original_filename, is_cloud, is_big)
+		 SELECT $poster_live_id, poster_thumb, poster_image, is_default, FileExtention, original_filename, is_cloud, is_big
+		 FROM tbl_poster_images WHERE fk_poster_id = $poster_id");
+
+	// 3. Copy old-style categories to tbl_poster_to_category_live
+	mysqli_query($db,
+		"INSERT IGNORE INTO tbl_poster_to_category_live (fk_poster_id, fk_cat_id)
+		 SELECT $poster_live_id, fk_cat_id FROM tbl_poster_to_category WHERE fk_poster_id = $poster_id");
+
+	// 4. Copy shop category and subcategory to live tables
+	$shopRow = mysqli_fetch_assoc(mysqli_query($db,
+		"SELECT fk_shop_cat_id FROM tbl_poster_to_shop_category WHERE fk_poster_id = $poster_id LIMIT 1"));
+	if ($shopRow) {
+		$shopCatObj = new ShopCategory();
+		$shopCatObj->savePosterShopCat($poster_live_id, (int)$shopRow['fk_shop_cat_id'], true);
+	}
+	$subcatRow = mysqli_fetch_assoc(mysqli_query($db,
+		"SELECT fk_subcat_id FROM tbl_poster_to_subcategory WHERE fk_poster_id = $poster_id LIMIT 1"));
+	if ($subcatRow) {
+		$subcatObj = new Subcategory();
+		$subcatObj->savePosterSubcat($poster_live_id, (int)$subcatRow['fk_subcat_id'], true);
+	}
+
+	// 5. Insert into tbl_auction_live
+	mysqli_query($db,
+		"INSERT INTO tbl_auction_live
+		 (fk_auction_type_id, fk_poster_id, fk_auction_week_id, auction_asked_price,
+		  auction_reserve_offer_price, is_offer_price_percentage, auction_buynow_price,
+		  auction_start_date, auction_end_date, auction_actual_start_datetime, auction_actual_end_datetime,
+		  auction_is_approved, auction_is_sold, auction_note, imdb_link, post_date, up_date, status, post_ip)
+		 VALUES (2, $poster_live_id, ".(int)$auction_week.", ".(int)$asked_price.",
+		         '".(int)$auctionRow['auction_reserve_offer_price']."',
+		         '".$auctionRow['is_offer_price_percentage']."',
+		         '".(int)$auctionRow['auction_buynow_price']."',
+		         '$start_date', '$end_date', '$start_date', '$end_date',
+		         '1', '0',
+		         '".mysqli_real_escape_string($db, $auctionRow['auction_note'])."',
+		         '".mysqli_real_escape_string($db, $auctionRow['imdb_link'])."',
+		         NOW(), '0000-00-00 00:00:00', '1', '".$_SERVER['REMOTE_ADDR']."')");
  }
  function weekly_relist(){
  	
