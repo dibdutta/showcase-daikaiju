@@ -749,26 +749,27 @@ function timeLeftPosterDetails(dataArr)
                      dispData = '<input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="1"><div class="text bold BigFont"><span class="message" style="color:red;margin-left:70px;">Opted for Buy Now.</span></div>';
 
                     $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
-                }else{ 
-                    if(parseInt(bidDataArr[i]['offer_count']) > 0){
+                }else{
+                    var offerCount = parseInt(bidDataArr[i]['offer_count']) || 0;
+                    var auctionType = parseInt(bidDataArr[i]['fk_auction_type_id']);
+                    if(offerCount > 0){
                         /* Offer data starts */
-                        //alert(bidDataArr[i]['next_increment']);
                         var nextoffer = parseFloat(bidDataArr[i]['last_offer_amount'])+ parseFloat(bidDataArr[i]['next_increment']);
                         dispData = '<div class="auction-row" style="position:relative; cursor:pointer;"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:12px; color:#000;">Current Offer:</span></div><div class="buy-text offer_buyprice"><input type="hidden" id="current_bid_'+bidDataArr[i]['auction_id']+'" value='+bidDataArr[i]['last_offer_amount']+'>$'+bidDataArr[i]['last_offer_amount']+'</div><div class="buy-text-detpstr" onMouseOver="toggleDiv('+bidDataArr[i]['auction_id']+',1,1,1)" onMouseOut="toggleDiv('+bidDataArr[i]['auction_id']+',0,1,0)" ><b class="OfferBidNumber" >'+bidDataArr[i]['offer_count']+' Offer(s)</b></div></div>';
                         $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
                         $('#auction_data_'+bidDataArr[i]['auction_id']).show();
-                        /* Offer data onds */
-                    }else if(parseInt(bidDataArr[i]['offer_count']) < 1 && parseInt(bidDataArr[i]['fk_auction_type_id']) == 1){
+                        /* Offer data ends */
+                    }else if(auctionType == 1){
+                        /* Fixed price with no offers — show nothing */
                     	dispData = '<input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0">';
                         $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
                         $('#auction_data_'+bidDataArr[i]['auction_id']).show();
-                    }else if(parseInt(bidDataArr[i]['offer_count']) < 1 && parseInt(bidDataArr[i]['fk_auction_type_id']) == 4){
+                    }else if(auctionType == 4){
                     	dispData = '<div class="auction-row" style="padding:0px;"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Starting Bid:</span></div><div class="buy-text offer_buyprice" style="font-size:13px;">$'+parseFloat(bidDataArr[i]['auction_asked_price']).toFixed(2)+'</div></div>';
                         $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
                         $('#auction_data_'+bidDataArr[i]['auction_id']).show();
-                    }
-                    else{
-                        /* Auction data starts */
+                    }else{
+                        /* Auction bid data — only for weekly (type 2) and monthly (type 3) */
                         if(parseInt(bidDataArr[i]['bid_count']) > 0){
                             var highest_user= bidDataArr[i]['highest_user'];
                         	var nextbid = parseFloat(bidDataArr[i]['last_bid_amount'])+parseFloat(bidDataArr[i]['next_increment']);
