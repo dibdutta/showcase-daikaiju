@@ -2809,7 +2809,9 @@ right: 144px;*/
 }
 
 .makeoffer {
-	background: #3A6152;
+	background: #3A6152 !important;
+	background-image: none !important;
+	color: #ffffff !important;
 	width: 110px;
 }
 
