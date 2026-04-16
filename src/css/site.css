@@ -2809,9 +2809,8 @@ right: 144px;*/
 }
 
 .makeoffer {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/make-offer-btn.png);
-	background-repeat: no-repeat;
-	background-position: left top;
+	background: #3A6152;
+	width: 110px;
 }
 
 .BuyNow {

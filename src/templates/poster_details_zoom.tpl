@@ -253,7 +253,7 @@ function toggleDiv(id,flagit,type,track) {
 					test_enter(auc_id);
 					}	
 				}); {/literal}" onblur="test_blur(this.id)"  /><div class="CurrencyDecimal"> .00</div></td>
-																	<td valign="top"><input type="button" id="offer_bttn_{$auctionDetails[0].auction_id}" value="" onclick="postOffer({$auctionDetails[0].auction_id}, '{$auctionDetails[0].fk_user_id}','{$auctionDetails[0].auction_asked_price}');"  class="bidnow-btn makeoffer" style="margin:1px 0 0 0;" /></td>
+																	<td valign="top"><input type="button" id="offer_bttn_{$auctionDetails[0].auction_id}" value="MAKE OFFER" onclick="postOffer({$auctionDetails[0].auction_id}, '{$auctionDetails[0].fk_user_id}','{$auctionDetails[0].auction_asked_price}');"  class="bidnow-btn makeoffer" style="margin:1px 0 0 0;" /></td>
 																</tr>
 															</table>
 														</div>
