@@ -4100,12 +4100,16 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 		return;
 	}
 	function paymentDetailsSeller($user_id='',$start_date='',$end_date=''){
-		$sql="Select * from ".TBL_MPE_ADMIN_PAYMENT_TO_SELLER." where user_id= $user_id ";
+		if ($user_id === '' || $user_id === null) {
+			return [];
+		}
+		$bidArr = [];
+		$sql="Select * from ".TBL_MPE_ADMIN_PAYMENT_TO_SELLER." where user_id= ".(int)$user_id." ";
 		if($start_date != ""){
 			$sql .= " AND DATE(payment_date) >='$start_date' ";
-			}
+		}
 		if($end_date != ""){
-		$sql .= " AND DATE(payment_date) <='$end_date' ";
+			$sql .= " AND DATE(payment_date) <='$end_date' ";
 		}
 		$sql .="ORDER BY payment_date DESC ";
 		if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
