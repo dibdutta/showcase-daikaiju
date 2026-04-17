@@ -8,6 +8,11 @@ require_once __DIR__ . "/site_constants.php";
 $connect=mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME) or die("Cannot connect DB Server: " . mysqli_connect_error());
 $GLOBALS['db_connect'] = $connect;
 
+// PHP 8.1+ changed default MySQLi reporting to MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT,
+// which causes uncaught exceptions on SQL errors in legacy code that uses if($rs = mysqli_query(...)).
+// Restore pre-8.1 behavior so failed queries return false instead of throwing.
+mysqli_report(MYSQLI_REPORT_OFF);
+
 // Disable strict SQL modes for MySQL 8 compatibility with legacy queries
 // ONLY_FULL_GROUP_BY - allows GROUP BY without all selected columns
 // STRICT_TRANS_TABLES - allows INSERT without all required fields (uses defaults/empty)
