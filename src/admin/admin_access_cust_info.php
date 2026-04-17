@@ -151,23 +151,19 @@ if($mode == "buyer"){
 			$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 
 		}
-			$sqlInv = "SELECT additional_charges FROM ".TBL_INVOICE." inv WHERE inv.is_claimed = 0	";
-			$i=0;
+			$sqlInv = "SELECT additional_charges FROM ".TBL_INVOICE." inv WHERE inv.is_claimed = 0";
 			$subTotal = 0;
 			if($rs = mysqli_query($GLOBALS['db_connect'],$sqlInv)){
-				while($invoiceData = mysqli_fetch_assoc($rs)){
-
-					$charges = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $invoiceData['additional_charges']);
-					$charges = unserialize($charges);
-					if(!empty($charges)){
-						foreach($charges as $key => $value){
-							//$newinvoiceCharge[] =array('description' => mysqli_real_escape_string($GLOBALS['db_connect'],$invoiceData['additional_charges'][$key]['description']), 'amount' => $invoiceData['additional_charges'][$key]['amount']);
-							$subTotal += $charges[$key]['amount'];
-
+				while($chargeRow = mysqli_fetch_assoc($rs)){
+					if(!empty($chargeRow['additional_charges'])){
+						$charges = preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $chargeRow['additional_charges']);
+						$charges = unserialize($charges);
+						if(!empty($charges)){
+							foreach($charges as $key => $value){
+								$subTotal += $charges[$key]['amount'];
+							}
 						}
 					}
-
-					$i++;
 				}
 			}
 

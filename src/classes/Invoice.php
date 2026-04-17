@@ -1332,22 +1332,16 @@ class Invoice extends DBCommon{
 							ORDER BY i.invoice_generated_on DESC ";
 		}
 		//echo $sqlInvoice;
+		$dataArr = [];
 		if($res_sqlInvoice=mysqli_query($GLOBALS['db_connect'],$sqlInvoice)){
-		//$count = mysqli_num_rows($res_sqlInvoice);
 		$i=0;
-		   while($row = mysqli_fetch_assoc($res_sqlInvoice)){		       
+		   while($row = mysqli_fetch_assoc($res_sqlInvoice)){
 			   $dataArr[] = $row;
-			   $dataArr[$i]['inv_no']= str_pad($row['invoice_id'], 4, "0", STR_PAD_LEFT);  
-			   //$count--;
+			   $dataArr[$i]['inv_no']= str_pad($row['invoice_id'], 4, "0", STR_PAD_LEFT);
 			   $i++;
 		   }
-		   /*echo "<pre>";
-		   print_r($dataArr);
-		   echo "</pre>";*/
-		   return $dataArr;
-		
 		}
-		return false;
+		return $dataArr;
 	}
 	function fetchInvoiceAuctionDetails($invoice_id, $user_id = '')
 	{
