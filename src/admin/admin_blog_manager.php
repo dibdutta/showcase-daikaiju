@@ -80,6 +80,7 @@ function show_form($blogID = null) {
     }
 
     $smarty->assign('blog', $data);
+    $smarty->assign('blog_content_json', json_encode($data['content'] ?? ''));
     $smarty->assign('blog_id', $blogID);
     $smarty->assign('mode', $blogID ? 'save_edit' : 'save_create');
     $smarty->assign('encoded_string', easy_crypt($_SERVER['REQUEST_URI']));

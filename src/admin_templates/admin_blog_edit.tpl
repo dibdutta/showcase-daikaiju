@@ -64,7 +64,7 @@
                                                     <div id="ckeditor-container"></div>
                                                     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
                                                     <script>
-                                                    var initialContent = {$blog.content|json_encode default:''};
+                                                    var initialContent = {$blog_content_json};
                                                     ClassicEditor.create(document.getElementById('ckeditor-container'), {
                                                         initialData: initialContent,
                                                         simpleUpload: {
