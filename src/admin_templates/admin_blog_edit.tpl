@@ -106,6 +106,7 @@
                                                         initialData: initialContent,
                                                         extraPlugins: [BlogImageUploadAdapterPlugin],
                                                         image: {
+                                                            resizeUnit: '%',
                                                             resizeOptions: [
                                                                 { name: 'resizeImage:original', value: null, label: 'Original' },
                                                                 { name: 'resizeImage:25', value: '25', label: '25%' },
@@ -114,7 +115,7 @@
                                                             ],
                                                             toolbar: [
                                                                 'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', '|',
-                                                                'resizeImage', '|',
+                                                                'resizeImage:25', 'resizeImage:50', 'resizeImage:75', 'resizeImage:original', '|',
                                                                 'toggleImageCaption', 'imageTextAlternative'
                                                             ]
                                                         }
