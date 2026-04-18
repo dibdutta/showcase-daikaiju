@@ -62,7 +62,7 @@
                                                 <td>
                                                     <textarea name="content" id="content" style="display:none;"></textarea>
                                                     <div id="ckeditor-container"></div>
-                                                    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
+                                                    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
                                                     <script>
                                                     var initialContent = {$blog_content_json};
                                                     ClassicEditor.create(document.getElementById('ckeditor-container'), {
@@ -70,21 +70,12 @@
                                                         simpleUpload: {
                                                             uploadUrl: '/admin/blog_image_upload.php',
                                                             withCredentials: true
-                                                        },
-                                                        toolbar: {
-                                                            items: [
-                                                                'heading', '|',
-                                                                'bold', 'italic', 'underline', 'strikethrough', '|',
-                                                                'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
-                                                                'uploadImage', 'insertTable', '|',
-                                                                'undo', 'redo'
-                                                            ]
                                                         }
                                                     }).then(function(editor) {
                                                         document.querySelector('form').addEventListener('submit', function() {
                                                             document.getElementById('content').value = editor.getData();
                                                         });
-                                                    }).catch(console.error);
+                                                    }).catch(function(err) { console.error(err); });
                                                     </script>
                                                 </td>
                                             </tr>
