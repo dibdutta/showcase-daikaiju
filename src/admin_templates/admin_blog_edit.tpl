@@ -61,7 +61,7 @@
                                                 <td class="bold_text" valign="top"><span class="err">*</span> Content :</td>
                                                 <td>
                                                     <textarea name="content" id="content" style="width:100%;">{$blog.content|escape:'html'}</textarea>
-                                                    <script src="https://cdn.ckeditor.com/4.25.1-lts/standard-all/ckeditor.js"></script>
+                                                    <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
                                                     <script>
                                                     CKEDITOR.replace('content', {
                                                         imageUploadUrl: '/admin/blog_image_upload.php',
