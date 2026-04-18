@@ -10,6 +10,8 @@
                         <a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_blog_manager.php?mode=comments" class="action_link">
                             Manage All Comments {if $pendingComments > 0}<span class="err">({$pendingComments} pending)</span>{/if}
                         </a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_blog_manager.php?mode=cleanup_images" class="action_link" style="color:#856404;">&#128465; Cleanup S3 Images</a>
                     </td>
                 </tr>
                 {if $errorMessage != ""}

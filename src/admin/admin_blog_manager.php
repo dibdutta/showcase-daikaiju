@@ -22,6 +22,8 @@ if ($mode === 'create') {
     save_blog(true);
 } elseif ($mode === 'delete') {
     delete_blog();
+} elseif ($mode === 'cleanup_images') {
+    cleanup_images();
 } elseif ($mode === 'comments') {
     show_comments();
 } elseif ($mode === 'approve_comment') {
@@ -214,6 +216,66 @@ function approve_comment() {
     $_SESSION['adminErr'] = $ok ? 'Comment approved.' : 'Failed to approve comment.';
     $qs = $blogID ? '?mode=comments&blog_id=' . $blogID : '?mode=comments';
     redirect_admin('admin_blog_manager.php' . $qs);
+}
+
+function cleanup_images() {
+    require_once INCLUDE_PATH . 'lib/adminCommon.php';
+    require_once INCLUDE_PATH . 'lib/AWS/aws-autoloader.php';
+
+    $confirm  = ($_GET['confirm'] ?? '') === '1';
+    $s3Bucket = getenv('S3_STATIC_BUCKET') ?: 'showcase-prod-static-assets-263180773284';
+    $s3Prefix = 'blog-images/';
+    $cdnBase  = rtrim(getenv('CDN_STATIC_URL') ?: 'https://d294w6g1afjpvs.cloudfront.net', '/');
+
+    $s3 = new Aws\S3\S3Client(['version' => 'latest', 'region' => 'us-east-1']);
+
+    // Collect all filenames referenced in the DB
+    $referenced = [];
+    $res = mysqli_query($GLOBALS['db_connect'], "SELECT content, featured_image FROM tbl_blog");
+    while ($row = mysqli_fetch_assoc($res)) {
+        if (!empty($row['featured_image'])) {
+            $referenced[$row['featured_image']] = true;
+        }
+        if (!empty($row['content'])) {
+            preg_match_all('#blog-images/([^\s"\'<>]+)#', $row['content'], $m);
+            foreach ($m[1] as $f) { $referenced[$f] = true; }
+        }
+    }
+
+    // List all S3 objects under blog-images/
+    $s3Objects = [];
+    $paginator = $s3->getPaginator('ListObjectsV2', ['Bucket' => $s3Bucket, 'Prefix' => $s3Prefix]);
+    foreach ($paginator as $page) {
+        foreach ($page['Contents'] ?? [] as $obj) {
+            $filename = basename($obj['Key']);
+            $s3Objects[$filename] = ['key' => $obj['Key'], 'size' => $obj['Size'], 'modified' => $obj['LastModified']->format('Y-m-d H:i')];
+        }
+    }
+
+    $orphans    = array_diff_key($s3Objects, $referenced);
+    $totalBytes = array_sum(array_column($orphans, 'size'));
+    $deleted    = [];
+    $errors     = [];
+
+    if ($confirm && !empty($orphans)) {
+        $keys   = array_map(fn($o) => ['Key' => $o['key']], array_values($orphans));
+        foreach (array_chunk($keys, 1000) as $batch) {
+            $result = $s3->deleteObjects(['Bucket' => $s3Bucket, 'Delete' => ['Objects' => $batch]]);
+            foreach ($result['Deleted'] ?? [] as $d) { $deleted[] = basename($d['Key']); }
+            foreach ($result['Errors']  ?? [] as $e) { $errors[]  = basename($e['Key']) . ': ' . $e['Message']; }
+        }
+        $_SESSION['adminErr'] = count($deleted) . ' orphaned image(s) deleted from S3.';
+    }
+
+    $smarty->assign('s3_total',      count($s3Objects));
+    $smarty->assign('db_referenced', count($referenced));
+    $smarty->assign('orphans',       $orphans);
+    $smarty->assign('total_kb',      round($totalBytes / 1024, 1));
+    $smarty->assign('confirm',       $confirm);
+    $smarty->assign('deleted',       $deleted);
+    $smarty->assign('errors',        $errors);
+    $smarty->assign('encoded_string', easy_crypt($_SERVER['REQUEST_URI']));
+    $smarty->display('admin_blog_cleanup.tpl');
 }
 
 function delete_comment() {
