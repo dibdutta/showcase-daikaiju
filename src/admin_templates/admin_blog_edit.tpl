@@ -50,7 +50,7 @@
                                                 <td class="bold_text" valign="top">Featured Image :</td>
                                                 <td>
                                                     {if $blog.featured_image != ""}
-                                                        <img src="http://{$smarty.server.HTTP_HOST}/blog_images/{$blog.featured_image}" style="max-height:80px; display:block; margin-bottom:6px; border:1px solid #ddd;" /><br />
+                                                        <img src="{$smarty.const.BLOG_IMAGE_BASE_URL}{$blog.featured_image}" style="max-height:80px; display:block; margin-bottom:6px; border:1px solid #ddd;" /><br />
                                                     {/if}
                                                     <input type="file" name="featured_image" class="look" accept="image/*" />
                                                     <br /><small>JPG, PNG, GIF or WebP. Leave blank to keep existing.</small>
@@ -59,7 +59,34 @@
 
                                             <tr class="tr_bgcolor">
                                                 <td class="bold_text" valign="top"><span class="err">*</span> Content :</td>
-                                                <td>{$editor}</td>
+                                                <td>
+                                                    <textarea name="content" id="content" style="display:none;"></textarea>
+                                                    <div id="ckeditor-container"></div>
+                                                    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
+                                                    <script>
+                                                    var initialContent = {$blog.content|json_encode default:''};
+                                                    ClassicEditor.create(document.getElementById('ckeditor-container'), {
+                                                        initialData: initialContent,
+                                                        simpleUpload: {
+                                                            uploadUrl: '/admin/blog_image_upload.php',
+                                                            withCredentials: true
+                                                        },
+                                                        toolbar: {
+                                                            items: [
+                                                                'heading', '|',
+                                                                'bold', 'italic', 'underline', 'strikethrough', '|',
+                                                                'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
+                                                                'uploadImage', 'insertTable', '|',
+                                                                'undo', 'redo'
+                                                            ]
+                                                        }
+                                                    }).then(function(editor) {
+                                                        document.querySelector('form').addEventListener('submit', function() {
+                                                            document.getElementById('content').value = editor.getData();
+                                                        });
+                                                    }).catch(console.error);
+                                                    </script>
+                                                </td>
                                             </tr>
 
                                             <tr class="tr_bgcolor">
