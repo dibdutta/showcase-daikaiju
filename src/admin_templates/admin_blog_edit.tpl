@@ -64,13 +64,47 @@
                                                     <div id="ckeditor-container"></div>
                                                     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
                                                     <script>
+                                                    function BlogImageUploadAdapter(loader) {
+                                                        this.loader = loader;
+                                                    }
+                                                    BlogImageUploadAdapter.prototype.upload = function() {
+                                                        var loader = this.loader;
+                                                        return loader.file.then(function(file) {
+                                                            return new Promise(function(resolve, reject) {
+                                                                var data = new FormData();
+                                                                data.append('upload', file);
+                                                                var xhr = new XMLHttpRequest();
+                                                                xhr.open('POST', '/admin/blog_image_upload.php', true);
+                                                                xhr.withCredentials = true;
+                                                                xhr.onload = function() {
+                                                                    if (xhr.status === 200) {
+                                                                        var res = JSON.parse(xhr.responseText);
+                                                                        if (res.uploaded) {
+                                                                            resolve({ default: res.url });
+                                                                        } else {
+                                                                            reject(res.error ? res.error.message : 'Upload failed');
+                                                                        }
+                                                                    } else {
+                                                                        reject('Upload failed (HTTP ' + xhr.status + ')');
+                                                                    }
+                                                                };
+                                                                xhr.onerror = function() { reject('Network error'); };
+                                                                xhr.send(data);
+                                                            });
+                                                        });
+                                                    };
+                                                    BlogImageUploadAdapter.prototype.abort = function() {};
+
+                                                    function BlogImageUploadAdapterPlugin(editor) {
+                                                        editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
+                                                            return new BlogImageUploadAdapter(loader);
+                                                        };
+                                                    }
+
                                                     var initialContent = {$blog_content_json};
                                                     ClassicEditor.create(document.getElementById('ckeditor-container'), {
                                                         initialData: initialContent,
-                                                        simpleUpload: {
-                                                            uploadUrl: '/admin/blog_image_upload.php',
-                                                            withCredentials: true
-                                                        }
+                                                        extraPlugins: [BlogImageUploadAdapterPlugin]
                                                     }).then(function(editor) {
                                                         document.querySelector('form').addEventListener('submit', function() {
                                                             document.getElementById('content').value = editor.getData();
