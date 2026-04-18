@@ -104,7 +104,20 @@
                                                     var initialContent = {$blog_content_json};
                                                     ClassicEditor.create(document.getElementById('ckeditor-container'), {
                                                         initialData: initialContent,
-                                                        extraPlugins: [BlogImageUploadAdapterPlugin]
+                                                        extraPlugins: [BlogImageUploadAdapterPlugin],
+                                                        image: {
+                                                            resizeOptions: [
+                                                                { name: 'resizeImage:original', value: null, label: 'Original' },
+                                                                { name: 'resizeImage:25', value: '25', label: '25%' },
+                                                                { name: 'resizeImage:50', value: '50', label: '50%' },
+                                                                { name: 'resizeImage:75', value: '75', label: '75%' }
+                                                            ],
+                                                            toolbar: [
+                                                                'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', '|',
+                                                                'resizeImage', '|',
+                                                                'toggleImageCaption', 'imageTextAlternative'
+                                                            ]
+                                                        }
                                                     }).then(function(editor) {
                                                         document.querySelector('form').addEventListener('submit', function() {
                                                             document.getElementById('content').value = editor.getData();
