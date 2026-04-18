@@ -25,7 +25,7 @@
 
                                 {if $post.featured_image != ""}
                                 <div style="margin-bottom:16px;">
-                                    <img src="{$smarty.const.DOMAIN_PATH}/blog_images/{$post.featured_image}" alt="{$post.title|escape}" style="max-width:100%; border:1px solid #ddd;" />
+                                    <img src="{$smarty.const.BLOG_IMAGE_BASE_URL}{$post.featured_image}" alt="{$post.title|escape}" style="max-width:100%; border:1px solid #ddd;" />
                                 </div>
                                 {/if}
 

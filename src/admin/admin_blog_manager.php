@@ -130,13 +130,36 @@ function save_blog($isEdit) {
         $ext     = strtolower(pathinfo($_FILES['featured_image']['name'], PATHINFO_EXTENSION));
         $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         if (in_array($ext, $allowed)) {
-            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/blog_images/';
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0755, true);
-            }
             $filename = 'blog_' . time() . '_' . mt_rand(100, 999) . '.' . $ext;
-            if (move_uploaded_file($_FILES['featured_image']['tmp_name'], $uploadDir . $filename)) {
-                $featuredImage = $filename;
+            $mimeMap  = ['jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif', 'webp' => 'image/webp'];
+            $mimeType = $mimeMap[$ext] ?? 'image/jpeg';
+
+            if (APP_ENV === 'production') {
+                require_once INCLUDE_PATH . 'lib/AWS/aws-autoloader.php';
+                $s3Bucket = getenv('S3_STATIC_BUCKET');
+                if ($s3Bucket) {
+                    try {
+                        $s3 = new Aws\S3\S3Client(['version' => 'latest', 'region' => 'us-east-1']);
+                        $s3->putObject([
+                            'Bucket'       => $s3Bucket,
+                            'Key'          => 'blog-images/' . $filename,
+                            'SourceFile'   => $_FILES['featured_image']['tmp_name'],
+                            'ContentType'  => $mimeType,
+                            'CacheControl' => 'max-age=31536000',
+                        ]);
+                        $featuredImage = $filename;
+                    } catch (Exception $e) {
+                        // upload failed — keep existing image
+                    }
+                }
+            } else {
+                $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/blog_images/';
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0755, true);
+                }
+                if (move_uploaded_file($_FILES['featured_image']['tmp_name'], $uploadDir . $filename)) {
+                    $featuredImage = $filename;
+                }
             }
         }
     }

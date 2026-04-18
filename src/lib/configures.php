@@ -171,6 +171,13 @@ if (APP_ENV === 'production') {
 }
 
 define ("DOMAIN_PATH", "http://".$_SERVER['HTTP_HOST']."");
+
+if (APP_ENV === 'production') {
+    $cdnBase = getenv('CDN_STATIC_URL') ?: "https://d294w6g1afjpvs.cloudfront.net";
+    define("BLOG_IMAGE_BASE_URL", $cdnBase . "/blog-images/");
+} else {
+    define("BLOG_IMAGE_BASE_URL", "http://" . $_SERVER['HTTP_HOST'] . "/blog_images/");
+}
 if(isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT']=='443'){
 	define ("DOMAIN_PATH_NEW", "http://".$_SERVER['HTTP_HOST']."");
 }else{

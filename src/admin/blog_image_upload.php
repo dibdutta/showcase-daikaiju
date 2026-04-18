@@ -1,6 +1,8 @@
 <?php
 /**
- * CKEditor image upload endpoint.
+ * FCKeditor/CKEditor image upload endpoint.
+ * In production: streams the file to S3, returns a CloudFront URL.
+ * Locally: saves to userfiles/image/ on the local filesystem.
  * Returns JSON: { uploaded, fileName, url } or { uploaded:0, error:{ message } }
  */
 define('INCLUDE_PATH', '../');
@@ -25,24 +27,52 @@ if (!in_array($ext, $allowed)) {
     exit;
 }
 
-// Use dirname(__FILE__) — always resolves correctly regardless of DOCUMENT_ROOT config
-$uploadDir = dirname(__FILE__) . '/../userfiles/image/';
-if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0755, true);
-}
-
 $filename = 'blog_' . time() . '_' . mt_rand(1000, 9999) . '.' . $ext;
-$destPath = $uploadDir . $filename;
+$mimeMap  = ['jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif', 'webp' => 'image/webp'];
+$mimeType = $mimeMap[$ext] ?? 'image/jpeg';
 
-if (!move_uploaded_file($_FILES['upload']['tmp_name'], $destPath)) {
-    $err = error_get_last();
-    echo json_encode(['uploaded' => 0, 'error' => ['message' => 'Failed to save file: ' . ($err['message'] ?? 'unknown')]]);
-    exit;
+if (APP_ENV === 'production') {
+    require_once INCLUDE_PATH . 'lib/AWS/aws-autoloader.php';
+
+    $s3Bucket = getenv('S3_STATIC_BUCKET');
+    $cdnBase  = getenv('CDN_STATIC_URL') ?: 'https://d294w6g1afjpvs.cloudfront.net';
+
+    if (!$s3Bucket) {
+        echo json_encode(['uploaded' => 0, 'error' => ['message' => 'S3_STATIC_BUCKET not configured']]);
+        exit;
+    }
+
+    try {
+        $s3 = new Aws\S3\S3Client([
+            'version' => 'latest',
+            'region'  => 'us-east-1',
+        ]);
+
+        $s3->putObject([
+            'Bucket'       => $s3Bucket,
+            'Key'          => 'blog-images/' . $filename,
+            'SourceFile'   => $_FILES['upload']['tmp_name'],
+            'ContentType'  => $mimeType,
+            'CacheControl' => 'max-age=31536000',
+        ]);
+
+        $url = rtrim($cdnBase, '/') . '/blog-images/' . $filename;
+        echo json_encode(['uploaded' => 1, 'fileName' => $filename, 'url' => $url]);
+    } catch (Exception $e) {
+        echo json_encode(['uploaded' => 0, 'error' => ['message' => 'S3 upload failed: ' . $e->getMessage()]]);
+    }
+} else {
+    $uploadDir = dirname(__FILE__) . '/../userfiles/image/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    if (!move_uploaded_file($_FILES['upload']['tmp_name'], $uploadDir . $filename)) {
+        $err = error_get_last();
+        echo json_encode(['uploaded' => 0, 'error' => ['message' => 'Failed to save file: ' . ($err['message'] ?? 'unknown')]]);
+        exit;
+    }
+
+    $url = 'http://' . $_SERVER['HTTP_HOST'] . '/userfiles/image/' . $filename;
+    echo json_encode(['uploaded' => 1, 'fileName' => $filename, 'url' => $url]);
 }
-
-$url = 'https://' . $_SERVER['HTTP_HOST'] . '/userfiles/image/' . $filename;
-echo json_encode([
-    'uploaded' => 1,
-    'fileName' => $filename,
-    'url'      => $url,
-]);

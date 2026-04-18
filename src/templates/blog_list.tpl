@@ -27,7 +27,7 @@
                                 <div style="border-bottom:1px solid #e8e8e8; padding:16px 0 14px 0; overflow:hidden;">
                                     {if $p.featured_image != ""}
                                         <a href="{$smarty.const.DOMAIN_PATH}/blog.php?slug={$p.slug}">
-                                            <img src="{$smarty.const.DOMAIN_PATH}/blog_images/{$p.featured_image}" alt="{$p.title|escape}" style="width:160px; height:110px; object-fit:cover; float:left; margin:0 14px 6px 0; border:1px solid #ddd;" />
+                                            <img src="{$smarty.const.BLOG_IMAGE_BASE_URL}{$p.featured_image}" alt="{$p.title|escape}" style="width:160px; height:110px; object-fit:cover; float:left; margin:0 14px 6px 0; border:1px solid #ddd;" />
                                         </a>
                                     {/if}
                                     <h2 style="margin:0 0 4px 0; font-size:15px; line-height:1.3;">
