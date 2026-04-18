@@ -60,70 +60,14 @@
                                             <tr class="tr_bgcolor">
                                                 <td class="bold_text" valign="top"><span class="err">*</span> Content :</td>
                                                 <td>
-                                                    <textarea name="content" id="content" style="display:none;"></textarea>
-                                                    <div id="ckeditor-container"></div>
-                                                    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+                                                    <textarea name="content" id="content" style="width:100%;">{$blog.content|escape:'html'}</textarea>
+                                                    <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
                                                     <script>
-                                                    function BlogImageUploadAdapter(loader) {
-                                                        this.loader = loader;
-                                                    }
-                                                    BlogImageUploadAdapter.prototype.upload = function() {
-                                                        var loader = this.loader;
-                                                        return loader.file.then(function(file) {
-                                                            return new Promise(function(resolve, reject) {
-                                                                var data = new FormData();
-                                                                data.append('upload', file);
-                                                                var xhr = new XMLHttpRequest();
-                                                                xhr.open('POST', '/admin/blog_image_upload.php', true);
-                                                                xhr.withCredentials = true;
-                                                                xhr.onload = function() {
-                                                                    if (xhr.status === 200) {
-                                                                        var res = JSON.parse(xhr.responseText);
-                                                                        if (res.uploaded) {
-                                                                            resolve({ default: res.url });
-                                                                        } else {
-                                                                            reject(res.error ? res.error.message : 'Upload failed');
-                                                                        }
-                                                                    } else {
-                                                                        reject('Upload failed (HTTP ' + xhr.status + ')');
-                                                                    }
-                                                                };
-                                                                xhr.onerror = function() { reject('Network error'); };
-                                                                xhr.send(data);
-                                                            });
-                                                        });
-                                                    };
-                                                    BlogImageUploadAdapter.prototype.abort = function() {};
-
-                                                    function BlogImageUploadAdapterPlugin(editor) {
-                                                        editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
-                                                            return new BlogImageUploadAdapter(loader);
-                                                        };
-                                                    }
-
-                                                    var initialContent = {$blog_content_json};
-                                                    ClassicEditor.create(document.getElementById('ckeditor-container'), {
-                                                        initialData: initialContent,
-                                                        extraPlugins: [BlogImageUploadAdapterPlugin],
-                                                        image: {
-                                                            resizeUnit: '%',
-                                                            resizeOptions: [
-                                                                { name: 'resizeImage:original', value: null, label: 'Original' },
-                                                                { name: 'resizeImage:25', value: '25', label: '25%' },
-                                                                { name: 'resizeImage:50', value: '50', label: '50%' },
-                                                                { name: 'resizeImage:75', value: '75', label: '75%' }
-                                                            ],
-                                                            toolbar: [
-                                                                'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', '|',
-                                                                'resizeImage:25', 'resizeImage:50', 'resizeImage:75', 'resizeImage:original', '|',
-                                                                'toggleImageCaption', 'imageTextAlternative'
-                                                            ]
-                                                        }
-                                                    }).then(function(editor) {
-                                                        document.querySelector('form').addEventListener('submit', function() {
-                                                            document.getElementById('content').value = editor.getData();
-                                                        });
-                                                    }).catch(function(err) { console.error(err); });
+                                                    CKEDITOR.replace('content', {
+                                                        imageUploadUrl: '/admin/blog_image_upload.php',
+                                                        extraPlugins: 'uploadimage',
+                                                        height: 500
+                                                    });
                                                     </script>
                                                 </td>
                                             </tr>
