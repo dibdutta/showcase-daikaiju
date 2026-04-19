@@ -2252,18 +2252,13 @@ function delete_invoice_charge(){
      $aucetionWeeks = $auctionWeekObj->fetchActiveWeeks();
      $smarty->assign('aucetionWeeks', $aucetionWeeks);
 
-     ob_start();
-     $oFCKeditor = new FCKeditor('poster_desc') ;
-     $oFCKeditor->BasePath = '../FCKeditor/';
-     /*$oFCKeditor->ToolbarSet = 'Basic';*/
-     $oFCKeditor->Value = $posterRow[0]['poster_desc'];
-     $oFCKeditor->Width  = '430';
-     $oFCKeditor->Height = '300';
-     $oFCKeditor->ToolbarSet = 'AdminToolBar';
-     $oFCKeditor->Create() ;
-     $poster_desc = ob_get_contents();
-     ob_end_clean();
-     $smarty->assign('poster_desc', $poster_desc);
+     $smarty->assign('poster_desc', $posterRow[0]['poster_desc']);
+     $shopCatObj = new ShopCategory();
+     $smarty->assign('shopCatRows', $shopCatObj->fetchAll());
+     $subcatObj = new Subcategory();
+     $smarty->assign('subcatJson', json_encode($subcatObj->fetchAllGrouped()));
+     $smarty->assign('selected_shop_cat_id', $shopCatObj->getPosterShopCatId($auctionRow[0]['fk_poster_id'] ?? 0, false));
+     $smarty->assign('selected_subcat_id', $subcatObj->getPosterSubcatId($auctionRow[0]['fk_poster_id'] ?? 0, false));
      $smarty->display('admin_reopen_weekly_auction_manager.tpl');
  }
  function reopen_weekly_auction(){
