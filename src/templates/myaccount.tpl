@@ -41,7 +41,7 @@
                                       <h3>Winning Bids</h3>
                   						<table width="100%" cellpadding="0" cellspacing="0" border="0"  >
                                         	<tr>
-                                                <th width="55%" align="left" valign="top" class="tal">Poster Title</th>                                            
+                                                <th width="55%" align="left" valign="top" class="tal">Item Name</th>                                            
                                                 <th width="18%" align="left" valign="top" class="tal">Bid Date</th>
                                                 <th width="19%" align="left" valign="top" class="tal">Amount</th>
                                             </tr>
@@ -67,14 +67,14 @@
                                         </table>
                                         
                                       </div>
-                                        <div class="tar morediv"><a href="{$actualPath}/my_bid?mode=winning"><img src="../images/more.jpg" border="0" /></a></div>
+                                        <div class="tar morediv"><a href="{$actualPath}/my_bid?mode=winning"><img src="https://d294w6g1afjpvs.cloudfront.net/images/more.jpg" border="0" /></a></div>
                                         <div class="dashboard-main_shadow"></div>
                                     </div>
                                     <div class="dashblock">
                                         <h3>Winning Offers</h3>
                                         <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" >
                                             <tr>
-                                                <th width="55%" align="left" valign="top" class="tal">Poster Title</th>                                    
+                                                <th width="55%" align="left" valign="top" class="tal">Item Name</th>                                    
                                                 <th width="18%" align="left" valign="top" class="tal">Offer Date</th>
                                                 <th width="19%" align="left" valign="top" class="tal">Amount</th>
                                             </tr>
@@ -100,14 +100,14 @@
                                             {/if}
                                         </table>
                                         </div>
-                                         <div class="tar morediv"><a href="{$actualPath}/offers"><img src="../images/more.jpg" border="0" /></a></div>
+                                         <div class="tar morediv"><a href="{$actualPath}/offers"><img src="https://d294w6g1afjpvs.cloudfront.net/images/more.jpg" border="0" /></a></div>
                                         <div class="dashboard-main_shadow"></div>
                                     </div>
                                     <div class="dashblock mr24">
                                         <h3>Selling</h3>
                                         <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" >
                                             <tr>
-                                                <th width="75%" align="left" valign="top" class="tal">Poster Title</th>                                    
+                                                <th width="75%" align="left" valign="top" class="tal">Item Name</th>                                    
                                                 <th width="25%" align="right" valign="top" class="tal">Highest Bid/Offer</th>
                                             </tr>
                                          </table>
@@ -132,7 +132,7 @@
                                             {/if}
                                         </table>
                                         </div>
-                                         <div class="tar morediv"><a href="{$actualPath}/myselling?mode=selling"><img src="../images/more.jpg" border="0" /></a></div>
+                                         <div class="tar morediv"><a href="{$actualPath}/myselling?mode=selling"><img src="https://d294w6g1afjpvs.cloudfront.net/images/more.jpg" border="0" /></a></div>
                                         <div class="dashboard-main_shadow"></div>
                                     </div>
 									{*
@@ -140,7 +140,7 @@
                                         <h3>My Sold Items</h3>
                                         <table width="100%" align="center" cellpadding="2" cellspacing="0" border="0" >
                                             <tr>
-                                                <th width="75%" align="left" valign="top" class="tal">Poster Title</th>
+                                                <th width="75%" align="left" valign="top" class="tal">Item Name</th>
                                                 <th width="25%" align="left" valign="top" class="tal">Sold Price</th>
                                             </tr>
                                          </table>
@@ -164,7 +164,7 @@
                                             {/if}
                                         </table>
                                         </div>
-                                         <div class="tar morediv"><a href="{$actualPath}/myselling?mode=sold"><img src="../images/more.jpg" border="0" /></a></div>
+                                         <div class="tar morediv"><a href="{$actualPath}/myselling?mode=sold"><img src="https://d294w6g1afjpvs.cloudfront.net/images/more.jpg" border="0" /></a></div>
                                         <div class="dashboard-main_shadow"></div>
                                     </div>
                                     *}
