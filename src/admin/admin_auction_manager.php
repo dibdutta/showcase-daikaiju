@@ -1895,7 +1895,6 @@ function manage_invoice_seller_print(){
 				WHERE  ita.fk_invoice_id = '".$_REQUEST['invoice_id']."' AND a.auction_id=ita.fk_auction_id ";
 	if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   $row = mysqli_fetch_assoc($rs);
-		   var_dump($row);
 		   $smarty->assign("invoice_key", $row['auction_actual_end_datetime']);
 	}
 	if($chk_item_type==1 || $chk_item_type==4){
@@ -1958,7 +1957,6 @@ function delete_invoice_charge(){
 	$auction = $dbCommonObj->selectData(TBL_INVOICE,array('additional_charges','total_amount'),array('invoice_id'=>$_REQUEST['invoice_id']));
 	$auction[0]['additional_charges']=preg_replace_callback('!s:(\d+):"(.*?)";!s', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $auction[0]['additional_charges']);
 	$charges=unserialize($auction[0]['additional_charges']);
-	print_r($charges);
 	$total_amnt=$auction[0]['total_amount'];
 	$total_amnt=$total_amnt - $_REQUEST['charge_amnt'];
 	$i=0;
