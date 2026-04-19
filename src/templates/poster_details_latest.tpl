@@ -102,7 +102,7 @@ function toggleDiv(id,flagit,type,track) {
              	<div class="tabbed-inner-nav-left">
              	<ul class="menu" >
                 	<li><a class="active" href="{$actualPath}/buy"><span>See all Items</span></a></li>
-                    <li><a href="{$actualPath}/buy?list=fixed"><span>Fixed Price Items</span></a></li>
+                    <li><a href="{$actualPath}/buy?list=fixed"><span>For Sale</span></a></li>
                     {if $live_count<=1}
                     		<li {if $smarty.request.list == 'weekly'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly"><span>{if $totalLiveWeekly > 0}{$auctionWeeksData[0].auction_week_title}{else}Auction Results{/if}</span></a></li>
                     		{*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy?list=monthly"><span>Event Auctions</span></a></li>*}
