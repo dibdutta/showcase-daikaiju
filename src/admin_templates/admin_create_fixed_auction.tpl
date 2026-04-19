@@ -252,7 +252,7 @@ $(document).ready(function() {
                                             <tr class="tr_bgcolor">
                                                 <td>&nbsp;</td>
                                                 <td class="smalltext">
-												<div id="flat_rolled" {if $flat_rolled==''} style="display:none;" {/if}>
+												<div id="flat_rolled">
                                                 <div id="folded" {if $flat_rolled=='rolled' && $no_sizes!='2'} style="display:none;"{/if}>
 												<input id="folded_selected" type="radio" name="flat_rolled" value="flat" checked="checked" /><label>&nbsp;Folded&nbsp;</label>
 												</div>
