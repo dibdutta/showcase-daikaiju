@@ -190,7 +190,7 @@ textarea
                 <div class="innerpage-container-main">
                   
                    <div class="dashboard-main">
-                        <h1>Manual Upload for Fixed Price Posters</h1>
+                        <h1>Manual Upload for Fixed Price Item</h1>
                         <p>Fields marked with <span class="mandatory">*</span> are mandatory </p>
                    </div>
      
@@ -210,13 +210,13 @@ textarea
 
                                 <div style="max-width:780px; margin:0 auto; font-family:Arial,Helvetica,sans-serif; font-size:13px;">
 
-                                    <!-- Section: Poster Details -->
+                                    <!-- Section: Item Details -->
                                     <div style="background:#fff; border:1px solid #ddd; border-radius:4px; margin-bottom:16px;">
-                                        <div style="background:#6b0000; color:#fff; font-weight:bold; font-size:13px; padding:8px 14px; border-radius:4px 4px 0 0;">Poster Details</div>
+                                        <div style="background:#6b0000; color:#fff; font-weight:bold; font-size:13px; padding:8px 14px; border-radius:4px 4px 0 0;">Item Details</div>
                                         <div style="padding:16px;">
 
                                             <div style="margin-bottom:14px;">
-                                                <label style="display:block; font-weight:bold; margin-bottom:4px;">Poster Title <span style="color:#c00;">*</span></label>
+                                                <label style="display:block; font-weight:bold; margin-bottom:4px;">Item Name <span style="color:#c00;">*</span></label>
                                                 <input type="text" name="poster_title" id="poster_title" value="{$poster_title}" class="formlisting-txtfield required" style="width:100%; box-sizing:border-box;" />
                                                 <div class="disp-err">{$poster_title_err}</div>
                                             </div>
