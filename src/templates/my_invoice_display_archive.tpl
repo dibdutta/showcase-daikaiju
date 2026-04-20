@@ -13,9 +13,9 @@
             */
         function fancy_images(i){
             $("#various_"+i).fancybox({
-                'width'				: '90%',
-                'height'			: '100%',
-                'autoScale'			: false,
+                'width'				: 900,
+                'height'			: 600,
+                'autoScale'			: true,
                 'transitionIn'		: 'none',
                 'transitionOut'		: 'none',
                 'type'				: 'iframe'

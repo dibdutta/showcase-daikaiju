@@ -17,9 +17,9 @@
             $.fancybox.open({
                 'href'			: $("#various_"+i).attr('href'),
                 'type'			: 'iframe',
-                'width'			: '90%',
-                'height'		: '100%',
-                'autoScale'		: false,
+                'width'			: 900,
+                'height'		: 600,
+                'autoScale'		: true,
                 'transitionIn'	: 'none',
                 'transitionOut'	: 'none',
                 'closeBtn'		: true
