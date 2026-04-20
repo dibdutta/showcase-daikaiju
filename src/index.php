@@ -80,7 +80,6 @@ function dispmiddle(){
 				AND a.auction_is_sold='0'
 				AND tpi.is_default='1'";
 	$rs = mysqli_query($GLOBALS['db_connect'],$sql);
-	$k=0;
 	if($rs){
 		while($row = mysqli_fetch_assoc($rs)){
 				   $dataArrSlider[] = $row;
