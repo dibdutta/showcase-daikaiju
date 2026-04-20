@@ -57,7 +57,7 @@ margin:0px;
         <td align="left" style="padding:4px;" class="print" colspan="2"><b>Date Paid:</b> {$invoiceData[0].paid_on|date_format}</td>
     </tr>
 	{/if}
-	{if $invoiceData[0].tracking_number != ''}
+	{if $invoiceData[0].tracking_number}
 	<tr bordercolor="#000000" bordercolordark="#000000" bordercolorlight="#FFFFFF" height="26">
         <td align="left" style="padding:4px;" class="print" colspan="2"><b>Tracking Number:</b> {$invoiceData[0].tracking_number}</td>
     </tr>

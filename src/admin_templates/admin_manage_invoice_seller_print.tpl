@@ -40,7 +40,7 @@ margin:0px;
 										<td align="left" colspan="2">&nbsp;Date paid: {$invoiceData[0].paid_on|date_format}</td>
 									</tr>
 								{/if}
-								{if $invoiceData[0].tracking_number != ''}
+								{if $invoiceData[0].tracking_number}
 									<tr height="26">
 										<td align="left" colspan="2">&nbsp;<strong>Tracking Number:</strong> {$invoiceData[0].tracking_number}</td>
 									</tr>
