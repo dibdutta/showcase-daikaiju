@@ -35,10 +35,15 @@ margin:0px;
                                 	<td align="left"  id="invoice_approved_on"><strong>Invoice Status: </strong><font style="color:green;">Paid</font> </td>
                                 	{/if}
                                 </tr> 
-								{if $invoiceData[0].is_paid=='1'} 
-									<tr height="26">                                
-										<td align="left" colspan="2">&nbsp;Date paid: {$invoiceData[0].paid_on|date_format}</td> 
-									</tr> 
+								{if $invoiceData[0].is_paid=='1'}
+									<tr height="26">
+										<td align="left" colspan="2">&nbsp;Date paid: {$invoiceData[0].paid_on|date_format}</td>
+									</tr>
+								{/if}
+								{if $invoiceData[0].tracking_number != ''}
+									<tr height="26">
+										<td align="left" colspan="2">&nbsp;<strong>Tracking Number:</strong> {$invoiceData[0].tracking_number}</td>
+									</tr>
 								{/if}                               
                                 <tr height="26">
                                  {if $invoiceData[0].is_buyers_copy=='1'}

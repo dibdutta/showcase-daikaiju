@@ -80,5 +80,13 @@ runSql($db, "CREATE TABLE IF NOT EXISTS tbl_poster_to_shop_category_live (
     UNIQUE KEY uq_poster_shopcat_live (fk_poster_id, fk_shop_cat_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", $results);
 
+// 6. Add tracking_number to tbl_invoice
+$colCheck3 = mysqli_query($db, "SHOW COLUMNS FROM tbl_invoice LIKE 'tracking_number'");
+if (mysqli_num_rows($colCheck3) == 0) {
+    runSql($db, "ALTER TABLE tbl_invoice ADD COLUMN tracking_number VARCHAR(100) NULL DEFAULT NULL AFTER shipped_date", $results);
+} else {
+    $results[] = "OK: tracking_number column already exists in tbl_invoice — skipping.";
+}
+
 echo "<pre>" . implode("\n", $results) . "\n\nMigration complete. Delete this file.</pre>";
 ?>

@@ -183,7 +183,7 @@ $(document).ready(function() {
     });
 	
 	$("#add_note").click(function(){
-		var note=$("#note").val();	
+		var note=$("#note").val();
 		if(note!=''){
 			var invoice_id=$("#invoice_id").val();
             var auction_id=$("#auction_id").val();
@@ -193,7 +193,24 @@ $(document).ready(function() {
 
                     });
 		}
-	})
+	});
+
+	$("#save_tracking_btn").click(function(){
+		var invoice_id = $("#invoice_id").val();
+		var tracking   = $.trim($("#tracking_number").val());
+		if (tracking === '') { alert("Please enter a tracking number."); return; }
+		$("#tracking_status").text("Saving...").css("color","#888");
+		$.post("admin_auction_manager.php?mode=save_tracking_number",
+			{ invoice_id: invoice_id, tracking_number: tracking },
+			function(data) {
+				if (data.ok) {
+					$("#tracking_status").text("Saved! Item marked as shipped.").css("color","green");
+				} else {
+					$("#tracking_status").text("Save failed.").css("color","red");
+				}
+			}, "json"
+		);
+	});
 
 });
 
@@ -290,6 +307,20 @@ function del_discount(id)
 							<td align="left">&nbsp;{$invoiceData.auction_actual_end_datetime|date_format:"%m%d%Y"}-{$invoiceData.invoice_id} </td>
 								
 					</tr>
+                    <tr class="header_bgcolor" height="26">
+                        <td colspan="2" class="headertext"><b>&nbsp;Tracking Number</b></td>
+                    </tr>
+                    <tr class="bgcolor" height="26">
+                        <td align="left" colspan="2">
+                            &nbsp;
+                            <input type="text" id="tracking_number" value="{$tracking_number}" maxlength="100" class="look" placeholder="Enter tracking number" style="width:260px;" />
+                            &nbsp;<input type="button" id="save_tracking_btn" value="Save Tracking" class="button" style="font-size:11px;" />
+                            &nbsp;<span id="tracking_status" style="font-size:11px;"></span>
+                            {if $invoiceData.is_shipped=='1'}
+                                &nbsp;<span style="color:green; font-size:11px; font-weight:bold;">&#10003; Shipped{if $invoiceData.shipped_date} on {$invoiceData.shipped_date|date_format:"%b %d, %Y"}{/if}</span>
+                            {/if}
+                        </td>
+                    </tr>
                     <tr class="header_bgcolor" height="26">
                         <td colspan="2" class="headertext"><b>&nbsp;Invoice Details</b></td>
                     </tr>

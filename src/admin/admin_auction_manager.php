@@ -45,6 +45,8 @@ if($mode == "edit_fixed"){
 }
 elseif($mode == "manage_invoice"){
 	manage_invoice();
+}elseif($mode == "save_tracking_number"){
+	save_tracking_number();
 }elseif($mode == "fixed"){
 	fixedPriceSale();
 }elseif($mode == "weekly"){
@@ -1809,8 +1811,21 @@ function manage_invoice()
 		$smarty->assign('chk_item_type', 2);
 	}
 	$smarty->assign("invoiceData", $invoiceData);
-	
+	$smarty->assign("tracking_number", $invoiceData['tracking_number'] ?? '');
+
 	$smarty->display('admin_manage_invoice.tpl');
+}
+
+function save_tracking_number() {
+    header('Content-Type: application/json');
+    $invoiceId      = (int)($_POST['invoice_id'] ?? 0);
+    $trackingNumber = trim($_POST['tracking_number'] ?? '');
+    if (!$invoiceId) { echo json_encode(['ok' => false]); exit; }
+    $db = $GLOBALS['db_connect'];
+    $safe = mysqli_real_escape_string($db, $trackingNumber);
+    $ok = mysqli_query($db, "UPDATE tbl_invoice SET tracking_number='$safe', is_shipped=1, shipped_date=NOW() WHERE invoice_id=$invoiceId");
+    echo json_encode(['ok' => (bool)$ok]);
+    exit;
 }
 
 function manage_invoice_seller()
