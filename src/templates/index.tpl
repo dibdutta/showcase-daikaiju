@@ -1,7 +1,7 @@
 {include file="header-index.tpl"}
-<link href="{$smarty.const.DOMAIN_PATH}/javascript/slider/style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="{$smarty.const.DOMAIN_PATH}/javascript/slider/lib/jquery.jcarousel.min.demo.js"></script>
-<link rel="stylesheet" type="text/css" href="{$smarty.const.DOMAIN_PATH}/javascript/slider/skins/tango/skin.css" />
+<link href="{$actualPathJSCSS}javascript/slider/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{$actualPathJSCSS}javascript/slider/lib/jquery.jcarousel.min.demo.js"></script>
+<link rel="stylesheet" type="text/css" href="{$actualPathJSCSS}javascript/slider/skins/tango/skin.css" />
 
 
 
