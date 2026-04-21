@@ -271,7 +271,7 @@ function formSubmit(){
             {section name=counter loop=$dataArrWeekly}
                 <div class="hp-card">
                     <div class="hp-card-img-wrap">
-                        <img src="{$dataArrWeekly[counter].image_path}"
+                        <img src="{$dataArrWeekly[counter].large_image}"
                              alt="{$dataArrWeekly[counter].poster_title}"
                              onclick="redirect_poster_details({$dataArrWeekly[counter].auction_id});">
                     </div>
@@ -306,7 +306,7 @@ function formSubmit(){
             {section name=counter loop=$dataArrUpcoming}
                 <div class="hp-card">
                     <div class="hp-card-img-wrap">
-                        <img src="{$dataArrUpcoming[counter].image_path}"
+                        <img src="{$dataArrUpcoming[counter].large_image}"
                              alt="{$dataArrUpcoming[counter].poster_title}"
                              onclick="redirect_poster_details({$dataArrUpcoming[counter].auction_id});">
                     </div>
@@ -339,7 +339,7 @@ function formSubmit(){
             {section name=counter loop=$dataArrFixed}
                 <div class="hp-card">
                     <div class="hp-card-img-wrap">
-                        <img src="{$dataArrFixed[counter].image_path}"
+                        <img src="{$dataArrFixed[counter].large_image}"
                              alt="{$dataArrFixed[counter].poster_title}"
                              onclick="redirect_poster_details({$dataArrFixed[counter].auction_id});">
                     </div>
@@ -372,7 +372,7 @@ function formSubmit(){
             {section name=counter loop=$dataJstFinishedAuction}
                 <div class="hp-card">
                     <div class="hp-card-img-wrap">
-                        <img src="{$dataJstFinishedAuction[counter].image_path}"
+                        <img src="{$dataJstFinishedAuction[counter].large_image}"
                              alt="{$dataJstFinishedAuction[counter].poster_title}"
                              onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});">
                     </div>

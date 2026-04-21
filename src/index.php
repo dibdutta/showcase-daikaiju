@@ -146,7 +146,7 @@ function dispmiddle(){
         $totJstFinished = count($dataJstFinishedAuction);
         for($i = 0; $i < $totJstFinished; $i++){
             $dataJstFinishedAuction[$i]['image_path'] = CLOUD_POSTER_THUMB_BUY . $dataJstFinishedAuction[$i]['poster_thumb'];
-            $dataJstFinishedAuction[$i]['large_image'] = CLOUD_POSTER_THUMB_BUY . $dataJstFinishedAuction[$i]['poster_thumb'];
+            $dataJstFinishedAuction[$i]['large_image'] = CLOUD_POSTER_THUMB_BUY_GALLERY . $dataJstFinishedAuction[$i]['poster_thumb'];
         }
         $smarty->assign("dataJstFinishedAuction", $dataJstFinishedAuction);
         $smarty->assign("totJstFinished", $totJstFinished);
