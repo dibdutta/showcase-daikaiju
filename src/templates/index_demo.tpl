@@ -296,7 +296,6 @@ function formSubmit(){
                 </div>
             {/section}
             </div>
-            <div class="seeall lower-poster-area"><input type="button" value="" class="seeall-btn" onclick="$(location).attr('href', '{$actualPath}/buy?list=weekly');" /></div>
         </div>
         {/if}
 
@@ -330,7 +329,6 @@ function formSubmit(){
                 </div>
             {/section}
             </div>
-            <div class="seeall lower-poster-area"><input type="button" value="" class="seeall-btn" onclick="$(location).attr('href', '{$actualPath}/buy?list=upcoming');" /></div>
         </div>
         {/if}
 
@@ -364,7 +362,6 @@ function formSubmit(){
                 </div>
             {/section}
             </div>
-            <div class="seeall lower-poster-area"><input type="button" value="" class="seeall-btn" onclick="$(location).attr('href', '{$actualPath}/buy?list=fixed');" /></div>
         </div>
         {/if}
 
@@ -393,7 +390,6 @@ function formSubmit(){
                 </div>
             {/section}
             </div>
-            <div class="seeall lower-poster-area"><input type="button" value="" class="seeall-btn" onclick="$(location).attr('href', '{$actualPath}/sold_item');" /></div>
         </div>
         {/if}
 
