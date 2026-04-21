@@ -38,66 +38,129 @@ function formSubmit(){
 </script>
 
 <style>
-/* Grid card layout — only affects interior of .home_fi sections */
+/* ── Section headers — overrides .home_fi h2 sprite style ─────────────────── */
+.home_fi h2 {
+    background-image: none !important;
+    background-color: #1c1c1c !important;
+    color: #fff !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    letter-spacing: 2.5px !important;
+    text-transform: uppercase !important;
+    padding: 13px 18px 13px 16px !important;
+    margin: 0 0 0 0 !important;
+    border-left: 4px solid #bd1a21 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+.home_fi h2 .h2-seeall {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    text-transform: none;
+    color: #bd1a21;
+    text-decoration: none;
+    border: 1px solid #bd1a21;
+    padding: 3px 10px;
+    border-radius: 2px;
+    transition: all 0.2s;
+}
+.home_fi h2 .h2-seeall:hover {
+    background: #bd1a21;
+    color: #fff;
+}
+
+/* ── Card grid ─────────────────────────────────────────────────────────────── */
 .hp-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 14px;
-    padding: 14px 0 4px;
+    gap: 12px;
+    padding: 16px 0 8px;
 }
 .hp-card {
     background: #fff;
-    border: 1px solid #ddd;
+    border: 1px solid #e2e2e2;
+    border-radius: 3px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    transition: transform 0.15s, box-shadow 0.15s;
 }
-.hp-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+.hp-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.13);
+}
 .hp-card-img-wrap {
     width: 100%;
-    background: #e8e8e8;
+    background: #efefef;
     overflow: hidden;
-    text-align: center;
 }
 .hp-card-img-wrap img {
     width: 100%;
-    height: 180px;
+    height: 185px;
     object-fit: cover;
     display: block;
     cursor: pointer;
+    transition: transform 0.2s;
 }
+.hp-card:hover .hp-card-img-wrap img { transform: scale(1.04); }
 .hp-card-body {
-    padding: 7px 8px 9px;
+    padding: 9px 10px 11px;
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
 }
 .hp-card-price {
     color: #bd1a21;
-    font-weight: bold;
-    font-size: 13px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.3px;
 }
 .hp-card-title a {
-    color: #222;
+    color: #2c2c2c;
     text-decoration: none;
-    line-height: 1.3;
+    line-height: 1.35;
     display: block;
+    font-size: 12px;
 }
 .hp-card-title a:hover { color: #bd1a21; }
+
+/* ── Watch button ──────────────────────────────────────────────────────────── */
 .hp-card-watch {
-    margin-top: 5px;
-    padding: 3px 10px;
-    font-size: 11px;
-    background: #333;
-    color: #fff;
-    border: none;
+    margin-top: 7px;
+    padding: 6px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: transparent;
+    color: #555;
+    border: 1.5px solid #bbb;
+    border-radius: 2px;
     cursor: pointer;
     align-self: flex-start;
+    transition: all 0.18s;
 }
-.hp-card-watch:hover { background: #bd1a21; }
+.hp-card-watch:hover {
+    border-color: #bd1a21;
+    color: #bd1a21;
+    background: #fff5f5;
+}
+.hp-card-watch--watching {
+    border-color: #3a6152;
+    color: #3a6152;
+}
+.hp-card-watch--watching:hover {
+    background: #f0f7f4;
+    border-color: #2d4f42;
+    color: #2d4f42;
+}
 </style>
 {/literal}
 
@@ -203,7 +266,7 @@ function formSubmit(){
 
         {if $totWeekly > 0}
         <div class="home_fi">
-            <h2>Featured Auction Items</h2>
+            <h2>Featured Auction Items <a href="{$actualPath}/buy?list=weekly" class="h2-seeall">See All &rarr;</a></h2>
             <div class="hp-grid">
             {section name=counter loop=$dataArrWeekly}
                 <div class="hp-card">
@@ -227,7 +290,7 @@ function formSubmit(){
                         {if $dataArrWeekly[counter].watch_indicator == 0}
                         <button class="hp-card-watch" onclick="add_watchlist('{$dataArrWeekly[counter].auction_id}');" id="watch_{$dataArrWeekly[counter].auction_id}">Watch this item</button>
                         {else}
-                        <button class="hp-card-watch" onclick="redirect_watchlist({$dataArrWeekly[counter].auction_id});">You are watching</button>
+                        <button class="hp-card-watch hp-card-watch--watching" onclick="redirect_watchlist({$dataArrWeekly[counter].auction_id});">You are watching</button>
                         {/if}
                     </div>
                 </div>
@@ -239,7 +302,7 @@ function formSubmit(){
 
         {if $totUpcoming > 1}
         <div class="home_fi">
-            <h2>Featured Upcoming Auction</h2>
+            <h2>Featured Upcoming Auction <a href="{$actualPath}/buy?list=upcoming" class="h2-seeall">See All &rarr;</a></h2>
             <div class="hp-grid">
             {section name=counter loop=$dataArrUpcoming}
                 <div class="hp-card">
@@ -261,7 +324,7 @@ function formSubmit(){
                         {if $dataArrUpcoming[counter].watch_indicator == 0}
                         <button class="hp-card-watch" onclick="add_watchlist('{$dataArrUpcoming[counter].auction_id}');" id="watch_{$dataArrUpcoming[counter].auction_id}">Watch this item</button>
                         {else}
-                        <button class="hp-card-watch" onclick="redirect_watchlist({$dataArrUpcoming[counter].auction_id});">You are watching</button>
+                        <button class="hp-card-watch hp-card-watch--watching" onclick="redirect_watchlist({$dataArrUpcoming[counter].auction_id});">You are watching</button>
                         {/if}
                     </div>
                 </div>
@@ -273,7 +336,7 @@ function formSubmit(){
 
         {if $totFixed > 0}
         <div class="home_fi">
-            <h2>Featured Items for Sale</h2>
+            <h2>Featured Items for Sale <a href="{$actualPath}/buy?list=fixed" class="h2-seeall">See All &rarr;</a></h2>
             <div class="hp-grid">
             {section name=counter loop=$dataArrFixed}
                 <div class="hp-card">
@@ -295,7 +358,7 @@ function formSubmit(){
                         {if $dataArrFixed[counter].watch_indicator == 0}
                         <button class="hp-card-watch" onclick="add_watchlist('{$dataArrFixed[counter].auction_id}');" id="watch_{$dataArrFixed[counter].auction_id}">Watch this item</button>
                         {else}
-                        <button class="hp-card-watch" onclick="redirect_watchlist({$dataArrFixed[counter].auction_id});">You are watching</button>
+                        <button class="hp-card-watch hp-card-watch--watching" onclick="redirect_watchlist({$dataArrFixed[counter].auction_id});">You are watching</button>
                         {/if}
                     </div>
                 </div>
@@ -307,7 +370,7 @@ function formSubmit(){
 
         {if $totJstFinished > 0}
         <div class="home_fi">
-            <h2>Featured Sales Results</h2>
+            <h2>Featured Sales Results <a href="{$actualPath}/sold_item" class="h2-seeall">See All &rarr;</a></h2>
             <div class="hp-grid">
             {section name=counter loop=$dataJstFinishedAuction}
                 <div class="hp-card">
