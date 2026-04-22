@@ -324,7 +324,7 @@ function updateArrows(wrap) {
         <div class="home_fi">
             <h2>Featured Auction Items <a href="{$actualPath}/buy?list=weekly" class="h2-seeall">See All &rarr;</a></h2>
             <div class="hp-carousel-wrap">
-                <button class="hp-prev" onclick="hpSlide(this, -1)">&#8249;</button>
+                <button type="button" class="hp-prev" onclick="hpSlide(this, -1)">&#8249;</button>
                 <div class="hp-viewport">
                     <div class="hp-track">
                     {section name=counter loop=$dataArrWeekly}
@@ -354,7 +354,7 @@ function updateArrows(wrap) {
                     {/section}
                     </div>
                 </div>
-                <button class="hp-next" onclick="hpSlide(this, 1)">&#8250;</button>
+                <button type="button" class="hp-next" onclick="hpSlide(this, 1)">&#8250;</button>
             </div>
         </div>
         {/if}
@@ -363,7 +363,7 @@ function updateArrows(wrap) {
         <div class="home_fi">
             <h2>Featured Upcoming Auction <a href="{$actualPath}/buy?list=upcoming" class="h2-seeall">See All &rarr;</a></h2>
             <div class="hp-carousel-wrap">
-                <button class="hp-prev" onclick="hpSlide(this, -1)">&#8249;</button>
+                <button type="button" class="hp-prev" onclick="hpSlide(this, -1)">&#8249;</button>
                 <div class="hp-viewport">
                     <div class="hp-track">
                     {section name=counter loop=$dataArrUpcoming}
@@ -393,7 +393,7 @@ function updateArrows(wrap) {
                     {/section}
                     </div>
                 </div>
-                <button class="hp-next" onclick="hpSlide(this, 1)">&#8250;</button>
+                <button type="button" class="hp-next" onclick="hpSlide(this, 1)">&#8250;</button>
             </div>
         </div>
         {/if}
@@ -402,7 +402,7 @@ function updateArrows(wrap) {
         <div class="home_fi">
             <h2>Featured Items for Sale <a href="{$actualPath}/buy?list=fixed" class="h2-seeall">See All &rarr;</a></h2>
             <div class="hp-carousel-wrap">
-                <button class="hp-prev" onclick="hpSlide(this, -1)">&#8249;</button>
+                <button type="button" class="hp-prev" onclick="hpSlide(this, -1)">&#8249;</button>
                 <div class="hp-viewport">
                     <div class="hp-track">
                     {section name=counter loop=$dataArrFixed}
@@ -432,7 +432,7 @@ function updateArrows(wrap) {
                     {/section}
                     </div>
                 </div>
-                <button class="hp-next" onclick="hpSlide(this, 1)">&#8250;</button>
+                <button type="button" class="hp-next" onclick="hpSlide(this, 1)">&#8250;</button>
             </div>
         </div>
         {/if}
@@ -441,7 +441,7 @@ function updateArrows(wrap) {
         <div class="home_fi">
             <h2>Featured Sales Results <a href="{$actualPath}/sold_item" class="h2-seeall">See All &rarr;</a></h2>
             <div class="hp-carousel-wrap">
-                <button class="hp-prev" onclick="hpSlide(this, -1)">&#8249;</button>
+                <button type="button" class="hp-prev" onclick="hpSlide(this, -1)">&#8249;</button>
                 <div class="hp-viewport">
                     <div class="hp-track">
                     {section name=counter loop=$dataJstFinishedAuction}
@@ -466,7 +466,7 @@ function updateArrows(wrap) {
                     {/section}
                     </div>
                 </div>
-                <button class="hp-next" onclick="hpSlide(this, 1)">&#8250;</button>
+                <button type="button" class="hp-next" onclick="hpSlide(this, 1)">&#8250;</button>
             </div>
         </div>
         {/if}
