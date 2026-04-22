@@ -35,10 +35,39 @@ $(function(){
 function formSubmit(){
     document.getElementById("frm1").submit();
 }
+
+/* ── Carousel logic ─────────────────────────────────────────────────────── */
+$(function(){
+    $('.hp-carousel-wrap').each(function(){
+        updateArrows($(this));
+    });
+});
+function hpSlide(btn, dir) {
+    var wrap  = $(btn).closest('.hp-carousel-wrap');
+    var track = wrap.find('.hp-track');
+    var card  = track.find('.hp-card').first();
+    var cardW = card.outerWidth(true);
+    var visible = 5;
+    var total   = track.find('.hp-card').length;
+    var maxPos  = Math.max(0, total - visible);
+    var pos     = parseInt(track.data('pos') || 0);
+    pos = Math.max(0, Math.min(maxPos, pos + dir));
+    track.data('pos', pos);
+    track.stop(true).animate({ left: -(pos * cardW) + 'px' }, 280);
+    updateArrows(wrap);
+}
+function updateArrows(wrap) {
+    var track   = wrap.find('.hp-track');
+    var visible = 5;
+    var total   = track.find('.hp-card').length;
+    var pos     = parseInt(track.data('pos') || 0);
+    wrap.find('.hp-prev').toggleClass('hp-arrow-disabled', pos === 0);
+    wrap.find('.hp-next').toggleClass('hp-arrow-disabled', pos >= total - visible);
+}
 </script>
 
 <style>
-/* ── Section headers — overrides .home_fi h2 sprite style ─────────────────── */
+/* ── Section headers ────────────────────────────────────────────────────── */
 .home_fi h2 {
     background-image: none !important;
     background-color: #1c1c1c !important;
@@ -49,7 +78,7 @@ function formSubmit(){
     letter-spacing: 2.5px !important;
     text-transform: uppercase !important;
     padding: 13px 18px 13px 16px !important;
-    margin: 0 0 0 0 !important;
+    margin: 0 !important;
     border-left: 4px solid #bd1a21 !important;
     display: flex !important;
     align-items: center !important;
@@ -67,19 +96,58 @@ function formSubmit(){
     border-radius: 2px;
     transition: all 0.2s;
 }
-.home_fi h2 .h2-seeall:hover {
-    background: #bd1a21;
-    color: #fff;
+.home_fi h2 .h2-seeall:hover { background: #bd1a21; color: #fff; }
+
+/* ── Carousel wrapper ───────────────────────────────────────────────────── */
+.hp-carousel-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 16px 0 12px;
+    gap: 6px;
+}
+.hp-viewport {
+    overflow: hidden;
+    flex: 1;
+}
+.hp-track {
+    display: flex;
+    gap: 12px;
+    position: relative;
+    left: 0;
 }
 
-/* ── Card grid ─────────────────────────────────────────────────────────────── */
-.hp-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-    padding: 16px 0 8px;
+/* ── Arrow buttons ──────────────────────────────────────────────────────── */
+.hp-prev, .hp-next {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid #1c1c1c;
+    background: #1c1c1c;
+    color: #fff;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s, border-color 0.18s;
+    padding: 0;
 }
+.hp-prev:hover, .hp-next:hover {
+    background: #bd1a21;
+    border-color: #bd1a21;
+}
+.hp-arrow-disabled {
+    opacity: 0.25;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* ── Cards ──────────────────────────────────────────────────────────────── */
 .hp-card {
+    flex: 0 0 calc((100% - 4 * 12px) / 5);
     background: #fff;
     border: 1px solid #e2e2e2;
     border-radius: 3px;
@@ -119,7 +187,6 @@ function formSubmit(){
     color: #bd1a21;
     font-weight: 700;
     font-size: 14px;
-    letter-spacing: 0.3px;
 }
 .hp-card-title a {
     color: #2c2c2c;
@@ -130,7 +197,7 @@ function formSubmit(){
 }
 .hp-card-title a:hover { color: #bd1a21; }
 
-/* ── Watch button ──────────────────────────────────────────────────────────── */
+/* ── Watch button ───────────────────────────────────────────────────────── */
 .hp-card-watch {
     margin-top: 7px;
     padding: 6px 12px;
@@ -147,20 +214,9 @@ function formSubmit(){
     align-self: flex-start;
     transition: all 0.18s;
 }
-.hp-card-watch:hover {
-    border-color: #bd1a21;
-    color: #bd1a21;
-    background: #fff5f5;
-}
-.hp-card-watch--watching {
-    border-color: #3a6152;
-    color: #3a6152;
-}
-.hp-card-watch--watching:hover {
-    background: #f0f7f4;
-    border-color: #2d4f42;
-    color: #2d4f42;
-}
+.hp-card-watch:hover { border-color: #bd1a21; color: #bd1a21; background: #fff5f5; }
+.hp-card-watch--watching { border-color: #3a6152; color: #3a6152; }
+.hp-card-watch--watching:hover { background: #f0f7f4; border-color: #2d4f42; color: #2d4f42; }
 </style>
 {/literal}
 
@@ -259,7 +315,7 @@ function formSubmit(){
 
     </div>{* end .featuredgallerydiv — floats cleared by .home_fi clear:both below *}
 
-    {* ── Grid sections — .home_fi provides clear:both, width, black h2 header ── *}
+    {* ── Carousel sections ──────────────────────────────────────────────────── *}
     <form name="listFrom" id="listFrom">
         <input type="hidden" name="mode" value="select_watchlist" />
         <input type="hidden" name="is_track" id="is_track" value="" />
@@ -267,34 +323,38 @@ function formSubmit(){
         {if $totWeekly > 0}
         <div class="home_fi">
             <h2>Featured Auction Items <a href="{$actualPath}/buy?list=weekly" class="h2-seeall">See All &rarr;</a></h2>
-            <div class="hp-grid">
-            {section name=counter loop=$dataArrWeekly}
-                <div class="hp-card">
-                    <div class="hp-card-img-wrap">
-                        <img src="{$dataArrWeekly[counter].large_image}"
-                             alt="{$dataArrWeekly[counter].poster_title}"
-                             onclick="redirect_poster_details({$dataArrWeekly[counter].auction_id});">
-                    </div>
-                    <div class="hp-card-body">
-                        {if $smarty.session.sessUserID <> ""}
-                        <div class="hp-card-price">
-                            ${if $dataArrWeekly[counter].last_bid_amount > 0}{$dataArrWeekly[counter].last_bid_amount|number_format:2}{else}{$dataArrWeekly[counter].auction_asked_price|number_format:2}{/if}
+            <div class="hp-carousel-wrap">
+                <button class="hp-prev" onclick="hpSlide(this, -1)">&#8249;</button>
+                <div class="hp-viewport">
+                    <div class="hp-track">
+                    {section name=counter loop=$dataArrWeekly}
+                        <div class="hp-card">
+                            <div class="hp-card-img-wrap">
+                                <img src="{$dataArrWeekly[counter].large_image}"
+                                     alt="{$dataArrWeekly[counter].poster_title}"
+                                     onclick="redirect_poster_details({$dataArrWeekly[counter].auction_id});">
+                            </div>
+                            <div class="hp-card-body">
+                                {if $smarty.session.sessUserID <> ""}
+                                <div class="hp-card-price">${if $dataArrWeekly[counter].last_bid_amount > 0}{$dataArrWeekly[counter].last_bid_amount|number_format:2}{else}{$dataArrWeekly[counter].auction_asked_price|number_format:2}{/if}</div>
+                                {/if}
+                                <div class="hp-card-title">
+                                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrWeekly[counter].auction_id}"
+                                       title="{$dataArrWeekly[counter].poster_title}"
+                                       id="tipsy_{$dataArrWeekly[counter].auction_id}"
+                                       onmouseover="tipsy(this.id)">{$dataArrWeekly[counter].poster_title}</a>
+                                </div>
+                                {if $dataArrWeekly[counter].watch_indicator == 0}
+                                <button class="hp-card-watch" onclick="add_watchlist('{$dataArrWeekly[counter].auction_id}');" id="watch_{$dataArrWeekly[counter].auction_id}">Watch this item</button>
+                                {else}
+                                <button class="hp-card-watch hp-card-watch--watching" onclick="redirect_watchlist({$dataArrWeekly[counter].auction_id});">You are watching</button>
+                                {/if}
+                            </div>
                         </div>
-                        {/if}
-                        <div class="hp-card-title">
-                            <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrWeekly[counter].auction_id}"
-                               title="{$dataArrWeekly[counter].poster_title}"
-                               id="tipsy_{$dataArrWeekly[counter].auction_id}"
-                               onmouseover="tipsy(this.id)">{$dataArrWeekly[counter].poster_title}</a>
-                        </div>
-                        {if $dataArrWeekly[counter].watch_indicator == 0}
-                        <button class="hp-card-watch" onclick="add_watchlist('{$dataArrWeekly[counter].auction_id}');" id="watch_{$dataArrWeekly[counter].auction_id}">Watch this item</button>
-                        {else}
-                        <button class="hp-card-watch hp-card-watch--watching" onclick="redirect_watchlist({$dataArrWeekly[counter].auction_id});">You are watching</button>
-                        {/if}
+                    {/section}
                     </div>
                 </div>
-            {/section}
+                <button class="hp-next" onclick="hpSlide(this, 1)">&#8250;</button>
             </div>
         </div>
         {/if}
@@ -302,32 +362,38 @@ function formSubmit(){
         {if $totUpcoming > 1}
         <div class="home_fi">
             <h2>Featured Upcoming Auction <a href="{$actualPath}/buy?list=upcoming" class="h2-seeall">See All &rarr;</a></h2>
-            <div class="hp-grid">
-            {section name=counter loop=$dataArrUpcoming}
-                <div class="hp-card">
-                    <div class="hp-card-img-wrap">
-                        <img src="{$dataArrUpcoming[counter].large_image}"
-                             alt="{$dataArrUpcoming[counter].poster_title}"
-                             onclick="redirect_poster_details({$dataArrUpcoming[counter].auction_id});">
-                    </div>
-                    <div class="hp-card-body">
-                        {if $smarty.session.sessUserID <> ""}
-                        <div class="hp-card-price">${$dataArrUpcoming[counter].auction_asked_price|number_format:2}</div>
-                        {/if}
-                        <div class="hp-card-title">
-                            <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrUpcoming[counter].auction_id}"
-                               title="{$dataArrUpcoming[counter].poster_title}"
-                               id="tipsy_{$dataArrUpcoming[counter].auction_id}"
-                               onmouseover="tipsy(this.id)">{$dataArrUpcoming[counter].poster_title}</a>
+            <div class="hp-carousel-wrap">
+                <button class="hp-prev" onclick="hpSlide(this, -1)">&#8249;</button>
+                <div class="hp-viewport">
+                    <div class="hp-track">
+                    {section name=counter loop=$dataArrUpcoming}
+                        <div class="hp-card">
+                            <div class="hp-card-img-wrap">
+                                <img src="{$dataArrUpcoming[counter].large_image}"
+                                     alt="{$dataArrUpcoming[counter].poster_title}"
+                                     onclick="redirect_poster_details({$dataArrUpcoming[counter].auction_id});">
+                            </div>
+                            <div class="hp-card-body">
+                                {if $smarty.session.sessUserID <> ""}
+                                <div class="hp-card-price">${$dataArrUpcoming[counter].auction_asked_price|number_format:2}</div>
+                                {/if}
+                                <div class="hp-card-title">
+                                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrUpcoming[counter].auction_id}"
+                                       title="{$dataArrUpcoming[counter].poster_title}"
+                                       id="tipsy_{$dataArrUpcoming[counter].auction_id}"
+                                       onmouseover="tipsy(this.id)">{$dataArrUpcoming[counter].poster_title}</a>
+                                </div>
+                                {if $dataArrUpcoming[counter].watch_indicator == 0}
+                                <button class="hp-card-watch" onclick="add_watchlist('{$dataArrUpcoming[counter].auction_id}');" id="watch_{$dataArrUpcoming[counter].auction_id}">Watch this item</button>
+                                {else}
+                                <button class="hp-card-watch hp-card-watch--watching" onclick="redirect_watchlist({$dataArrUpcoming[counter].auction_id});">You are watching</button>
+                                {/if}
+                            </div>
                         </div>
-                        {if $dataArrUpcoming[counter].watch_indicator == 0}
-                        <button class="hp-card-watch" onclick="add_watchlist('{$dataArrUpcoming[counter].auction_id}');" id="watch_{$dataArrUpcoming[counter].auction_id}">Watch this item</button>
-                        {else}
-                        <button class="hp-card-watch hp-card-watch--watching" onclick="redirect_watchlist({$dataArrUpcoming[counter].auction_id});">You are watching</button>
-                        {/if}
+                    {/section}
                     </div>
                 </div>
-            {/section}
+                <button class="hp-next" onclick="hpSlide(this, 1)">&#8250;</button>
             </div>
         </div>
         {/if}
@@ -335,32 +401,38 @@ function formSubmit(){
         {if $totFixed > 0}
         <div class="home_fi">
             <h2>Featured Items for Sale <a href="{$actualPath}/buy?list=fixed" class="h2-seeall">See All &rarr;</a></h2>
-            <div class="hp-grid">
-            {section name=counter loop=$dataArrFixed}
-                <div class="hp-card">
-                    <div class="hp-card-img-wrap">
-                        <img src="{$dataArrFixed[counter].large_image}"
-                             alt="{$dataArrFixed[counter].poster_title}"
-                             onclick="redirect_poster_details({$dataArrFixed[counter].auction_id});">
-                    </div>
-                    <div class="hp-card-body">
-                        {if $smarty.session.sessUserID <> ""}
-                        <div class="hp-card-price">${$dataArrFixed[counter].auction_asked_price|number_format:2}</div>
-                        {/if}
-                        <div class="hp-card-title">
-                            <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrFixed[counter].auction_id}"
-                               title="{$dataArrFixed[counter].poster_title}"
-                               id="tipsy_{$dataArrFixed[counter].auction_id}"
-                               onmouseover="tipsy(this.id)">{$dataArrFixed[counter].poster_title}</a>
+            <div class="hp-carousel-wrap">
+                <button class="hp-prev" onclick="hpSlide(this, -1)">&#8249;</button>
+                <div class="hp-viewport">
+                    <div class="hp-track">
+                    {section name=counter loop=$dataArrFixed}
+                        <div class="hp-card">
+                            <div class="hp-card-img-wrap">
+                                <img src="{$dataArrFixed[counter].large_image}"
+                                     alt="{$dataArrFixed[counter].poster_title}"
+                                     onclick="redirect_poster_details({$dataArrFixed[counter].auction_id});">
+                            </div>
+                            <div class="hp-card-body">
+                                {if $smarty.session.sessUserID <> ""}
+                                <div class="hp-card-price">${$dataArrFixed[counter].auction_asked_price|number_format:2}</div>
+                                {/if}
+                                <div class="hp-card-title">
+                                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrFixed[counter].auction_id}"
+                                       title="{$dataArrFixed[counter].poster_title}"
+                                       id="tipsy_{$dataArrFixed[counter].auction_id}"
+                                       onmouseover="tipsy(this.id)">{$dataArrFixed[counter].poster_title}</a>
+                                </div>
+                                {if $dataArrFixed[counter].watch_indicator == 0}
+                                <button class="hp-card-watch" onclick="add_watchlist('{$dataArrFixed[counter].auction_id}');" id="watch_{$dataArrFixed[counter].auction_id}">Watch this item</button>
+                                {else}
+                                <button class="hp-card-watch hp-card-watch--watching" onclick="redirect_watchlist({$dataArrFixed[counter].auction_id});">You are watching</button>
+                                {/if}
+                            </div>
                         </div>
-                        {if $dataArrFixed[counter].watch_indicator == 0}
-                        <button class="hp-card-watch" onclick="add_watchlist('{$dataArrFixed[counter].auction_id}');" id="watch_{$dataArrFixed[counter].auction_id}">Watch this item</button>
-                        {else}
-                        <button class="hp-card-watch hp-card-watch--watching" onclick="redirect_watchlist({$dataArrFixed[counter].auction_id});">You are watching</button>
-                        {/if}
+                    {/section}
                     </div>
                 </div>
-            {/section}
+                <button class="hp-next" onclick="hpSlide(this, 1)">&#8250;</button>
             </div>
         </div>
         {/if}
@@ -368,27 +440,33 @@ function formSubmit(){
         {if $totJstFinished > 0}
         <div class="home_fi">
             <h2>Featured Sales Results <a href="{$actualPath}/sold_item" class="h2-seeall">See All &rarr;</a></h2>
-            <div class="hp-grid">
-            {section name=counter loop=$dataJstFinishedAuction}
-                <div class="hp-card">
-                    <div class="hp-card-img-wrap">
-                        <img src="{$dataJstFinishedAuction[counter].large_image}"
-                             alt="{$dataJstFinishedAuction[counter].poster_title}"
-                             onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});">
-                    </div>
-                    <div class="hp-card-body">
-                        {if $smarty.session.sessUserID <> ""}
-                        <div class="hp-card-price">Sold: ${if $dataJstFinishedAuction[counter].soldamnt == ''}0.00{else}{$dataJstFinishedAuction[counter].soldamnt}{/if}</div>
-                        {/if}
-                        <div class="hp-card-title">
-                            <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}"
-                               title="{$dataJstFinishedAuction[counter].poster_title}"
-                               id="tipsy_{$dataJstFinishedAuction[counter].auction_id}"
-                               onmouseover="tipsy(this.id)">{$dataJstFinishedAuction[counter].poster_title}</a>
+            <div class="hp-carousel-wrap">
+                <button class="hp-prev" onclick="hpSlide(this, -1)">&#8249;</button>
+                <div class="hp-viewport">
+                    <div class="hp-track">
+                    {section name=counter loop=$dataJstFinishedAuction}
+                        <div class="hp-card">
+                            <div class="hp-card-img-wrap">
+                                <img src="{$dataJstFinishedAuction[counter].large_image}"
+                                     alt="{$dataJstFinishedAuction[counter].poster_title}"
+                                     onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});">
+                            </div>
+                            <div class="hp-card-body">
+                                {if $smarty.session.sessUserID <> ""}
+                                <div class="hp-card-price">Sold: ${if $dataJstFinishedAuction[counter].soldamnt == ''}0.00{else}{$dataJstFinishedAuction[counter].soldamnt}{/if}</div>
+                                {/if}
+                                <div class="hp-card-title">
+                                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}"
+                                       title="{$dataJstFinishedAuction[counter].poster_title}"
+                                       id="tipsy_{$dataJstFinishedAuction[counter].auction_id}"
+                                       onmouseover="tipsy(this.id)">{$dataJstFinishedAuction[counter].poster_title}</a>
+                                </div>
+                            </div>
                         </div>
+                    {/section}
                     </div>
                 </div>
-            {/section}
+                <button class="hp-next" onclick="hpSlide(this, 1)">&#8250;</button>
             </div>
         </div>
         {/if}
