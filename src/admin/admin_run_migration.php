@@ -80,7 +80,21 @@ runSql($db, "CREATE TABLE IF NOT EXISTS tbl_poster_to_shop_category_live (
     UNIQUE KEY uq_poster_shopcat_live (fk_poster_id, fk_shop_cat_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", $results);
 
-// 6. Add tracking_number to tbl_invoice
+// 6. Add PayPal REST v2 credentials to config_table
+$colCheck6a = mysqli_query($db, "SHOW COLUMNS FROM config_table LIKE 'paypal_client_id'");
+if (mysqli_num_rows($colCheck6a) == 0) {
+    runSql($db, "ALTER TABLE config_table ADD COLUMN paypal_client_id VARCHAR(255) NOT NULL DEFAULT ''", $results);
+} else {
+    $results[] = "OK: paypal_client_id already exists in config_table — skipping.";
+}
+$colCheck6b = mysqli_query($db, "SHOW COLUMNS FROM config_table LIKE 'paypal_client_secret'");
+if (mysqli_num_rows($colCheck6b) == 0) {
+    runSql($db, "ALTER TABLE config_table ADD COLUMN paypal_client_secret VARCHAR(255) NOT NULL DEFAULT ''", $results);
+} else {
+    $results[] = "OK: paypal_client_secret already exists in config_table — skipping.";
+}
+
+// 8. Add tracking_number to tbl_invoice
 $colCheck3 = mysqli_query($db, "SHOW COLUMNS FROM tbl_invoice LIKE 'tracking_number'");
 if (mysqli_num_rows($colCheck3) == 0) {
     runSql($db, "ALTER TABLE tbl_invoice ADD COLUMN tracking_number VARCHAR(100) NULL DEFAULT NULL AFTER shipped_date", $results);
