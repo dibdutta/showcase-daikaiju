@@ -100,18 +100,26 @@
   <div class="clear"></div>
 </div>
 
-<!-- PayPal JS SDK: components=buttons,hosted-fields enables both Smart Buttons and card fields -->
-<script src="https://www.paypal.com/sdk/js?client-id={$paypal_client_id}&currency=USD&components=buttons,hosted-fields&intent=capture" data-csp-nonce=""></script>
-<script>
-(function () {
-  var INVOICE_ID = {$invoice_id|intval};
-  var ENDPOINT   = '{$actualPath}/paypal_orders.php';
-  var RETURN_URL = '{$actualPath}/my_invoice';
+<!-- PayPal JS SDK: components=buttons,hosted-fields enables Smart Buttons + card fields -->
+<script src="https://www.paypal.com/sdk/js?client-id={$paypal_client_id}&currency=USD&components=buttons,hosted-fields&intent=capture"></script>
 
+<!-- Expose Smarty-rendered values as plain JS vars before the literal block -->
+<script>
+var _pp = {
+  invoiceId:  {$invoice_id},
+  endpoint:   '{$actualPath}/paypal_orders.php',
+  returnUrl:  '{$actualPath}/my_invoice',
+  totalLabel: 'Pay ${$total_amount|string_format:"%.2f"} with Card'
+};
+</script>
+
+{literal}
+<script>
+(function (pp) {
   function apiCall(params) {
-    return fetch(ENDPOINT, {
+    return fetch(pp.endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: new URLSearchParams(params).toString()
     }).then(function (r) { return r.json(); });
   }
@@ -122,12 +130,12 @@
     el.style.display = 'block';
   }
 
-  // ── Smart Buttons (PayPal / Venmo / Pay Later) ──────────────────────────────
+  // ── Smart Buttons (PayPal / Venmo / Pay Later shown by SDK based on eligibility) ─
   paypal.Buttons({
-    style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
+    style: {layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal'},
 
     createOrder: function () {
-      return apiCall({ action: 'create_order', invoice_id: INVOICE_ID })
+      return apiCall({action: 'create_order', invoice_id: pp.invoiceId})
         .then(function (data) {
           if (data.error) { alert('Error: ' + data.error); throw new Error(data.error); }
           return data.id;
@@ -135,10 +143,10 @@
     },
 
     onApprove: function (data) {
-      return apiCall({ action: 'capture_order', order_id: data.orderID, invoice_id: INVOICE_ID })
+      return apiCall({action: 'capture_order', order_id: data.orderID, invoice_id: pp.invoiceId})
         .then(function (result) {
           if (result.success) {
-            window.location.href = RETURN_URL;
+            window.location.href = pp.returnUrl;
           } else {
             alert('Payment failed: ' + (result.error || 'Unknown error'));
           }
@@ -151,46 +159,47 @@
     }
   }).render('#paypal-button-container');
 
-  // ── Hosted Card Fields (requires PayPal Advanced Payments / Pro) ────────────
+  // ── Hosted Card Fields (requires PayPal Advanced Payments / Pro on merchant account) ─
   if (paypal.HostedFields && paypal.HostedFields.isEligible()) {
     document.getElementById('card-divider').style.display = 'block';
     document.getElementById('card-form').style.display    = 'block';
 
     paypal.HostedFields.render({
       createOrder: function () {
-        return apiCall({ action: 'create_order', invoice_id: INVOICE_ID })
+        return apiCall({action: 'create_order', invoice_id: pp.invoiceId})
           .then(function (data) { return data.id; });
       },
       fields: {
-        number:         { selector: '#card-number-field-container', placeholder: '•••• •••• •••• ••••' },
-        expirationDate: { selector: '#expiry-field-container',      placeholder: 'MM / YYYY' },
-        cvv:            { selector: '#cvv-field-container',         placeholder: 'CVV' }
+        number:         {selector: '#card-number-field-container', placeholder: '•••• •••• •••• ••••'},
+        expirationDate: {selector: '#expiry-field-container',      placeholder: 'MM / YYYY'},
+        cvv:            {selector: '#cvv-field-container',         placeholder: 'CVV'}
       }
     }).then(function (cardFields) {
       document.getElementById('card-submit-btn').addEventListener('click', function () {
         document.getElementById('card-error').style.display = 'none';
         var btn = this;
-        btn.disabled = true;
+        btn.disabled    = true;
         btn.textContent = 'Processing…';
 
-        cardFields.submit({ contingencies: ['3D_SECURE'] })
+        cardFields.submit({contingencies: ['3D_SECURE']})
           .then(function (submitData) {
-            return apiCall({ action: 'capture_order', order_id: submitData.orderId, invoice_id: INVOICE_ID });
+            var oid = submitData.orderID || submitData.orderId;
+            return apiCall({action: 'capture_order', order_id: oid, invoice_id: pp.invoiceId});
           })
           .then(function (result) {
             if (result.success) {
-              window.location.href = RETURN_URL;
+              window.location.href = pp.returnUrl;
             } else {
               showCardError(result.error || 'Payment failed. Please try again.');
-              btn.disabled = false;
-              btn.textContent = 'Pay ${$total_amount|string_format:"%.2f"} with Card';
+              btn.disabled    = false;
+              btn.textContent = pp.totalLabel;
             }
           })
           .catch(function (err) {
             console.error('Card payment error', err);
             showCardError('Card payment failed. Please check your details and try again.');
-            btn.disabled = false;
-            btn.textContent = 'Pay ${$total_amount|string_format:"%.2f"} with Card';
+            btn.disabled    = false;
+            btn.textContent = pp.totalLabel;
           });
       });
     }).catch(function (err) {
@@ -199,7 +208,8 @@
       document.getElementById('card-form').style.display    = 'none';
     });
   }
-})();
+}(_pp));
 </script>
+{/literal}
 
 {include file="foot.tpl"}

@@ -1,36 +1,17 @@
 <?php
+ob_start(); // capture any stray output (BOM, whitespace, PHP notices, or die() text)
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 define("INCLUDE_PATH", "./");
 require_once INCLUDE_PATH . "lib/inc.php";
 
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['sessUserID'])) {
-    http_response_code(401);
-    echo json_encode(['error' => 'Not logged in']);
-    exit;
-}
+// ── helpers ───────────────────────────────────────────────────────────────────
 
-$action     = $_REQUEST['action'] ?? '';
-$invoice_id = (int)($_REQUEST['invoice_id'] ?? 0);
-
-if (!$invoice_id) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Missing invoice_id']);
-    exit;
-}
-
-$objDb = new DBCommon();
-$counter = $objDb->countData(TBL_INVOICE, [
-    'invoice_id'   => $invoice_id,
-    'fk_user_id'   => $_SESSION['sessUserID'],
-    'is_paid'      => 0,
-    'is_approved'  => 1,
-    'is_cancelled' => 0,
-]);
-if ($counter == 0) {
-    http_response_code(403);
-    echo json_encode(['error' => 'Invoice not found or not payable']);
+function jsonOut(array $payload, int $status = 200): void {
+    ob_clean();
+    http_response_code($status);
+    echo json_encode($payload);
     exit;
 }
 
@@ -71,19 +52,49 @@ function paypalRequest(string $method, string $path, ?array $body, string $token
     return ['status' => $httpCode, 'body' => json_decode($response, true)];
 }
 
+// ── auth + invoice ownership check ────────────────────────────────────────────
+
+if (!isset($_SESSION['sessUserID'])) {
+    jsonOut(['error' => 'Not logged in'], 401);
+}
+
+$action     = $_REQUEST['action'] ?? '';
+$invoice_id = (int)($_REQUEST['invoice_id'] ?? 0);
+
+if (!$invoice_id) {
+    jsonOut(['error' => 'Missing invoice_id'], 400);
+}
+
+// Direct query — DBCommon::countData() uses `or die()` which would corrupt the
+// JSON response if the query fails, so we bypass it here.
+$esc_inv = (int)$invoice_id;
+$esc_usr = (int)$_SESSION['sessUserID'];
+$rs = mysqli_query(
+    $GLOBALS['db_connect'],
+    "SELECT COUNT(*) AS cnt FROM " . TBL_INVOICE .
+    " WHERE invoice_id = $esc_inv AND fk_user_id = $esc_usr" .
+    " AND is_paid = 0 AND is_approved = 1 AND is_cancelled = 0"
+);
+if (!$rs || (int)(mysqli_fetch_assoc($rs)['cnt'] ?? 0) === 0) {
+    jsonOut(['error' => 'Invoice not found or not payable'], 403);
+}
+
 // ── create_order ──────────────────────────────────────────────────────────────
+
 if ($action === 'create_order') {
-    $rows    = $objDb->selectData(TBL_INVOICE, ['total_amount'], ['invoice_id' => $invoice_id]);
-    $base    = (float)($rows[0]['total_amount'] ?? 0);
-    $sessKey = 'invoice_' . $invoice_id;
-    $si      = $_SESSION[$sessKey]['shipping_info'] ?? [];
-    $total   = number_format($base + (float)($si['shipping_charge'] ?? 0) + (float)($si['sale_tax_amount'] ?? 0), 2, '.', '');
+    $rs2    = mysqli_query($GLOBALS['db_connect'], "SELECT total_amount FROM " . TBL_INVOICE . " WHERE invoice_id = $esc_inv");
+    $invRow = $rs2 ? mysqli_fetch_assoc($rs2) : [];
+    $base   = (float)($invRow['total_amount'] ?? 0);
+
+    $sessKey  = 'invoice_' . $invoice_id;
+    $si       = $_SESSION[$sessKey]['shipping_info'] ?? [];
+    $shipping = (float)($si['shipping_charge'] ?? 0);
+    $tax      = (float)($si['sale_tax_amount'] ?? 0);
+    $total    = number_format($base + $shipping + $tax, 2, '.', '');
 
     $token = paypalAccessToken();
     if (!$token) {
-        http_response_code(502);
-        echo json_encode(['error' => 'PayPal authentication failed']);
-        exit;
+        jsonOut(['error' => 'PayPal authentication failed — check Client ID and Secret in admin config'], 502);
     }
 
     $result = paypalRequest('POST', '/v2/checkout/orders', [
@@ -103,36 +114,28 @@ if ($action === 'create_order') {
     ], $token);
 
     if ($result['status'] === 201 && !empty($result['body']['id'])) {
-        echo json_encode(['id' => $result['body']['id']]);
-    } else {
-        http_response_code(502);
-        echo json_encode(['error' => 'Order creation failed', 'details' => $result['body']]);
+        jsonOut(['id' => $result['body']['id']]);
     }
-    exit;
+    jsonOut(['error' => 'Order creation failed', 'details' => $result['body']], 502);
 }
 
 // ── capture_order ─────────────────────────────────────────────────────────────
+
 if ($action === 'capture_order') {
     $order_id = trim($_REQUEST['order_id'] ?? '');
     if (!$order_id) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Missing order_id']);
-        exit;
+        jsonOut(['error' => 'Missing order_id'], 400);
     }
 
     $token = paypalAccessToken();
     if (!$token) {
-        http_response_code(502);
-        echo json_encode(['error' => 'PayPal authentication failed']);
-        exit;
+        jsonOut(['error' => 'PayPal authentication failed'], 502);
     }
 
     $result = paypalRequest('POST', '/v2/checkout/orders/' . rawurlencode($order_id) . '/capture', null, $token);
 
-    if ($result['status'] !== 201 || ($result['body']['status'] ?? '') !== 'COMPLETED') {
-        http_response_code(502);
-        echo json_encode(['error' => 'Capture failed', 'details' => $result['body']]);
-        exit;
+    if (!in_array($result['status'], [200, 201]) || ($result['body']['status'] ?? '') !== 'COMPLETED') {
+        jsonOut(['error' => 'Capture failed', 'details' => $result['body']], 502);
     }
 
     // Mirror pay_now() DB updates exactly
@@ -206,9 +209,7 @@ if ($action === 'capture_order') {
     $invoiceObj->mailInvoice($invoice_id, 'invoice');
     unset($_SESSION[$sessKey]);
 
-    echo json_encode(['success' => true]);
-    exit;
+    jsonOut(['success' => true]);
 }
 
-http_response_code(400);
-echo json_encode(['error' => 'Unknown action']);
+jsonOut(['error' => 'Unknown action'], 400);
