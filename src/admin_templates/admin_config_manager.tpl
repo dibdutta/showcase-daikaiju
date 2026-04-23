@@ -54,6 +54,25 @@
 												<td class="smalltext"><input type="checkbox" name="paypal_is_test_mode" value="1" {if $paypal_is_test_mode == '1'} checked="checked" {/if} /><br><span class="err">{$pageTitle_err}</span></td>
 											</tr>
 											<tr class="header_bgcolor" height="24">
+												<td colspan="2" align="left" class="headertext">PayPal Expanded Checkout (REST API v2)</td>
+											</tr>
+											<tr class="tr_bgcolor">
+												<td class="bold_text" valign="top" width="36%">Client ID :</td>
+												<td class="smalltext">
+													<input type="text" name="paypal_client_id" value="{$paypal_client_id}" class="look" style="width:400px;" placeholder="sandbox or live client ID" />
+													<br /><small style="color:#666;">From developer.paypal.com &rarr; Apps &amp; Credentials. Used in the JS SDK — safe to expose.</small>
+													<br /><span class="err">{$paypal_client_id_err}</span>
+												</td>
+											</tr>
+											<tr class="tr_bgcolor">
+												<td class="bold_text" valign="top" width="36%">Client Secret :</td>
+												<td class="smalltext">
+													<input type="password" name="paypal_client_secret" value="{$paypal_client_secret}" class="look" style="width:400px;" placeholder="keep this confidential" />
+													<br /><small style="color:#666;">Server-side only. Never exposed to the browser.</small>
+													<br /><span class="err">{$paypal_client_secret_err}</span>
+												</td>
+											</tr>
+											<tr class="header_bgcolor" height="24">
 												<td colspan="2" align="left" class="headertext">Administrator's Information</td>
 											</tr>
 											<tr class="tr_bgcolor">

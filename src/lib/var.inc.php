@@ -66,6 +66,8 @@ define ("CONFIG_PAYPAL_API_USERNAME", "paypal_api_username");
 define ("CONFIG_PAYPAL_API_PASSWORD", "paypal_api_password");
 define ("CONFIG_PAYPAL_API_SIGNATURE", "paypal_api_signature");
 define ("CONFIG_PAYPAL_IS_TEST_MODE", "paypal_is_test_mode");
+define ("CONFIG_PAYPAL_CLIENT_ID",     "paypal_client_id");
+define ("CONFIG_PAYPAL_CLIENT_SECRET", "paypal_client_secret");
 
 define ("CONFIG_SALE_TAX_GA", "sale_tax_ga");
 define ("CONFIG_SALE_TAX_NC", "sale_tax_nc");

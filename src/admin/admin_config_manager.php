@@ -60,6 +60,8 @@ function dispmiddle() {
 	$paypal_api_password = $row[CONFIG_PAYPAL_API_PASSWORD];
 	$paypal_api_signature = $row[CONFIG_PAYPAL_API_SIGNATURE];
 	$paypal_is_test_mode = $row[CONFIG_PAYPAL_IS_TEST_MODE];
+	$paypal_client_id     = $row[CONFIG_PAYPAL_CLIENT_ID] ?? '';
+	$paypal_client_secret = $row[CONFIG_PAYPAL_CLIENT_SECRET] ?? '';
 	
 	$sale_tax_ga = $row[CONFIG_SALE_TAX_GA];
 	$sale_tax_nc = $row[CONFIG_SALE_TAX_NC];
@@ -115,6 +117,8 @@ function dispmiddle() {
 	$smarty->assign('paypal_api_password', $paypal_api_password);
 	$smarty->assign('paypal_api_signature', $paypal_api_signature);
 	$smarty->assign('paypal_is_test_mode', $paypal_is_test_mode);
+	$smarty->assign('paypal_client_id',     $paypal_client_id);
+	$smarty->assign('paypal_client_secret', $paypal_client_secret);
 	
 	$smarty->assign('sale_tax_ga', $sale_tax_ga);
 	$smarty->assign('sale_tax_nc', $sale_tax_nc);
@@ -207,6 +211,8 @@ function save_content() {
 			".CONFIG_PAYPAL_API_PASSWORD."='".($_REQUEST['paypal_api_password'] ?? '')."',
 			".CONFIG_PAYPAL_API_SIGNATURE."='".($_REQUEST['paypal_api_signature'] ?? '')."',
 			".CONFIG_PAYPAL_IS_TEST_MODE."='".($_REQUEST['paypal_is_test_mode'] ?? '')."',
+			".CONFIG_PAYPAL_CLIENT_ID."='".mysqli_real_escape_string($GLOBALS['db_connect'], $_REQUEST['paypal_client_id'] ?? '')."',
+			".CONFIG_PAYPAL_CLIENT_SECRET."='".mysqli_real_escape_string($GLOBALS['db_connect'], $_REQUEST['paypal_client_secret'] ?? '')."',
 			".CONFIG_SALE_TAX_GA."='".($_REQUEST['sale_tax_ga'] ?? '')."',
 			".CONFIG_SALE_TAX_NC."='".($_REQUEST['sale_tax_nc'] ?? '')."',
 			".MARCHANT_FEE."='".($_REQUEST['marchant_fee'] ?? '')."',

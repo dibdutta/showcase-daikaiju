@@ -130,6 +130,13 @@ define ("SUBJECT","");
 define ("VERSION", "65.1");
 define ("CURRENCY_CODE", "USD");
 
+define ("PAYPAL_CLIENT_ID",     $row[CONFIG_PAYPAL_CLIENT_ID] ?? '');
+define ("PAYPAL_CLIENT_SECRET", $row[CONFIG_PAYPAL_CLIENT_SECRET] ?? '');
+define ("PAYPAL_V2_IS_SANDBOX", $row[CONFIG_PAYPAL_IS_TEST_MODE] == '1');
+define ("PAYPAL_V2_BASE_URL",   ($row[CONFIG_PAYPAL_IS_TEST_MODE] == '1')
+    ? 'https://api-m.sandbox.paypal.com'
+    : 'https://api-m.paypal.com');
+
 define('USE_PROXY', FALSE);
 define('PROXY_HOST', '127.0.0.1');
 define('PROXY_PORT', '808');
