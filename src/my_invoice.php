@@ -95,6 +95,8 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='print'){
 }elseif($_REQUEST['mode']=='do_direct_payment'){
 //var_dump(session_id());
 	paymentOption();
+}elseif($_REQUEST['mode']=='do_paypal_v2'){
+	doPaypalV2Checkout();
 }elseif($_REQUEST['mode']=='do_express_checkout'){
  setExpressCheckout();
 }elseif($_REQUEST['mode']=='do_express_reviewoder'){
@@ -839,8 +841,53 @@ function cancel_payment()
 	header("location: my_invoice?mode=order&invoice_id=".$_REQUEST['invoice_id']);
 	exit;
 }
+function doPaypalV2Checkout() {
+	require_once INCLUDE_PATH . "lib/common.php";
+
+	$invoice_id = (int)($_REQUEST['invoice_id'] ?? 0);
+	if (!$invoice_id) {
+		dispmiddle();
+		return;
+	}
+
+	// Guard: invoice must belong to this user and be payable
+	$invoiceObj = new Invoice();
+	$counter = $invoiceObj->countData(TBL_INVOICE, [
+		'invoice_id'   => $invoice_id,
+		'fk_user_id'   => $_SESSION['sessUserID'],
+		'is_paid'      => 0,
+		'is_approved'  => 1,
+		'is_cancelled' => 0,
+	]);
+	if ($counter == 0) {
+		dispmiddle();
+		return;
+	}
+
+	// Session must have shipping info (set by chooseOptionForPayment)
+	$sessKey = 'invoice_' . $invoice_id;
+	if (empty($_SESSION[$sessKey]['shipping_info'])) {
+		header('Location: my_invoice?mode=shippinginfo&invoice_id=' . $invoice_id);
+		exit;
+	}
+
+	$rows     = $invoiceObj->selectData(TBL_INVOICE, ['total_amount'], ['invoice_id' => $invoice_id]);
+	$base     = (float)($rows[0]['total_amount'] ?? 0);
+	$si       = $_SESSION[$sessKey]['shipping_info'] ?? [];
+	$shipping = (float)($si['shipping_charge'] ?? 0);
+	$tax      = (float)($si['sale_tax_amount'] ?? 0);
+
+	$smarty->assign('invoice_id',      $invoice_id);
+	$smarty->assign('paypal_client_id', PAYPAL_CLIENT_ID);
+	$smarty->assign('base_amount',     $base);
+	$smarty->assign('shipping_charge', $shipping);
+	$smarty->assign('sale_tax',        $tax);
+	$smarty->assign('total_amount',    $base + $shipping + $tax);
+	$smarty->display('paypal_checkout_v2.tpl');
+}
+
 function setExpressCheckout(){
-	
+
 	require_once INCLUDE_PATH."lib/common.php";
 	$dbCommonObj = new DBCommon();
 	$smarty->assign('paypal_url',$_SERVER['HTTP_HOST']);
