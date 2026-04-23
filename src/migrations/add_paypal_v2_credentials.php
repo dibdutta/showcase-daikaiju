@@ -1,17 +1,17 @@
 <?php
-// Migration: add paypal_client_id and paypal_client_secret to tbl_config
+// Migration: add paypal_client_id and paypal_client_secret to config_table
 define("INCLUDE_PATH", "../");
 require_once INCLUDE_PATH . "lib/inc.php";
 
 $cols = [
-    "paypal_client_id"     => "ALTER TABLE tbl_config ADD COLUMN paypal_client_id VARCHAR(255) NOT NULL DEFAULT ''",
-    "paypal_client_secret" => "ALTER TABLE tbl_config ADD COLUMN paypal_client_secret VARCHAR(255) NOT NULL DEFAULT ''",
+    "paypal_client_id"     => "ALTER TABLE config_table ADD COLUMN paypal_client_id VARCHAR(255) NOT NULL DEFAULT ''",
+    "paypal_client_secret" => "ALTER TABLE config_table ADD COLUMN paypal_client_secret VARCHAR(255) NOT NULL DEFAULT ''",
 ];
 
 foreach ($cols as $col => $sql) {
     $check = mysqli_query($GLOBALS['db_connect'],
         "SELECT COUNT(*) AS cnt FROM INFORMATION_SCHEMA.COLUMNS
-         WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'tbl_config' AND COLUMN_NAME = '$col'"
+         WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'config_table' AND COLUMN_NAME = '$col'"
     );
     $row = mysqli_fetch_assoc($check);
     if ($row['cnt'] == 0) {
