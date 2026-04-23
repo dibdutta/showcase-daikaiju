@@ -73,7 +73,7 @@ $rs = mysqli_query(
     $GLOBALS['db_connect'],
     "SELECT COUNT(*) AS cnt FROM " . TBL_INVOICE .
     " WHERE invoice_id = $esc_inv AND fk_user_id = $esc_usr" .
-    " AND is_paid = 0 AND is_approved = 1 AND is_cancelled = 0"
+    " AND is_paid = '0' AND is_approved = '1' AND is_cancelled = '0'"
 );
 if (!$rs || (int)(mysqli_fetch_assoc($rs)['cnt'] ?? 0) === 0) {
     // Diagnostic: fetch actual invoice row to pinpoint failing condition
@@ -198,7 +198,7 @@ if ($action === 'capture_order') {
         'shipping_address'   => $shipping_address,
         'additional_charges' => mysqli_real_escape_string($GLOBALS['db_connect'], serialize($charges)),
         'total_amount'       => $total_amount,
-        'is_paid'            => 1,
+        'is_paid'            => '1',
         'paid_on'            => date('Y-m-d H:i:s'),
     ], ['invoice_id' => $invoice_id], true);
 
