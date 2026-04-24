@@ -215,24 +215,19 @@
                                                          {if $is_expired=='0' && $is_expired_stills !='1' && $smarty.request.list!='alternative' &&  $smarty.request.list!=''}
 														   {if $auctionItems[counter].fk_auction_type_id <> '1'}
                                             				<div class="inner-cntnt-each-poster pt10  pb05 pl10 pr10">                                        
-                                                			  <div class="tac">
-																{if $auctionItems[counter].watch_indicator ==0}	
+                                                			  <div style="display:flex; align-items:center; justify-content:space-between;">
+																{if $auctionItems[counter].watch_indicator ==0}
 																  {if $smarty.request.list!='extendded'}
-																	<div class="timerwrapper" style="float:right">
-																 	<!-- <div class="timer-left"></div>-->
-																  	<div class="text-timer" id="timer_{$auctionItems[counter].auction_id}" style="background:#003878; background-image:none; color:#fff; border-radius:3px;">{$auctionItems[counter].auction_countdown}</div>
-																  	<!--<div class="timer-right"></div>-->
-																  	</div>
 																	<input type="button" value="Watch" class="track-btn" style="width:60px;" onclick="{if $smarty.session.sessUserID == ''}showLogIn();{else}add_watchlist_for_details({$auctionItems[counter].auction_id});{/if}" id="watch_{$auctionItems[counter].auction_id}" />
+																	<div class="timerwrapper">
+																  	<div class="text-timer" id="timer_{$auctionItems[counter].auction_id}" style="background:#003878; background-image:none; color:#fff; border-radius:3px;">{$auctionItems[counter].auction_countdown}</div>
+																  	</div>
 																  {/if}
 																{else}
-																	<div class="timerwrapper" style="float:right">
-																 	<!-- <div class="timer-left"></div>-->
-																  		<div class="text-timer" id="timer_{$auctionItems[counter].auction_id}" style="background:#003878; background-image:none; color:#fff; border-radius:3px;">{$auctionItems[counter].auction_countdown}</div>
-																  		<!--<div class="timer-right"></div>-->
-																  	</div>
 																	<input type="button" value="Watching" style="width:80px;" onclick="redirect_watchlist({$auctionItems[counter].auction_id});" class="track-btn"  />
-													
+																	<div class="timerwrapper">
+																  		<div class="text-timer" id="timer_{$auctionItems[counter].auction_id}" style="background:#003878; background-image:none; color:#fff; border-radius:3px;">{$auctionItems[counter].auction_countdown}</div>
+																  	</div>
 																{/if}
                                                                </div>
                                                             </div>
