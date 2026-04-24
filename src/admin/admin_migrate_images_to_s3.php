@@ -1,6 +1,7 @@
 <?php
 /**
  * One-time migration: copy all poster images from EFS to S3.
+ * Uses S3_STATIC_BUCKET env var (set via ECS task definition).
  * Run once via browser after deploying the S3 upload code, then DELETE this file.
  *
  * Usage: https://www.mygodzillashop.com/admin/admin_migrate_images_to_s3.php
