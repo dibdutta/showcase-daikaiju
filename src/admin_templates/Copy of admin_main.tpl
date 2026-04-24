@@ -29,7 +29,7 @@
 					<span style="width: 200px;float:left;text-align:left; "><b>Poster Title</b></span> <span style="width: 120px;"><b>Bid Day</b></span><span style="width: 120px;">&nbsp;<b>Amount</b></span><br/>
 					{if $totalBids > 0}
                     {section name=counter loop=$bidDetails}
-                     <span style="width: 200px;float:left;text-align:left;"><img src="{$actualPath}/poster_photo/thumbnail/{$bidDetails[counter].poster_thumb}" width="20px" height="20px" border="0" />&nbsp;&nbsp;{$bidDetails[counter].poster_title}(#{$bidDetails[counter].poster_sku})</span>
+                     <span style="width: 200px;float:left;text-align:left;"><img src="{$smarty.const.CLOUD_POSTER_THUMB}{$bidDetails[counter].poster_thumb}" width="20px" height="20px" border="0" />&nbsp;&nbsp;{$bidDetails[counter].poster_title}(#{$bidDetails[counter].poster_sku})</span>
                      <span style="width: 120px;">{$bidDetails[counter].bids[0].post_date}</span>
                      <span style="width: 120px;">&nbsp;${$bidDetails[counter].bids[0].bid_amount}</span><br/>                                        
                      {/section}
@@ -46,7 +46,7 @@
 					<span style="width: 150px;float:left;"><b>Poster Title</b></span> <span style="width: 120px;"><b>Offer Day</b></span><span style="width: 120px;">&nbsp;<b>Amount</b></span><br/>
 					{if $totalOffers > 0}
                      {section name=counter loop=$dataOfr}
-                      <span style="width: 250px;float:left;"><img src="{$actualPath}/poster_photo/thumbnail/{$bidDetails[counter].poster_thumb}" width="20px" height="20px" border="0" />&nbsp;&nbsp;{$dataOfr[counter].poster_title}(#{$dataOfr[counter].poster_sku})</span>
+                      <span style="width: 250px;float:left;"><img src="{$smarty.const.CLOUD_POSTER_THUMB}{$bidDetails[counter].poster_thumb}" width="20px" height="20px" border="0" />&nbsp;&nbsp;{$dataOfr[counter].poster_title}(#{$dataOfr[counter].poster_sku})</span>
                      <span style="width: 120px;">{$dataOfr[counter].post_date|date_format:"%m/%d/%Y"}</span>
                      <span style="width: 120px;">&nbsp;${$dataOfr[counter].offer_amount}</span><br/> 
                      {/section}

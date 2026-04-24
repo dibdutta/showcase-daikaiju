@@ -74,7 +74,7 @@ font-family:Calibri;
 										</tr>
 										{section name=counter loop=$paidAuctionDetails}
 											<tr class="{cycle values="odd_tr,even_tr"}">
-												<td align="left" class="smalltext" width="20%">&nbsp;&nbsp;<img src="{$actualPath}/poster_photo/thumbnail/{$paidAuctionDetails[counter].poster_thumb}" ><br/>
+												<td align="left" class="smalltext" width="20%">&nbsp;&nbsp;<img src="{$smarty.const.CLOUD_POSTER_THUMB}{$paidAuctionDetails[counter].poster_thumb}" ><br/>
 												<font style="font-size:12px; font-family:Arial;">{$paidAuctionDetails[counter].poster_title}(#{$paidAuctionDetails[counter].poster_sku})</font>
 												</td >
 												

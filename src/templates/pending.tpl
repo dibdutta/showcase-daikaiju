@@ -49,7 +49,7 @@
 										</div>
 										<div class="poster-area-list">
 											<div class="shadowbottom">
-                                       <div class="shadow-bringer shadow"><a href="javascript:void(0)"><img class="image-brdr" src="poster_photo/thumbnail/{$auction[counter].poster_thumb}" border="0" width="83" height="78" border="0" /></a></div></div><p>{$auction[counter].poster_desc}</p>
+                                       <div class="shadow-bringer shadow"><a href="javascript:void(0)"><img class="image-brdr" src="{$smarty.const.CLOUD_POSTER_THUMB}{$auction[counter].poster_thumb}" border="0" width="83" height="78" border="0" /></a></div></div><p>{$auction[counter].poster_desc}</p>
 										</div>
 										<div class="poster-area-list">
 											<span><strong>&nbsp;</strong></span><br />

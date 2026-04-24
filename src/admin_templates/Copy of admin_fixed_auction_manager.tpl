@@ -68,7 +68,7 @@ function approveAuction(id, is_approved, searchDisp)
 										{section name=counter loop=$auctionRows}
 											<tr id="tr_{$auctionRows[counter].auction_id}" class="{cycle values="odd_tr,even_tr"}">
 												<!--<td align="center" class="smalltext"><input type="checkbox" name="poster_ids[]" value="{$posterRows[counter].poster_id}" class="checkBox" /></td>-->
-                                                <td align="center" class="smalltext"><img src="{$actualPath}/poster_photo/thumbnail/{$auctionRows[counter].poster_thumb}" height="100" width="78"><br />{$auctionRows[counter].poster_title}<br />{$auctionRows[counter].poster_sku}</td>
+                                                <td align="center" class="smalltext"><img src="{$smarty.const.CLOUD_POSTER_THUMB}{$auctionRows[counter].poster_thumb}" height="100" width="78"><br />{$auctionRows[counter].poster_title}<br />{$auctionRows[counter].poster_sku}</td>
 												<td align="center" class="smalltext">${$auctionRows[counter].auction_asked_price}</td>
                                                 <td align="center" class="smalltext">{if $auctionRows[counter].is_offer_price_percentage == 1}{$auctionRows[counter].auction_reserve_offer_price}%{else}${$auctionRows[counter].auction_reserve_offer_price}{/if}</td>
                                                 {if $smarty.request.search == '' || $smarty.request.search == 'waiting'}

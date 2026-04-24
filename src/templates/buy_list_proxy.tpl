@@ -226,7 +226,7 @@ $(document).ready(function(){
                         {/if} </div>
                       <div class="poster-area-list">
                         <div id="gallery_{$smarty.section.counter.index}" class="image-hldr"><div class="shadowbottom">
-                                       <div class="shadow-bringer shadow"> <img  class="image-brdr" src="{$actualPath}/poster_photo/thumbnail/{$auctionItems[counter].poster_thumb}"  onclick="redirect_poster_details({$auctionItems[counter].auction_id});" style="cursor:pointer;" /></div></div> </div>
+                                       <div class="shadow-bringer shadow"> <img  class="image-brdr" src="{$smarty.const.CLOUD_POSTER_THUMB}{$auctionItems[counter].poster_thumb}"  onclick="redirect_poster_details({$auctionItems[counter].auction_id});" style="cursor:pointer;" /></div></div> </div>
 
                         <div class="descrp-area"> {section name=catCounter loop=$auctionItems[counter].categories}
                           {if $auctionItems[counter].categories[catCounter].fk_cat_type_id == 1}

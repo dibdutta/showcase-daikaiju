@@ -299,7 +299,7 @@ textarea
                                             <div id="existing_photos" style="width:100%; padding:10px; margin:0px; float:left;">
                                                 {section name=counter loop=$posterImageRows}
                                                     {assign var="countID" value=$smarty.section.counter.index+1}
-                                                    <div id="existing_{$countID}" style="float:left; width:110px; padding:0px 2px 0 1px; margin:0px;"><img src="{$actualPath}/poster_photo/thumbnail/{$posterImageRows[counter].poster_thumb}" height="78" width="100" />
+                                                    <div id="existing_{$countID}" style="float:left; width:110px; padding:0px 2px 0 1px; margin:0px;"><img src="{$smarty.const.CLOUD_POSTER_THUMB}{$posterImageRows[counter].poster_thumb}" height="78" width="100" />
                                                     <br /><input type="radio" name="is_default" value="{$posterImageRows[counter].poster_thumb}" {if $posterImageRows[counter].is_default == 1} checked="checked" {/if} />
                                                     <br /><img src="{$smarty.const.CLOUD_STATIC}delete-icon.png" onclick="deletePhoto('existing_{$countID}', '{$posterImageRows[counter].poster_thumb}', 'existing')" />
                                                     <span id="errexisting_{$countID}"></span>

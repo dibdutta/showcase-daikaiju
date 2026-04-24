@@ -126,7 +126,7 @@ function fancy_images(i){
                                         <div id="gallery_{$smarty.section.counter.index}" class="image-hldr">
                                         <div class="shadowbottom">
                                        <div class="shadow-bringer shadow">
-                                            <img  class="image-brdr" src="{$actualPath}/poster_photo/thumbnail/{$auction[counter].poster_thumb}"  border="0" style="cursor:pointer;"   onclick="javascript:window.open('{$actualPath}/auction_images_large?mode=auction_images_large&id={$auction[counter].poster_id}','mywindow','menubar=1,resizable=1,width={$auction[counter].img_width+100},height={$auction[counter].img_height+100},scrollbars=yes')" />
+                                            <img  class="image-brdr" src="{$smarty.const.CLOUD_POSTER_THUMB}{$auction[counter].poster_thumb}"  border="0" style="cursor:pointer;"   onclick="javascript:window.open('{$actualPath}/auction_images_large?mode=auction_images_large&id={$auction[counter].poster_id}','mywindow','menubar=1,resizable=1,width={$auction[counter].img_width+100},height={$auction[counter].img_height+100},scrollbars=yes')" />
                                            </div></div>
                                             <!---Move To Weekly Button---->
                                             <div class="Buttondesign MoveToWeekly">

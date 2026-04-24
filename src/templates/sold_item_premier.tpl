@@ -92,7 +92,7 @@ function show_text(){
                                              <div class="poster-area-list">
                                                 <div id="gallery_{$smarty.section.counter.index}" class="image-hldr">
                                                         <div class="shadowbottom">
-                                       <div class="shadow-bringer shadow"><img  class="image-brdr" src="{$actualPath}/poster_photo/thumbnail/{$dataJstFinishedAuction[counter].poster_thumb}"  onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});" style="cursor:pointer;" /></div></div>
+                                       <div class="shadow-bringer shadow"><img  class="image-brdr" src="{$smarty.const.CLOUD_POSTER_THUMB}{$dataJstFinishedAuction[counter].poster_thumb}"  onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});" style="cursor:pointer;" /></div></div>
                                                 </div>
                                                 <div class="descrp-area">
                                                 {section name=catCounter loop=$dataJstFinishedAuction[counter].categories}

@@ -30,7 +30,7 @@
 										{section name=counter loop=$auctionRows}
 											<tr id="tr_{$auctionRows[counter].auction_id}" class="{cycle values="odd_tr,even_tr"}">
 												<!--<td align="center" class="smalltext"><input type="checkbox" name="poster_ids[]" value="{$posterRows[counter].poster_id}" class="checkBox" /></td>-->
-                                                <td align="center" class="smalltext"><img src="{$actualPath}/poster_photo/thumbnail/{$auctionRows[counter].poster_thumb}" height="78" width="100" /><br />{$auctionRows[counter].poster_title}<br /><b>SKU: </b>{$auctionRows[counter].poster_sku}</td>
+                                                <td align="center" class="smalltext"><img src="{$smarty.const.CLOUD_POSTER_THUMB}{$auctionRows[counter].poster_thumb}" height="78" width="100" /><br />{$auctionRows[counter].poster_title}<br /><b>SKU: </b>{$auctionRows[counter].poster_sku}</td>
 												<td align="center" class="smalltext">${$auctionRows[counter].auction_asked_price|number_format:2}</td>
                                                 <td align="center" class="smalltext">${$auctionRows[counter].auction_reserve_offer_price|number_format:2}</td>
                                                 <td align="center" class="smalltext">{$auctionRows[counter].event_title}</td>

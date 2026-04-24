@@ -37,7 +37,7 @@ function tipsy(id){
 			var newSrc = src.split("/");
             // hover in
             $(this).parent().parent().css("z-index", 10);
-            $("#"+img_id).attr("src", "{/literal}{$actualPath}{literal}/poster_photo/thumb_buy_gallery/"+newSrc[5]);
+            $("#"+img_id).attr("src", "{/literal}{$smarty.const.CLOUD_POSTER_THUMB_BUY_GALLERY}{literal}"+newSrc[5]);
 			$(this).animate({
 			   position: "absolute", 
             }, "fast");
@@ -47,7 +47,7 @@ function tipsy(id){
 			var newSrc = src.split("/");
             // hover out
             $(this).parent().parent().css("z-index", 0);
-            $("#"+img_id).attr("src", "{/literal}{$actualPath}{literal}/poster_photo/thumb_buy/"+newSrc[5]);
+            $("#"+img_id).attr("src", "{/literal}{$smarty.const.CLOUD_POSTER_THUMB_BUY}{literal}"+newSrc[5]);
 			$(this).animate({
 			   position: "absolute",
             }, "fast");
@@ -117,7 +117,7 @@ function tipsy(id){
                    <table align="center"><tbody><tr><td align="center" valign="bottom"><div class="shadowbottom"><div class="shadow-bringer shadow">
 				   <div class="img">
 				   <a href="#">
-				   <img class="image-brdr" src="{$actualPath}/poster_photo/thumb_buy/{$dataArrFixed[counter].poster_thumb}"   alt=""  style="cursor:pointer;"  id="{$dataArrFixed[counter].auction_id}"  onclick="redirect_poster_details({$dataArrFixed[counter].auction_id});"/>
+				   <img class="image-brdr" src="{$smarty.const.CLOUD_POSTER_THUMB_BUY}{$dataArrFixed[counter].poster_thumb}"   alt=""  style="cursor:pointer;"  id="{$dataArrFixed[counter].auction_id}"  onclick="redirect_poster_details({$dataArrFixed[counter].auction_id});"/>
 				   </a>
 				   </div>
 				   </div></div></td></tr></tbody></table>
@@ -184,7 +184,7 @@ function tipsy(id){
                 <div>
                 
                 <div id="gallery_sold{$smarty.section.counter.index}" class="image-hldr">
-                   <table align="center"><tbody><tr><td align="center" valign="bottom"><div class="shadowbottom"><div class="shadow-bringer shadow"><div class="img"><a href="#"><img class="image-brdr" src="{$actualPath}/poster_photo/thumb_buy/{$dataJstFinishedAuction[counter].poster_thumb}"   alt=""  onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});" style="cursor:pointer;"  id="{$dataJstFinishedAuction[counter].auction_id}"/></a></div></div></div></td></tr></tbody></table>
+                   <table align="center"><tbody><tr><td align="center" valign="bottom"><div class="shadowbottom"><div class="shadow-bringer shadow"><div class="img"><a href="#"><img class="image-brdr" src="{$smarty.const.CLOUD_POSTER_THUMB_BUY}{$dataJstFinishedAuction[counter].poster_thumb}"   alt=""  onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});" style="cursor:pointer;"  id="{$dataJstFinishedAuction[counter].auction_id}"/></a></div></div></div></td></tr></tbody></table>
 				 </div>
                 
                 

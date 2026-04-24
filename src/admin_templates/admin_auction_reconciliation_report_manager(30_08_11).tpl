@@ -176,7 +176,7 @@ if(document.getElementById('start_date').value!=''){
 										</tr>
 										{section name=counter loop=$paidAuctionDetails}
 											<tr class="{cycle values="odd_tr,even_tr"}">
-												<td align="left" class="smalltext" width="20%">&nbsp;&nbsp;<img src="{$actualPath}/poster_photo/thumbnail/{$paidAuctionDetails[counter].poster_thumb}" ><br/>
+												<td align="left" class="smalltext" width="20%">&nbsp;&nbsp;<img src="{$smarty.const.CLOUD_POSTER_THUMB}{$paidAuctionDetails[counter].poster_thumb}" ><br/>
 												{$paidAuctionDetails[counter].poster_title}(#{$paidAuctionDetails[counter].poster_sku})
 												</td >
 												
