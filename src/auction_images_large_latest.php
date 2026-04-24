@@ -21,7 +21,7 @@ function auction_images_large(){
 	 $total_images=count($poster_arr);
     for($i=0;$i<$total_images;$i++){
         if (file_exists("poster_photo/".$poster_arr[$i]['poster_image'])){
-            $poster_arr[$i]['image_path_new']="http://".$_SERVER['HTTP_HOST']."/poster_photo/".$poster_arr[$i]['poster_image'];
+            $poster_arr[$i]['image_path_new']=CLOUD_POSTER.$poster_arr[$i]['poster_image'];
         }else{
             $poster_arr[$i]['image_path_new']=CLOUD_POSTER.$poster_arr[$i]['poster_image'];
         }
@@ -51,7 +51,7 @@ function images_next(){
         list($width, $height, $type, $attr) = getimagesize("poster_photo/".$imgArr[0]['poster_image']);
         $smarty->assign('width', $width);
         $smarty->assign('height', $height);
-        $imgArr[0]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/".$imgArr[0]['poster_image'];
+        $imgArr[0]['image_path']=CLOUD_POSTER.$imgArr[0]['poster_image'];
     }else{
         list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$imgArr[0]['poster_image']);
         $smarty->assign('width', $width);

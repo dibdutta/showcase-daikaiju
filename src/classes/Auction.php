@@ -2417,7 +2417,7 @@ class Auction extends DBCommon{
 					if ($dataArr[$i]['is_cloud']=='1'){
 						$dataArr[$i]['image_path']=CLOUD_POSTER_THUMB.$dataArr[$i]['poster_thumb'];                    
 					}else{
-						$dataArr[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataArr[$i]['poster_thumb'];
+						$dataArr[$i]['image_path']=CLOUD_POSTER_THUMB.$dataArr[$i]['poster_thumb'];
 					}
 				}
                 $i++;
@@ -2475,7 +2475,7 @@ class Auction extends DBCommon{
             while($row = mysqli_fetch_assoc($rs)){
                 $dataArr[] = $row;
                 if (file_exists("../poster_photo/" . $dataArr[$i]['poster_thumb'])){
-                    $dataArr[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataArr[$i]['poster_thumb'];
+                    $dataArr[$i]['image_path']=CLOUD_POSTER_THUMB.$dataArr[$i]['poster_thumb'];
                 }else{
                     $dataArr[$i]['image_path']=CLOUD_POSTER_THUMB.$dataArr[$i]['poster_thumb'];
                 }

@@ -131,7 +131,7 @@ function images_next(){
         list($width, $height, $type, $attr) = getimagesize("poster_photo/".$imgArr[0]['poster_image']);
         $smarty->assign('width', $width);
         $smarty->assign('height', $height);
-        $imgArr[0]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/".$imgArr[0]['poster_image'];
+        $imgArr[0]['image_path']=CLOUD_POSTER.$imgArr[0]['poster_image'];
     }else{
         list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$imgArr[0]['poster_image']);
         $smarty->assign('width', $width);

@@ -265,7 +265,7 @@ function wantlist_details()
 	
 	for($i=0;$i<count($mywantlist_array);$i++){
         if (file_exists("poster_photo/" . $mywantlist_array[$i]['poster_thumb'])){
-            $mywantlist_array[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$mywantlist_array[$i]['poster_thumb'];
+            $mywantlist_array[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$mywantlist_array[$i]['poster_thumb'];
         }else{
             $mywantlist_array[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$mywantlist_array[$i]['poster_thumb'];
         }

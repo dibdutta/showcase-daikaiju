@@ -367,7 +367,7 @@ function stills_result(){
     if(!empty($dataJstFinishedAuction)){
         for($i=0;$i<count($dataJstFinishedAuction);$i++){
             if($dataJstFinishedAuction[$i]['is_cloud']=='0'){
-                $dataJstFinishedAuction[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$dataJstFinishedAuction[$i]['poster_thumb'];
+                $dataJstFinishedAuction[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$dataJstFinishedAuction[$i]['poster_thumb'];
             }else{
                 $dataJstFinishedAuction[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$dataJstFinishedAuction[$i]['poster_thumb'];
             }
@@ -479,7 +479,7 @@ function search_sold_stills(){
             $auctionWeek= $auctionWeekObj->selectAuctionWeekStills();
             for($i=0;$i<count($dataJstFinishedAuction);$i++){
                 if($dataJstFinishedAuction[$i]['is_cloud']=='0'){
-                    $dataJstFinishedAuction[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$dataJstFinishedAuction[$i]['poster_thumb'];
+                    $dataJstFinishedAuction[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$dataJstFinishedAuction[$i]['poster_thumb'];
                 }else{
                     $dataJstFinishedAuction[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$dataJstFinishedAuction[$i]['poster_thumb'];
                 }

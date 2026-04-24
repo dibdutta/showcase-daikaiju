@@ -66,7 +66,7 @@ function dispmiddle(){
 			   if($row['is_cloud']=='1'){
 			   	$dataArrSlider[$k]['big_image']=CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
 			   }else{
-			   	$dataArrSlider[$k]['big_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_big_slider/".$row['poster_thumb'];
+			   	$dataArrSlider[$k]['big_image']=CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
 			   }
 			   
 			   $k++;
@@ -86,7 +86,7 @@ function dispmiddle(){
 				   if($row['is_cloud']=='1'){
 					$dataArrSlider[$k]['big_image']=CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
 				   }else{
-					$dataArrSlider[$k]['big_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_big_slider/".$row['poster_thumb'];
+					$dataArrSlider[$k]['big_image']=CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
 				   }
 				   
 				   $k++;

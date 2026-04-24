@@ -184,17 +184,17 @@ function displayList()
         /*if($list!='weekly'){*/
             if ($auctionItems[$i]['is_cloud']!='1'){
                 if($_SESSION['sessAuctionView']=='list'){
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy/".$auctionItems[$i]['poster_thumb'];
-                    $auctionItems[$i]['large_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }else{
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }
             }else{
                 if($_SESSION['sessAuctionView']=='list'){
                     $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$auctionItems[$i]['poster_thumb'];
                     $auctionItems[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }else{
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$auctionItems[$i]['poster_thumb'];
                 }
             }
         /*}else{
@@ -521,10 +521,10 @@ function displayKeySearch()
                 }
             }else{
                 if($_SESSION['sessAuctionView']=='list'){
-					$auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy/".$auctionItems[$i]['poster_thumb'];
-                    $auctionItems[$i]['large_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+					$auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }else{
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }
             }
        /* }else{
@@ -663,10 +663,10 @@ function displayKeySearchGlobal()
                 }
             }else{
                 if($_SESSION['sessAuctionView']=='list'){
-					$auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy/".$auctionItems[$i]['poster_thumb'];
-                    $auctionItems[$i]['large_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+					$auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }else{
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }
             }
        
@@ -776,10 +776,10 @@ function displayKeySearch_upcoming(){
         /*if($list!='weekly'){*/
             if (file_exists("poster_photo/".$auctionItems[$i]['poster_thumb'])){
                 if($_SESSION['sessAuctionView']=='list'){
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy/".$auctionItems[$i]['poster_thumb'];
-                    $auctionItems[$i]['large_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }else{
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }
             }else{
                 if($_SESSION['sessAuctionView']=='list'){
@@ -901,10 +901,10 @@ function displayDoRefineSearch()
         /*if($_REQUEST['list']!='weekly'){*/
             if (file_exists("poster_photo/".$auctionItems[$i]['poster_thumb'])){
                 if($_SESSION['sessAuctionView']=='list'){
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy/".$auctionItems[$i]['poster_thumb'];
-                    $auctionItems[$i]['large_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }else{
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }
             }else{
                 if($_SESSION['sessAuctionView']=='list'){
@@ -1067,9 +1067,9 @@ if(isset($_SESSION['sessUserID'])){
         list($width, $height, $type, $attr) = @getimagesize("/poster_photo/".$auctionDetails[0]['poster_thumb']);
         $smarty->assign('width', $width);
         $smarty->assign('height', $height);
-        $auctionDetails[0]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionDetails[0]['poster_thumb'];
-        $auctionDetails[0]['large_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/".$auctionDetails[0]['poster_thumb'];
-		$auctionDetails[0]['disp_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/".$auctionDetails[0]['poster_thumb'];
+        $auctionDetails[0]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionDetails[0]['poster_thumb'];
+        $auctionDetails[0]['large_image']=CLOUD_POSTER.$auctionDetails[0]['poster_thumb'];
+		$auctionDetails[0]['disp_image']=CLOUD_POSTER.$auctionDetails[0]['poster_thumb'];
     }else{
         list($width, $height, $type, $attr) = @getimagesize(CLOUD_POSTER.$auctionDetails[0]['poster_thumb']);
         $smarty->assign('width', $width);
@@ -1130,8 +1130,8 @@ if(isset($_SESSION['sessUserID'])){
 		}
 		for($i=0;$i<count($itemImageArry);$i++){        
             if ($itemImageArry[$i]['is_cloud']!='1'){                
-               $itemImageArry[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$itemImageArry[$i]['poster_image'];  
-			   $itemImageArry[$i]['big_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/".$itemImageArry[$i]['poster_image'];                 
+               $itemImageArry[$i]['image_path']=CLOUD_POSTER_THUMB.$itemImageArry[$i]['poster_image'];  
+			   $itemImageArry[$i]['big_image']=CLOUD_POSTER.$itemImageArry[$i]['poster_image'];                 
             }else{
                $itemImageArry[$i]['image_path']=CLOUD_POSTER_THUMB.$itemImageArry[$i]['poster_image'];
 			   $itemImageArry[$i]['large_image']=CLOUD_POSTER.$itemImageArry[$i]['poster_image'];
@@ -1214,10 +1214,10 @@ function displayDoRefineSearchStills()
         if($_REQUEST['list']!='weekly'){
             if (file_exists("poster_photo/".$auctionItems[$i]['poster_thumb'])){
                 if($_SESSION['sessAuctionView']=='list'){
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy/".$auctionItems[$i]['poster_thumb'];
-                    $auctionItems[$i]['large_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }else{
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }
             }else{
                 if($_SESSION['sessAuctionView']=='list'){
@@ -1383,10 +1383,10 @@ function key_search_stills(){
         /*if($list!='weekly'){*/
             if (file_exists("poster_photo/".$auctionItems[$i]['poster_thumb'])){
                 if($_SESSION['sessAuctionView']=='list'){
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy/".$auctionItems[$i]['poster_thumb'];
-                    $auctionItems[$i]['large_image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }else{
-                    $auctionItems[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }
             }else{
                 if($_SESSION['sessAuctionView']=='list'){

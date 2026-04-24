@@ -205,7 +205,7 @@ function displayList()
                 if ($dataBid[$i]['is_cloud']==1){
 					$dataBid[$i]['image_path']=CLOUD_POSTER_THUMB.$dataBid[$i]['poster_thumb'];               
                 }else{
-                    $dataBid[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataBid[$i]['poster_thumb'];
+                    $dataBid[$i]['image_path']=CLOUD_POSTER_THUMB.$dataBid[$i]['poster_thumb'];
                 }
 				$where_bid_max=array("bid_fk_auction_id"=>$dataBid[$i]['auction_id'],"bid_amount"=>$dataBid[$i]['highest_bid']);
 				$count_bid_max=$objBid->countData(TBL_BID,$where_bid_max);
@@ -311,7 +311,7 @@ function closed(){
 			   while($row = mysqli_fetch_assoc($rs)){
 				   $dataArr[] = $row;
                    if (file_exists("poster_photo/" . $row['poster_thumb'])){
-                       $dataArr[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$row['poster_thumb'];
+                       $dataArr[$i]['image_path']=CLOUD_POSTER_THUMB.$row['poster_thumb'];
                    }else{
                        $dataArr[$i]['image_path']=CLOUD_POSTER_THUMB.$row['poster_thumb'];
                    }
@@ -332,7 +332,7 @@ function closed(){
             if ($dataBid[$i]['is_cloud']==1){
 				$dataBid[$i]['image_path']=CLOUD_POSTER_THUMB.$dataBid[$i]['poster_thumb'];
             }else{
-                $dataBid[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataBid[$i]['poster_thumb'];               
+                $dataBid[$i]['image_path']=CLOUD_POSTER_THUMB.$dataBid[$i]['poster_thumb'];               
             }
         }
 	}
@@ -368,7 +368,7 @@ function fixed_puchases(){
         $auctionRows = $offerObj->fetchMyAuction_OffersNew($_SESSION['sessUserID'], true);
         for($i=0;$i<count($auctionRows);$i++){
             if (file_exists("poster_photo/" . $auctionRows[$i]['poster_thumb'])){
-                $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_thumb'];
+                $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_thumb'];
             }else{
                 $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_thumb'];
             }

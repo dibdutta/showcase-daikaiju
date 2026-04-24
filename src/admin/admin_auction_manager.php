@@ -250,7 +250,7 @@ function fixedPriceSale() {
                 list($width, $height, $type, $attr) = @getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
                 $auctionRows[$i]['img_width']=$width ?? 800;
                 $auctionRows[$i]['img_height']=$height ?? 600;
-                $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_image'];
+                $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_image'];
             }else{
                 //list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$auctionRows[$i]['poster_image']);
                 $auctionRows[$i]['img_width']=800;
@@ -335,7 +335,7 @@ function weeklyAuction() {
                 list($width, $height, $type, $attr) = @getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
                 $auctionRows[$i]['img_width']=$width ?? 800;
                 $auctionRows[$i]['img_height']=$height ?? 600;
-                $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_image'];
+                $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_image'];
             }else{
                 //list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$auctionRows[$i]['poster_image']);
                 $auctionRows[$i]['img_width']=800;
@@ -411,7 +411,7 @@ function monthlyAuction() {
                 list($width, $height, $type, $attr) = @getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
                 $auctionRows[$i]['img_width']=$width ?? 800;
                 $auctionRows[$i]['img_height']=$height ?? 600;
-                $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_image'];
+                $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_image'];
             }else{
                 list($width, $height, $type, $attr) = @getimagesize(CLOUD_POSTER.($auctionRows[$i]['poster_image'] ?? ''));
                 $auctionRows[$i]['img_width']=$width ?? 800;
@@ -507,7 +507,7 @@ if(!$_POST)
 	$posterImageRows =  $auctionObj->selectData(TBL_POSTER_IMAGES, array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
     for($i=0;$i<count($posterImageRows ?? []);$i++){
         if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
-            $posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+            $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }else{
             $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }
@@ -577,7 +577,7 @@ function view_fixed() {
 	$posterImageRows =  $auctionObj->selectData(TBL_POSTER_IMAGES, array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
     for($i=0;$i<count($posterImageRows ?? []);$i++){
         if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
-            $posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+            $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }else{
             $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }
@@ -871,7 +871,7 @@ if(!$_POST)
 	
     for($i=0;$i<count($posterImageRows ?? []);$i++){
         if ($posterImageRows[$i]['is_cloud']!='1'){
-            $posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+            $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }else{
             $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }
@@ -1005,7 +1005,7 @@ function view_weekly()
 		$posterImageRows =  $auctionObj->selectData('tbl_poster_images_live', array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
 		for($i=0;$i<count($posterImageRows ?? []);$i++){
 			if ($posterImageRows[$i]['is_cloud']!='1'){
-				$posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+				$posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
 			}else{
 				$posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
 			}
@@ -1050,7 +1050,7 @@ function view_weekly()
 		$posterImageRows =  $auctionObj->selectData(TBL_POSTER_IMAGES, array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
 		for($i=0;$i<count($posterImageRows ?? []);$i++){
 			if ($posterImageRows[$i]['poster_thumb']!='1'){
-				$posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+				$posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
 			}else{
 				$posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
 			}
@@ -1331,7 +1331,7 @@ if(!$_POST)
 	$posterImageRows =  $auctionObj->selectData(TBL_POSTER_IMAGES, array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
     for($i=0;$i<count($posterImageRows ?? []);$i++){
         if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
-            $posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+            $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }else{
             $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }
@@ -1440,7 +1440,7 @@ function view_monthly()
 	$posterImageRows =  $auctionObj->selectData(TBL_POSTER_IMAGES, array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
     for($i=0;$i<count($posterImageRows ?? []);$i++){
         if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
-            $posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+            $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }else{
             $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }
@@ -1656,7 +1656,7 @@ function view_details(){
 	$obj = new Auction();
 	$auctionArr=$obj->select_details_auction($auction_id);
     if ($auctionArr[0]['is_cloud']!='1'){
-        $auctionArr[0]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionArr[0]['poster_thumb'];
+        $auctionArr[0]['image_path']=CLOUD_POSTER_THUMB.$auctionArr[0]['poster_thumb'];
     }else{
         $auctionArr[0]['image_path']=CLOUD_POSTER_THUMB.$auctionArr[0]['poster_thumb'];
     }
@@ -1710,7 +1710,7 @@ function view_details_offer(){
 	$obj = new Auction();
 	$auctionArr=$obj->select_details_auction($auction_id);
     if (file_exists("../poster_photo/" . $auctionArr[0]['poster_thumb'])){
-        $auctionArr[0]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionArr[0]['poster_thumb'];
+        $auctionArr[0]['image_path']=CLOUD_POSTER_THUMB.$auctionArr[0]['poster_thumb'];
     }else{
         $auctionArr[0]['image_path']=CLOUD_POSTER_THUMB.$auctionArr[0]['poster_thumb'];
     }
@@ -2149,7 +2149,7 @@ function delete_invoice_charge(){
 	$posterImageRows =  $auctionObj->selectData(TBL_POSTER_IMAGES, array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
      for($i=0;$i<count($posterImageRows ?? []);$i++){
          if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
-             $posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+             $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
          }else{
              $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
          }
@@ -2237,7 +2237,7 @@ function delete_invoice_charge(){
      $posterImageRows =  $auctionObj->selectData(TBL_POSTER_IMAGES, array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
      for($i=0;$i<count($posterImageRows ?? []);$i++){
          if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
-             $posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+             $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
          }else{
              $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
          }
@@ -2437,7 +2437,7 @@ function delete_invoice_charge(){
 	$posterImageRows =  $auctionObj->selectData(TBL_POSTER_IMAGES, array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
      for($i=0;$i<count($posterImageRows ?? []);$i++){
          if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
-             $posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+             $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
          }else{
              $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
          }
@@ -3560,7 +3560,7 @@ function bulkupload_pending(){
                 list($width, $height, $type, $attr) = getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
                 $auctionRows[$i]['img_width']=$width;
                 $auctionRows[$i]['img_height']=$height;
-                $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_image'];
+                $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_image'];
             }else{
                 list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$auctionRows[$i]['poster_image']);
                 $auctionRows[$i]['img_width']=$width;
@@ -3627,7 +3627,7 @@ function stills() {
                 list($width, $height, $type, $attr) = getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
                 $auctionRows[$i]['img_width']=$width;
                 $auctionRows[$i]['img_height']=$height;
-                $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_image'];
+                $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_image'];
             }else{
                 //list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$auctionRows[$i]['poster_image']);
                 $auctionRows[$i]['img_width']=800;
@@ -4038,7 +4038,7 @@ if(!$_POST)
 	$posterImageRows =  $auctionObj->selectData(TBL_POSTER_IMAGES, array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
     for($i=0;$i<count($posterImageRows ?? []);$i++){
         if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
-            $posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+            $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }else{
             $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }
@@ -4153,7 +4153,7 @@ if(!$_POST)
 		$auctionDetails=$objAuction->select_details_auction($id);
 		$auctionDetails[0]['poster_desc']=strip_slashes($auctionDetails[0]['poster_desc']);
 		if (file_exists("poster_photo/" . $auctionDetails[0]['poster_image'])){
-			$auctionDetails[0]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionDetails[0]['poster_image'];
+			$auctionDetails[0]['image_path']=CLOUD_POSTER_THUMB.$auctionDetails[0]['poster_image'];
 		 }else{
 			 $auctionDetails[0]['image_path']=CLOUD_POSTER_THUMB.$auctionDetails[0]['poster_image'];
 		 }
@@ -4252,7 +4252,7 @@ if(!$_POST)
 				list($width, $height, $type, $attr) = getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
 				$auctionRows[$i]['img_width']=$width;
 				$auctionRows[$i]['img_height']=$height;
-                $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_image'];
+                $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_image'];
 			}else{
                 //list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$auctionRows[$i]['poster_image']);
                 $auctionRows[$i]['img_width']=800;
@@ -4627,7 +4627,7 @@ if(!$_POST)
 	$posterImageRows =  $auctionObj->selectData(TBL_POSTER_IMAGES, array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
     for($i=0;$i<count($posterImageRows ?? []);$i++){
         if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
-            $posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+            $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }else{
             $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }
@@ -4853,7 +4853,7 @@ function view_stills() {
 	$posterImageRows =  $auctionObj->selectData(TBL_POSTER_IMAGES, array('*'), array("fk_poster_id" => $auctionRow[0]['fk_poster_id']));
     for($i=0;$i<count($posterImageRows ?? []);$i++){
         if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
-            $posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+            $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }else{
             $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
         }
@@ -4917,7 +4917,7 @@ function reopen_stills(){
 	 
 	 for($i=0;$i<count($posterImageRows ?? []);$i++){
          if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
-             $posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+             $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
          }else{
              $posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
          }

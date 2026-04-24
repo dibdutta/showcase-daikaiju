@@ -255,7 +255,7 @@ function auction_report_display(){
 					$FetchTotalYetpaid[$i]['mpe_charge']=number_format(($FetchTotalYetpaid[$i]['soldamnt']* MPE_CHARGE_TO_SELLER_WEEKLY)/100, 2, '.', '');
 				}
 				if ($FetchTotalYetpaid[$i]['is_cloud'] !='1'){
-                	$FetchTotalYetpaid[$i]['image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$FetchTotalYetpaid[$i]['poster_thumb'];
+                	$FetchTotalYetpaid[$i]['image']=CLOUD_POSTER_THUMB.$FetchTotalYetpaid[$i]['poster_thumb'];
             	}else{
                 	$FetchTotalYetpaid[$i]['image']=CLOUD_POSTER_THUMB.$FetchTotalYetpaid[$i]['poster_thumb'];
             	}
@@ -467,7 +467,7 @@ if(($_REQUEST['search'] ?? '')!='reconciliation'){
 	$price = array();
 	for($i=0;$i<$total_yet_paid;$i++){
 	    if ($FetchTotalYetpaid[$i]['is_cloud'] !='1'){
-			$FetchTotalYetpaid[$i]['image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$FetchTotalYetpaid[$i]['poster_thumb'];
+			$FetchTotalYetpaid[$i]['image']=CLOUD_POSTER_THUMB.$FetchTotalYetpaid[$i]['poster_thumb'];
 		}else{
 			$FetchTotalYetpaid[$i]['image']=CLOUD_POSTER_THUMB.$FetchTotalYetpaid[$i]['poster_thumb'];
 		}
@@ -569,7 +569,7 @@ if(($_REQUEST['search'] ?? '')!='reconciliation'){
 					$FetchTotalYetpaid[$i]['mpe_charge']=number_format(($FetchTotalYetpaid[$i]['soldamnt']* MPE_CHARGE_TO_SELLER_WEEKLY)/100, 2, '.', '');
 				}
 			 if ($FetchTotalYetpaid[$i]['is_cloud'] !='1'){
-                	$FetchTotalYetpaid[$i]['image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$FetchTotalYetpaid[$i]['poster_thumb'];
+                	$FetchTotalYetpaid[$i]['image']=CLOUD_POSTER_THUMB.$FetchTotalYetpaid[$i]['poster_thumb'];
             	}else{
                 	$FetchTotalYetpaid[$i]['image']=CLOUD_POSTER_THUMB.$FetchTotalYetpaid[$i]['poster_thumb'];
             	}

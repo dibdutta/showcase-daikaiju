@@ -85,7 +85,7 @@ function dispmiddle()
 	$dataJstFinishedAuction=$objAuction->soldAuction(true,true,'',$_SESSION['sessUserID'],$type='Home');
     for($i=0;$i<count($dataJstFinishedAuction);$i++){
         if (file_exists("poster_photo/" . $dataJstFinishedAuction[$i]['poster_thumb'])){
-            $dataJstFinishedAuction[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataJstFinishedAuction[$i]['poster_thumb'];
+            $dataJstFinishedAuction[$i]['image_path']=CLOUD_POSTER_THUMB.$dataJstFinishedAuction[$i]['poster_thumb'];
         }else{
             $dataJstFinishedAuction[$i]['image_path']=CLOUD_POSTER_THUMB.$dataJstFinishedAuction[$i]['poster_thumb'];
         }
@@ -103,7 +103,7 @@ function dispmiddle()
     if(!empty($dataBid)) {
         for($i=0;$i<count($dataBid);$i++){
             if (file_exists("poster_photo/" . $dataBid[$i]['poster_thumb'])){
-                $dataBid[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataBid[$i]['poster_thumb'];
+                $dataBid[$i]['image_path']=CLOUD_POSTER_THUMB.$dataBid[$i]['poster_thumb'];
             }else{
                 $dataBid[$i]['image_path']=CLOUD_POSTER_THUMB.$dataBid[$i]['poster_thumb'];
             }
@@ -119,7 +119,7 @@ function dispmiddle()
     if(!empty($dataOfr)) {
         for($i=0;$i<count($dataOfr);$i++){
             if (file_exists("poster_photo/" . $dataOfr[$i]['poster_thumb'])){
-                $dataOfr[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$dataOfr[$i]['poster_thumb'];
+                $dataOfr[$i]['image_path']=CLOUD_POSTER_THUMB.$dataOfr[$i]['poster_thumb'];
             }else{
                 $dataOfr[$i]['image_path']=CLOUD_POSTER_THUMB.$dataOfr[$i]['poster_thumb'];
             }
@@ -137,7 +137,7 @@ function dispmiddle()
         for($i=0;$i<count($auctionRow);$i++)
         {
             if (file_exists("poster_photo/" . $auctionRow[$i]['poster_thumb'])){
-                $auctionRow[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRow[$i]['poster_thumb'];
+                $auctionRow[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRow[$i]['poster_thumb'];
             }else{
                 $auctionRow[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRow[$i]['poster_thumb'];
             }

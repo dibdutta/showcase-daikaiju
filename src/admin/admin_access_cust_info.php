@@ -206,7 +206,7 @@ if($mode == "buyer"){
 			$invoiceData['auction_details'][$key]['fk_auction_type_id'] = $row['fk_auction_type_id'];
 			//$invoiceData['auction_details'][$key]['image'] = $row['poster_thumb'];
 			if ($row['is_cloud'] !='1'){
-                $invoiceData['auction_details'][$key]['image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$row['poster_thumb'];
+                $invoiceData['auction_details'][$key]['image']=CLOUD_POSTER_THUMB.$row['poster_thumb'];
             }else{
                 $invoiceData['auction_details'][$key]['image']=CLOUD_POSTER_THUMB.$row['poster_thumb'];
             }
@@ -227,7 +227,7 @@ if($mode == "buyer"){
 				$invoiceData['auction_details'][$key]['fk_auction_type_id'] = $row['fk_auction_type_id'];
 				//$invoiceData['auction_details'][$key]['image'] = $row['poster_thumb'];
 				if ($row['is_cloud'] !='1'){
-					$invoiceData['auction_details'][$key]['image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$row['poster_thumb'];
+					$invoiceData['auction_details'][$key]['image']=CLOUD_POSTER_THUMB.$row['poster_thumb'];
 				}else{
 					$invoiceData['auction_details'][$key]['image']=CLOUD_POSTER_THUMB.$row['poster_thumb'];
 				}

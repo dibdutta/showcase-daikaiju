@@ -134,7 +134,7 @@ function displayList()
 		}else{
 			for($i=0;$i<count($dataArr);$i++){
 				if ($dataArr[$i]['is_cloud']=='0'){
-					$dataArr[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$dataArr[$i]['poster_thumb'];
+					$dataArr[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$dataArr[$i]['poster_thumb'];
 				}else{
 					if($type==''){
 						$dataArr[$i]['image_path']=CLOUD_POSTER_THUMB.$dataArr[$i]['poster_thumb'];

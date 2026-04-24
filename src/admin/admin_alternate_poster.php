@@ -95,7 +95,7 @@ function dispmiddle() {
                 list($width, $height, $type, $attr) = getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
                 $auctionRows[$i]['img_width']=$width;
                 $auctionRows[$i]['img_height']=$height;
-                $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_image'];
+                $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_image'];
             }else{
                 //list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$auctionRows[$i]['poster_image']);
                 $auctionRows[$i]['img_width']=800;
@@ -494,7 +494,7 @@ function save_new_fixed_auction(){
 		$poster_images_arr = $poster_images_arr ?? [];
 		for($i=0;$i<count($posterImageRows);$i++){
 			if (file_exists("../poster_photo/" . $posterImageRows[$i]['poster_thumb'])){
-				$posterImageRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$posterImageRows[$i]['poster_thumb'];
+				$posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
 			}else{
 				$posterImageRows[$i]['image_path']=CLOUD_POSTER_THUMB.$posterImageRows[$i]['poster_thumb'];
 			}
@@ -682,7 +682,7 @@ function save_new_fixed_auction(){
 	$obj = new Auction();
 	$auctionArr=$obj->select_details_auction($auction_id);
     if (file_exists("../poster_photo/" . $auctionArr[0]['poster_thumb'])){
-        $auctionArr[0]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionArr[0]['poster_thumb'];
+        $auctionArr[0]['image_path']=CLOUD_POSTER_THUMB.$auctionArr[0]['poster_thumb'];
     }else{
         $auctionArr[0]['image_path']=CLOUD_POSTER_THUMB.$auctionArr[0]['poster_thumb'];
     }

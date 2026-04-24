@@ -444,7 +444,7 @@ function email_template(){
 		if($row['is_cloud']==1){
 			$smarty->assign('image_path', CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb']);
 		}else{
-			$smarty->assign('image_path', "http://".$_SERVER['HTTP_HOST']."/poster_photo/".$row['poster_thumb']);
+			$smarty->assign('image_path', CLOUD_POSTER.$row['poster_thumb']);
 		}
 		$smarty->assign('auction_id', $rowtemp['auction_id']);
 		$smarty->assign('poster_title', $row['poster_title']);

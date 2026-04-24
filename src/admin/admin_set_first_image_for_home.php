@@ -60,7 +60,7 @@ ob_end_flush();
                         list($width, $height, $type, $attr) = getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
                         $auctionRows[$i]['img_width']=$width;
                         $auctionRows[$i]['img_height']=$height;
-                        $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_image'];
+                        $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_image'];
                     }else{
                         //list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$auctionRows[$i]['poster_image']);
                         $auctionRows[$i]['img_width']=800;
@@ -129,7 +129,7 @@ function updateSliderForAuction(){
                     list($width, $height, $type, $attr) = getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
                     $auctionRows[$i]['img_width']=$width;
                     $auctionRows[$i]['img_height']=$height;
-                    $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_image'];
+                    $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_image'];
                 }else{
                     //list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$auctionRows[$i]['poster_image']);
                     $auctionRows[$i]['img_width']=800;
@@ -204,7 +204,7 @@ function upcoming(){
                     list($width, $height, $type, $attr) = getimagesize("../poster_photo/".$auctionRows[$i]['poster_image']);
                     $auctionRows[$i]['img_width']=$width;
                     $auctionRows[$i]['img_height']=$height;
-                    $auctionRows[$i]['image_path']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumbnail/".$auctionRows[$i]['poster_image'];
+                    $auctionRows[$i]['image_path']=CLOUD_POSTER_THUMB.$auctionRows[$i]['poster_image'];
                 }else{
                     //list($width, $height, $type, $attr) = getimagesize(CLOUD_POSTER.$auctionRows[$i]['poster_image']);
                     $auctionRows[$i]['img_width']=800;

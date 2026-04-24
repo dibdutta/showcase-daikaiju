@@ -69,7 +69,7 @@ if(($_REQUEST['mode'] ?? '')=="view_template"){
 				$dataArr[$key]['poster_title']=$row['poster_title'];
 				$dataArr[$key]['poster_size']=$row['cat_value'];
 				if ($row['is_cloud'] !='1'){                
-                	$dataArr[$key]['image']="http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_buy_gallery/".$row['poster_thumb'];
+                	$dataArr[$key]['image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$row['poster_thumb'];
             	}else{                
                 	$dataArr[$key]['image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$row['poster_thumb'];
             	}

@@ -48,7 +48,7 @@ function dispmiddle(){
 	while($row = mysqli_fetch_assoc($rs)){
 			   $row['big_image'] = $row['is_cloud']=='1'
 			       ? CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb']
-			       : "http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_big_slider/".$row['poster_thumb'];
+			       : CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
 			   $dataArrSlider[] = $row;
 		   }
 	
@@ -65,7 +65,7 @@ function dispmiddle(){
 		while($row = mysqli_fetch_assoc($rs)){
 				   $row['big_image'] = $row['is_cloud']=='1'
 				       ? CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb']
-				       : "http://".$_SERVER['HTTP_HOST']."/poster_photo/thumb_big_slider/".$row['poster_thumb'];
+				       : CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
 				   $dataArrSlider[] = $row;
 			   }
 	}		   			
