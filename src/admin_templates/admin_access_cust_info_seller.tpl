@@ -225,7 +225,7 @@
               <table align="center" width="90%" border="0" cellspacing="1" cellpadding="2" class="header_bordercolor" >
                 <tr>
                   <td><div class="lefttable">
-                      <h2>MPE Invoice History</h2>
+                      <h2>Kaijulink Invoice History</h2>
 					  <input type="button" class=" cutomersection submitbtn" value="Seller Info" onclick="view_seller({$user_new_id})"/>
 					   <input type="button" class=" cutomersection submitbtn" value="Print All" onclick="print_all()"/>
 					   <input onClick="setAllCheckboxes(this.id);" type="checkbox" id="them" />All of them

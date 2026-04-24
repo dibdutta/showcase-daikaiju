@@ -133,7 +133,7 @@ function change_auction_status(){
 			//$textContent = 'Your poster has been Approved. For more details, please <a href="http://'.HOST_NAME.'">login </a><br /><br />Poster Title: '.$row['poster_title'].'<br />Poster SKU: '.$row['poster_sku'].'<br /><br />';
 			if($row['fk_auction_type_id'] == 3){
 			$subject = "Poster / Auction Approved";	
-			$textContent .= 'Please ship your posters to MPE for monthly auction .<br /><br />';
+			$textContent .= 'Please ship your posters to Kaijulink for monthly auction .<br /><br />';
 			}
 		}elseif(($_REQUEST['is_approved'] ?? 0)==2){
 			$subject = "Item not approved";

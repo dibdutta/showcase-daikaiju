@@ -725,7 +725,7 @@ function save_fixed_auction()
 	$fromMail = ADMIN_EMAIL_ADDRESS;
 	$fromName = ADMIN_NAME;
 
-	$subject = "MPE::Your item has been successfully listed ";
+	$subject = "Kaijulink::Your item has been successfully listed ";
 
 	$textContent = 'Dear '.$emailArr['firstname'].' '.$emailArr['lastname'].',<br /><br />';
 				//$textContent .= '<b>Poster Title : </b>'.$invoice['poster_title'].'<br />';

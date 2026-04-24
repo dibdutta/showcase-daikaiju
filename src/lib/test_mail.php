@@ -22,7 +22,7 @@ define('RECIPIENT', 'dibyendu.dutta.mail@gmail.com');
 // Replace us-west-2 with the AWS region you're using for Amazon SES.
 define('REGION','us-west-2');
 
-define('SUBJECT','MPE::New poster matching your want list');
+define('SUBJECT','Kaijulink::New poster matching your want list');
 define('BODY','This email was sent with Amazon SES using the AWS SDK for PHP.');
 
 

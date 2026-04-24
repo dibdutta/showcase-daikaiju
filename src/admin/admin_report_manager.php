@@ -288,7 +288,7 @@ function auction_report_display(){
 		}
         ########### total amount  paid by buyer  calculation ENDS #########
 
-        ########### total amount  sold by MPE   calculation starts #########
+        ########### total amount  sold by Kaijulink   calculation starts #########
         $objAuction->offset = 0;
         $objAuction->toShow = $total_sold;
 		$total_amount_sold_by_mpe = 0;
@@ -306,7 +306,7 @@ function auction_report_display(){
 		}else{
 			$smarty->assign('total_amount_sold_by_mpe', 0);
 		}
-        ########### total amount  Sold by MPE  calculation ENDS #########
+        ########### total amount  Sold by Kaijulink  calculation ENDS #########
 
         ########### total amount  Unpaid by buyer calculation starts #########
         $objAuction->offset = 0;

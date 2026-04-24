@@ -647,7 +647,7 @@ function save_user()
 		$fromMail = ADMIN_EMAIL_ADDRESS;
 		$fromName = ADMIN_NAME;
 
-		$textContent = "An account hasbeen creted for you by MPE Admin.<br /><br />";
+		$textContent = "An account hasbeen creted for you by Kaijulink Admin.<br /><br />";
 		$textContent .= "<b>Username : </b>".($_POST['username'] ?? '')."<br />";
 		$textContent .= "<b>Password : </b>".$password."<br /><br />";
 		$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;	

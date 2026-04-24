@@ -33,11 +33,11 @@ font-family:Calibri;
 											<td colspan="3">&nbsp;<font style="font-size:12px; font-family:Arial;">{$total_sold}</font></td>
 										</tr>
 										<tr class="tr_bgcolor" height="26">
-											<td  class="printer"  colspan="2">Total paid by MPE admin:</td >
+											<td  class="printer"  colspan="2">Total paid by Kaijulink admin:</td >
 											<td colspan="3">&nbsp;<font style="font-size:12px; font-family:Arial;">{$total_paid_by_admin}</font></td>
 										</tr>
 										<tr class="tr_bgcolor" height="26">
-											<td  class="printer"  colspan="2">Total to be paid by MPE admin:</td >
+											<td  class="printer"  colspan="2">Total to be paid by Kaijulink admin:</td >
 											<td colspan="3">&nbsp;<font style="font-size:12px; font-family:Arial;">{$total_yet_paid}</font></td>
 										</tr>
 										<tr class="tr_bgcolor" height="26">
@@ -77,7 +77,7 @@ font-family:Calibri;
 											<td align="center" width="16%"><font style="font-size:12px; font-family:Arial; font-weight:bold;"> Poster</font></td >
 											<td align="center" width="14%"><font style="font-size:12px; font-family:Arial; font-weight:bold;">Auction Type</font></td>
 											<td align="center" width="15%"><font style="font-size:12px; font-family:Arial; font-weight:bold;">Sold Amount</font></td>
-											<td align="center" width="15%"><font style="font-size:12px; font-family:Arial; font-weight:bold;">MPE Commission</font><font style="font-size:9px; font-family:Arial;"><br/>(MPE charge + Merchant Fee)</font></td>
+											<td align="center" width="15%"><font style="font-size:12px; font-family:Arial; font-weight:bold;">Kaijulink Commission</font><font style="font-size:9px; font-family:Arial;"><br/>(Kaijulink charge + Merchant Fee)</font></td>
 											<td align="center" width="15%"><font style="font-size:12px; font-family:Arial; font-weight:bold;">Seller Owned</font></td>
 										</tr>
 										{section name=counter loop=$paidAuctionDetails}

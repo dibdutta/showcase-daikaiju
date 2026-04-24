@@ -146,7 +146,7 @@ function reset_date(ele) {
 											<td align="center" class="headertext" width="16%">Poster</td >
 											<td align="center" class="headertext" width="14%">Auction Type</td>
 											<td align="center" class="headertext" width="15%">Sold Amount</td>
-											<td align="center" class="headertext" width="15%">MPE Commission<font style="font-size:8px;"><br/>(MPE charge + transaction fee)</font></td>
+											<td align="center" class="headertext" width="15%">Kaijulink Commission<font style="font-size:8px;"><br/>(Kaijulink charge + transaction fee)</font></td>
 											<td align="center" class="headertext" width="15%">Seller Owned</td>
 										</tr>
 										{section name=counter loop=$paidAuctionDetails}

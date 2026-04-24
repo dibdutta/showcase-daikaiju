@@ -71,7 +71,7 @@ $auctionObj= new Auction();
 			$fromMail = ADMIN_EMAIL_ADDRESS;
 			$fromName = ADMIN_NAME;
 			
-			$subject = "MPE::Offer Made - ".$row['poster_title']." ";
+			$subject = "Kaijulink::Offer Made - ".$row['poster_title']." ";
 			
 			$textContent = 'Dear '.$row['firstname'].' '.$row['lastname'].',<br /><br />';
 			$textContent .= '<b>Item Title : </b>'.$row['poster_title'].'<br /><br />';
@@ -296,7 +296,7 @@ function postBid($lastBid)
 							$fromMail = ADMIN_EMAIL_ADDRESS;
 							$fromName = ADMIN_NAME;
 
-							//$subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+							//$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 							
 							$subject = "Auction outbid notice:You have been outbid";
 
@@ -350,7 +350,7 @@ function postBid($lastBid)
 							$fromMail = ADMIN_EMAIL_ADDRESS;
 							$fromName = ADMIN_NAME;
 
-							//$subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+							//$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 							$subject = "Auction outbid notice:You have been outbid";
 
 							$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
@@ -411,7 +411,7 @@ function postBid($lastBid)
 							$fromMail = ADMIN_EMAIL_ADDRESS;
 							$fromName = ADMIN_NAME;
 
-							//$subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+							//$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 							$subject = "Auction outbid notice:You have been outbid";
 
 							$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
@@ -461,7 +461,7 @@ function postBid($lastBid)
                     $fromMail = ADMIN_EMAIL_ADDRESS;
                     $fromName = ADMIN_NAME;
 
-                    $subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+                    $subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 
                     $textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
                     $textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
@@ -623,7 +623,7 @@ function postBid($lastBid)
 						$fromMail = ADMIN_EMAIL_ADDRESS;
 						$fromName = ADMIN_NAME;
 
-						//$subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+						//$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 						$subject = "Auction outbid notice:You have been outbid";
 
 						$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
@@ -647,7 +647,7 @@ function postBid($lastBid)
 						$fromMail = ADMIN_EMAIL_ADDRESS;
 						$fromName = ADMIN_NAME;
 
-						//$subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+						//$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 						$subject = "Auction outbid notice:You have been outbid";
 
 						$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
@@ -970,7 +970,7 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
 							$fromMail = ADMIN_EMAIL_ADDRESS;
 							$fromName = ADMIN_NAME;
 
-							//$subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+							//$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 							$subject = "Auction outbid notice:You have been outbid";
 
 							$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
@@ -1022,7 +1022,7 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
 							$fromMail = ADMIN_EMAIL_ADDRESS;
 							$fromName = ADMIN_NAME;
 
-							//$subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+							//$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 							$subject = "Auction outbid notice:You have been outbid";
 
 							$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
@@ -1084,7 +1084,7 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
 							$fromMail = ADMIN_EMAIL_ADDRESS;
 							$fromName = ADMIN_NAME;
 
-							//$subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+							//$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 							$subject = "Auction outbid notice:You have been outbid";
 
 							$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
@@ -1133,7 +1133,7 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
                     $fromMail = ADMIN_EMAIL_ADDRESS;
                     $fromName = ADMIN_NAME;
 
-                    $subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+                    $subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 
                     $textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
                     $textContent .= '<b>Poster Title : </b>'.$rowOutbid['poster_title'].'<br />';
@@ -1296,7 +1296,7 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
 						$fromMail = ADMIN_EMAIL_ADDRESS;
 						$fromName = ADMIN_NAME;
 
-						//$subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+						//$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 						$subject = "Auction outbid notice:You have been outbid";
 
 						$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
@@ -1320,7 +1320,7 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
 						$fromMail = ADMIN_EMAIL_ADDRESS;
 						$fromName = ADMIN_NAME;
 
-						//$subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+						//$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 						$subject = "Auction outbid notice:You have been outbid";
 
 						$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';

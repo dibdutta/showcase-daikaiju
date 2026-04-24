@@ -84,7 +84,7 @@ function mark_paid_seller_invoice(id){
                                 <tr class="header_bgcolor" height="26">
                                     <!--<td align="center" class="headertext" width="6%"></td>-->
                                     <td align="center" class="headertext" width="15%">Poster</td>
-                                    <td align="center" class="headertext" width="15%">Seller Owned<br/>(Sold price -(MPE Charge + Merchant Fee)) </td>
+                                    <td align="center" class="headertext" width="15%">Seller Owned<br/>(Sold price -(Kaijulink Charge + Merchant Fee)) </td>
                                     <td align="center" class="headertext" width="14%">Auction Week</td>
                                     <td align="center" class="headertext" width="14%">Sold Date</td>
                                     <td align="center" class="headertext" width="14%">Status</td>

@@ -44,7 +44,7 @@ $GLOBALS["metaKeywords"] = $row[SITE_GLOBAL_KEYWORDS];
 $GLOBALS["metaDescription"] = $row[SITE_GLOBAL_DESCRIPTION];
 define ("ADMIN_NAME", $row[CONFIG_ADMIN_NAME]);
 define ("ADMIN_EMAIL_ADDRESS", $row[CONFIG_ADMIN_EMAIL]);
-define ("SITE_TITLE", $row[CONFIG_ADMIN_PAGE_TITLE] ?: "MPE");
+define ("SITE_TITLE", $row[CONFIG_ADMIN_PAGE_TITLE] ?: "Kaijulink");
 
 //////////////    Auction Settings   //////////
 
@@ -104,7 +104,7 @@ define ("SHORT_TYPE", $row['short_type']);
 /* Shipping Default Parameters Ends */
 
 /* Admin Details Starts */
-define ("ADMIN_BUY_NAME", $row[CONFIG_ADMIN_NAME] ?: 'MPE');
+define ("ADMIN_BUY_NAME", $row[CONFIG_ADMIN_NAME] ?: 'Kaijulink');
 define ("ADMIN_ADDRESS1", '221 E MAIN ST');
 define ("ADMIN_CITY", 'GIBSONVILLE');
 define ("ADMIN_STATE", 'NC');

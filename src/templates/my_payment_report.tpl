@@ -69,7 +69,7 @@
                  <div class="tabbed-inner-nav-left">
                     <ul class="menu">
                         <li ><a href="{$actualPath}/my_report"><span>My Report </span></a></li>
-                        <li class="active"><a href="{$actualPath}/my_report?mode=payment_from_mpe"><span>Payments from MPE</span></a></li>
+                        <li class="active"><a href="{$actualPath}/my_report?mode=payment_from_mpe"><span>Payments from Kaijulink</span></a></li>
                     </ul>
                      
                  </div>

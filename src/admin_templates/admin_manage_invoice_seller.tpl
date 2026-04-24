@@ -308,7 +308,7 @@
                                             {section name=counter loop=$invoiceData.discounts}
                                             <tr id='tr_del_amnt_{$smarty.section.counter.index}'>
                                             <td align="right" >&nbsp;{if $invoiceData.is_approved == '0' && $invoiceData.is_cancelled == '0' }
-                                           	{if $invoiceData.discounts[counter].description!='Merchant Fee' && $invoiceData.discounts[counter].description!='MPE Charge' &&  $invoiceData.discounts[counter].description!='Transaction charge' && $invoiceData.discounts[counter].description!='MPE Commision'}
+                                           	{if $invoiceData.discounts[counter].description!='Merchant Fee' && $invoiceData.discounts[counter].description!='MPE Charge' && $invoiceData.discounts[counter].description!='MPE Commision' && $invoiceData.discounts[counter].description!='MPE Commission' && $invoiceData.discounts[counter].description!='Transaction charge' && $invoiceData.discounts[counter].description!='Kaijulink Commission'}
                                            	<img src='{$smarty.const.CLOUD_STATIC_ADMIN}del_ind.jpg' style="display:none;" class="del_img"> 
                                             <img  src='{$smarty.const.CLOUD_STATIC_ADMIN}delete_charge.jpg' id='del_amnt_{$smarty.section.counter.index}'class="del_ind" title='Delete' onclick='del_discount(this.id)'>{/if}{else}&nbsp;{/if}</td>
                                                 <td align="right" >

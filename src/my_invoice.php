@@ -1098,7 +1098,7 @@ function generate_buy_now_invoice(){
                 $toMailBuyer=$rowBuyer['email'];
                 $toNameBuyer=$rowBuyer['firstname']." ".$rowBuyer['lastname'];
                 $textContentBuyer='';
-                $subjectBuyer = "MPE::Offer Rejected - ".$rowBuyer['poster_title']." ";
+                $subjectBuyer = "Kaijulink::Offer Rejected - ".$rowBuyer['poster_title']." ";
 				$textContentBuyer = 'Dear '.$rowBuyer['firstname'].' '.$rowBuyer['lastname'].',<br><br>';
                 $textContentBuyer .= 'Your offer of $'.$rowBuyer['offer_amount'].' has been rejected.<br /><br />As '.$rowBuyer['poster_title'].' has been sold.<br/><br/>';
                 $textContentBuyer .= 'For more details, please <a href="http://'.HOST_NAME.'">login</a><br /><br />';
@@ -1117,7 +1117,7 @@ function generate_buy_now_invoice(){
 			$rowSeller = mysqli_fetch_array($rsSeller);
 			$toMailSeller=$rowSeller['email'];
             $toNameSeller=$rowSeller['firstname']." ".$rowSeller['lastname'];
-			$subjectSeller = "MPE::Opted For Buy Now - ".$rowSeller['poster_title']." ";
+			$subjectSeller = "Kaijulink::Opted For Buy Now - ".$rowSeller['poster_title']." ";
 			$textContentSeller = 'Dear '.$rowSeller['firstname'].' '.$rowSeller['lastname'].',<br><br>';
 			$textContentSeller .= 'Poster Title :'.$rowSeller['poster_title'].'<br />';
 			$textContentSeller .= 'Congratulations! Your item has been opted for Buy Now. You will receive an email confirmation when payment is received.<br />';

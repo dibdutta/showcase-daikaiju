@@ -829,7 +829,7 @@ function postBid($username, $password,$auction_id,$bid_amount) {
 								$res_outbid = mysqli_query($GLOBALS['db_connect'], $sql_outbid_user);
 								$row_outbid = mysqli_fetch_assoc($res_outbid);
 								if($row_outbid){
-									$outbid_subject = "MPE::You have been outbid - " . $row_outbid['poster_title'];
+									$outbid_subject = "Kaijulink::You have been outbid - " . $row_outbid['poster_title'];
 									$outbid_body  = 'Dear ' . $row_outbid['firstname'] . ' ' . $row_outbid['lastname'] . ',<br /><br />';
 									$outbid_body .= '<b>You have been outbid on: </b>' . $row_outbid['poster_title'] . '<br /><br />';
 									$outbid_body .= 'To increase your bid, click: <a href="http://' . HOST_NAME . '/buy.php?mode=poster_details&auction_id=' . $auction_id . '">View Item</a><br /><br />';

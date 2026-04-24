@@ -92,7 +92,7 @@ while($row = mysqli_fetch_array($res)){
 		$poster_title_sold=$row['poster_title'];
 		echo 'Poster-Title-'.$poster_title_sold;
 		echo "<br/>";
-        $subject = "MPE::Bid won - ".$row['poster_title']." ";
+        $subject = "Kaijulink::Bid won - ".$row['poster_title']." ";
         $fromMail = ADMIN_EMAIL_ADDRESS;
         $fromName = ADMIN_NAME;
 
@@ -124,7 +124,7 @@ while($row = mysqli_fetch_array($res)){
         $rowSeller=mysqli_fetch_array($res_sql_SellerMail);
         $toMailSeller = $rowSeller['email'];
         $toNameSeller = $rowSeller['firstname'].' '.$rowSeller['lastname'];
-        $subject = "MPE::Poster Sold - ".$rowSeller['poster_title']." ";
+        $subject = "Kaijulink::Poster Sold - ".$rowSeller['poster_title']." ";
         $fromMail = ADMIN_EMAIL_ADDRESS;
         $fromName = ADMIN_NAME;
 

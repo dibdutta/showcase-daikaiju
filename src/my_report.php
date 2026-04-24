@@ -73,7 +73,7 @@
 
 				########### total amount  paid by buyer  calculation ENDS #########
 
-				########### total amount  sold by MPE   calculation starts #########
+				########### total amount  sold by Kaijulink   calculation starts #########
 				$objAuction->offset = 0;
 				$objAuction->toShow = $total_sold;
 				$FetchTotalSoldByMPE=$objAuction->fetchTotalSoldAuctionReport($_SESSION['sessUserID'],'sold',$start_date,$end_date,$_REQUEST['sort'],$_REQUEST['auction_type'],$_REQUEST['auction_week']);
@@ -84,7 +84,7 @@
 				}
 				$smarty->assign('total_amount_sold_by_mpe', number_format(($total_amount_sold_by_mpe), 2, '.', ''));
 
-				########### total amount  Sold by MPE  calculation ENDS #########
+				########### total amount  Sold by Kaijulink  calculation ENDS #########
 
 				########### total amount  Unpaid by buyer calculation starts #########
 				$objAuction->offset = 0;
@@ -129,7 +129,7 @@
 
 			########### total amount  paid by buyer  calculation ENDS #########
 
-			########### total amount  sold by MPE   calculation starts #########
+			########### total amount  sold by Kaijulink   calculation starts #########
 			$objAuction->offset = 0;
 			$objAuction->toShow = $total_sold;
 			$FetchTotalSoldByMPE=$objAuction->fetchTotalSoldAuctionReport($_SESSION['sessUserID'],'sold',$start_date,$end_date,$_REQUEST['sort'],$_REQUEST['auction_type'],$_REQUEST['auction_week']);
@@ -140,7 +140,7 @@
 			}
 			$smarty->assign('total_amount_sold_by_mpe', number_format(($total_amount_sold_by_mpe), 2, '.', ''));
 
-			########### total amount  Sold by MPE  calculation ENDS #########
+			########### total amount  Sold by Kaijulink  calculation ENDS #########
 
 			########### total amount  Unpaid by buyer calculation starts #########
 			$objAuction->offset = 0;

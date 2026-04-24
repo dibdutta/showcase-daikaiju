@@ -69,7 +69,7 @@ font-family:Calibri;
 											<td align="center" width="16%"><font style="font-size:12px; font-family:Arial; font-weight:bold;"> Poster</font></td >
 											<td align="center" width="14%"><font style="font-size:12px; font-family:Arial; font-weight:bold;">Auction Type</font></td>
 											<td align="center" width="15%"><font style="font-size:12px; font-family:Arial; font-weight:bold;">Sold Amount</font></td>
-											<td align="center" width="15%"><font style="font-size:12px; font-family:Arial; font-weight:bold;">MPE Commission</font><font style="font-size:9px; font-family:Arial;"><br/>(MPE charge + transaction fee)</font></td>
+											<td align="center" width="15%"><font style="font-size:12px; font-family:Arial; font-weight:bold;">Kaijulink Commission</font><font style="font-size:9px; font-family:Arial;"><br/>(Kaijulink charge + transaction fee)</font></td>
 											<td align="center" width="15%"><font style="font-size:12px; font-family:Arial; font-weight:bold;">Seller Owned</font></td>
 										</tr>
 										{section name=counter loop=$paidAuctionDetails}

@@ -51,7 +51,7 @@ font-family:Calibri;
 										{/section}	
 											<tr><td colspan="3">&nbsp;</td></tr>
 											<tr>
-												<td align="right" colspan="2" class="printer">MPE Charge(10 Percent):</td >
+												<td align="right" colspan="2" class="printer">Kaijulink Charge(10 Percent):</td >
 												<td align="right" class="printer">${$invoiceData[0].mpe_charge}</td>
 											</tr>
 											<tr>

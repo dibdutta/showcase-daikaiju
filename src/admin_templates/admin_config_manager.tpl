@@ -223,14 +223,14 @@
 												<td class="smalltext"><input type="text" name="marchant_fee" value="{$marchant_fee}" class="look" maxlength="5" style="width:50px;" />&nbsp;%<br /><span class="err">{$marchant_fee_err}</span></td>
 											</tr>
 											<tr class="header_bgcolor" height="24">
-												<td colspan="2" align="left" class="headertext">MPE Charge</td>
+												<td colspan="2" align="left" class="headertext">Kaijulink Charge</td>
 											</tr>
 											<tr class="tr_bgcolor">
-												<td class="bold_text" valign="top">MPE Charge(Fixed):</td>
+												<td class="bold_text" valign="top">Kaijulink Charge(Fixed):</td>
 												<td class="smalltext"><input type="text" name="mpe_charge" value="{$mpe_charge}" class="look" maxlength="5" style="width:50px;" />&nbsp;%<br /><span class="err">{$mpe_charge_err}</span></td>
 											</tr>
 											<tr class="tr_bgcolor">
-                                                <td class="bold_text" valign="top">MPE Charge(Weekly):</td>
+                                                <td class="bold_text" valign="top">Kaijulink Charge(Weekly):</td>
                                                 <td class="smalltext"><input type="text" name="mpe_charge_weekly" value="{$mpe_charge_weekly}" class="look" maxlength="5" style="width:50px;" />&nbsp;%<br /><span class="err">{$mpe_charge_weekly_err}</span></td>
                                             </tr>
 											<tr class="header_bgcolor" height="24">

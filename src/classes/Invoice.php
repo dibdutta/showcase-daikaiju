@@ -727,7 +727,7 @@ class Invoice extends DBCommon{
 			}
 			$transection_charge = number_format(((mysqli_real_escape_string($GLOBALS['db_connect'],$invoice['amount'])*MPE_TRANSACTION_CHARGE_TO_SELLER)/100), 2, '.', '');
 			
-			$mpe_charges = serialize(array(array('description' => 'MPE Commission', 'amount' => $mpe_charge),
+			$mpe_charges = serialize(array(array('description' => 'Kaijulink Commission', 'amount' => $mpe_charge),
 									 array('description' => 'Merchant Fee', 'amount' => $transection_charge)));
 			
 			$amount = mysqli_real_escape_string($GLOBALS['db_connect'],$invoice['amount']) - ($mpe_charge + $transection_charge);						 
@@ -817,13 +817,13 @@ class Invoice extends DBCommon{
 				$fromMail = ADMIN_EMAIL_ADDRESS;
 				$fromName = ADMIN_NAME;
 
-				$subject = "MPE::Buyer has paid for - ".$invoice['poster_title']." ";
+				$subject = "Kaijulink::Buyer has paid for - ".$invoice['poster_title']." ";
 
 				$textContent = 'Dear '.$invoice['firstname'].' '.$invoice['lastname'].',<br /><br />';
 				//$textContent .= '<b>Poster Title : </b>'.$invoice['poster_title'].'<br />';
 				$textContent .= 'Congratulations! Your Item has Sold and Buyer has paid for:<br />';
 				$textContent .= "<b>".$invoice['poster_title']."</b><br />";
-				$textContent .= "Please ship to Buyer promptly so that we may expedite payment to you. Please email MPE at ".SITE_EMAIL." and confirm item has shipped(You can simply reply to this email with info). <br /><br />";
+				$textContent .= "Please ship to Buyer promptly so that we may expedite payment to you. Please email Kaijulink at ".SITE_EMAIL." and confirm item has shipped(You can simply reply to this email with info). <br /><br />";
 				$textContent .= "Please provide method of shipping and tracking information.<br /><br />";
 				$textContent .= $email_template;
 				
@@ -839,7 +839,7 @@ class Invoice extends DBCommon{
 				$fromMail = ADMIN_EMAIL_ADDRESS;
 				$fromName = ADMIN_NAME;
 
-				$subject = "MPE::Buyer has paid for - ".$invoice['poster_title']." ";
+				$subject = "Kaijulink::Buyer has paid for - ".$invoice['poster_title']." ";
 
 				$textContent = 'Dear '.$invoice['firstname'].' '.$invoice['lastname'].',<br /><br />';
 				$textContent .= 'Congratulations! <b>Poster Title : </b>'.$invoice['poster_title'].' has been sold. <br />';
@@ -847,7 +847,7 @@ class Invoice extends DBCommon{
 				$textContent .= ADMIN_BUY_NAME.' <br /><br />';
 				$textContent .= 'POB 123<br /><br />';
 				$textContent .= 'Gibsonville, NC 27249 <br /><br />';
-				$textContent .= 'Please ship promptly so that we may expedite transaction and issue payment to you! If MPE is currently holding item then please disregard. <br /><br />';
+				$textContent .= 'Please ship promptly so that we may expedite transaction and issue payment to you! If Kaijulink is currently holding item then please disregard. <br /><br />';
 				$textContent .= 'For more details, please <a href="http://'.HOST_NAME.'/">login </a> and go to <b> My Selling/Sold </b> <br /><br />';
 				$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
 				$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
@@ -902,7 +902,7 @@ class Invoice extends DBCommon{
         }elseif($EmailType=='invoice'){
             $email_template = 'Your paid invoice is below. To view this please login to your account and select <b>Invoices/Reconciliation</b>, located in <b>User Section</b>, under <b>My Account</b>.<br/>';
         }elseif($EmailType=='phone_order'){
-			$email_template = 'Thank you for your order. Please contact MPE at 336.402.4123 to make payment arrangements.  You may view status of invoice by logging into your account and selecting <b>Invoices/Reconciliations</b> located in <b>User Section</b> under <b>My Account</b>.<br/><br/>';
+			$email_template = 'Thank you for your order. Please contact Kaijulink at 336.402.4123 to make payment arrangements.  You may view status of invoice by logging into your account and selecting <b>Invoices/Reconciliations</b> located in <b>User Section</b> under <b>My Account</b>.<br/><br/>';
         }elseif($EmailType=='phone_order_approve'){
 			$email_template = 'We have received your payment. Thanks again for your order and we will send a tracking number as soon as your purchase is shipped.';
         }else{
@@ -1092,9 +1092,9 @@ class Invoice extends DBCommon{
 		$toMail = $invoice['email'];
 		$toName = $invoice['firstname']." ".$invoice['lastname'];
         if($EmailType!='Seller'){
-            $subject = "Movie Poster Invoice";
+            $subject = "Kaijulink Invoice";
         }else{
-            $subject = "Movie Poster Seller Reconciliation";
+            $subject = "Kaijulink Seller Reconciliation";
         }
 		$fromMail = ADMIN_EMAIL_ADDRESS;
 		$fromName = ADMIN_NAME;
@@ -1104,7 +1104,7 @@ class Invoice extends DBCommon{
 		$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 		$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 		
-		/* Invoice to the MPE Admin */
+		/* Invoice to the Kaijulink Admin */
 		$toMail = ADMIN_EMAIL_ADDRESS;
 		$toNameAdmin = ADMIN_NAME;
 		
@@ -1113,7 +1113,7 @@ class Invoice extends DBCommon{
 		}elseif($EmailType=='phone_order_approve'){
 			$subject = "You have marked as Paid invoice of ".$toName;
 		}else{
-			$subject = "Movie Poster Invoice";
+			$subject = "Kaijulink Invoice";
 		}
 		$fromMail = ADMIN_EMAIL_ADDRESS;
 		$fromName = ADMIN_NAME;
@@ -1128,7 +1128,7 @@ class Invoice extends DBCommon{
 			/* Invoice to the Sean */
 			$toMailSean = SEAN_EMAIL;
 			$toNameSean = "Sean Linkenback";
-			$subject = "Movie Poster Invoice";
+			$subject = "Kaijulink Invoice";
 			$fromMail = ADMIN_EMAIL_ADDRESS;
 			$fromName = ADMIN_NAME;
 			
@@ -1142,7 +1142,7 @@ class Invoice extends DBCommon{
 			/* Invoice to the Peter */
 			$toMailPeter = PETER_EMAIL;  
 			$toNamePeter = "Peter Contarino";
-			$subject = "Movie Poster Invoice";
+			$subject = "Kaijulink Invoice";
 			$fromMail = ADMIN_EMAIL_ADDRESS;
 			$fromName = ADMIN_NAME;
 			
@@ -1161,7 +1161,7 @@ class Invoice extends DBCommon{
 			/* Invoice to the Sean */
 			$toMailSean = SEAN_EMAIL;
 			$toNameSean = "Sean Linkenback";
-			$subject = "Movie Poster Invoice";
+			$subject = "Kaijulink Invoice";
 			$fromMail = ADMIN_EMAIL_ADDRESS;
 			$fromName = ADMIN_NAME;
 			
@@ -1175,7 +1175,7 @@ class Invoice extends DBCommon{
 			/* Invoice to the Peter */
 			$toMailPeter = PETER_EMAIL;  
 			$toNamePeter = "Peter Contarino";
-			$subject = "Movie Poster Invoice";
+			$subject = "Kaijulink Invoice";
 			$fromMail = ADMIN_EMAIL_ADDRESS;
 			$fromName = ADMIN_NAME;
 			

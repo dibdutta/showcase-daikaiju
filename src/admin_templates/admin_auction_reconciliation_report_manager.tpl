@@ -100,13 +100,13 @@ function check_auction_type(val){
 										  <select name="auction_week"  class="look" id="auction_week" {if $auction_type!='weekly'}style="display: none;"{/if}>
                                             <option value="" selected="selected">All Auction</option>
 											{section name=counter loop=$auctionWeek}
-												<option value="{$auctionWeek[counter].auction_week_id}" {if $smarty.request.auction_week == $auctionWeek[counter].auction_week_id} selected {/if} >MPE Weekly Auction&nbsp;( {$auctionWeek[counter].auction_week_end_date|date_format:"%D"})</option>
+												<option value="{$auctionWeek[counter].auction_week_id}" {if $smarty.request.auction_week == $auctionWeek[counter].auction_week_id} selected {/if} >Kaijulink Weekly Auction&nbsp;( {$auctionWeek[counter].auction_week_end_date|date_format:"%D"})</option>
 											{/section}
                                          </select>
 										 <select name="auction_stills"  class="look" id="auction_stills" {if $auction_type!='stills'}style="display: none;"{/if}>
                                             <option value="" selected="selected">All Stills Auction</option>
 											{section name=counter loop=$auctionWeekStills}
-												<option value="{$auctionWeekStills[counter].auction_week_id}" {if $smarty.request.auction_stills == $auctionWeekStills[counter].auction_week_id} selected {/if} >MPE Stills Auction&nbsp;( {$auctionWeekStills[counter].auction_week_end_date|date_format:"%D"})</option>
+												<option value="{$auctionWeekStills[counter].auction_week_id}" {if $smarty.request.auction_stills == $auctionWeekStills[counter].auction_week_id} selected {/if} >Kaijulink Stills Auction&nbsp;( {$auctionWeekStills[counter].auction_week_end_date|date_format:"%D"})</option>
 											{/section}
                                          </select>
      								    </td >
@@ -174,11 +174,11 @@ function check_auction_type(val){
 
                                         </tr>
 										<tr class="tr_bgcolor" height="26">
-											<td  class="bold_text" colspan="3">Total Paid by MPE:</td >
+											<td  class="bold_text" colspan="3">Total Paid by Kaijulink:</td >
 											<td colspan="3">&nbsp;{$total_paid_by_admin}&nbsp;{if $total_amount_paid_by_admin > 0}(${$total_amount_paid_by_admin})&nbsp;{/if}{if $total_paid_by_admin > 0}<img src="{$smarty.const.CLOUD_STATIC_ADMIN}icon_view.gif" title="details" class="iconViewAlign" width="19" height="19" border="0" style="cursor: pointer;" onclick="javascript:window.open('{$smarty.const.ADMIN_PAGE_LINK}/admin_report_manager.php?mode=admin_auction_seller_detail&search=paid&user_id={$user_id}&start_date={$start_date}&end_date={$end_date}&auction_type={$auction_type}&auction_week={$auction_week}&auction_stills={$auction_stills}&offset={$offset}&toshow={$toshow}','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" />{/if}</td>
 										</tr>
 										<tr class="tr_bgcolor" height="26">
-											<td  class="bold_text" colspan="3">Total to be Paid by MPE:</td >
+											<td  class="bold_text" colspan="3">Total to be Paid by Kaijulink:</td >
 										
 											<td colspan="3">&nbsp;{$total_yet_paid}&nbsp;{if $total_yet_paid > 0}<span id="seller_own_amount"></span>{*if $total_own > 0}&nbsp;(${$total_own}){/if*}&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}icon_view.gif" class="iconViewAlign" title="View & Print" width="19" height="19" border="0" style="cursor: pointer;" onclick="javascript:window.open('{$smarty.const.ADMIN_PAGE_LINK}/admin_report_manager.php?mode=admin_auction_seller_detail&search=yet_to_pay&user_id={$user_id}&start_date={$start_date}&end_date={$end_date}&auction_type={$auction_type}&auction_week={$auction_week}&auction_stills={$auction_stills}&offset={$offset}&toshow={$toshow}','mywindow','menubar=1,resizable=1,width=700,height=500,scrollbars=yes')" />{/if}</td>
 										</tr>
@@ -218,7 +218,7 @@ function check_auction_type(val){
 											<td align="center" class="headertext" width="16%">Poster</td >
 											<td align="center" class="headertext" width="14%">Auction Type</td>
 											<td align="center" class="headertext" width="15%">Sold Amount</td>
-											{*<td align="center" class="headertext" width="15%">MPE Commission<font style="font-size:8px;"><br/>(MPE charge + Merchant fee)</font></td>*}
+											{*<td align="center" class="headertext" width="15%">Kaijulink Commission<font style="font-size:8px;"><br/>(Kaijulink charge + Merchant fee)</font></td>*}
 											<td align="center" class="headertext" width="15%">Charges</td>
 											<td align="center" class="headertext" width="15%">Discounts</td>
 											<td align="center" class="headertext" width="15%">Seller Owed</td>

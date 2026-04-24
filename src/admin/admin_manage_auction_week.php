@@ -999,7 +999,7 @@ function combine_seller_invoice(){
 
     $transection_charge = number_format(((mysqli_real_escape_string($GLOBALS['db_connect'],$total_till)*MPE_TRANSACTION_CHARGE_TO_SELLER)/100), 2, '.', '');
 
-    $discount = serialize(array(array('description' => 'MPE Commision', 'amount' => $mpe_charge),
+    $discount = serialize(array(array('description' => 'Kaijulink Commission', 'amount' => $mpe_charge),
         array('description' => 'Merchant Fee', 'amount' => $transection_charge)));
     $auction_details=serialize($newinvoiceAuction);
 

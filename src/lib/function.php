@@ -924,7 +924,7 @@ function sendOfferMailCron($row, $status)
 {
     $toMail = $row['email'];
     $toName = $row['firstname'].' '.$row['lastname'];
-    $subject = "MPE::Offer Accepted - ".$row['poster_title']." (#".$row['poster_sku'].")";
+    $subject = "Kaijulink::Offer Accepted - ".$row['poster_title']." (#".$row['poster_sku'].")";
     $fromMail = ADMIN_EMAIL_ADDRESS;
     $fromName = ADMIN_NAME;
     
@@ -973,7 +973,7 @@ function sendMailByUserid($mail_poster_title,$id,$date)
         $row = mysqli_fetch_array($rs);
     $toMail = $row['email'];
     $toName = $row['firstname'].' '.$row['lastname'];
-    $subject = "MPE::New poster matching your want list";
+    $subject = "Kaijulink::New poster matching your want list";
     $fromMail = ADMIN_EMAIL_ADDRESS;
     $fromName = ADMIN_NAME;
     

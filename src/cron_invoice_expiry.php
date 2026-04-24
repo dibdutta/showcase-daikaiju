@@ -161,7 +161,7 @@ function checkExpiredInvoice(){
                 $toMailBuyer=$rowBuyer['email'];
                 $toNameBuyer=$rowBuyer['firstname']." ".$rowBuyer['lastname'];
                 $textContentBuyer='';
-                $subjectBuyer = "MPE::Poster Relisted - ".$rowBuyer['poster_title']." ";
+                $subjectBuyer = "Kaijulink::Poster Relisted - ".$rowBuyer['poster_title']." ";
 				$textContentBuyer = 'Dear '.$rowBuyer['firstname'].' '.$rowBuyer['lastname'].',<br><br>';
                 $textContentBuyer .= $rowBuyer['poster_title'].' has been relisted again.<br /><br />';
                 $textContentBuyer .= 'For more details, please <a href="http://'.HOST_NAME.'">login</a><br /><br />';

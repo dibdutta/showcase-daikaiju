@@ -28,7 +28,7 @@
 		<td width="100%">
 			<table width="100%" border="0" cellspacing="0" cellpadding="2">
 				<tr>
-					<td width="100%" align="center" class="err"><a href="javascript:void(0);" class="action_link"><strong>MPE Blacklist Section</strong></a></td>
+					<td width="100%" align="center" class="err"><a href="javascript:void(0);" class="action_link"><strong>Kaijulink Blacklist Section</strong></a></td>
 				</tr>
 				{if $errorMessage<>""}
 					<tr>

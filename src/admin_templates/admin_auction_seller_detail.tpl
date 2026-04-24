@@ -49,7 +49,7 @@ font-family:Calibri;
 								<table align="center" width="96%" border="1" cellspacing="1" cellpadding="2" style="border-collapse:collapse;" bordercolor="#000000"  >
 									<tbody>
 										<tr>
-											<td {if $smarty.request.auction_type!='weekly'}colspan="8"{else}colspan="7"{/if} align="center" class="printer"><b>MPE Report:{if $search=='' && $auction_type==''} All Posters {elseif $search=='' && $auction_type!=''} {$smarty.request.auction_type|lower|capitalize} {/if}{if $search!=''}{if $search=='yet_to_pay'} Total(s) to be Paid by MPE {elseif $search=='unpaid'}Total Unpaid by Buyer{elseif $search=='paid'} Total Payments to Seller(s){elseif $search=='paid_by_buyer'} Total Paid by Buyer(s) {else} {$search|lower|capitalize} Items{/if}  {/if}{if $start_date!=''}From {$start_date|date_format:"%m-%d-%Y"} To {$end_date|date_format:"%m-%d-%Y"}{/if}</b></td>
+											<td {if $smarty.request.auction_type!='weekly'}colspan="8"{else}colspan="7"{/if} align="center" class="printer"><b>Kaijulink Report:{if $search=='' && $auction_type==''} All Posters {elseif $search=='' && $auction_type!=''} {$smarty.request.auction_type|lower|capitalize} {/if}{if $search!=''}{if $search=='yet_to_pay'} Total(s) to be Paid by Kaijulink {elseif $search=='unpaid'}Total Unpaid by Buyer{elseif $search=='paid'} Total Payments to Seller(s){elseif $search=='paid_by_buyer'} Total Paid by Buyer(s) {else} {$search|lower|capitalize} Items{/if}  {/if}{if $start_date!=''}From {$start_date|date_format:"%m-%d-%Y"} To {$end_date|date_format:"%m-%d-%Y"}{/if}</b></td>
 										</tr>
 										
 										
@@ -171,7 +171,7 @@ font-family:Calibri;
                                         {/if}
 										{if $smarty.request.search=='yet_to_pay'}
 										<tr>
-										<td colspan="9" align="right" class="print_data">Total Payable From MPE to seller:</td>
+										<td colspan="9" align="right" class="print_data">Total Payable From Kaijulink to seller:</td>
 										<td class="print_data" colspan="2" align="left">&nbsp;&nbsp;${assign var="totsoldamnt" value=$total_sold_price}
 												{assign var="tottotalOwn" value=$TotalCharge+$totsoldamnt}
 												{assign var="totsellerOwn" value=$tottotalOwn-$TotalDis}
@@ -186,7 +186,7 @@ font-family:Calibri;
                                         {/if}
 										{if $smarty.request.search=='paid'}
 										<tr>
-										<td {if $smarty.request.auction_type!='weekly'}colspan="9"{else}colspan="8"{/if} align="right" class="print_data">Total amount paid by MPE to seller:</td>
+										<td {if $smarty.request.auction_type!='weekly'}colspan="9"{else}colspan="8"{/if} align="right" class="print_data">Total amount paid by Kaijulink to seller:</td>
 										<td colspan="2"  class="print_data">&nbsp;&nbsp;${assign var="totsoldamnt" value=$total_sold_price}
 												{assign var="tottotalOwn" value=$TotalCharge+$totsoldamnt}
 												{assign var="totsellerOwn" value=$tottotalOwn-$TotalDis}

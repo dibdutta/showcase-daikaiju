@@ -157,7 +157,7 @@ function sendOfferMailCron($row, $status)
 {
     $toMail = $row['email'];
     $toName = $row['firstname'].' '.$row['lastname'];
-    //$subject = "MPE::Offer Accepted - ".$row['poster_title']." (#".$row['poster_sku'].")";
+    //$subject = "Kaijulink::Offer Accepted - ".$row['poster_title']." (#".$row['poster_sku'].")";
     $fromMail = ADMIN_EMAIL_ADDRESS;
     $fromName = ADMIN_NAME;
     
@@ -165,20 +165,20 @@ function sendOfferMailCron($row, $status)
     $textContent .= '<b>Poster Title : </b>'.$row['poster_title'].'<br />';
     $textContent .= '<b>Poster Sku : </b>'.$row['poster_sku'].'<br /><br />';
     if($status == "no_respose_from_seller"){ // Mail goes to seller for no response from seller's end
-    	$subject = "MPE::Buyer Offer Rejected - ".$row['poster_title']." (#".$row['poster_sku'].")";
+    	$subject = "Kaijulink::Buyer Offer Rejected - ".$row['poster_title']." (#".$row['poster_sku'].")";
         $textContent .= 'Buyer offer is rejected as there is no response from your end in the allotted 72 hrs.<br /><br />';
         $textContent .= 'For more details, please <a href="'.SITE_URL.'">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Selling/My Incoming Offers.<br /><br />';
     }elseif($status == "no_respose_from_buyer"){ // Mail goes to seller for no response from buyer's end
-    	$subject = "MPE::Your Offer Rejected - ".$row['poster_title']." (#".$row['poster_sku'].")";
+    	$subject = "Kaijulink::Your Offer Rejected - ".$row['poster_title']." (#".$row['poster_sku'].")";
         $textContent .= 'Buyer has not responded to your counter offer within the allotted 72 hours. Counter offer has expired.<br /><br />';
         $textContent .= 'For more details, please <a href="'.SITE_URL.'">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Selling/My Outgoing Counters. <br /><br />';
     }elseif($status == "reject_offer_seller"){ // Mail goes to buyer for no response from seller's end
-    	$subject = "MPE::Your Offer Rejected - ".$row['poster_title']." (#".$row['poster_sku'].")";
+    	$subject = "Kaijulink::Your Offer Rejected - ".$row['poster_title']." (#".$row['poster_sku'].")";
         //$textContent .= 'Your offer has expired with no response, but we encourage you to submit another offer.<br /><br />';
         $textContent .= 'Seller has not responded to your offer in the allotted 72 hours. Offer has expired.<br /><br />';
         $textContent .= 'For more details, please <a href="'.SITE_URL.'">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Buying/My Outgoing Offers.<br /><br />';
     }elseif($status == "reject_offer_buyer"){ // Mail goes to buyer for no response from buyer's end
-    	$subject = "MPE::Seller Offer Rejected - ".$row['poster_title']." (#".$row['poster_sku'].")";
+    	$subject = "Kaijulink::Seller Offer Rejected - ".$row['poster_title']." (#".$row['poster_sku'].")";
         $textContent .= 'Seller offer is rejected as there is no response from your end in the allotted 72 hrs.<br /><br />';
         $textContent .= 'For more details, please <a href="'.SITE_URL.'">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Buying/My Incoming Counters.<br /><br />';
     }
@@ -279,7 +279,7 @@ function updateBidCronJob(){
 							$fromMail = ADMIN_EMAIL_ADDRESS;
 							$fromName = ADMIN_NAME;
 		
-							$subject = "MPE::You have been outbid - ".$rowOutbid['poster_title']." ";
+							$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 		
 							$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
 							$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
@@ -527,7 +527,7 @@ function processExpiredAuction($auction_id, $bid_id)
         $row=mysqli_fetch_array($res_sql_winnerMail);
         $toMail = $row['email'];
         $toName = $row['firstname'].' '.$row['lastname'];
-        $subject = "MPE::Bid won - ".$row['poster_title']." ";
+        $subject = "Kaijulink::Bid won - ".$row['poster_title']." ";
         $fromMail = ADMIN_EMAIL_ADDRESS;
         $fromName = ADMIN_NAME;
 
@@ -559,7 +559,7 @@ function processExpiredAuction($auction_id, $bid_id)
         $rowSeller=mysqli_fetch_array($res_sql_SellerMail);
         $toMailSeller = $rowSeller['email'];
         $toNameSeller = $rowSeller['firstname'].' '.$rowSeller['lastname'];
-        $subject = "MPE::Poster Sold - ".$rowSeller['poster_title']." ";
+        $subject = "Kaijulink::Poster Sold - ".$rowSeller['poster_title']." ";
         $fromMail = ADMIN_EMAIL_ADDRESS;
         $fromName = ADMIN_NAME;
 
