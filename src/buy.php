@@ -194,7 +194,7 @@ function displayList()
                     $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$auctionItems[$i]['poster_thumb'];
                     $auctionItems[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }else{
-                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$auctionItems[$i]['poster_thumb'];
+                    $auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
                 }
             }
         /*}else{
