@@ -103,7 +103,6 @@ resource "aws_ecs_task_definition" "web" {
 
       mountPoints = [
         { sourceVolume = "sessions", containerPath = "/var/www/html/sessions" },
-        { sourceVolume = "poster-photo", containerPath = "/var/www/html/poster_photo" },
         { sourceVolume = "templates-c", containerPath = "/var/www/html/templates_c" },
         { sourceVolume = "admin-templates-c", containerPath = "/var/www/html/admin_templates_c" },
         { sourceVolume = "bulkupload", containerPath = "/var/www/html/bulkupload" }
@@ -127,18 +126,6 @@ resource "aws_ecs_task_definition" "web" {
       transit_encryption = "ENABLED"
       authorization_config {
         access_point_id = aws_efs_access_point.sessions.id
-        iam             = "ENABLED"
-      }
-    }
-  }
-
-  volume {
-    name = "poster-photo"
-    efs_volume_configuration {
-      file_system_id     = aws_efs_file_system.main.id
-      transit_encryption = "ENABLED"
-      authorization_config {
-        access_point_id = aws_efs_access_point.poster_photo.id
         iam             = "ENABLED"
       }
     }

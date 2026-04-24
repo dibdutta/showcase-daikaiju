@@ -44,26 +44,6 @@ resource "aws_efs_access_point" "sessions" {
   tags = { Name = "${local.name_prefix}-sessions" }
 }
 
-resource "aws_efs_access_point" "poster_photo" {
-  file_system_id = aws_efs_file_system.main.id
-
-  posix_user {
-    gid = 33
-    uid = 33
-  }
-
-  root_directory {
-    path = "/poster_photo"
-    creation_info {
-      owner_gid   = 33
-      owner_uid   = 33
-      permissions = "0755"
-    }
-  }
-
-  tags = { Name = "${local.name_prefix}-poster-photo" }
-}
-
 resource "aws_efs_access_point" "templates_c" {
   file_system_id = aws_efs_file_system.main.id
 
