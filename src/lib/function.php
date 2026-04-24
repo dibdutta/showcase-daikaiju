@@ -1434,106 +1434,39 @@ function increment_amount($buy_now){
 				create_thumbnail_for_buy_gallery($destThumb_buy_gallery,$dest,$fileName,200,200);
 				create_thumbnail_for_big_slider($destThumb_big_slider,$dest,$fileName,570,430);
 			}
-			/*
-		 * Upload Files to the colud--Start
-		 */
-		 $originalImage = $_SERVER['DOCUMENT_ROOT']."/poster_photo/".$fileName;
-		 $thumbImage = $_SERVER['DOCUMENT_ROOT']."/poster_photo/thumbnail/".$fileName;
-		 $thumbBuyImage = $_SERVER['DOCUMENT_ROOT']."/poster_photo/thumb_buy/".$fileName;
-		 $thumbBuyGalleryImage = $_SERVER['DOCUMENT_ROOT']."/poster_photo/thumb_buy_gallery/".$fileName;
-		 $thumbBuyBigImage = $_SERVER['DOCUMENT_ROOT']."/poster_photo/thumb_big_slider/".$fileName;		
-		 
-		 // Buckets into upload AWS 
-		 /*$bucketoriginalImage="cloudposter";
-		 $bucketthumbImage="cloudposterthumb";
-		 $bucketthumbBuyImage="cloudposterthumbbuy";
-		 $bucketthumbBuyGalleryImage="cloudposterthumbbuygallery";
-		 $bucketthumbBuyBigImage="cloudposterthumbbiggallery";*/
-		 
-		 // Connect to AWS 
-		 /*$client = new Aws\S3\S3Client([
-    		'version' => 'latest',
-    		'region'  => 'us-west-2'//,
-    		//'debug'   => true
-		 ]);
-		 */
-		
-		
- 		//Upload original image	
-		 /*try {
-			$client->putObject(array(
-				 'Bucket'=>$bucketoriginalImage,
-				 'Key' =>  $fileName,
-				 'SourceFile' => $originalImage,
-				 'StorageClass' => 'STANDARD'
-        	));
-		 }catch (S3Exception $e) {
-         // Catch an S3 specific exception.
-        	echo $e->getMessage();
-    	 }*/
-		
-		//Upload thumb image	
-		 /*try {
-			$client->putObject(array(
-				 'Bucket'=>$bucketthumbImage,
-				 'Key' =>  $fileName,
-				 'SourceFile' => $thumbImage,
-				 'StorageClass' => 'STANDARD'
-        	));
-		 }catch (S3Exception $e) {
-         // Catch an S3 specific exception.
-        	echo $e->getMessage();
-    	 }*/
-				
-		//Upload thumbbuy image	
-		 /*try {
-			$client->putObject(array(
-				 'Bucket'=>$bucketthumbBuyImage,
-				 'Key' =>  $fileName,
-				 'SourceFile' => $thumbBuyImage,
-				 'StorageClass' => 'STANDARD'
-        	));
-		 }catch (S3Exception $e) {
-         // Catch an S3 specific exception.
-        	echo $e->getMessage();
-    	 }*/
-				
-		//Upload thumbbuy gallery image	
-		 /*try {
-			$client->putObject(array(
-				 'Bucket'=>$bucketthumbBuyGalleryImage,
-				 'Key' =>  $fileName,
-				 'SourceFile' => $thumbBuyGalleryImage,
-				 'StorageClass' => 'STANDARD'
-        	));
-		 }catch (S3Exception $e) {
-         // Catch an S3 specific exception.
-        	echo $e->getMessage();
-    	 }*/
-		 
-		 //Upload slider container image	
-		 /*try {
-			$client->putObject(array(
-				 'Bucket'=>$bucketthumbBuyBigImage,
-				 'Key' =>  $fileName,
-				 'SourceFile' => $thumbBuyBigImage,
-				 'StorageClass' => 'STANDARD'
-        	));
-		 }catch (S3Exception $e) {
-         // Catch an S3 specific exception.
-        	echo $e->getMessage();
-    	 }*/
-
-        //unlink($originalImage);
-        //unlink($thumbImage);
-        //unlink($thumbBuyImage);
-        //unlink($thumbBuyGalleryImage);
-		//unlink($thumbBuyBigImage);
-
-		 //echo $object->public_uri();					
-		/*
-		 * Upload Files to the colud--End
-		 */	
+			// Upload all variants to S3 and remove local copies (production only)
+		if (APP_ENV === 'production') {
+			$s3Bucket = getenv('S3_STATIC_BUCKET');
+			if ($s3Bucket) {
+				try {
+					$s3 = new Aws\S3\S3Client(['version' => 'latest', 'region' => 'us-east-1']);
+					$mime = mime_content_type($dest) ?: 'image/jpeg';
+					$s3uploads = [
+						'poster_photo/'                   . $fileName => $dest,
+						'poster_photo/thumbnail/'         . $fileName => $destThumb         . $fileName,
+						'poster_photo/thumb_buy/'         . $fileName => $destThumb_buy      . $fileName,
+						'poster_photo/thumb_buy_gallery/' . $fileName => $destThumb_buy_gallery . $fileName,
+					];
+					if (!empty($destThumb_big_slider)) {
+						$s3uploads['poster_photo/thumb_big_slider/' . $fileName] = $destThumb_big_slider . $fileName;
+					}
+					foreach ($s3uploads as $s3Key => $localPath) {
+						if (file_exists($localPath)) {
+							$s3->putObject([
+								'Bucket'       => $s3Bucket,
+								'Key'          => $s3Key,
+								'SourceFile'   => $localPath,
+								'ContentType'  => $mime,
+								'CacheControl' => 'max-age=31536000',
+							]);
+							unlink($localPath);
+						}
+					}
+				} catch (Exception $e) {
+					error_log('S3 poster upload failed for ' . $fileName . ': ' . $e->getMessage());
+				}
+			}
+		}
   }
  }
  function decade_calculator($year)

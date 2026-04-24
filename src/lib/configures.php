@@ -228,19 +228,19 @@ define("CLOUD_POSTER_THUMB_BUY_GALLERY_CONTAINER","cloud_mpe_poster_thumb_buy_ga
 define("CLOUD_POSTER_THUMB_BIG_GALLERY_CONTAINER","cloud_mpe_big_slider");
 
 if (APP_ENV === 'production') {
-	$posterBase = "https://" . $_SERVER['HTTP_HOST'] . "/";
-	define("CLOUD_POSTER", $posterBase . "poster_photo/");
-	define("CLOUD_POSTER_THUMB", $posterBase . "poster_photo/thumbnail/");
-	define("CLOUD_POSTER_THUMB_BUY", $posterBase . "poster_photo/thumb_buy/");
-	define("CLOUD_POSTER_THUMB_BUY_GALLERY", $posterBase . "poster_photo/thumb_buy_gallery/");
-	define("CLOUD_POSTER_THUMB_BIG_GALLERY", $posterBase . "poster_photo/thumb_big_slider/");
+	$_posterCdn = getenv('CDN_STATIC_URL') ?: 'https://d294w6g1afjpvs.cloudfront.net';
+	define("CLOUD_POSTER",                  $_posterCdn . "/poster_photo/");
+	define("CLOUD_POSTER_THUMB",            $_posterCdn . "/poster_photo/thumbnail/");
+	define("CLOUD_POSTER_THUMB_BUY",        $_posterCdn . "/poster_photo/thumb_buy/");
+	define("CLOUD_POSTER_THUMB_BUY_GALLERY",$_posterCdn . "/poster_photo/thumb_buy_gallery/");
+	define("CLOUD_POSTER_THUMB_BIG_GALLERY",$_posterCdn . "/poster_photo/thumb_big_slider/");
 } else {
-	$localBase = "http://" . $_SERVER['HTTP_HOST'] . "/";
-	define("CLOUD_POSTER", $localBase . "poster_photo/");
-	define("CLOUD_POSTER_THUMB", $localBase . "poster_photo/thumbnail/");
-	define("CLOUD_POSTER_THUMB_BUY", $localBase . "poster_photo/thumb_buy/");
-	define("CLOUD_POSTER_THUMB_BUY_GALLERY", $localBase . "poster_photo/thumb_buy_gallery/");
-	define("CLOUD_POSTER_THUMB_BIG_GALLERY", $localBase . "poster_photo/thumb_big_slider/");
+	$_posterLocal = "http://" . $_SERVER['HTTP_HOST'] . "/";
+	define("CLOUD_POSTER",                  $_posterLocal . "poster_photo/");
+	define("CLOUD_POSTER_THUMB",            $_posterLocal . "poster_photo/thumbnail/");
+	define("CLOUD_POSTER_THUMB_BUY",        $_posterLocal . "poster_photo/thumb_buy/");
+	define("CLOUD_POSTER_THUMB_BUY_GALLERY",$_posterLocal . "poster_photo/thumb_buy_gallery/");
+	define("CLOUD_POSTER_THUMB_BIG_GALLERY",$_posterLocal . "poster_photo/thumb_big_slider/");
 }
 
 define("CLOUD_TEST_ORIGINAL","http://c15168198.r98.cf2.rackcdn.com/");

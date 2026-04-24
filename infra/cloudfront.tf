@@ -160,6 +160,27 @@ resource "aws_cloudfront_distribution" "main" {
     max_ttl                = 2592000
   }
 
+  # Poster images -> S3
+  ordered_cache_behavior {
+    path_pattern     = "/poster_photo/*"
+    allowed_methods  = ["GET", "HEAD"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "s3-static"
+
+    forwarded_values {
+      query_string = false
+      cookies {
+        forward = "none"
+      }
+    }
+
+    compress               = true
+    viewer_protocol_policy = "redirect-to-https"
+    min_ttl                = 0
+    default_ttl            = 2592000  # 30 days
+    max_ttl                = 31536000 # 1 year
+  }
+
   # Default: dynamic content -> ALB
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
