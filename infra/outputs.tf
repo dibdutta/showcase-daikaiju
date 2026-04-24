@@ -70,11 +70,6 @@ output "efs_access_point_sessions" {
   value       = aws_efs_access_point.sessions.id
 }
 
-output "efs_access_point_poster_photo" {
-  description = "EFS access point ID for poster_photo"
-  value       = aws_efs_access_point.poster_photo.id
-}
-
 output "efs_access_point_templates_c" {
   description = "EFS access point ID for templates_c"
   value       = aws_efs_access_point.templates_c.id
