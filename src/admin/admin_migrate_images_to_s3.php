@@ -8,6 +8,9 @@
  */
 define('INCLUDE_PATH', '../');
 require_once INCLUDE_PATH . 'lib/inc.php';
+require_once INCLUDE_PATH . 'lib/AWS/aws-autoloader.php';
+
+header('Content-Type: text/plain');
 
 if (!isset($_SESSION['adminLoginID'])) {
     die('Admin login required.');
@@ -74,7 +77,6 @@ foreach ($dirs as $dir) {
     }
 }
 
-header('Content-Type: text/plain');
 echo "Migration complete.\n";
 echo "Uploaded : $ok\n";
 echo "Skipped  : $skip (already in S3)\n";
