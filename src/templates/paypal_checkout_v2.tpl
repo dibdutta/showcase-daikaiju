@@ -167,11 +167,14 @@ var _pp = {
     paypal.HostedFields.render({
       createOrder: function () {
         return apiCall({action: 'create_order', invoice_id: pp.invoiceId})
-          .then(function (data) { return data.id; });
+          .then(function (data) {
+            if (!data.id) { throw new Error(data.error || 'Order creation failed'); }
+            return data.id;
+          });
       },
       fields: {
         number:         {selector: '#card-number-field-container', placeholder: '•••• •••• •••• ••••'},
-        expirationDate: {selector: '#expiry-field-container',      placeholder: 'MM / YYYY'},
+        expirationDate: {selector: '#expiry-field-container',      placeholder: 'MM / YY'},
         cvv:            {selector: '#cvv-field-container',         placeholder: 'CVV'}
       }
     }).then(function (cardFields) {
@@ -204,8 +207,7 @@ var _pp = {
       });
     }).catch(function (err) {
       console.warn('Hosted Fields render failed', err);
-      document.getElementById('card-divider').style.display = 'none';
-      document.getElementById('card-form').style.display    = 'none';
+      showCardError(err.message || 'Card payment setup failed. Please use the PayPal button above.');
     });
   }
 }(_pp));

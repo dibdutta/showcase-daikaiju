@@ -76,13 +76,7 @@ $rs = mysqli_query(
     " AND is_paid = '0' AND is_approved = '1' AND is_cancelled = '0'"
 );
 if (!$rs || (int)(mysqli_fetch_assoc($rs)['cnt'] ?? 0) === 0) {
-    // Diagnostic: fetch actual invoice row to pinpoint failing condition
-    $rs_dbg = mysqli_query($GLOBALS['db_connect'],
-        "SELECT invoice_id, fk_user_id, is_paid, is_approved, is_cancelled FROM " . TBL_INVOICE .
-        " WHERE invoice_id = $esc_inv LIMIT 1"
-    );
-    $dbg = $rs_dbg ? (mysqli_fetch_assoc($rs_dbg) ?: []) : ['query_failed' => mysqli_error($GLOBALS['db_connect'])];
-    jsonOut(['error' => 'Invoice not found or not payable', '_debug' => ['checked_user' => $esc_usr, 'row' => $dbg]], 403);
+    jsonOut(['error' => 'Invoice not found or not payable'], 403);
 }
 
 // ── create_order ──────────────────────────────────────────────────────────────
