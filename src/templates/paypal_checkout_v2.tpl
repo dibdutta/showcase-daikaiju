@@ -23,7 +23,7 @@
               <div class="left-midbg">
               <div class="right-midbg">
               <div class="mid-rept-bg">
-                <div class="inner-area-general" style="max-width:580px; padding:20px;">
+                <div class="inner-area-general" style="max-width:580px; padding:20px; margin:0 auto;">
 
                   <!-- Order summary -->
                   <div style="background:#f9f9f9; border:1px solid #ddd; border-radius:4px; padding:14px 18px; margin-bottom:22px; font-family:Arial,sans-serif; font-size:13px;">
