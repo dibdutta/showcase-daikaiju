@@ -27,8 +27,8 @@
                 </ul>
             </div>            
             <div class="right">
-            	<p><span>&copy; 2011 - {$smarty.now|date_format:"%Y"}. All rights reserved.</span></p>                
-            </div>            
+            	<p><span>&copy; 2011 &ndash; {$smarty.now|date_format:"%Y"}. Kaiju Link. All rights reserved.</span></p>
+            </div>
         </div> 
         
         

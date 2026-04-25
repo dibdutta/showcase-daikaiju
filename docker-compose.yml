@@ -12,6 +12,7 @@ services:
       - mysql
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html
+      - DB_NAME=showcase
 
   mysql:
     image: mysql:8.0
@@ -19,7 +20,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mpe
+      MYSQL_DATABASE: showcase
       MYSQL_USER: appuser
       MYSQL_PASSWORD: password123
     ports:

@@ -16,6 +16,7 @@
 
 <!-- Merged CSS: style.css + fonts.css + jquery-ui.css + template.css + glob.css + dddropdownpanel.css -->
 <link href="{$actualPath}/css/site.css" rel="stylesheet" type="text/css" />
+<link href="{$actualPathJSCSS}css/kaijulink.css" rel="stylesheet" type="text/css" />
 
 
 
