@@ -10,6 +10,35 @@
 	background: #7a3050;
 }
 
+/* Equal-height card rows: cards in the same row stretch to the tallest card's height */
+.display-listing-main.buygrid > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+.display-listing-main.buygrid > div > div:not(.btomgrey-bg) {
+    display: flex;
+    flex-direction: column;
+}
+.display-listing-main.buygrid > div > .btomgrey-bg {
+    flex: 0 0 100%;
+}
+.display-listing-main.buygrid .grid-view-main {
+    float: none !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.display-listing-main.buygrid .poster-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+/* Push Watch/timer section to a consistent vertical position within each card */
+.display-listing-main.buygrid .inner-cntnt-each-poster.pt10 {
+    margin-top: auto;
+}
+
 </style>
 
 {/literal}
@@ -181,13 +210,13 @@
                                              <div class="inner-cntnt-each-poster">
                                                 <div id="gallery_{$smarty.section.counter.index}" class="image-hldr">
                                                      <div class="buygridtb" style="padding:2px; text-align:center; height:170px;">
-                                       					<div style="padding:2px; margin-bottom:2px; height:155px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                                       					<div style="padding:2px; margin-bottom:2px;">
 														{if $auctionItems[counter].fk_auction_type_id=='1'}
-															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}" style="max-height:150px; max-width:100%; width:auto; height:auto;"  /></a>
+															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
 														{elseif $smarty.request.list=='extended'}
-															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&extended=true"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}" style="max-height:150px; max-width:100%; width:auto; height:auto;"  /></a>
+															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&extended=true"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
 														{else}
-															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}" style="max-height:150px; max-width:100%; width:auto; height:auto;"  /></a>
+															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
 														{/if}
 
                                                         </div>
