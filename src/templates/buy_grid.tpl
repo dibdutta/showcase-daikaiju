@@ -181,15 +181,15 @@
                                              <div class="inner-cntnt-each-poster">
                                                 <div id="gallery_{$smarty.section.counter.index}" class="image-hldr">
                                                      <div class="buygridtb" style="padding:2px; text-align:center; height:170px;">
-                                       					<div style="padding:2px; margin-bottom:2px;">
+                                       					<div style="padding:2px; margin-bottom:2px; height:155px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
 														{if $auctionItems[counter].fk_auction_type_id=='1'}
-															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
+															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}" style="max-height:150px; max-width:100%; width:auto; height:auto;"  /></a>
 														{elseif $smarty.request.list=='extended'}
-															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&extended=true"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
+															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&extended=true"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}" style="max-height:150px; max-width:100%; width:auto; height:auto;"  /></a>
 														{else}
-															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
+															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}" style="max-height:150px; max-width:100%; width:auto; height:auto;"  /></a>
 														{/if}
-                                                        
+
                                                         </div>
                                                       </div>
                                                         {if ($smarty.request.list=='alternative' || $smarty.request.list=='') && $auctionItems[counter].fk_auction_type_id == 6}
