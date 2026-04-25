@@ -215,13 +215,19 @@
                                                          {if $is_expired=='0' && $is_expired_stills !='1' && $smarty.request.list!='alternative' &&  $smarty.request.list!=''}
 														   {if $auctionItems[counter].fk_auction_type_id <> '1'}
                                             				<div class="inner-cntnt-each-poster pt10  pb05 pl10 pr10">                                        
-                                                			  <div style="display:flex; align-items:center;">
+                                                			  <div style="display:flex; align-items:center; justify-content:space-between;">
 																{if $auctionItems[counter].watch_indicator ==0}
 																  {if $smarty.request.list!='extendded'}
 																	<input type="button" value="Watch" class="track-btn" style="width:60px;" onclick="{if $smarty.session.sessUserID == ''}showLogIn();{else}add_watchlist_for_details({$auctionItems[counter].auction_id});{/if}" id="watch_{$auctionItems[counter].auction_id}" />
+																	<div class="timerwrapper">
+																  	<div class="text-timer" id="timer_{$auctionItems[counter].auction_id}" style="background:#003878; background-image:none; color:#fff; border-radius:3px;">{$auctionItems[counter].auction_countdown}</div>
+																  	</div>
 																  {/if}
 																{else}
 																	<input type="button" value="Watching" style="width:80px;" onclick="redirect_watchlist({$auctionItems[counter].auction_id});" class="track-btn"  />
+																	<div class="timerwrapper">
+																  		<div class="text-timer" id="timer_{$auctionItems[counter].auction_id}" style="background:#003878; background-image:none; color:#fff; border-radius:3px;">{$auctionItems[counter].auction_countdown}</div>
+																  	</div>
 																{/if}
                                                                </div>
                                                             </div>
@@ -249,23 +255,21 @@
 													
 												
                                                 {if ($smarty.request.list == "weekly" || $smarty.request.list == "extended") && ($is_expired == '0' && $is_expired_stills!='1') }
-<div style="margin:4px 0 0 0;">
-  <div style="border:1px solid #e0e0e0; border-radius:6px 6px 0 0; padding:8px; background:#fff;">
-    <div style="font-size:10px; color:#999; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; margin-bottom:4px;">BID ENTRY</div>
-    <div style="font-size:12px; color:#333; margin-bottom:6px;">Current Bid: <span style="color:#881318; font-weight:700;">${$auctionItems[counter].last_bid_amount|number_format:2}</span>{if $auctionItems[counter].bid_count > 0}&nbsp;&middot;&nbsp;{$auctionItems[counter].bid_count} Bid(s){/if}</div>
-    <div style="display:flex; align-items:center; gap:3px;">
-      <span style="font-size:13px; font-weight:600;">$</span>
-      <input type="text" name="bid_price_{$auctionItems[counter].auction_id}" id="bid_price_{$auctionItems[counter].auction_id}" maxlength="8" style="width:55px; border:1px solid #ccc; border-radius:3px; padding:4px 5px; font-size:13px; text-align:right;" onfocus="{literal}$(this).keypress(function(event){var keycode=(event.keyCode?event.keyCode:event.which);if(keycode=='13'){var auc_id=this.id;test_enter_for_bid(auc_id);}}); {/literal}" onblur="test_blur_for_bid(this.id)" />
-      <span style="font-size:12px; color:#555;">.00</span>
-      <input type="button" id="bid_bttn_{$auctionItems[counter].auction_id}" value="BID NOW" onclick="postBid({$auctionItems[counter].auction_id}, '{$auctionItems[counter].fk_user_id}');" style="background:#881318; color:#fff; border:none; border-radius:4px; padding:5px 10px; font-size:11px; font-weight:700; cursor:pointer; letter-spacing:0.05em;" />
-    </div>
-  </div>
-  <div style="border:1px solid #e0e0e0; border-top:0; border-radius:0 0 6px 6px; padding:8px; background:#fff;">
-    <div style="font-size:10px; color:#999; font-weight:600; letter-spacing:0.07em; text-transform:uppercase; margin-bottom:4px;">TIME LEFT</div>
-    <div class="timerwrapper" style="margin-bottom:4px;"><div class="text-timer" id="timer_{$auctionItems[counter].auction_id}" style="background:#1e3a5f; background-image:none; color:#fff; border-radius:5px; padding:5px 8px; font-size:13px; font-weight:700; display:inline-block;">{$auctionItems[counter].auction_countdown}</div></div>
-    <div style="font-size:10px; color:#999;">Bids placed in the last 3 min extend the auction.</div>
-  </div>
-</div>
+												<div class="bid-time" >
+                                                        <div class="left-side1"  style="margin-right: 12px;">
+                                                            <div class="text-grid CurrencyDecimal fll"  style="font-size:15px;">&#36;</div>
+                                                            <div class="txtdivd fll"><input type="text" name="bid_price_{$auctionItems[counter].auction_id}" id="bid_price_{$auctionItems[counter].auction_id}" maxlength="8"  onfocus="{literal}$(this).keypress(function(event){
+                                                                    var keycode = (event.keyCode ? event.keyCode : event.which);
+                                                                    if(keycode == '13'){
+                                                                    var auc_id=this.id;
+                                                                    test_enter_for_bid(auc_id);
+                                                                    }
+                                                                    }); {/literal}" onblur="test_blur_for_bid(this.id)" style="width:40px;" /></div>
+                                                            <div class="CurrencyDecimal" style="font-size:15px;">.00</div>
+                                                        </div>
+                                                        <div class="left-side fll">
+														<input type="button" id="bid_bttn_{$auctionItems[counter].auction_id}" value="Bid Now" onclick="postBid({$auctionItems[counter].auction_id}, '{$auctionItems[counter].fk_user_id}');" class="bidnow-hammer-btn2" /></div>
+                                                    </div>
 												<div id="auction_data_{$auctionItems[counter].auction_id}" >
                                                     
                                                 </div>
