@@ -54,7 +54,7 @@
 		
 		<tr>
 			<td align="left" colspan="3" width="50%"><b style="font-size:17px;color:#CC0000;">Note:</b>&nbsp;<b style="font-size:13px;" id="note">{$invoiceData.note}</b></td>
-			<td align="right" width="20%"><img src="http://c4922595.r95.cf2.rackcdn.com/icon_edit.gif" align="absmiddle" alt="Update" title="Update" border="0" class="changeStatus" onclick="editNote()">&nbsp;&nbsp;<b>Total</b></td>
+			<td align="right" width="20%"><img src="https://d294w6g1afjpvs.cloudfront.net/images/icon_edit.gif" align="absmiddle" alt="Update" title="Update" border="0" class="changeStatus" onclick="editNote()">&nbsp;&nbsp;<b>Total</b></td>
 			<td align="left" id="new_total_amnt">${$invoiceData.total_amount}</td>
 			<input type="hidden" id="total_cost_amnt" value="{$invoiceData.total_amount}"/>
 		</tr>	
