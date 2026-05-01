@@ -116,7 +116,10 @@ if($mode == "buyer"){
         define ("PAGE_HEADER_TEXT", "Admin Access Customer Information");
         require_once INCLUDE_PATH."lib/adminCommon.php";
 
-		if(isset($_REQUEST['start_date']) && isset($_REQUEST['end_date']) && compareDates($_REQUEST['end_date'],$_REQUEST['start_date']) ){
+		$start_date_req = (($_REQUEST['start_date'] ?? '') !== '') ? $_REQUEST['start_date'] : date('m/d/Y', strtotime('-2 months'));
+		$end_date_req   = (($_REQUEST['end_date']   ?? '') !== '') ? $_REQUEST['end_date']   : date('m/d/Y');
+
+		if(compareDates($end_date_req, $start_date_req)){
 			$_SESSION['adminErr'] = "End Date must be greater than Start Date.";
 			header("location: ".PHP_SELF."?mode=seller");
 			exit;
@@ -126,27 +129,15 @@ if($mode == "buyer"){
 			$arrUser= $objUser->selectData(USER_TABLE,array("user_id"),array("username"=>$user_name));
 			$user_new_id=$arrUser[0]['user_id'] ?? '';
 			$smarty->assign("user_new_id", $user_new_id);
-			if(($_REQUEST['start_date'] ?? '')!='')
-			{
-				$start_date=date('Y-m-d',strtotime($_REQUEST['start_date']));
-			}else{
-				$start_date='';
-			}
-			if(($_REQUEST['end_date'] ?? '')!=''){
-				$end_date=date('Y-m-d',strtotime($_REQUEST['end_date']));
-			}else{
-				$end_date='';
-			}
+			$start_date = date('Y-m-d', strtotime($start_date_req));
+			$end_date   = date('Y-m-d', strtotime($end_date_req));
 			$invoiceObj = new Invoice() ;
 			$invoiceData = array();
 			$invoiceData = $invoiceObj->access_customer_information_master($user_new_id,$start_date,$end_date,$_REQUEST['invoice_type'] ?? '');
 
 			$smarty->assign('invoiceData', $invoiceData);
-			if(($_REQUEST['start_date'] ?? '')!='' && ($_REQUEST['end_date'] ?? '')!='')
-			 {
-				$smarty->assign('start_date_show', date('m/d/Y',strtotime($start_date)));
-				$smarty->assign('end_date_show', date('m/d/Y',strtotime($end_date)));
-			  }
+			$smarty->assign('start_date_show', date('m/d/Y', strtotime($start_date)));
+			$smarty->assign('end_date_show',   date('m/d/Y', strtotime($end_date)));
 			$smarty->assign("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
 			$smarty->assign("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 
