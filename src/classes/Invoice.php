@@ -1310,7 +1310,7 @@ class Invoice extends DBCommon{
 		}
 		if($start_date!='' && $end_date!=''){
 			$start_date = $start_date.' 00:00:00';
-			$end_date = $end_date.' 24:00:00';
+			$end_date = $end_date.' 23:59:59';
 			$sqlInvoice .= " AND i.invoice_generated_on >= '".$start_date."' AND i.invoice_generated_on <= '".$end_date."'";
 		}
 		if($invoice_type!=''){
