@@ -31,7 +31,7 @@ $(document).ready(function() {
                                 </div>
                         
                         <div class="left-midbg"> 
-               <div class="right-midbg" style="background-image:url(../images/contactbg.png); background-position:right top; background-repeat:no-repeat;">
+               <div class="right-midbg" style="background-image:url({$smarty.const.CLOUD_STATIC}contactbg.png); background-position:right top; background-repeat:no-repeat;">
                
                 <div class="mid-rept-bg">
                         <div class="inner-area-general" style="padding-top:0;">

@@ -197,13 +197,13 @@ function chkQuantity(id,quantity,inputId){
 							<div style="float:left; margin-top:10px;">
 							                       
 								<div >
-									<img src="../images/comodo_secure.png" >
+									<img src="{$smarty.const.CLOUD_STATIC}comodo_secure.png" >
 								</div>
 								
 		                     				
 							</div>
 							<div style="float:left; margin:10px 0 0 5px;">
-								<a href="https://www.paypal.com/us/verified/pal=info%40mygodzillashop%2ecom" target="_blank"><img src="../images/verification_seal.png" border="0" alt="Official PayPal Seal"></A>
+								<a href="https://www.paypal.com/us/verified/pal=info%40mygodzillashop%2ecom" target="_blank"><img src="{$smarty.const.CLOUD_STATIC}verification_seal.png" border="0" alt="Official PayPal Seal"></A>
 							</div>
 						</div>
 						<div style="clear:both;height: 0"></div>

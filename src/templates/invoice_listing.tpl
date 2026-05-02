@@ -83,7 +83,7 @@
                                                          {/if}</td>
                                             <td class="tar">${$invoiceData[counter].total_amount}</td>
                                             <td class="tac">{if $invoiceData[counter].is_paid=='0'}
-                                                Approved{else}Paid{/if} &nbsp;<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img src="../images/print.png" alt="Print" width="15" height="15" title="Print" onclick="fancy_images({$smarty.section.counter.index})"></a>
+                                                Approved{else}Paid{/if} &nbsp;<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img src="{$smarty.const.CLOUD_STATIC}print.png" alt="Print" width="15" height="15" title="Print" onclick="fancy_images({$smarty.section.counter.index})"></a>
                                             </td>
                                         </tr>
                                     {/section}

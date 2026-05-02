@@ -211,11 +211,11 @@
                                         {elseif $invoiceData[counter].is_paid == '1'}
                                         PAID &nbsp;<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="{$smarty.const.CLOUD_STATIC}print.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
                                         {elseif $invoiceData[counter].is_paid == '0' && $invoiceData[counter].is_cancelled == '0' && $invoiceData[counter].is_ordered == '0'}
-                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=order&invoice_id={$invoiceData[counter].invoice_id}"><img src="../images/pay_now.png" alt="Pay Now" width="67" height="17" title="Pay Now" /></a>
+                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=order&invoice_id={$invoiceData[counter].invoice_id}"><img src="{$smarty.const.CLOUD_STATIC}pay_now.png" alt="Pay Now" width="67" height="17" title="Pay Now" /></a>
                                         {elseif $invoiceData[counter].is_paid == '1' || $invoiceData[counter].is_cancelled == '1'}
                                         <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Print" title="Print" src="{$smarty.const.CLOUD_STATIC}print.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
                                         {elseif $invoiceData[counter].is_ordered == '1' && $invoiceData[counter].is_cancelled == '0'}
-										<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Phone Ordered" title="Phone Ordered" src="../images/success_order.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
+										<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Phone Ordered" title="Phone Ordered" src="{$smarty.const.CLOUD_STATIC}success_order.png" onclick="fancy_images({$smarty.section.counter.index})"></a>
 										{/if}
                                         </td>
                                     </tr>

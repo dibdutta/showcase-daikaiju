@@ -97,7 +97,7 @@
                                 <td width="220"><div style="width:80px; float:left; margin-top: 3px;">Start Date&nbsp;</div><input type="text" name="start_date" id="start_date" value="{$start_date}"  class="formlisting-txtfield required" /></td>
 								<td width="220"><div style="width:80px; float:left; margin-top: 3px;">End date&nbsp;</div><input type="text" 1 name="end_date" id="end_date"  value="{$end_date}"  class="formlisting-txtfield required" /></td>
 								<td><input type="submit" value="Search" class="submit-btn"> <input type="button" value="Reset" class="submit-btn" onclick="reset_date(this.form)" ></td>
-								<td width="30"><div style="width:30px; float:left; margin: 3px 0px 0px 13px;"><a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_report?mode=print_payment_details&start_date={$start_date}&end_date={$end_date}"><img src="../images/print.png" alt="Print" width="15" height="15" title="Print" onclick="fancy_images({$smarty.section.counter.index})"></a></div></td>
+								<td width="30"><div style="width:30px; float:left; margin: 3px 0px 0px 13px;"><a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_report?mode=print_payment_details&start_date={$start_date}&end_date={$end_date}"><img src="{$smarty.const.CLOUD_STATIC}print.png" alt="Print" width="15" height="15" title="Print" onclick="fancy_images({$smarty.section.counter.index})"></a></div></td>
 							     </tr>
                                 
                                 </table>
