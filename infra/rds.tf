@@ -10,7 +10,7 @@ resource "aws_db_subnet_group" "main" {
 }
 
 ################################################################################
-# RDS Parameter Group (MySQL 8.0 compatibility)
+# RDS Parameter Group (MySQL 8.0 — keep until upgrade is applied and verified)
 ################################################################################
 
 resource "aws_db_parameter_group" "mysql80" {
@@ -36,6 +36,33 @@ resource "aws_db_parameter_group" "mysql80" {
 }
 
 ################################################################################
+# RDS Parameter Group (MySQL 8.4 LTS)
+################################################################################
+
+resource "aws_db_parameter_group" "mysql84" {
+  name   = "${local.name_prefix}-mysql84"
+  family = "mysql8.4"
+
+  # Suppress ONLY_FULL_GROUP_BY — legacy queries rely on non-deterministic GROUP BY
+  parameter {
+    name  = "sql_mode"
+    value = "NO_ENGINE_SUBSTITUTION"
+  }
+
+  parameter {
+    name  = "character_set_server"
+    value = "utf8mb4"
+  }
+
+  parameter {
+    name  = "collation_server"
+    value = "utf8mb4_unicode_ci"
+  }
+
+  tags = { Name = "${local.name_prefix}-mysql84-params" }
+}
+
+################################################################################
 # Read DB Password from AWS Secrets Manager
 # Create this secret manually first:
 #   aws secretsmanager create-secret --name showcase/prod/db-password \
@@ -54,7 +81,7 @@ resource "aws_db_instance" "main" {
   identifier = "${local.name_prefix}-mysql"
 
   engine         = "mysql"
-  engine_version = "8.0"
+  engine_version = "8.4"
   instance_class = "db.t3.micro"
 
   allocated_storage     = 20
@@ -68,14 +95,14 @@ resource "aws_db_instance" "main" {
 
   db_subnet_group_name   = aws_db_subnet_group.main.name
   vpc_security_group_ids = [aws_security_group.rds.id]
-  parameter_group_name   = aws_db_parameter_group.mysql80.name
+  parameter_group_name   = aws_db_parameter_group.mysql84.name
 
   multi_az            = false
   publicly_accessible = true
   skip_final_snapshot = false
   final_snapshot_identifier = "${local.name_prefix}-final-snapshot"
 
-  backup_retention_period = 1
+  backup_retention_period = 7
   backup_window           = "03:00-04:00"
   maintenance_window      = "sun:04:00-sun:05:00"
 
