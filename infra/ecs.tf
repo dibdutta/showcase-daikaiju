@@ -318,7 +318,7 @@ resource "aws_ecs_service" "cloudbeaver" {
   name            = "${local.name_prefix}-cloudbeaver"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.cloudbeaver.arn
-  desired_count   = 1
+  desired_count   = 0
   launch_type     = "FARGATE"
 
   network_configuration {
