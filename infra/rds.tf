@@ -80,9 +80,10 @@ data "aws_secretsmanager_secret_version" "db_password" {
 resource "aws_db_instance" "main" {
   identifier = "${local.name_prefix}-mysql"
 
-  engine         = "mysql"
-  engine_version = "8.4"
-  instance_class = "db.t3.micro"
+  engine                    = "mysql"
+  engine_version            = "8.4"
+  allow_major_version_upgrade = true
+  instance_class            = "db.t3.micro"
 
   allocated_storage     = 20
   max_allocated_storage = 100
