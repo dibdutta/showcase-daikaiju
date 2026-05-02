@@ -1,9 +1,9 @@
 {include file="header.tpl"}
-<link href="https://d294w6g1afjpvs.cloudfront.net/css/jquery.countdown.css" rel="stylesheet" type="text/css"/>
-<link href="https://d294w6g1afjpvs.cloudfront.net/css/magnifier.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/jquery.countdown.js"></script>
-<script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/Event.js"></script>
-<script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/Magnifier.js"></script>
+<link href="{$actualPathJSCSS}css/jquery.countdown.css" rel="stylesheet" type="text/css"/>
+<link href="{$actualPathJSCSS}css/magnifier.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="{$actualPathJSCSS}js/jquery.countdown.js"></script>
+<script type="text/javascript" src="{$actualPathJSCSS}js/Event.js"></script>
+<script type="text/javascript" src="{$actualPathJSCSS}js/Magnifier.js"></script>
 
 {literal}
 <script type="text/javascript">

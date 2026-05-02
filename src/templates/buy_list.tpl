@@ -1,10 +1,10 @@
  {include file="header.tpl"}
-<link href="https://d294w6g1afjpvs.cloudfront.net/css/jquery.countdown.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/jquery.countdown.js"></script>
+<link href="{$actualPathJSCSS}css/jquery.countdown.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="{$actualPathJSCSS}js/jquery.countdown.js"></script>
 <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
 <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.19.0/babel.min.js"></script>
-<script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/axios.min.js"></script>
+<script type="text/javascript" src="{$actualPathJSCSS}js/axios.min.js"></script>
 
 	{literal}	
 <script type="text/javascript">

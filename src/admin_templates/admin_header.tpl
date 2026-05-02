@@ -8,7 +8,7 @@
 		<title>{$smarty.const.ADMIN_PAGE_TITLE}</title>
 		<link href="{$adminStaticPath}/adminStyle.css" rel="stylesheet">
         <link href="{$adminStaticPath}/dropdown_menu.css" rel="stylesheet">
-        <script src="https://d294w6g1afjpvs.cloudfront.net/js/jquery.min.js"></script>
+        <script src="{$actualPathJSCSS}js/jquery.min.js"></script>
         <script type="text/javascript" src="{$smarty.const.PAGE_LINK}/javascript/dropdown_menu.js"></script>
 		<script type="text/javascript" src="{$smarty.const.PAGE_LINK}/javascript/adminCommon.js.php"></script>
 	</head>

@@ -88,7 +88,7 @@ resource "aws_ecs_task_definition" "web" {
 
       environment = [
         { name = "APP_ENV", value = "production" },
-        { name = "CDN_STATIC_URL", value = "https://${aws_cloudfront_distribution.main.domain_name}" },
+        { name = "CDN_STATIC_URL", value = "https://www.${var.domain_name}" },
         { name = "S3_STATIC_BUCKET", value = aws_s3_bucket.static_assets.id },
         { name = "USPS_CONSUMER_KEY", value = var.usps_consumer_key },
         { name = "USPS_CONSUMER_SECRET", value = var.usps_consumer_secret }

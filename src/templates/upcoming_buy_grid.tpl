@@ -1,6 +1,6 @@
 {include file="header.tpl"}
-<link href="https://d294w6g1afjpvs.cloudfront.net/css/jquery.countdown.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/jquery.countdown.js"></script>
+<link href="{$actualPathJSCSS}css/jquery.countdown.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="{$actualPathJSCSS}js/jquery.countdown.js"></script>
 {literal}
 <script type="text/javascript">
         function clear_text(){

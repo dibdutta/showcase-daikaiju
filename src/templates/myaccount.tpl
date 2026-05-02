@@ -67,7 +67,7 @@
                                         </table>
                                         
                                       </div>
-                                        <div class="tar morediv"><a href="{$actualPath}/my_bid?mode=winning"><img src="https://d294w6g1afjpvs.cloudfront.net/images/more.jpg" border="0" /></a></div>
+                                        <div class="tar morediv"><a href="{$actualPath}/my_bid?mode=winning"><img src="{$smarty.const.CLOUD_STATIC}more.jpg" border="0" /></a></div>
                                         <div class="dashboard-main_shadow"></div>
                                     </div>
                                     <div class="dashblock">
@@ -100,7 +100,7 @@
                                             {/if}
                                         </table>
                                         </div>
-                                         <div class="tar morediv"><a href="{$actualPath}/offers"><img src="https://d294w6g1afjpvs.cloudfront.net/images/more.jpg" border="0" /></a></div>
+                                         <div class="tar morediv"><a href="{$actualPath}/offers"><img src="{$smarty.const.CLOUD_STATIC}more.jpg" border="0" /></a></div>
                                         <div class="dashboard-main_shadow"></div>
                                     </div>
                                     <div class="dashblock mr24">
@@ -132,7 +132,7 @@
                                             {/if}
                                         </table>
                                         </div>
-                                         <div class="tar morediv"><a href="{$actualPath}/myselling?mode=selling"><img src="https://d294w6g1afjpvs.cloudfront.net/images/more.jpg" border="0" /></a></div>
+                                         <div class="tar morediv"><a href="{$actualPath}/myselling?mode=selling"><img src="{$smarty.const.CLOUD_STATIC}more.jpg" border="0" /></a></div>
                                         <div class="dashboard-main_shadow"></div>
                                     </div>
 									{*
@@ -164,7 +164,7 @@
                                             {/if}
                                         </table>
                                         </div>
-                                         <div class="tar morediv"><a href="{$actualPath}/myselling?mode=sold"><img src="https://d294w6g1afjpvs.cloudfront.net/images/more.jpg" border="0" /></a></div>
+                                         <div class="tar morediv"><a href="{$actualPath}/myselling?mode=sold"><img src="{$smarty.const.CLOUD_STATIC}more.jpg" border="0" /></a></div>
                                         <div class="dashboard-main_shadow"></div>
                                     </div>
                                     *}

@@ -258,7 +258,7 @@ function shipsame(form){
 						<div  style="text-align:center;">
 						<div style="margin-top:10px;">
 								<div>
-								<a href="https://www.paypal.com/us/verified/pal=info%40mygodzillashop%2ecom" target="_blank"><img src="https://d294w6g1afjpvs.cloudfront.net/images/verification_seal.png" border="0" alt="Official PayPal Seal"></a>
+								<a href="https://www.paypal.com/us/verified/pal=info%40mygodzillashop%2ecom" target="_blank"><img src="{$smarty.const.CLOUD_STATIC}verification_seal.png" border="0" alt="Official PayPal Seal"></a>
 								</div>
 							</div>
 					</div>

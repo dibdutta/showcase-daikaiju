@@ -14,11 +14,11 @@ td,th{text-align:left}td pre,th{padding:5px}h1,h2,h3,h4,h5,h6{color:#4088b8;clea
 
 @font-face {
     font-family: 'open_sansbold';
-    src: url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-bold-webfont.eot');
-    src: url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-bold-webfont.eot?#iefix') format('embedded-opentype'),
+    src: url('/css/opensans-bold-webfont.eot');
+    src: url('/css/opensans-bold-webfont.eot?#iefix') format('embedded-opentype'),
          url('type/opensans-bold-webfont.woff') format('woff'),
-         url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-bold-webfont.ttf') format('truetype'),
-         url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-bold-webfont.svg#open_sansbold') format('svg');
+         url('/css/opensans-bold-webfont.ttf') format('truetype'),
+         url('/css/opensans-bold-webfont.svg#open_sansbold') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -29,11 +29,11 @@ td,th{text-align:left}td pre,th{padding:5px}h1,h2,h3,h4,h5,h6{color:#4088b8;clea
 
 @font-face {
     font-family: 'open_sanslight';
-    src: url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-light-webfont.eot');
-    src: url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-light-webfont.eot?#iefix') format('embedded-opentype'),
+    src: url('/css/opensans-light-webfont.eot');
+    src: url('/css/opensans-light-webfont.eot?#iefix') format('embedded-opentype'),
          url('type/opensans-light-webfont.woff') format('woff'),
-         url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-light-webfont.ttf') format('truetype'),
-         url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-light-webfont.svg#open_sanslight') format('svg');
+         url('/css/opensans-light-webfont.ttf') format('truetype'),
+         url('/css/opensans-light-webfont.svg#open_sanslight') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -44,11 +44,11 @@ td,th{text-align:left}td pre,th{padding:5px}h1,h2,h3,h4,h5,h6{color:#4088b8;clea
 
 @font-face {
     font-family: 'open_sansregular';
-    src: url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-regular-webfont.eot');
-    src: url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    src: url('/css/opensans-regular-webfont.eot');
+    src: url('/css/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
          url('type/opensans-regular-webfont.woff') format('woff'),
-         url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-regular-webfont.ttf') format('truetype'),
-         url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-regular-webfont.svg#open_sansregular') format('svg');
+         url('/css/opensans-regular-webfont.ttf') format('truetype'),
+         url('/css/opensans-regular-webfont.svg#open_sansregular') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -59,11 +59,11 @@ td,th{text-align:left}td pre,th{padding:5px}h1,h2,h3,h4,h5,h6{color:#4088b8;clea
 
 @font-face {
     font-family: 'open_sanssemibold';
-    src: url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-semibold-webfont.eot');
-    src: url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+    src: url('/css/opensans-semibold-webfont.eot');
+    src: url('/css/opensans-semibold-webfont.eot?#iefix') format('embedded-opentype'),
          url('type/opensans-semibold-webfont.woff') format('woff'),
-         url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-semibold-webfont.ttf') format('truetype'),
-         url('https://d294w6g1afjpvs.cloudfront.net/css/opensans-semibold-webfont.svg#open_sanssemibold') format('svg');
+         url('/css/opensans-semibold-webfont.ttf') format('truetype'),
+         url('/css/opensans-semibold-webfont.svg#open_sanssemibold') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -72,11 +72,11 @@ td,th{text-align:left}td pre,th{padding:5px}h1,h2,h3,h4,h5,h6{color:#4088b8;clea
 
 @font-face {
     font-family: 'latobold';
-    src: url('https://d294w6g1afjpvs.cloudfront.net/css/lato-bol-webfont.eot');
-    src: url('https://d294w6g1afjpvs.cloudfront.net/css/lato-bol-webfont.eot?#iefix') format('embedded-opentype'),
+    src: url('/css/lato-bol-webfont.eot');
+    src: url('/css/lato-bol-webfont.eot?#iefix') format('embedded-opentype'),
          url('type/lato-bol-webfont.woff') format('woff'),
-         url('https://d294w6g1afjpvs.cloudfront.net/css/lato-bol-webfont.ttf') format('truetype'),
-         url('https://d294w6g1afjpvs.cloudfront.net/css/lato-bol-webfont.svg#latobold') format('svg');
+         url('/css/lato-bol-webfont.ttf') format('truetype'),
+         url('/css/lato-bol-webfont.svg#latobold') format('svg');
     font-weight: normal;
     font-style: normal;
 
@@ -1439,16 +1439,16 @@ ul {
 /*-----------------General------------------- */
 
 #page-poster {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/bodybg.png) repeat-x #faf9f9;
+	background: url(/images/bodybg.png) repeat-x #faf9f9;
 	height: 95px;
 }
 
 /*19/12/11 Starts*/
 #page {
-	/*background: #fff url(https://d294w6g1afjpvs.cloudfront.net/images/header_bg.png) repeat-x bottom;*/
+	/*background: #fff url(/images/header_bg.png) repeat-x bottom;*/
 	height: 192px;
 	width: 100%;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/header_bg.jpg);
+	background-image: url(/images/header_bg.jpg);
 	background-repeat: repeat-x;
 	background-position: left top;
 }
@@ -1629,7 +1629,7 @@ ul {
 	/*width:833px;*/
 	padding: 0px;
 	margin: 0;
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/mainnavigation_bg.png) repeat-x left bottom;*/
+	/*background:url(/images/mainnavigation_bg.png) repeat-x left bottom;*/
 	height: 57px;
 	width: 800px;
 	font-family: 'latobold';
@@ -1678,7 +1678,7 @@ ul {
 	line-height: 45px;
 	font-size: 11px;
 	text-transform: uppercase;
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/topmenudivider.png) no-repeat left bottom;*/
+	/*background:url(/images/topmenudivider.png) no-repeat left bottom;*/
 
 }
 
@@ -1697,7 +1697,7 @@ ul {
 #header #mainnavigation ul.menu li a:hover {
 	color: #3a3a39;
 	display: block;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/topmenu_activestate.png);
+	background-image: url(/images/topmenu_activestate.png);
 	background-repeat: no-repeat;
 	background-position: center bottom;
 	height: 60px;
@@ -1729,7 +1729,7 @@ ul {
 /*19/04/12 Ends*/
 /*19/04/12 Starts*/
 #headerthemepanel #theme {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/theme.png) left top no-repeat;*/
+	/*background:url(/images/theme.png) left top no-repeat;*/
 	height: 203px;
 	width: 976px;
 	margin: 0 0 0 19px;
@@ -1788,7 +1788,7 @@ ul {
 
 #searchbar .search-left-bg,
 .mailchimpsignup .search-left-bg {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/search-left-bg.png) no-repeat top left;*/
+	/*background:url(/images/search-left-bg.png) no-repeat top left;*/
 	width: 5px;
 	height: 50px;
 	padding: 0px;
@@ -1800,7 +1800,7 @@ ul {
 
 
 #searchbar .search-midrept-bg {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/search-mid-bg.png) no-repeat top right;*/
+	/*background:url(/images/search-mid-bg.png) no-repeat top right;*/
 	height: 50px;
 	padding: 7px 0 0 0;
 	margin: 0px;
@@ -1809,7 +1809,7 @@ ul {
 }
 
 .mailchimpsignup .search-midrept-bg2 {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/search-mid-bg.png) no-repeat top right;*/
+	/*background:url(/images/search-mid-bg.png) no-repeat top right;*/
 	height: 50px;
 	padding: 8px 0 0 0px;
 	margin: 0px;
@@ -1837,7 +1837,7 @@ ul {
 	float: left;
 	font-size: 12px;
 	color: #abacad;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/srch-txtarea.png);
+	background-image: url(/images/srch-txtarea.png);
 	background-repeat: repeat-x;
 }
 
@@ -1849,12 +1849,12 @@ ul {
 	float: left;
 	cursor: pointer;
 	border: none;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/srch-btn.png);
+	background-image: url(/images/srch-btn.png);
 	background-repeat: no-repeat;
 }
 
 #searchbar .search-midrept-bg .refine-srchbtn-main {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/refine-srch-btn.png) no-repeat;
+	background: url(/images/refine-srch-btn.png) no-repeat;
 	width: 93px;
 	height: 37px;
 	padding: 0px;
@@ -1901,7 +1901,7 @@ right: 144px;*/
 
 
 #headerthemepanel #loginbtns {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/myaccnt-panel.png) repeat-x;*/
+	/*background:url(/images/myaccnt-panel.png) repeat-x;*/
 	height: 24px;
 	padding: 0px;
 	position: relative;
@@ -1912,7 +1912,7 @@ right: 144px;*/
 }
 
 #headerthemepanel #loginbtns .leftbg-log {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/login-leftbg.png) no-repeat;
+	background: url(/images/login-leftbg.png) no-repeat;
 	width: 5px;
 	height: 24px;
 	padding: 0px;
@@ -1921,7 +1921,7 @@ right: 144px;*/
 }
 
 #headerthemepanel #loginbtns .midbg-log {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/login-midbg.png) repeat-x;
+	background: url(/images/login-midbg.png) repeat-x;
 	height: 24px;
 	padding: 0px;
 	margin: 0px;
@@ -1929,7 +1929,7 @@ right: 144px;*/
 }
 
 #headerthemepanel #loginbtns .rightbg-log {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/login-rghtbg.png) no-repeat;
+	background: url(/images/login-rghtbg.png) no-repeat;
 	width: 4px;
 	height: 24px;
 	padding: 0px;
@@ -1954,13 +1954,13 @@ right: 144px;*/
 }
 
 #headerthemepanel #loginbtns ul.menu li.signin {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/signin-left.png) no-repeat left top;
+	background: url(/images/signin-left.png) no-repeat left top;
 	padding-left: 5px;
 	margin: 2px 0 0 0;
 	color: #1a7694;
 	display: inline;
 
-	/*	background:url(https://d294w6g1afjpvs.cloudfront.net/images/left-black-inner-tab.png) no-repeat left top;
+	/*	background:url(/images/left-black-inner-tab.png) no-repeat left top;
 	padding-left:15px;
 	margin:0px;
 	display:inline;
@@ -1970,7 +1970,7 @@ right: 144px;*/
 
 #headerthemepanel #loginbtns ul.menu li.signin span a {
 	color: #1a7694;
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/signin-rght.png) no-repeat right top;
+	background: url(/images/signin-rght.png) no-repeat right top;
 	padding: 2px 10px 4px 5px;
 	margin: 0px;
 	display: block;
@@ -1980,14 +1980,14 @@ right: 144px;*/
 	text-decoration:none;
 	padding:9px 14px 8px 0px;
 	margin:0px;
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/right-black-inner-tab.png) no-repeat right top;
+	background:url(/images/right-black-inner-tab.png) no-repeat right top;
 	display:block;
 	color:#FFFFFF;
 	line-height:10px;*/
 }
 
 #headerthemepanel #loginbtns ul.menu li.myaccnt {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/signin-left.png) no-repeat left top;
+	background: url(/images/signin-left.png) no-repeat left top;
 	padding-left: 5px;
 	margin: 2px 0 0 0;
 	color: #1a7694;
@@ -1996,7 +1996,7 @@ right: 144px;*/
 
 #headerthemepanel #loginbtns ul.menu li.myaccnt span a {
 	color: #1a7694;
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/signin-rght.png) no-repeat right top;
+	background: url(/images/signin-rght.png) no-repeat right top;
 	padding: 2px 10px 4px 5px;
 	margin: 0px;
 	display: block;
@@ -2033,7 +2033,7 @@ right: 144px;*/
 	margin: 0;
 	padding: 20px;
 	position: absolute;
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/loginbg.png) no-repeat;*/
+	/*background:url(/images/loginbg.png) no-repeat;*/
 	/* Gradient background */
 	background: #797979;
 	background: -moz-linear-gradient(top, #797979, #ababab);
@@ -2058,7 +2058,7 @@ right: 144px;*/
 
 
 #signup-login #login-panel .topbg-main {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/loginbox-topbg.png) no-repeat;
+	background: url(/images/loginbox-topbg.png) no-repeat;
 	width: 268px;
 	height: 4px;
 	padding: 0px 0px 0px 5px;
@@ -2067,7 +2067,7 @@ right: 144px;*/
 }
 
 #signup-login #login-panel .btombg-main {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/loginbox-btombg.png) no-repeat;
+	background: url(/images/loginbox-btombg.png) no-repeat;
 	width: 268px;
 	height: 26px;
 	padding: 0px 0px 0px 5px;
@@ -2078,7 +2078,7 @@ right: 144px;*/
 }
 
 #signup-login #login-panel .midrept-bg {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/loginbox-midreptbg.png) repeat-y;
+	background: url(/images/loginbox-midreptbg.png) repeat-y;
 	width: 268px;
 	padding: 0px 0px 0px 5px;
 	margin: 0px 0px 0px 5px;
@@ -2098,7 +2098,7 @@ right: 144px;*/
 }
 
 #signup-login #login-panel .midrept-bg .blue-cross-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/blue-cross-btn.png) no-repeat;
+	background: url(/images/blue-cross-btn.png) no-repeat;
 	width: 13px;
 	height: 13px;
 	padding: 0px;
@@ -2109,7 +2109,7 @@ right: 144px;*/
 }
 
 /*#headerthemepanel #theme #signup-login #login-panel .midrept-bg .loginarea .txtfield{
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/login-txtfield.png) no-repeat;
+	background:url(/images/login-txtfield.png) no-repeat;
 	width:208px;
 	height:25px;
 	padding:0px 0 0 10px;
@@ -2120,7 +2120,7 @@ right: 144px;*/
 }*/
 
 .txtfield {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/login-txtfield.png) no-repeat;
+	background: url(/images/login-txtfield.png) no-repeat;
 	width: 208px;
 
 	padding: 5px 0 5px 10px;
@@ -2162,7 +2162,7 @@ right: 144px;*/
 
 
 #headerthemepanel #theme #signup-login #login-panel .midrept-bg .loginarea .login-blue-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/login-blue-btn.png) no-repeat;
+	background: url(/images/login-blue-btn.png) no-repeat;
 	width: 78px;
 	height: 26px;
 	padding: 0px;
@@ -2183,7 +2183,7 @@ right: 144px;*/
 }
 
 #signup-login #login-panel .midrept-bg .loginarea .login-blue-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/login-blue-btn.png) no-repeat;
+	background: url(/images/login-blue-btn.png) no-repeat;
 	width: 78px;
 	height: 26px;
 	padding: 0px;
@@ -2240,7 +2240,7 @@ right: 144px;*/
 }
 
 #wrapper #auctionboxes #for-landing .black-left-crnr {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/landingfm-top-left.png) top left no-repeat;
+	background: url(/images/landingfm-top-left.png) top left no-repeat;
 	width: 14px;
 	height: 29px;
 	padding: 0px;
@@ -2249,7 +2249,7 @@ right: 144px;*/
 }
 
 #wrapper #auctionboxes #for-landing .black-midrept-landing {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/landingfm-top-mid.png) top left repeat-x;
+	background: url(/images/landingfm-top-mid.png) top left repeat-x;
 	height: 29px;
 	width: 495px;
 	padding: 0px;
@@ -2266,7 +2266,7 @@ right: 144px;*/
 }
 
 #wrapper #auctionboxes #for-landing .black-right-crnr {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/landingfm-top-right.png) top left no-repeat;
+	background: url(/images/landingfm-top-right.png) top left no-repeat;
 	width: 17px;
 	height: 29px;
 	padding: 0px;
@@ -2275,7 +2275,7 @@ right: 144px;*/
 }
 
 #wrapper #auctionboxes #for-landing .landing-mid {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/landingfm-midpage.png) repeat-y;
+	background: url(/images/landingfm-midpage.png) repeat-y;
 	width: 539px;
 	padding: 10px 0 0 0;
 	margin: 0px;
@@ -2331,7 +2331,7 @@ right: 144px;*/
 }
 
 .notification-area .noticeleft-bg {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/notice-left.png) no-repeat;*/
+	/*background:url(/images/notice-left.png) no-repeat;*/
 	width: 14px;
 	height: 37px;
 	padding: 0px;
@@ -2340,7 +2340,7 @@ right: 144px;*/
 }
 
 .notification-area .noticemidbg {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/notice-midbg.png) repeat-x;
+	background: url(/images/notice-midbg.png) repeat-x;
 	height: 26px;
 	/*padding:5px 0 0 24px;*/
 	padding: 5px 0 0 34px;
@@ -2355,7 +2355,7 @@ right: 144px;*/
 }
 
 .notification-area .noticerghtbg {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/notice-rightbg.png) no-repeat;
+	background: url(/images/notice-rightbg.png) no-repeat;
 	width: 8px;
 	height: 31px;
 	padding: 0px;
@@ -2371,7 +2371,7 @@ right: 144px;*/
 }
 
 .posterlanding-container .left-corner {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/landingfm-btom-left.png) no-repeat;
+	background: url(/images/landingfm-btom-left.png) no-repeat;
 	width: 14px;
 	height: 18px;
 	padding: 0px;
@@ -2380,7 +2380,7 @@ right: 144px;*/
 }
 
 .posterlanding-container .midrept-landing {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/landingfm-btom-mid.png) repeat-x;
+	background: url(/images/landingfm-btom-mid.png) repeat-x;
 	width: 495px;
 	height: 18px;
 	padding: 0px;
@@ -2389,7 +2389,7 @@ right: 144px;*/
 }
 
 .posterlanding-container .right-corner {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/landingfm-btom-right.png) no-repeat;
+	background: url(/images/landingfm-btom-right.png) no-repeat;
 	width: 17px;
 	height: 18px;
 	padding: 0px;
@@ -2407,7 +2407,7 @@ right: 144px;*/
 }
 
 .black-left-crnr {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/posterbox-top-left-crnr.png) top left no-repeat;
+	background: url(/images/posterbox-top-left-crnr.png) top left no-repeat;
 	width: 11px;
 	height: 29px;
 	padding: 0px;
@@ -2416,7 +2416,7 @@ right: 144px;*/
 }
 
 .black-midrept {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/posterbox-top-midrept.png) top left repeat-x;
+	background: url(/images/posterbox-top-midrept.png) top left repeat-x;
 	height: 29px;
 	width: 943px;
 	padding: 0px;
@@ -2433,7 +2433,7 @@ right: 144px;*/
 }
 
 .black-right-crnr {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/posterbox-top-right-crnr.png) top left no-repeat;
+	background: url(/images/posterbox-top-right-crnr.png) top left no-repeat;
 	width: 11px;
 	height: 29px;
 	padding: 0px;
@@ -2468,7 +2468,7 @@ right: 144px;*/
 }
 
 #wrapper #auctionboxes .auction-panels .grey-topbg-main .top-left-grey-crnr {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/grey-top-left-crnr.png) no-repeat;
+	background: url(/images/grey-top-left-crnr.png) no-repeat;
 	width: 12px;
 	height: 28px;
 	padding: 0px;
@@ -2477,7 +2477,7 @@ right: 144px;*/
 }
 
 #wrapper #auctionboxes .auction-panels .grey-topbg-main .top-midrept-grey {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/grey-top-mid-rept.png) repeat-x;
+	background: url(/images/grey-top-mid-rept.png) repeat-x;
 	width: 942px;
 	height: 28px;
 	padding: 0px;
@@ -2494,7 +2494,7 @@ right: 144px;*/
 }
 
 #wrapper #auctionboxes .auction-panels .grey-topbg-main .top-right-grey-crnr {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/grey-top-right-crnr.png) no-repeat;
+	background: url(/images/grey-top-right-crnr.png) no-repeat;
 	width: 11px;
 	height: 28px;
 	padding: 0px;
@@ -2508,7 +2508,7 @@ right: 144px;*/
 	border-right: 3px solid #C4C4C4;
 	background-color: #FFFFFF;
 	float: left;
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/wrap_bg.png) repeat-x left bottom;
+	background: url(/images/wrap_bg.png) repeat-x left bottom;
 }
 
 .poster-container {
@@ -2598,13 +2598,13 @@ right: 144px;*/
 }
 
 .shadowbottom {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/shadowbottom.png) no-repeat bottom left;
+	background: url(/images/shadowbottom.png) no-repeat bottom left;
 	padding-bottom: 14px;
 	position: relative;
 }
 
 /*.each-poster-box .track-btn{
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/track-btn.png) no-repeat;
+	background:url(/images/track-btn.png) no-repeat;
 	width:105px;
 	height:19px;
 	padding:0px;
@@ -2626,12 +2626,12 @@ right: 144px;*/
 	cursor: pointer;
 	border: none;
 	width: 79px;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/combine_btn.png);
+	background-image: url(/images/combine_btn.png);
 	background-repeat: no-repeat;
 }
 
 .combine-btn:hover {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/combine_btn_hover.png);
+	background-image: url(/images/combine_btn_hover.png);
 	background-repeat: no-repeat;
 }
 
@@ -2643,12 +2643,12 @@ right: 144px;*/
 	cursor: pointer;
 	border: none;
 	width: 129px;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/archive_btn.png);
+	background-image: url(/images/archive_btn.png);
 	background-repeat: no-repeat;
 }
 
 .archive-btn:hover {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/archive_btn_hover.png);
+	background-image: url(/images/archive_btn_hover.png);
 	background-repeat: no-repeat;
 }
 
@@ -2753,7 +2753,7 @@ right: 144px;*/
 
 
 .calc-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/track-btn.png) no-repeat;
+	background: url(/images/track-btn.png) no-repeat;
 	width: 105px;
 	height: 25px;
 	padding: 0px;
@@ -2771,7 +2771,7 @@ right: 144px;*/
 }
 
 /*.lower-poster-area .bidnow-btn{
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/bid-now-btn.png) no-repeat;
+	background:url(/images/bid-now-btn.png) no-repeat;
 	width:92px;
 	height:19px;
 	padding:0px;
@@ -2851,7 +2851,7 @@ right: 144px;*/
 	color: #fff;
 	font-weight: bold;
 	text-align: center;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/more-btn.png);
+	background-image: url(/images/more-btn.png);
 	background-repeat: no-repeat;
 }
 
@@ -2859,12 +2859,12 @@ right: 144px;*/
 	width: 71px;
 	height: 18px;
 	color: #d2ecfb;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/more-btn_hover.png);
+	background-image: url(/images/more-btn_hover.png);
 	background-repeat: no-repeat;
 }
 
 .lower-poster-area .more-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/more-btn.png) no-repeat;
+	background: url(/images/more-btn.png) no-repeat;
 	width: 88px;
 	height: 27px;
 	padding: 0px;
@@ -2879,7 +2879,7 @@ right: 144px;*/
 }
 
 .lower-poster-area .more-btn:hover {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/more-btn_hover.png) no-repeat;
+	background: url(/images/more-btn_hover.png) no-repeat;
 	color: #d2ecfb;
 }
 
@@ -2898,7 +2898,7 @@ right: 144px;*/
 }
 
 .poster-end-bg-container .left-corner {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/poster-lower-corner.png) no-repeat;
+	background: url(/images/poster-lower-corner.png) no-repeat;
 	width: 13px;
 	height: 19px;
 	padding: 0px;
@@ -2907,7 +2907,7 @@ right: 144px;*/
 }
 
 .poster-end-bg-container .midrept {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/poster-lower-midrept.png) repeat-x;
+	background: url(/images/poster-lower-midrept.png) repeat-x;
 	width: 939px;
 	height: 19px;
 	padding: 0px;
@@ -2916,7 +2916,7 @@ right: 144px;*/
 }
 
 .poster-end-bg-container .right-corner {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/poster-lower-corner-right.png) no-repeat;
+	background: url(/images/poster-lower-corner-right.png) no-repeat;
 	width: 13px;
 	height: 19px;
 	padding: 0px;
@@ -2951,7 +2951,7 @@ right: 144px;*/
 }
 
 #wrapper .aboutus-area .more-big-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/bigmore-btn.png) no-repeat;
+	background: url(/images/bigmore-btn.png) no-repeat;
 	width: 78px;
 	height: 25px;
 	padding: 0px;
@@ -2991,17 +2991,17 @@ right: 144px;*/
 
 
 .tabbed-inner-nav-left {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/tabbed-grey-bg_left.png) no-repeat left top;*/
+	/*background:url(/images/tabbed-grey-bg_left.png) no-repeat left top;*/
 	height: 26px;
 }
 
 #tabbed-inner-nav {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/tabbed-grey-bg_mid_tile.png) repeat-x left top;*/
+	/*background:url(/images/tabbed-grey-bg_mid_tile.png) repeat-x left top;*/
 	height: 26px;
 }
 
 .tabbed-inner-nav-right {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/tabbed-grey-bg_right.png) no-repeat right top;
+	background: url(/images/tabbed-grey-bg_right.png) no-repeat right top;
 	height: 26px;
 	width: 15px;
 	float: right;
@@ -3033,7 +3033,7 @@ right: 144px;*/
 	float: left;
 	font-size: 12px;
 	font-family: 'open_sanssemibold';
-	/*background-image:url(https://d294w6g1afjpvs.cloudfront.net/images/inner-tab-divider.png);
+	/*background-image:url(/images/inner-tab-divider.png);
 	background-repeat:no-repeat;
 	background-position:0px 10px;*/
 }
@@ -3067,7 +3067,7 @@ right: 144px;*/
 	text-decoration: none;
 	/*padding:5px 15px 4px 0;
 	margin:0px;
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/right-black-inner-tab.png) no-repeat right top;*/
+	background:url(/images/right-black-inner-tab.png) no-repeat right top;*/
 	display: block;
 	color: #FFFFFF;
 }
@@ -3108,7 +3108,7 @@ right: 144px;*/
 }*/
 
 /*#inner-left-container .innerpage-container-main .top-main-bg{
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/inner-page-top-bg.png) no-repeat;
+	background:url(/images/inner-page-top-bg.png) no-repeat;
 	width:798px;
 	height:15px;
 	padding:0px;
@@ -3308,7 +3308,7 @@ span.red-star {
 	margin: 0px;
 	float: left;
 	background: #f5f5f5;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/inner-grey-smallbg.png);
+	background-image: url(/images/inner-grey-smallbg.png);
 	background-repeat: repeat-x;
 	background-position: top;
 	height: 25px;
@@ -3333,7 +3333,7 @@ span.red-star {
 }
 
 .del-sectd-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/del-sel-btn.png) no-repeat;
+	background: url(/images/del-sel-btn.png) no-repeat;
 	width: 110px;
 	height: 20px;
 	padding: 0px 0 3px 0;
@@ -3404,18 +3404,18 @@ div.list-err {
 	font-family: 'open_sanssemibold';
 	color: #FFFFFF;
 	text-transform: uppercase;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/submit-btn.png);
+	background-image: url(/images/submit-btn.png);
 	background-repeat: no-repeat;
 }
 
 .submit-btn:hover {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/submit-btn_m.png);
+	background-image: url(/images/submit-btn_m.png);
 	background-repeat: no-repeat;
 }
 
 
 .submit-btn2 {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/submit-btn_large.png) no-repeat;
+	background: url(/images/submit-btn_large.png) no-repeat;
 	width: 190px;
 	height: 28px;
 	padding: 0px 0 3px 0;
@@ -3433,7 +3433,7 @@ div.list-err {
 }
 
 .btn-main-submit-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/btn-grey.png) no-repeat;
+	background: url(/images/btn-grey.png) no-repeat;
 	width: 100px;
 	height: 28px;
 	padding: 0px 0 3px 0;
@@ -3585,7 +3585,7 @@ text-decoration:none;
 	display:inline;
 	padding: 0px 14px 0 0;
 	text-decoration: none;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+	background-image: url(/images/list-grid-view.png);
 	background-repeat: no-repeat;
 	background-position: 0px -38px;
 	height: 14px;
@@ -3596,7 +3596,7 @@ text-decoration:none;
 	display: inline;
 	padding: 0px 14px 0 0;
 	text-decoration: none;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+	background-image: url(/images/list-grid-view.png);
 	background-repeat: no-repeat;
 	background-position: 0px -38px;
 	height: 14px;
@@ -3607,7 +3607,7 @@ text-decoration:none;
 	display: inline;
 	text-decoration: none;
 	padding: 0px 14px 0 0;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+	background-image: url(/images/list-grid-view.png);
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	height: 14px;
@@ -3619,7 +3619,7 @@ text-decoration:none;
 	display: inline;
 	text-decoration: none;
 	padding: 0px 14px 0 0;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+	background-image: url(/images/list-grid-view.png);
 	background-repeat: no-repeat;
 	background-position: 0px 2px;
 	height: 14px;
@@ -3630,7 +3630,7 @@ text-decoration:none;
 	display: inline;
 	padding: 0px 14px 0 0;
 	text-decoration: none;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+	background-image: url(/images/list-grid-view.png);
 	background-repeat: no-repeat;
 	background-position: 0px -38px;
 	height: 14px;
@@ -3641,7 +3641,7 @@ text-decoration:none;
 	display: inline;
 	text-decoration: none;
 	padding: 0px 14px 0 0;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+	background-image: url(/images/list-grid-view.png);
 	background-repeat: no-repeat;
 	background-position: 0px 2px;
 	height: 14px;
@@ -3659,7 +3659,7 @@ text-decoration:none;
 		padding: 4px 2px 0 0;
 		margin-right: 2px;
 		text-decoration: none;
-		background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+		background-image: url(/images/list-grid-view.png);
 		background-repeat: no-repeat;
 		background-position: 0px -37px;
 		height: 14px;
@@ -3678,7 +3678,7 @@ text-decoration:none;
 		text-decoration: none;
 		padding: 4px 2px 0 0;
 		margin-right: 2px;
-		background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+		background-image: url(/images/list-grid-view.png);
 		background-repeat: no-repeat;
 		background-position: 0px 3px;
 		height: 14px;
@@ -3691,7 +3691,7 @@ text-decoration:none;
 		text-decoration: none;
 		padding: 4px 2px 0 0;
 		margin-right: 2px;
-		background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+		background-image: url(/images/list-grid-view.png);
 		background-repeat: no-repeat;
 		background-position: 0px 3px;
 		height: 14px;
@@ -3705,7 +3705,7 @@ text-decoration:none;
 		text-decoration: none;
 		padding: 0px 14px 0 0;
 		margin-right: 4px;
-		background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+		background-image: url(/images/list-grid-view.png);
 		background-repeat: no-repeat;
 		background-position: 0px 2px;
 		height: 14px;
@@ -3717,7 +3717,7 @@ text-decoration:none;
 		padding: 0px 14px 0 0;
 		margin-right: 4px;
 		text-decoration: none;
-		background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+		background-image: url(/images/list-grid-view.png);
 		background-repeat: no-repeat;
 		background-position: 0px -38px;
 		height: 14px;
@@ -3729,7 +3729,7 @@ text-decoration:none;
 		text-decoration: none;
 		padding: 0px 14px 0 0;
 		margin-right: 4px;
-		background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+		background-image: url(/images/list-grid-view.png);
 		background-repeat: no-repeat;
 		background-position: 0px 2px;
 		height: 14px;
@@ -3745,7 +3745,7 @@ text-decoration:none;
 	display: inline;
 	padding: 0px 14px 0 0;
 	text-decoration: none;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+	background-image: url(/images/list-grid-view.png);
 	background-repeat: no-repeat;
 	background-position: 0px -58px;
 	height: 14px;
@@ -3757,7 +3757,7 @@ text-decoration:none;
 	display: inline;
 	padding: 0px 14px 0 0;
 	text-decoration: none;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+	background-image: url(/images/list-grid-view.png);
 	background-repeat: no-repeat;
 	background-position: 0px -18px;
 	height: 14px;
@@ -3768,7 +3768,7 @@ text-decoration:none;
 	display: inline;
 	padding: 0px 14px 0 0;
 	text-decoration: none;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+	background-image: url(/images/list-grid-view.png);
 	background-repeat: no-repeat;
 	background-position: 0px -18px;
 	height: 14px;
@@ -3779,7 +3779,7 @@ text-decoration:none;
 	display: inline;
 	padding: 0px 14px 0 0;
 	text-decoration: none;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+	background-image: url(/images/list-grid-view.png);
 	background-repeat: no-repeat;
 	background-position: 0px -20px;
 	height: 14px;
@@ -3795,7 +3795,7 @@ text-decoration:none;
 		padding: 0px 14px 0 0;
 		margin-left: 2px;
 		text-decoration: none;
-		background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+		background-image: url(/images/list-grid-view.png);
 		background-repeat: no-repeat;
 		background-position: 0px -58px;
 		height: 14px;
@@ -3808,7 +3808,7 @@ text-decoration:none;
 		padding: 0px 14px 0 0;
 		margin-left: 2px;
 		text-decoration: none;
-		background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+		background-image: url(/images/list-grid-view.png);
 		background-repeat: no-repeat;
 		background-position: 0px -18px;
 		height: 14px;
@@ -3820,7 +3820,7 @@ text-decoration:none;
 		padding: 0px 14px 0 0;
 		margin-left: 2px;
 		text-decoration: none;
-		background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+		background-image: url(/images/list-grid-view.png);
 		background-repeat: no-repeat;
 		background-position: 0px -18px;
 		height: 14px;
@@ -3832,7 +3832,7 @@ text-decoration:none;
 		padding: 0px 14px 0 0;
 		margin-left: 2px;
 		text-decoration: none;
-		background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/list-grid-view.png);
+		background-image: url(/images/list-grid-view.png);
 		background-repeat: no-repeat;
 		background-position: 0px -20px;
 		height: 14px;
@@ -4032,7 +4032,7 @@ text-decoration:none;
 	cursor: pointer;
 	border: none;
 	background-color: transparent;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/btn_selectall.png);
+	background-image: url(/images/btn_selectall.png);
 	background-repeat: no-repeat;
 	background-position: center center;
 }
@@ -4045,7 +4045,7 @@ text-decoration:none;
 	cursor: pointer;
 	border: none;
 	padding: 0 40px 0 15px;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/btn_deselectall.png);
+	background-image: url(/images/btn_deselectall.png);
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-color: transparent;
@@ -4061,7 +4061,7 @@ text-decoration:none;
 	cursor: pointer;
 	border: none;
 	background-color: transparent;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/btn_watchselected.png);
+	background-image: url(/images/btn_watchselected.png);
 	background-position: center center;
 	background-repeat: no-repeat;
 }
@@ -4075,7 +4075,7 @@ text-decoration:none;
 	cursor: pointer;
 	border: none;
 	background-color: transparent;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/btn_archiveselect.png);
+	background-image: url(/images/btn_archiveselect.png);
 	background-position: center 5px;
 	background-repeat: no-repeat;
 }
@@ -4084,7 +4084,7 @@ text-decoration:none;
 
 
 .light-grey-bg-inner .check-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/slct-all-btn.png) no-repeat;
+	background: url(/images/slct-all-btn.png) no-repeat;
 	width: 101px;
 	height: 27px;
 	padding: 0 40px 0 15px;
@@ -4154,7 +4154,7 @@ text-decoration:none;
 .weeklyevent {
 	/*border: 1px dashed #999999;*/
 	padding: 5px 10px 5px 25px;
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/eventicon.png) no-repeat scroll center left transparent;
+	background: url(/images/eventicon.png) no-repeat scroll center left transparent;
 	margin-bottom: 30px;
 }
 
@@ -4217,7 +4217,7 @@ text-decoration:none;
 }
 
 /*.list-view-main .list-poster-box .poster-area-list .track-btn{
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/track-btn.png) no-repeat;
+	background:url(/images/track-btn.png) no-repeat;
 	width:105px;
 	height:19px;
 	padding:0px;
@@ -4311,7 +4311,7 @@ text-decoration:none;
 	font-weight: bold;
 	background-attachment: scroll;
 	background-color: transparent;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/place-offers-btn-m.png);
+	background-image: url(/images/place-offers-btn-m.png);
 	background-repeat: no-repeat;
 	background-position: 0 0;
 }
@@ -4394,7 +4394,7 @@ text-decoration:none;
 }
 
 /*.list-view-main .list-bid-det .bidnow-btn{
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/bid-now-btn.png) no-repeat;
+	background:url(/images/bid-now-btn.png) no-repeat;
 	width:92px;
 	height:19px;
 	padding:0px;
@@ -4504,7 +4504,7 @@ text-decoration:none;
 }
 
 .timer-left {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/timer-left-bg.png) no-repeat;
+	background: url(/images/timer-left-bg.png) no-repeat;
 	width: 9px;
 	height: 44px;
 	padding: 0px;
@@ -4513,7 +4513,7 @@ text-decoration:none;
 }
 
 .timer-right {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/timer-right-bg.png) no-repeat;
+	background: url(/images/timer-right-bg.png) no-repeat;
 	width: 9px;
 	height: 44px;
 	padding: 0px;
@@ -4529,7 +4529,7 @@ text-decoration:none;
 	float: left;
 	height: 40px;
 	background-color: #000;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/timer-midrept-bg.png);
+	background-image: url(/images/timer-midrept-bg.png);
 	background-repeat: repeat-x;
 	background-position: left top;
 	color: #fff;
@@ -4729,7 +4729,7 @@ text-decoration:none;
 }
 
 /*.poster-area .inner-cntnt-each-poster .left-side .track-btn{
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/track-btn.png) no-repeat;
+	background:url(/images/track-btn.png) no-repeat;
 	width:105px;
 	height:19px;
 	padding:0px;
@@ -4768,7 +4768,7 @@ text-decoration:none;
 }*/
 
 /*.poster-area .inner-cntnt-each-poster .right-side .bidnow-btn{
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/bid-now-btn.png) no-repeat;
+	background:url(/images/bid-now-btn.png) no-repeat;
 	width:92px;
 	height:19px;
 	padding:0px;
@@ -4782,7 +4782,7 @@ text-decoration:none;
 }*/
 
 #inner-left-container .innerpage-container-main .btom-main-bg {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/inner-page-btom-bg.png) no-repeat;
+	background: url(/images/inner-page-btom-bg.png) no-repeat;
 	width: 798px;
 	height: 20px;
 	padding: 0px;
@@ -4814,7 +4814,7 @@ text-decoration:none;
 }
 
 .inner-right-container #member-area .black-left-bg {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/member-area-leftbg.png) no-repeat;
+	background: url(/images/member-area-leftbg.png) no-repeat;
 	width: 11px;
 	height: 114px;
 	padding: 0px;
@@ -4866,7 +4866,7 @@ text-decoration:none;
 }
 
 .inner-right-container #member-area .black-midrept-bg .member-box .left-round-crnr {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/rounded-profile.png) no-repeat;
+	background: url(/images/rounded-profile.png) no-repeat;
 	width: 10px;
 	height: 33px;
 	padding: 0px;
@@ -4875,7 +4875,7 @@ text-decoration:none;
 }
 
 .inner-right-container #member-area .black-midrept-bg .member-box .right-round-crnr {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/right-rounded-crnr.png) no-repeat;
+	background: url(/images/right-rounded-crnr.png) no-repeat;
 	width: 10px;
 	height: 33px;
 	padding: 0px;
@@ -4920,7 +4920,7 @@ text-decoration:none;
 }
 
 .inner-right-container #member-area .black-right-bg {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/member-area-right-bg.png) no-repeat;
+	background: url(/images/member-area-right-bg.png) no-repeat;
 	width: 10px;
 	height: 114px;
 	padding: 0px;
@@ -4944,7 +4944,7 @@ text-decoration:none;
 }*/
 
 .inner-right-container .grey-collapsable-container .dark-grey-topbg .left-bg-main {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/dark-grey-left-bg.png) no-repeat;
+	background: url(/images/dark-grey-left-bg.png) no-repeat;
 	width: 6px;
 	height: 24px;
 	padding: 0px;
@@ -4953,7 +4953,7 @@ text-decoration:none;
 }
 
 /*.inner-right-container .grey-collapsable-container .dark-grey-topbg .midrept-bg-main{
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/dark-grey-midrept-bg.png) repeat-x;
+	background:url(/images/dark-grey-midrept-bg.png) repeat-x;
 	width:155px;
 	height:20px;
 	padding:4px 0 0 7PX;
@@ -4981,7 +4981,7 @@ text-decoration:none;
 
 
 .inner-right-container .grey-collapsable-container .dark-grey-topbg .right-bg-main {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/dark-grey-right-bg.png) no-repeat;
+	background: url(/images/dark-grey-right-bg.png) no-repeat;
 	width: 6px;
 	height: 24px;
 	padding: 0px;
@@ -5074,7 +5074,7 @@ text-decoration:none;
 }
 
 /*.inner-right-container .grey-collapsable-container .rounded-bg{
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/grey-collapse-round-btm.png) no-repeat;
+	background:url(/images/grey-collapse-round-btm.png) no-repeat;
 	width:174px;
 	padding:0px;
 	margin:0px;
@@ -5094,7 +5094,7 @@ text-decoration:none;
 }
 
 .inner-right-container .lower-side-container .top-bg-main .left-bg-main {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/left-lite-grey-bg.png) no-repeat;
+	background: url(/images/left-lite-grey-bg.png) no-repeat;
 	width: 5px;
 	height: 24px;
 	padding: 0px;
@@ -5103,7 +5103,7 @@ text-decoration:none;
 }
 
 .inner-right-container .lower-side-container .top-bg-main .midrept-bg-main {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/midrept-lite-grey-bg.png) repeat-x;
+	background: url(/images/midrept-lite-grey-bg.png) repeat-x;
 	height: 20px;
 	width: 156px;
 	padding: 4px 0 0 9px;
@@ -5115,7 +5115,7 @@ text-decoration:none;
 }
 
 .inner-right-container .lower-side-container .top-bg-main .right-bg-main {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/right-lite-grey-bg.png) no-repeat;
+	background: url(/images/right-lite-grey-bg.png) no-repeat;
 	width: 4px;
 	height: 24px;
 	padding: 0px;
@@ -5170,7 +5170,7 @@ text-decoration:none;
 }
 
 .lower-side-container .rounded-bg {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/grey-collapse-round-btm.png) no-repeat;
+	background: url(/images/grey-collapse-round-btm.png) no-repeat;
 	width: 174px;
 	padding: 0px;
 	margin: 0px;
@@ -5375,7 +5375,7 @@ div.login-err {
 	font-family: 'open_sanssemibold';
 	padding: 18px 20px 7px 75px;
 	margin: 0px;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/info-user-iconbg.png);
+	background-image: url(/images/info-user-iconbg.png);
 	background-repeat: no-repeat;
 	background-position: left top;
 }
@@ -5740,7 +5740,7 @@ width: 120px;*/
 
 
 .place-offers-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/place-offers-btn.png) no-repeat;
+	background: url(/images/place-offers-btn.png) no-repeat;
 	width: 114px;
 	height: 20px;
 	padding: 0px;
@@ -5757,7 +5757,7 @@ width: 120px;*/
 
 
 .greybig-btn {
-	background: url("https://d294w6g1afjpvs.cloudfront.net/images/big-grey-btn.png") no-repeat scroll 0 0 transparent;
+	background: url("/images/big-grey-btn.png") no-repeat scroll 0 0 transparent;
 	border: medium none;
 	color: #FFFFFF;
 	cursor: pointer;
@@ -5779,13 +5779,13 @@ width: 120px;*/
 	margin: 0;
 	padding: 0;
 	width: 114px;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/cancel-btn.png);
+	background-image: url(/images/cancel-btn.png);
 	background-repeat: no-repeat;
 	background-position: 0 0;
 }
 
 .cancel-btn:hover {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/cancel-btn-m.png);
+	background-image: url(/images/cancel-btn-m.png);
 	background-repeat: no-repeat;
 	background-position: 0 0;
 }
@@ -5867,7 +5867,7 @@ width: 120px;*/
 /*************************css added on 26th aug 2011***************************************/
 
 .myaccount-main-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/my-accnt-main.png) no-repeat;
+	background: url(/images/my-accnt-main.png) no-repeat;
 	width: 110px;
 	height: 28px;
 	padding: 0px;
@@ -5892,7 +5892,7 @@ width: 120px;*/
 }
 
 .logout-main-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/logout-btn-main.png) no-repeat;
+	background: url(/images/logout-btn-main.png) no-repeat;
 	width: 30px;
 	height: 28px;
 	padding: 0px;
@@ -5991,7 +5991,7 @@ width: 120px;*/
 
 .signin-main-btn,
 .joinus-main-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/registerandsignin.png) no-repeat;
+	background: url(/images/registerandsignin.png) no-repeat;
 	color: #fff;
 	width: 94px;
 	height: 34px;
@@ -6045,7 +6045,7 @@ width: 120px;*/
 }
 
 .proxybid-add-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/proxy-add-btn.png) no-repeat;
+	background: url(/images/proxy-add-btn.png) no-repeat;
 	width: 50px;
 	height: 19px;
 	padding: 0px 5px 2px 5px;
@@ -6059,7 +6059,7 @@ width: 120px;*/
 }
 
 .proxybid-edit-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/proxy-edit-btn.png) no-repeat;
+	background: url(/images/proxy-edit-btn.png) no-repeat;
 	width: 50px;
 	height: 19px;
 	padding: 0px 5px 0 0;
@@ -6072,7 +6072,7 @@ width: 120px;*/
 }
 
 .proxybid-del-btn {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/proxy-del-btn.png) no-repeat;
+	background: url(/images/proxy-del-btn.png) no-repeat;
 	width: 71px;
 	height: 20px;
 	padding: 0px 5px 0 0;
@@ -6154,7 +6154,7 @@ label.time-txt {
 }
 
 .soldSearchblock .leftSearchbg {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/inner-searchbar-left.png) top left no-repeat;
+	background: url(/images/inner-searchbar-left.png) top left no-repeat;
 	width: 14px;
 	height: 26px;
 	padding: 0px;
@@ -6213,7 +6213,7 @@ label.time-txt {
 	margin: 0px;
 	float: left;
 	cursor: pointer;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/search_btn.png);
+	background-image: url(/images/search_btn.png);
 	background-repeat: no-repeat;
 	background-position: 10px 3px;
 	background-color: #FFF;
@@ -6353,7 +6353,7 @@ body.sidebars #squeeze {
 	padding: 10px 0 10px 0px;
 	margin: 0;
 	width: auto;
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/soidemenu_greygradient_bg.png) repeat-x top;
+	background: url(/images/soidemenu_greygradient_bg.png) repeat-x top;
 }
 
 /*css changes made on 31st oct 2011*/
@@ -6369,7 +6369,7 @@ body.sidebars #squeeze {
 
 /*css changes made on 31st oct 2011*/
 .inner-right-container .grey-collapsable-container .rounded-bg {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/grey-collapse-round-btm.png) no-repeat;
+	background: url(/images/grey-collapse-round-btm.png) no-repeat;
 	/*width:174px;*/
 	width: 139px;
 	padding: 0px;
@@ -6397,7 +6397,7 @@ body.sidebars #squeeze {
 /*css changes made on 31 oct 2011*/
 
 .inner-right-container .grey-collapsable-container .dark-grey-topbg .midrept-bg-main {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/dark-grey-midrept-bg.png) repeat-x;
+	background: url(/images/dark-grey-midrept-bg.png) repeat-x;
 	/*width:155px;*/
 	width: 120px;
 	height: 20px;
@@ -6428,7 +6428,7 @@ body.sidebars #squeeze {
 }
 
 #inner-left-container .innerpage-container-main .top-left {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/inner-page-top-leftbg.png) top left no-repeat;*/
+	/*background:url(/images/inner-page-top-leftbg.png) top left no-repeat;*/
 	border-top: 3px solid #bd1a21;
 	/*height: 10px;
 	margin-right: 22px;*/
@@ -6436,13 +6436,13 @@ body.sidebars #squeeze {
 }
 
 #inner-left-container .innerpage-container-main .top-mid {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/inner-page-top-mid-repeat-bg.png) top left repeat-x;
+	background: url(/images/inner-page-top-mid-repeat-bg.png) top left repeat-x;
 }
 
 #inner-left-container .innerpage-container-main .top-right {
 	float: right;
 	margin-top: -15px;
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/inner-page-top-rightbg.png) no-repeat right top;
+	background: url(/images/inner-page-top-rightbg.png) no-repeat right top;
 	height: 15px;
 	width: 22px;
 	font-size: 2px;
@@ -6472,7 +6472,7 @@ body.sidebars #squeeze {
 
 /* Used below fixed price item nav panel */
 #inner-left-container .innerpage-container-main .mid-rept-bg {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/inner-page-midrept-bg.png) repeat-y;*/
+	/*background:url(/images/inner-page-midrept-bg.png) repeat-y;*/
 	/*width:798px;*/
 	padding: 0px;
 	margin: 0px;
@@ -6480,13 +6480,13 @@ body.sidebars #squeeze {
 }
 
 /*#inner-left-container .innerpage-container-main .btom-left{
-	background:url(https://d294w6g1afjpvs.cloudfront.net/images/inner-page-btom-leftnewbg.png) left no-repeat;
+	background:url(/images/inner-page-btom-leftnewbg.png) left no-repeat;
 	height:20px;
 	margin-right:21px;
 }*/
 
 #inner-left-container .innerpage-container-main .btm-mid {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/inner-page-btom-midtilebg.png);
+	background-image: url(/images/inner-page-btom-midtilebg.png);
 	background-repeat: no-repeat;
 	background-position: center top;
 	height: 20px;
@@ -6495,7 +6495,7 @@ body.sidebars #squeeze {
 /*#inner-left-container .innerpage-container-main .btom-right {
 float: right;
 margin-top: -20px;
-background-image:url(https://d294w6g1afjpvs.cloudfront.net/images/inner-page-btom-rightbg.png);
+background-image:url(/images/inner-page-btom-rightbg.png);
 height: 20px; 
 width: 21px;
 font-size: 2px;
@@ -6526,7 +6526,7 @@ font-size: 2px;
 	padding: 16px;
 	margin: 0;
 	background-color: #FFF;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/inner-grey-smallbg.png);
+	background-image: url(/images/inner-grey-smallbg.png);
 	background-repeat: repeat-x;
 	background-position: left bottom;
 }
@@ -6579,7 +6579,7 @@ font-size: 2px;
 }
 
 .inner-right-container #member-area .black-midrept-bg {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/member-area-midrept-bg.png) repeat-x;
+	background: url(/images/member-area-midrept-bg.png) repeat-x;
 	width: 118px;
 	height: 114px;
 	padding: 0px;
@@ -6605,7 +6605,7 @@ font-size: 2px;
 
 
 #inner-left-container .innerpage-container-main .black-right-crnr {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/posterbox-top-right-crnr.png) top right no-repeat;
+	background: url(/images/posterbox-top-right-crnr.png) top right no-repeat;
 	float: right;
 	margin-top: -29px;
 	height: 29px;
@@ -6615,14 +6615,14 @@ font-size: 2px;
 }
 
 #inner-left-container .innerpage-container-main .black-midrept {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/black-round-left.png) top left no-repeat;*/
+	/*background:url(/images/black-round-left.png) top left no-repeat;*/
 	height: 29px;
 	margin-right: 11px;
 	margin-left: 4px;
 }
 
 .innerpage-container-main .black-left-crnr {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/black-round-left_new.png) top left no-repeat;
+	background: url(/images/black-round-left_new.png) top left no-repeat;
 	position: absolute;
 	left: 4px;
 	top: 0;
@@ -6707,7 +6707,7 @@ font-size: 2px;
 }
 
 .home_fi h1 {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/masthead_highlighter.png);
+	background-image: url(/images/masthead_highlighter.png);
 	background-repeat: no-repeat;
 	background-position: left bottom;
 	font-size: 25px;
@@ -6717,7 +6717,7 @@ font-size: 2px;
 }
 
 .home_fi h2 {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/masthead_highlighter.png);
+	background-image: url(/images/masthead_highlighter.png);
 	background-repeat: no-repeat;
 	background-position: left bottom;
 	font-size: 16px;
@@ -6727,7 +6727,7 @@ font-size: 2px;
 }
 
 .seeall {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/seeall_bg.png);
+	background-image: url(/images/seeall_bg.png);
 	background-repeat: repeat;
 	text-align: right;
 	margin-top: 30px;
@@ -6740,7 +6740,7 @@ font-size: 2px;
 }
 
 .dashboard-main h1 {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/masthead_highlighter.png);
+	background-image: url(/images/masthead_highlighter.png);
 	background-repeat: no-repeat;
 	background-position: left bottom;
 	font-size: 25px;
@@ -6765,7 +6765,7 @@ font-size: 2px;
 
 
 .dashboard-main2 h2 {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/masthead_highlighter.png);
+	background-image: url(/images/masthead_highlighter.png);
 	background-repeat: no-repeat;
 	background-position: -77px bottom;
 	font-size: 15px;
@@ -6793,7 +6793,7 @@ font-size: 2px;
 
 
 .dashboard-main_shadow {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/shadowbottom2.png);
+	background-image: url(/images/shadowbottom2.png);
 	background-repeat: no-repeat;
 	background-position: left bottom;
 	height: 14px;
@@ -6987,14 +6987,14 @@ font-size: 2px;
 }
 
 .ButtondesignLeft {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/greybuttonleft.png) no-repeat left top;
+	background: url(/images/greybuttonleft.png) no-repeat left top;
 	width: 9px;
 	height: 22px;
 	float: left;
 }
 
 .ButtondesignMiddle {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/greybuttontile.png) repeat-x left top;
+	background: url(/images/greybuttontile.png) repeat-x left top;
 	height: 22px;
 	float: left;
 }
@@ -7011,7 +7011,7 @@ font-size: 2px;
 
 /*---Move to Weekly btn*/
 .MoveToWeekly .ButtondesignRight {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/greybutton_mover_right.png) repeat-x right top;
+	background: url(/images/greybutton_mover_right.png) repeat-x right top;
 	width: 26px;
 	height: 22px;
 }
@@ -7123,12 +7123,12 @@ font-size: 2px;
 
 /*.bigfield
 {
-	background:	#E5E5E5 url(https://d294w6g1afjpvs.cloudfront.net/images/textareahandler.png) no-repeat right bottom;
+	background:	#E5E5E5 url(/images/textareahandler.png) no-repeat right bottom;
 }*/
 
 #handleCorner,
 #handleCorner1 {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/arrowhandler1.png) no-repeat right bottom;
+	background: url(/images/arrowhandler1.png) no-repeat right bottom;
 	height: 9px;
 	width: 9px;
 
@@ -7216,7 +7216,7 @@ a.FAQIcon {
 
 .ClickEnlarge,
 .ClickEnlarge:hover {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/clicktoenlargebg.png) no-repeat left top;
+	background: url(/images/clicktoenlargebg.png) no-repeat left top;
 	padding: 0 40px 0 7px;
 	height: 22px;
 	margin: 0 0 0 5px;
@@ -7438,7 +7438,7 @@ body a.posternumber:hover {
 	float: left;
 	margin: 0;
 	padding: 8px 5px;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/select_bg.png);
+	background-image: url(/images/select_bg.png);
 	background-repeat: no-repeat;
 	background-position: 0 0;
 	cursor: pointer;
@@ -7459,15 +7459,15 @@ body a.posternumber:hover {
 }
 
 .grey-collapsable-container .active .left-bg-main {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/light-blue-left-bg.png) 0 0 no-repeat !important;
+	background: url(/images/light-blue-left-bg.png) 0 0 no-repeat !important;
 }
 
 .grey-collapsable-container .active .midrept-bg-main {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/light-blue-bg.gif) 0 0 repeat-x !important;
+	background: url(/images/light-blue-bg.gif) 0 0 repeat-x !important;
 }
 
 .grey-collapsable-container .active .right-bg-main {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/light-blue-right-bg.png) 0 0 repeat-x !important;
+	background: url(/images/light-blue-right-bg.png) 0 0 repeat-x !important;
 }
 
 .home-dashboard {
@@ -7477,7 +7477,7 @@ body a.posternumber:hover {
 }
 
 .bannertxt {
-	background: url(https://d294w6g1afjpvs.cloudfront.net/images/banner_bg.png) 0 0 no-repeat;
+	background: url(/images/banner_bg.png) 0 0 no-repeat;
 	text-align: center;
 	font: bold 18px/22px;
 	width: 304px;
@@ -7487,7 +7487,7 @@ body a.posternumber:hover {
 }
 
 .menu .stills span {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/right-blue-inner-tab.gif) 100% 0 no-repeat;*/
+	/*background:url(/images/right-blue-inner-tab.gif) 100% 0 no-repeat;*/
 	color: #575757;
 	color: #575757;
 	text-decoration: none;
@@ -7502,7 +7502,7 @@ body a.posternumber:hover {
 }
 
 .menu .stills a {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/left-blue-inner-tab.gif) 0 0 no-repeat ;*/
+	/*background:url(/images/left-blue-inner-tab.gif) 0 0 no-repeat ;*/
 	padding: 0px 0 0 15px;
 	padding: 0 0 0 15px !important;
 	height: :27px;
@@ -7513,7 +7513,7 @@ body a.posternumber:hover {
 
 .menu .stills:hover span,
 .menu .actives span {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/right-red-inner-tab.gif) 100% 0 no-repeat!important;*/
+	/*background:url(/images/right-red-inner-tab.gif) 100% 0 no-repeat!important;*/
 	color: #575757;
 	text-decoration: none;
 	padding: 5px 15px 4px 0;
@@ -7524,7 +7524,7 @@ body a.posternumber:hover {
 
 .menu .stills:hover a,
 .menu .actives a {
-	/*background:url(https://d294w6g1afjpvs.cloudfront.net/images/left-red-inner-tab.gif) 0 0 no-repeat!important;*/
+	/*background:url(/images/left-red-inner-tab.gif) 0 0 no-repeat!important;*/
 	padding: 0 0 0 15px !important;
 	height: :27px;
 	margin: 0px;
@@ -7785,7 +7785,7 @@ div.features_menu_column div.features_selector {
 	position: absolute;
 	width: 170px;
 	z-index: 100000;
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/select_arrow.png);
+	background-image: url(/images/select_arrow.png);
 	background-repeat: no-repeat;
 	background-position: 175px 12px;
 }
@@ -8021,7 +8021,7 @@ div.features_menu_column div.features_selector div.trigger ul {
 	border-bottom: 0px solid #DADADA;
 	border-left: 0px solid #DADADA;
 	background-color: #FFFFFF;
-	background-image: url("https://d294w6g1afjpvs.cloudfront.net/images/newsletter.png");
+	background-image: url("/images/newsletter.png");
 	background-position: center center;
 	background-repeat: no-repeat;
 	margin: 0;
@@ -8058,7 +8058,7 @@ div.features_menu_column div.features_selector div.trigger ul {
 	border-bottom: 0px solid #DADADA;
 	border-left: 0px solid #DADADA;
 	background-color: #FFFFFF;
-	background-image: url("https://d294w6g1afjpvs.cloudfront.net/images/newsletter.png");
+	background-image: url("/images/newsletter.png");
 	background-position: center center;
 	background-repeat: no-repeat;
 	padding: 3px 6px 3px 8px;
@@ -8108,14 +8108,14 @@ div.features_menu_column div.features_selector div.trigger ul {
 }
 
 .bannersidebartopbg {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/banner_topline.png);
+	background-image: url(/images/banner_topline.png);
 	background-repeat: repeat-x;
 	background-position: left top;
 	height: 5px;
 }
 
 .bannersidebarbottombg {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/banner_bottomline.png);
+	background-image: url(/images/banner_bottomline.png);
 	background-repeat: repeat-x;
 	background-position: left bottom;
 	height: 5px;
@@ -8267,14 +8267,14 @@ div.features_menu_column div.features_selector div.trigger ul {
 }
 
 .buylisttbtopbg {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/buylisttb_dashedtop.jpg);
+	background-image: url(/images/buylisttb_dashedtop.jpg);
 	background-repeat: repeat-x;
 	background-position: left top;
 	height: 5px;
 }
 
 .buylisttbbottombg {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/buylisttb_dashedbottom.jpg);
+	background-image: url(/images/buylisttb_dashedbottom.jpg);
 	background-repeat: repeat-x;
 	background-position: left bottom;
 	height: 5px;
@@ -8462,7 +8462,7 @@ div.features_menu_column div.features_selector div.trigger ul {
 }
 
 .featuredposter_header {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/featuredposter_headerbg.jpg);
+	background-image: url(/images/featuredposter_headerbg.jpg);
 	background-repeat: no-repeat;
 	background-position: left top;
 }
@@ -8538,11 +8538,11 @@ li {
 }
 
 #menu li .drop {
-	background: url("https://d294w6g1afjpvs.cloudfront.net/images/drop2.png") no-repeat right 8px;
+	background: url("/images/drop2.png") no-repeat right 8px;
 }
 
 #menu li:hover .drop {
-	background: url("https://d294w6g1afjpvs.cloudfront.net/images/drop.png") no-repeat right 7px;
+	background: url("/images/drop.png") no-repeat right 7px;
 }
 
 .dropdown_1column,
@@ -9007,7 +9007,7 @@ li {
 }
 
 #slides_1 .prev, #slides_2 .prev, #slides_3 .prev, #slides_4 .prev {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/gallery_back2.jpg);
+	background-image: url(/images/gallery_back2.jpg);
 	background-repeat: no-repeat;
 	height: 20px;
 	width: 20px;
@@ -9015,7 +9015,7 @@ li {
 }
 
 #slides_1 .next, #slides_2 .next, #slides_3 .next, #slides_4 .next {
-	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/gallery_fwd2.jpg);
+	background-image: url(/images/gallery_fwd2.jpg);
 	background-repeat: no-repeat;
 	height: 20px;
 	width: 20px;
@@ -9053,7 +9053,7 @@ li {
 	width:12px;
 	height:0;
 	padding-top:12px;
-	background-image:url(https://d294w6g1afjpvs.cloudfront.net/images/pagination.png);
+	background-image:url(/images/pagination.png);
 	background-position:0 0;
 	float:left;
 	overflow:hidden;

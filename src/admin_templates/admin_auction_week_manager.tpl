@@ -62,13 +62,13 @@ function sync_missing(id){
 													&nbsp;&nbsp;
 													<a href="javascript:void(0);" ><img src="{$smarty.const.CLOUD_STATIC}sync.png" align="absmiddle" alt="Sync Auction Bids" title="Sync Auction Bids" border="0" class="changeStatus" width="20px" onclick="sync_bids({$auction_week[counter].auction_week_id})" /> </a>
 													&nbsp;&nbsp;
-													<a href="{$smarty.const.SITE_URL}/admin/missing_item.php?week_id={$auction_week[counter].auction_week_id}" target="_blank" ><img src="https://d294w6g1afjpvs.cloudfront.net/images/admin-list.png" align="absmiddle" target="_blank" alt="Sync Auction Bids" title="List of Missing Items" border="0" class="changeStatus" width="20px"  /> </a>
+													<a href="{$smarty.const.SITE_URL}/admin/missing_item.php?week_id={$auction_week[counter].auction_week_id}" target="_blank" ><img src="{$smarty.const.CLOUD_STATIC}admin-list.png" align="absmiddle" target="_blank" alt="Sync Auction Bids" title="List of Missing Items" border="0" class="changeStatus" width="20px"  /> </a>
 													&nbsp;&nbsp;
-													<a href="{$smarty.const.SITE_URL}/admin/missing_item_update.php?week_id={$auction_week[counter].auction_week_id}" target="_blank" ><img src="https://d294w6g1afjpvs.cloudfront.net/images/set-default.png" align="absmiddle" target="_blank" alt="Sync Auction Bids" title="Set Default Images" border="0" class="changeStatus" width="20px"  /> </a>
+													<a href="{$smarty.const.SITE_URL}/admin/missing_item_update.php?week_id={$auction_week[counter].auction_week_id}" target="_blank" ><img src="{$smarty.const.CLOUD_STATIC}set-default.png" align="absmiddle" target="_blank" alt="Sync Auction Bids" title="Set Default Images" border="0" class="changeStatus" width="20px"  /> </a>
 													&nbsp;&nbsp;
-													<a href="{$smarty.const.SITE_URL}/admin/sync_missing_item.php?week_id={$auction_week[counter].auction_week_id}" target="_blank" ><img src="https://d294w6g1afjpvs.cloudfront.net/images/sync-missing.png" align="absmiddle" target="_blank" alt="Sync Auction Bids" title="Sync Missing Sold Items" border="0" class="changeStatus" width="20px"  /> </a>
+													<a href="{$smarty.const.SITE_URL}/admin/sync_missing_item.php?week_id={$auction_week[counter].auction_week_id}" target="_blank" ><img src="{$smarty.const.CLOUD_STATIC}sync-missing.png" align="absmiddle" target="_blank" alt="Sync Auction Bids" title="Sync Missing Sold Items" border="0" class="changeStatus" width="20px"  /> </a>
 													&nbsp;&nbsp;
-													<a href="{$adminActualPath}/admin_manage_auction_week.php?mode=view_snipes&week_id={$auction_week[counter].auction_week_id}" target="_blank" ><img src="https://d294w6g1afjpvs.cloudfront.net/images/snipes.png" align="absmiddle" target="_blank" alt="View All Snipes" title="View All Snipes" border="0" class="changeStatus" width="20px"  /> </a>
+													<a href="{$adminActualPath}/admin_manage_auction_week.php?mode=view_snipes&week_id={$auction_week[counter].auction_week_id}" target="_blank" ><img src="{$smarty.const.CLOUD_STATIC}snipes.png" align="absmiddle" target="_blank" alt="View All Snipes" title="View All Snipes" border="0" class="changeStatus" width="20px"  /> </a>
 													
 													
                                                 </td>

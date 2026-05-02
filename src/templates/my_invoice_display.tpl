@@ -1,8 +1,8 @@
 {include file="header.tpl"}    
 	
-	<script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/jquery.mousewheel-3.0.6.pack.js"></script>
-	<script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/jquery.fancybox.js?v=2.1.5"></script>
-	<link rel="stylesheet" type="text/css" href="https://d294w6g1afjpvs.cloudfront.net/css/jquery.fancybox.css?v=2.1.5" media="screen" />
+	<script type="text/javascript" src="{$actualPathJSCSS}js/jquery.mousewheel-3.0.6.pack.js"></script>
+	<script type="text/javascript" src="{$actualPathJSCSS}js/jquery.fancybox.js?v=2.1.5"></script>
+	<link rel="stylesheet" type="text/css" href="{$actualPathJSCSS}css/jquery.fancybox.css?v=2.1.5" media="screen" />
 	<style type="text/css">
 	.fancybox-overlay { z-index: 200000 !important; }
 	.fancybox-wrap    { z-index: 200001 !important; }
@@ -243,15 +243,15 @@
                                       <td class="tar">${$invoiceData[counter].total_amount}</td>
                                         <td class="tac">
                                         {if $invoiceData[counter].is_cancelled == '1'}
-                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Print" title="Print" src="https://d294w6g1afjpvs.cloudfront.net/images/print.png"></a>
+                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Print" title="Print" src="{$smarty.const.CLOUD_STATIC}print.png"></a>
                                         {elseif $invoiceData[counter].is_paid == '1'}
-                                        PAID &nbsp;<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Print" title="Print" src="https://d294w6g1afjpvs.cloudfront.net/images/print.png"></a>
+                                        PAID &nbsp;<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Print" title="Print" src="{$smarty.const.CLOUD_STATIC}print.png"></a>
                                         {elseif $invoiceData[counter].is_paid == '0' && $invoiceData[counter].is_cancelled == '0' && $invoiceData[counter].is_ordered == '0'}
-                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=order&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Pay Now" title="Pay Now" width="67" src="https://d294w6g1afjpvs.cloudfront.net/images/pay_now.png" /></a>
+                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=order&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Pay Now" title="Pay Now" width="67" src="{$smarty.const.CLOUD_STATIC}pay_now.png" /></a>
                                         {elseif $invoiceData[counter].is_paid == '1' || $invoiceData[counter].is_cancelled == '1'}
-                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Print" title="Print" src="https://d294w6g1afjpvs.cloudfront.net/images/print.png"></a>
+                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Print" title="Print" src="{$smarty.const.CLOUD_STATIC}print.png"></a>
                                         {elseif $invoiceData[counter].is_ordered == '1' && $invoiceData[counter].is_cancelled == '0'}
-										<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Phone Order" title="Phone Order" src="https://d294w6g1afjpvs.cloudfront.net/images/phn_order.png"></a>
+										<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Phone Order" title="Phone Order" src="{$smarty.const.CLOUD_STATIC}phn_order.png"></a>
 										{/if}
                                         </td>
                                     </tr>

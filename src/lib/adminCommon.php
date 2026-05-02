@@ -9,6 +9,7 @@
 	$smarty->setCompileDir(INCLUDE_PATH.'admin_templates_c/'); 
 	
 	$smarty->assign('actualPath', PAGE_LINK);
+	$smarty->assign('actualPathJSCSS', PAGE_LINK_CSSJS);
 	$smarty->assign('adminActualPath', ADMIN_PAGE_LINK);
 	$smarty->assign('adminStaticPath', ADMIN_STATIC_LINK);
 	$smarty->assign('adminImagePath', ADMIN_IMAGE_LINK);

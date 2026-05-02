@@ -1,6 +1,6 @@
 {include file="header.tpl"}
-<link href="https://d294w6g1afjpvs.cloudfront.net/css/jquery.countdown.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="https://d294w6g1afjpvs.cloudfront.net/js/jquery.countdown.js"></script>
+<link href="{$actualPathJSCSS}css/jquery.countdown.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="{$actualPathJSCSS}js/jquery.countdown.js"></script>
 
 {literal}
 <style type="text/css">.popDiv { position:absolute; min-width:120px; list-style-type:none; background-color:#881318; color:#fff; z-index:1000;font-size:12px; padding:6px; outline:4px solid #881318; border: 1px solid #a3595c; margin-left:150px; margin-top:45px;visibility:hidden;}

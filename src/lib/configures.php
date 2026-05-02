@@ -210,16 +210,9 @@ define("CLOUD_API_USERNAME", getenv('CLOUD_API_USERNAME') ?: "mpexchange");
 define("CLOUD_API_PASSWORD", getenv('CLOUD_API_PASSWORD') ?: "064276f5fdc0df2bb74addd027c71655"); 
 define("CLOUD_STATIC_IMAGE_CONTAINER","cloud_mpe_static");
 
-$currentPage = basename($_SERVER['PHP_SELF']);	
-if($currentPage == "cart.php" || $currentPage == "my_invoice.php") {
-	//header("Location: default.php");
-	//exit;
-	define("CLOUD_STATIC","https://d294w6g1afjpvs.cloudfront.net/images/");
-	define("CLOUD_STATIC_ADMIN","https://d294w6g1afjpvs.cloudfront.net/images/");
-}else{
-	define("CLOUD_STATIC","https://d294w6g1afjpvs.cloudfront.net/images/");
-	define("CLOUD_STATIC_ADMIN","https://d294w6g1afjpvs.cloudfront.net/images/");
-}
+$_staticCdn = rtrim(getenv('CDN_STATIC_URL') ?: 'https://d294w6g1afjpvs.cloudfront.net', '/');
+define("CLOUD_STATIC",       $_staticCdn . "/images/");
+define("CLOUD_STATIC_ADMIN", $_staticCdn . "/images/");
 
 define("CLOUD_POSTER_CONTAINER","cloud_mpe_poster_original");
 define("CLOUD_POSTER_THUMB_CONTAINER","cloud_mpe_poster_thumbnail");

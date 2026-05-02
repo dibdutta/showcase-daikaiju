@@ -13,7 +13,7 @@ ob_end_flush();*/
 /*************************************************/
 require_once __DIR__ . "/lib/site_constants.php";
 define ("FULL_PATH", SITE_URL);
-define ("CLOUD_STATIC","https://d294w6g1afjpvs.cloudfront.net/images/");
+define("CLOUD_STATIC", rtrim(getenv("CDN_STATIC_URL") ?: "https://d294w6g1afjpvs.cloudfront.net", "/") . "/images/");
 define ("HOST_NAME", SITE_HOST);
 define ('MAIL_BODY_TOP', '<html><head></head><body style="  padding:0px; margin:0px;">
 <table align="center" bgcolor="#FFFFFF" width="600px" border="0" cellspacing="0" cellpadding="0">
