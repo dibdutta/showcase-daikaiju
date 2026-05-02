@@ -166,17 +166,7 @@ function highlight()
 		  <div class="pt10 pb10">
           <table width="260" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td><div class="socialIcon">
-                             	<div class="addthis_toolbox addthis_default_style ">
-                                <a class="addthis_button_preferred_1"></a>
-                                <a class="addthis_button_preferred_2"></a>
-                                <a class="addthis_button_preferred_3"></a>
-                                <a class="addthis_button_preferred_4"></a>
-                                <a class="addthis_button_compact"></a>
-                                <a class="addthis_counter addthis_bubble_style"></a>
-                                </div>
-								<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e76e64247cca97b"></script>
-                        </div></td>
+              <td></td>
               <td></td>
               </tr>
             </table></div>

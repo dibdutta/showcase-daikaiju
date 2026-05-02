@@ -420,19 +420,6 @@ function toggleDiv(id,flagit,type,track) {
 							<td class="buylisttbtopbg"></td>
 						  </tr>
                           <tr>
-                            <td class="pt10 pb10">
-                            <div class="socialIcon">
-                             	<div class="addthis_toolbox addthis_default_style ">
-                                <a class="addthis_button_facebook"></a>
-                                <a class="addthis_button_twitter"></a>                                
-								<a class="addthis_button_pinterest_pinit"></a>
-								<a class="addthis_button_tumblr"></a>
-                                </div>
-								<script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4e76e64247cca97b"></script>
-                        	</div>
-                            </td>
-                          </tr>
-                          <tr>
 							<td class="buylisttbbottombg"></td>
 						  </tr>
                           <tr>

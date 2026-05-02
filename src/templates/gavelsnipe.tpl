@@ -75,15 +75,6 @@
 			 </div>
 			 <div class="clear"></div>
              <div class="bannersidebartopbg"></div>
-              {literal}
-			  <script type="text/javascript" data-pp-pubid="6767a20954" data-pp-placementtype="234x60"> (function (d, t) {
-				"use strict";
-				var s = d.getElementsByTagName(t)[0], n = d.createElement(t);
-				n.src = "//paypal.adtag.where.com/merchant.js";
-				s.parentNode.insertBefore(n, s);
-				}(document, "script"));
-			   </script>
-			   {/literal} 
               <div class="bannersidebarbottombg"></div>
              
              <div style="padding:6px 0;" class="dashboard-main">
