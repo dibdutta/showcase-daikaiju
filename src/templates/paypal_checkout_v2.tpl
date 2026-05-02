@@ -184,7 +184,7 @@ var _pp = {
         btn.disabled    = true;
         btn.textContent = 'Processing…';
 
-        cardFields.submit({contingencies: ['3D_SECURE']})
+        cardFields.submit()
           .then(function (submitData) {
             var oid = submitData.orderID || submitData.orderId;
             return apiCall({action: 'capture_order', order_id: oid, invoice_id: pp.invoiceId});
