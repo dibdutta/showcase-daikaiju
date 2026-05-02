@@ -226,4 +226,10 @@ resource "aws_cloudfront_distribution" "main" {
 
   tags = { Name = "${local.name_prefix}-cdn" }
 
+  # www.mygodzillashop.com alias is owned by a different CloudFront distribution.
+  # Use `aws cloudfront associate-alias` after updating DNS to d294w6g1afjpvs.cloudfront.net
+  # to atomically move the alias, then remove this block.
+  lifecycle {
+    ignore_changes = [aliases, viewer_certificate]
+  }
 }
