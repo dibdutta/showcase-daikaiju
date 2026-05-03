@@ -59,16 +59,16 @@
                   <div id="card-form" style="display:none; font-family:Arial,sans-serif;">
                     <div style="margin-bottom:12px;">
                       <label style="display:block; font-size:12px; color:#555; margin-bottom:4px; font-weight:600;">Card Number</label>
-                      <div id="card-number-field-container" class="pp-hosted-field" style="height:40px; border:1px solid #ccc; border-radius:4px; padding:0 10px; background:#fff;"></div>
+                      <div id="card-number-field-container" class="pp-hosted-field" style="height:40px; border:1px solid #ccc; border-radius:4px; overflow:hidden; background:#fff;"></div>
                     </div>
                     <div style="display:flex; gap:12px; margin-bottom:12px;">
                       <div style="flex:1;">
                         <label style="display:block; font-size:12px; color:#555; margin-bottom:4px; font-weight:600;">Expiry Date</label>
-                        <div id="expiry-field-container" class="pp-hosted-field" style="height:40px; border:1px solid #ccc; border-radius:4px; padding:0 10px; background:#fff;"></div>
+                        <div id="expiry-field-container" class="pp-hosted-field" style="height:40px; border:1px solid #ccc; border-radius:4px; overflow:hidden; background:#fff;"></div>
                       </div>
                       <div style="flex:1;">
                         <label style="display:block; font-size:12px; color:#555; margin-bottom:4px; font-weight:600;">CVV</label>
-                        <div id="cvv-field-container" class="pp-hosted-field" style="height:40px; border:1px solid #ccc; border-radius:4px; padding:0 10px; background:#fff;"></div>
+                        <div id="cvv-field-container" class="pp-hosted-field" style="height:40px; border:1px solid #ccc; border-radius:4px; overflow:hidden; background:#fff;"></div>
                       </div>
                     </div>
                     <button id="card-submit-btn" type="button" style="width:100%; background:#0070ba; color:#fff; border:none; border-radius:4px; padding:12px; font-size:14px; font-weight:700; cursor:pointer; letter-spacing:.5px;">
