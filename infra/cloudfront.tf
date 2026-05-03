@@ -33,6 +33,28 @@ resource "aws_cloudfront_distribution" "main" {
     }
   }
 
+  # PHP files anywhere -> ALB (must come before static-path rules so
+  # files like /javascript/common.js.php are executed, not served raw from S3)
+  ordered_cache_behavior {
+    path_pattern     = "*.php"
+    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "alb-dynamic"
+
+    forwarded_values {
+      query_string = true
+      headers      = ["Host", "Origin", "Referer"]
+      cookies {
+        forward = "all"
+      }
+    }
+
+    viewer_protocol_policy = "redirect-to-https"
+    min_ttl                = 0
+    default_ttl            = 0
+    max_ttl                = 0
+  }
+
   # CSS files -> S3
   ordered_cache_behavior {
     path_pattern     = "/css/*"
