@@ -104,8 +104,8 @@ function dispmiddle()
 	if($GLOBALS['errorMessage'] != ""){
 		$smarty->assign('errorMessage', $GLOBALS['errorMessage']);
 	}
-	$smarty->assign('total', count($_SESSION['cart']));
-	$smarty->assign('cart', $_SESSION['cart']);
+	$smarty->assign('total', count($_SESSION['cart'] ?? []));
+	$smarty->assign('cart', $_SESSION['cart'] ?? []);
 	$smarty->display('cart.tpl');
 }
 
