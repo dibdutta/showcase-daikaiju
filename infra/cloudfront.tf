@@ -9,8 +9,7 @@ resource "aws_cloudfront_distribution" "main" {
   default_root_object = "index.php"
   price_class         = "PriceClass_100" # US, Canada, Europe only (cost saving)
 
-  # Only attach custom domain when cert is validated
-  aliases = var.domain_validated ? [var.domain_name, "www.${var.domain_name}"] : []
+  aliases = ["kaijulink.com", "www.kaijulink.com"]
 
   # Origin 1: S3 for static assets
   origin {
@@ -27,7 +26,7 @@ resource "aws_cloudfront_distribution" "main" {
     custom_origin_config {
       http_port                = 80
       https_port               = 443
-      origin_protocol_policy   = var.domain_validated ? "https-only" : "http-only"
+      origin_protocol_policy   = "https-only"
       origin_ssl_protocols     = ["TLSv1.2"]
       origin_read_timeout      = 60
       origin_keepalive_timeout = 60
@@ -207,29 +206,11 @@ resource "aws_cloudfront_distribution" "main" {
     }
   }
 
-  # Use custom cert when validated, otherwise default CloudFront cert
-  dynamic "viewer_certificate" {
-    for_each = var.domain_validated ? [1] : []
-    content {
-      acm_certificate_arn      = aws_acm_certificate.main.arn
-      ssl_support_method       = "sni-only"
-      minimum_protocol_version = "TLSv1.2_2021"
-    }
-  }
-
-  dynamic "viewer_certificate" {
-    for_each = var.domain_validated ? [] : [1]
-    content {
-      cloudfront_default_certificate = true
-    }
+  viewer_certificate {
+    acm_certificate_arn      = aws_acm_certificate.kaijulink.arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 
   tags = { Name = "${local.name_prefix}-cdn" }
-
-  # www.mygodzillashop.com alias is owned by a different CloudFront distribution.
-  # Use `aws cloudfront associate-alias` after updating DNS to d294w6g1afjpvs.cloudfront.net
-  # to atomically move the alias, then remove this block.
-  lifecycle {
-    ignore_changes = [aliases, viewer_certificate]
-  }
 }
