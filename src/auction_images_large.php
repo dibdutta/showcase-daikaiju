@@ -1,5 +1,6 @@
 <?php
-error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 ob_start();
 
 define ("INCLUDE_PATH", "./");
