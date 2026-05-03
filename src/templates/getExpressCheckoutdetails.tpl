@@ -143,7 +143,7 @@
 	                     {/literal}					
 						</div>
 						<div style="float:left">
-							<a href="https://www.paypal.com/us/verified/pal=info%40mygodzillashop%2ecom" target="_blank"><img src="https://www.paypal.com/en_US/i/icon/verification_seal.gif" border="0" alt="Official PayPal Seal"></A>
+							<a href="https://www.paypal.com/us/verified/pal=info%40kaijulink%2ecom" target="_blank"><img src="https://www.paypal.com/en_US/i/icon/verification_seal.gif" border="0" alt="Official PayPal Seal"></A>
 						</div>
 					</div>
 					<div style="clear:both;height: 0"></div>   

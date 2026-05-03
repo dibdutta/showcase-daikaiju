@@ -101,11 +101,11 @@ if ($action === 'create_order') {
         'intent' => 'CAPTURE',
         'purchase_units' => [[
             'reference_id' => 'inv-' . $invoice_id,
-            'description'  => 'MyGodzillaShop Invoice #' . $invoice_id,
+            'description'  => 'Kaijulink Invoice #' . $invoice_id,
             'amount'       => ['currency_code' => 'USD', 'value' => $total],
         ]],
         'application_context' => [
-            'brand_name'          => 'MyGodzillaShop',
+            'brand_name'          => 'Kaijulink',
             'landing_page'        => 'NO_PREFERENCE',
             'user_action'         => 'PAY_NOW',
             'return_url'          => SITE_URL . '/my_invoice',
