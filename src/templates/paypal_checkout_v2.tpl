@@ -100,8 +100,8 @@
   <div class="clear"></div>
 </div>
 
-<!-- PayPal JS SDK: components=buttons,hosted-fields enables Smart Buttons + card fields -->
-<script src="https://www.paypal.com/sdk/js?client-id={$paypal_client_id}&currency=USD&components=buttons,hosted-fields&intent=capture"></script>
+<!-- PayPal JS SDK v6: card-fields replaces deprecated hosted-fields -->
+<script src="https://www.paypal.com/sdk/js?client-id={$paypal_client_id}&currency=USD&components=buttons,card-fields&intent=capture"></script>
 
 <!-- Expose Smarty-rendered values as plain JS vars before the literal block -->
 <script>
@@ -159,12 +159,9 @@ var _pp = {
     }
   }).render('#paypal-button-container');
 
-  // ── Hosted Card Fields (requires PayPal Advanced Payments / Pro on merchant account) ─
-  if (paypal.HostedFields && paypal.HostedFields.isEligible()) {
-    document.getElementById('card-divider').style.display = 'block';
-    document.getElementById('card-form').style.display    = 'block';
-
-    paypal.HostedFields.render({
+  // ── Card Fields (PayPal JS SDK v6 — replaces deprecated HostedFields) ─
+  if (paypal.CardFields) {
+    var cardField = paypal.CardFields({
       createOrder: function () {
         return apiCall({action: 'create_order', invoice_id: pp.invoiceId})
           .then(function (data) {
@@ -172,43 +169,47 @@ var _pp = {
             return data.id;
           });
       },
-      fields: {
-        number:         {selector: '#card-number-field-container', placeholder: '•••• •••• •••• ••••'},
-        expirationDate: {selector: '#expiry-field-container',      placeholder: 'MM / YY'},
-        cvv:            {selector: '#cvv-field-container',         placeholder: 'CVV'}
+      onApprove: function (data) {
+        return apiCall({action: 'capture_order', order_id: data.orderID, invoice_id: pp.invoiceId})
+          .then(function (result) {
+            if (result.success) {
+              window.location.href = pp.returnUrl;
+            } else {
+              showCardError(result.error || 'Payment failed. Please try again.');
+            }
+          });
+      },
+      onError: function (err) {
+        console.error('CardFields error', err);
+        showCardError('Card payment failed. Please check your details and try again.');
+        var btn = document.getElementById('card-submit-btn');
+        btn.disabled    = false;
+        btn.textContent = pp.totalLabel;
       }
-    }).then(function (cardFields) {
+    });
+
+    if (cardField.isEligible()) {
+      document.getElementById('card-divider').style.display = 'block';
+      document.getElementById('card-form').style.display    = 'block';
+
+      cardField.NumberField({placeholder: '•••• •••• •••• ••••'}).render('#card-number-field-container');
+      cardField.ExpiryField({placeholder: 'MM / YY'}).render('#expiry-field-container');
+      cardField.CVVField({placeholder: 'CVV'}).render('#cvv-field-container');
+
       document.getElementById('card-submit-btn').addEventListener('click', function () {
         document.getElementById('card-error').style.display = 'none';
         var btn = this;
         btn.disabled    = true;
         btn.textContent = 'Processing…';
 
-        cardFields.submit()
-          .then(function (submitData) {
-            var oid = submitData.orderID || submitData.orderId;
-            return apiCall({action: 'capture_order', order_id: oid, invoice_id: pp.invoiceId});
-          })
-          .then(function (result) {
-            if (result.success) {
-              window.location.href = pp.returnUrl;
-            } else {
-              showCardError(result.error || 'Payment failed. Please try again.');
-              btn.disabled    = false;
-              btn.textContent = pp.totalLabel;
-            }
-          })
-          .catch(function (err) {
-            console.error('Card payment error', err);
-            showCardError('Card payment failed. Please check your details and try again.');
-            btn.disabled    = false;
-            btn.textContent = pp.totalLabel;
-          });
+        cardField.submit().catch(function (err) {
+          console.error('Card submit error', err);
+          showCardError('Card payment failed. Please check your details and try again.');
+          btn.disabled    = false;
+          btn.textContent = pp.totalLabel;
+        });
       });
-    }).catch(function (err) {
-      console.warn('Hosted Fields render failed', err);
-      showCardError(err.message || 'Card payment setup failed. Please use the PayPal button above.');
-    });
+    }
   }
 }(_pp));
 </script>
