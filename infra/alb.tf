@@ -77,13 +77,11 @@ resource "aws_lb_target_group" "web" {
 
 ################################################################################
 # Listeners
-# Phase 1 (domain_validated=false): HTTP forwards to target group
-# Phase 2 (domain_validated=true):  HTTP redirects to HTTPS, HTTPS forwards
+# CloudFront terminates HTTPS from clients and talks to ALB over HTTP (port 80).
+# ALB port 80 always forwards to the target group — no redirect needed here.
 ################################################################################
 
-# When cert NOT validated: HTTP listener forwards directly to app
 resource "aws_lb_listener" "http" {
-  count             = var.domain_validated ? 0 : 1
   load_balancer_arn = aws_lb.main.arn
   port              = 80
   protocol          = "HTTP"
@@ -91,24 +89,6 @@ resource "aws_lb_listener" "http" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.web.arn
-  }
-}
-
-# When cert IS validated: HTTP redirects to HTTPS
-resource "aws_lb_listener" "http_redirect" {
-  count             = var.domain_validated ? 1 : 0
-  load_balancer_arn = aws_lb.main.arn
-  port              = 80
-  protocol          = "HTTP"
-
-  default_action {
-    type = "redirect"
-
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
   }
 }
 
