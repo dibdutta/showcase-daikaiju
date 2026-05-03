@@ -1443,12 +1443,12 @@ function increment_amount($buy_now){
 					$mime = mime_content_type($dest) ?: 'image/jpeg';
 					$s3uploads = [
 						'poster_photo/'                   . $fileName => $dest,
-						'poster_photo/thumbnail/'         . $fileName => $destThumb         . $fileName,
-						'poster_photo/thumb_buy/'         . $fileName => $destThumb_buy      . $fileName,
-						'poster_photo/thumb_buy_gallery/' . $fileName => $destThumb_buy_gallery . $fileName,
+						'poster_photo/thumbnail/'         . $fileName => $destThumb         . '/' . $fileName,
+						'poster_photo/thumb_buy/'         . $fileName => $destThumb_buy      . '/' . $fileName,
+						'poster_photo/thumb_buy_gallery/' . $fileName => $destThumb_buy_gallery . '/' . $fileName,
 					];
 					if (!empty($destThumb_big_slider)) {
-						$s3uploads['poster_photo/thumb_big_slider/' . $fileName] = $destThumb_big_slider . $fileName;
+						$s3uploads['poster_photo/thumb_big_slider/' . $fileName] = $destThumb_big_slider . '/' . $fileName;
 					}
 					foreach ($s3uploads as $s3Key => $localPath) {
 						if (file_exists($localPath)) {
