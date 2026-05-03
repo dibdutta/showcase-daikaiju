@@ -1,5 +1,5 @@
 ################################################################################
-# ACM Certificate
+# ACM Certificate — mygodzillashop.com (existing, keeps HTTPS live)
 ################################################################################
 
 resource "aws_acm_certificate" "main" {
@@ -12,6 +12,22 @@ resource "aws_acm_certificate" "main" {
   }
 
   tags = { Name = "${local.name_prefix}-cert" }
+}
+
+################################################################################
+# ACM Certificate — kaijulink.com (new domain, pending DNS validation)
+################################################################################
+
+resource "aws_acm_certificate" "kaijulink" {
+  domain_name               = "kaijulink.com"
+  subject_alternative_names = ["*.kaijulink.com"]
+  validation_method         = "DNS"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tags = { Name = "${local.name_prefix}-kaijulink-cert" }
 }
 
 ################################################################################

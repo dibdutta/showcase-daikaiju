@@ -65,6 +65,17 @@ output "acm_certificate_validation_records" {
   }
 }
 
+output "kaijulink_certificate_validation_records" {
+  description = "CNAME records to add at kaijulink.com registrar for ACM cert validation"
+  value = {
+    for dvo in aws_acm_certificate.kaijulink.domain_validation_options : dvo.domain_name => {
+      type  = dvo.resource_record_type
+      name  = dvo.resource_record_name
+      value = dvo.resource_record_value
+    }
+  }
+}
+
 output "efs_access_point_sessions" {
   description = "EFS access point ID for sessions"
   value       = aws_efs_access_point.sessions.id
