@@ -106,9 +106,9 @@ define ("SHORT_TYPE", $row['short_type']);
 /* Admin Details Starts */
 define ("ADMIN_BUY_NAME", $row[CONFIG_ADMIN_NAME] ?: 'Kaijulink');
 define ("ADMIN_ADDRESS1", '221 E MAIN ST');
-define ("ADMIN_CITY", 'GIBSONVILLE');
-define ("ADMIN_STATE", 'NC');
-define ("ADMIN_ZIP", '27249');
+define ("ADMIN_CITY", 'WOODSTOCK');
+define ("ADMIN_STATE", 'GA');
+define ("ADMIN_ZIP", '30188');
 define ("ADMIN_COUNTRY", 'US');
 /* Admin Details  End */
 

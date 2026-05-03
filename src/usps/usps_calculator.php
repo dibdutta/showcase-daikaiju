@@ -29,7 +29,7 @@ function USPSGetToken() {
 }
 
 function USPSParcelRate($dest_zip, $width, $height, $length, $weight_lb, $weight_oz) {
-    $orig_zip   = '27249';
+    $orig_zip   = '30188';
     $weightLbs  = 1;//(float)$weight_lb + ((float)$weight_oz / 16);
 
     $token = USPSGetToken();
