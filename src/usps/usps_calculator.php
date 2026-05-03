@@ -30,7 +30,7 @@ function USPSGetToken() {
 
 function USPSParcelRate($dest_zip, $width, $height, $length, $weight_lb, $weight_oz) {
     $orig_zip   = '30188';
-    $weightLbs  = 1;//(float)$weight_lb + ((float)$weight_oz / 16);
+    $weightLbs  = defined('USPS_DEFAULT_WEIGHT_LBS') ? (float)USPS_DEFAULT_WEIGHT_LBS : 2.0;
 
     $token = USPSGetToken();
     if (empty($token)) {

@@ -85,6 +85,7 @@ define ("PRODUCT_WEIGHT_ROLL", 2);
 define ("PRODUCT_WEIGHT_FLAT", 1);
 define ("PRODUCT_HEIGHT", 10);
 define ("PRODUCT_GIRTH", 10);
+define ("USPS_DEFAULT_WEIGHT_LBS", 2);
 
 define ("MPE_CHARGE_TO_SELLER", $row[MPE_CHARGE]);
 define ("MPE_CHARGE_TO_SELLER_WEEKLY", $row[MPE_CHARGE_WEEKLY]);
