@@ -15,8 +15,8 @@ if (isset($_GET['sendmail'])) {
 
     $to   = $_GET['to'] ?? 'dibyendu.dutta.mail@gmail.com';
     $name = 'Test Recipient';
-    $subject = 'SES Test Email - MyGodzillaShop';
-    $body = '<h2>SES Test</h2><p>This is a test email sent via AWS SES from MyGodzillaShop at ' . date('Y-m-d H:i:s') . '</p>';
+    $subject = 'SES Test Email - KaijuLink';
+    $body = '<h2>SES Test</h2><p>This is a test email sent via AWS SES from KaijuLink at ' . date('Y-m-d H:i:s') . '</p>';
 
     try {
         sendMail($to, $name, $subject, $body);

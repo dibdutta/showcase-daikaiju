@@ -621,7 +621,7 @@ function pay_now()
 				$res_sql_SellerMail=mysqli_query($GLOBALS['db_connect'],$sql_SellerMail);
 				$rowSeller=mysqli_fetch_array($res_sql_SellerMail);
 				$toMailSeller = $rowSeller['email'];
-			    $toNameSeller = $rowSeller['firstname'].' '.$row['lastname'];
+			    $toNameSeller = $rowSeller['firstname'].' '.$rowSeller['lastname'];
 			    $subject = "Kaijulink::Poster Sold - ".$rowSeller['poster_title']." ";
 			    $fromMail = ADMIN_EMAIL_ADDRESS;
 			    $fromName = ADMIN_NAME;

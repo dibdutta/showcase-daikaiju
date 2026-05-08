@@ -422,6 +422,11 @@ function orderBy($linkname, $orderby, $imageshow=1, $class){
 //////////////  sendMail function START  /////////////////////////
 
 function sendMail($toMail, $toName, $subject, $textContent) {
+    if (empty($toMail) || strpos($toMail, '@') === false) {
+        error_log('sendMail skipped: invalid or empty recipient email: ' . var_export($toMail, true));
+        return false;
+    }
+
     require_once __DIR__ . '/AWS/aws-autoloader.php';
 
 	$client = new Aws\Ses\SesClient([
@@ -430,7 +435,7 @@ function sendMail($toMail, $toName, $subject, $textContent) {
 	]);
 
 	$ses_sender = SITE_EMAIL_SENDER;
-	$ses_recipient = $toName.'<'.$toMail.'>';
+	$ses_recipient = trim($toName) !== '' ? $toName . '<' . $toMail . '>' : $toMail;
 
 	$request = array();
 	$request['Source'] = $ses_sender;
