@@ -13,7 +13,7 @@ services:
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html
       - DB_NAME=showcase
-      - ZEPTOMAIL_SMTP_TOKEN=PHtE6r0PFOHsiW4q80UBtPC9HsbwMows+LtiLARH5Y1CA/4KGk0Go9silmLiqk0oUKFAFaGTwIhrsb6d4OuDIWzuNWtFCGqyqK3sx/VYSPOZsbq6x00eslsSdULaXY7vctJp1ibUvtbYNA==
+      - ZEPTOMAIL_SMTP_TOKEN=your_zeptomail_token_here
 
   mysql:
     image: mysql:8.4
