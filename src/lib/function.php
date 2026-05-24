@@ -434,7 +434,7 @@ function sendMail($toMail, $toName, $subject, $textContent) {
         'htmlbody' => $textContent,
     ]);
 
-    $ch = curl_init('https://api.zeptomail.in/v1.1/email');
+    $ch = curl_init(ZEPTOMAIL_API_URL);
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_POST           => true,

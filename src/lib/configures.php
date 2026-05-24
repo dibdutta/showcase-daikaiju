@@ -282,6 +282,7 @@ define ('MAIL_BODY_BOTTOM', '</td></tr>
 define ("MAILCHIMP_API", getenv('MAILCHIMP_API') ?: "5bc53167c17cc6e93a5f6aac6912c50e-us2");
 
 define('ZEPTOMAIL_SMTP_TOKEN', getenv('ZEPTOMAIL_SMTP_TOKEN') ?: '');
+define('ZEPTOMAIL_API_URL',   getenv('ZEPTOMAIL_API_URL')   ?: 'https://api.zeptomail.in/v1.1/email');
 
 
 
