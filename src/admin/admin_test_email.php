@@ -6,38 +6,8 @@ if (!isset($_SESSION['adminLoginID'])) {
     die('Access denied.');
 }
 
-// Show config being used
-echo "<pre>";
-echo "ZEPTOMAIL_API_URL:   " . ZEPTOMAIL_API_URL . "\n";
-echo "ZEPTOMAIL_SMTP_TOKEN set: " . (ZEPTOMAIL_SMTP_TOKEN ? 'YES (' . strlen(ZEPTOMAIL_SMTP_TOKEN) . ' chars)' : 'NO — MISSING') . "\n";
-echo "SITE_EMAIL:          " . SITE_EMAIL . "\n";
-echo "Sending to:          " . ADMIN_EMAIL_ADDRESS . "\n\n";
+$result = sendMail(ADMIN_EMAIL_ADDRESS, ADMIN_NAME, 'Zeptomail Production Test - Kaijulink', '<p>Zeptomail is working correctly in <b>production</b>.</p>');
 
-// Send with verbose cURL error capture
-$payload = json_encode([
-    'from'     => ['address' => SITE_EMAIL, 'name' => 'Kaijulink'],
-    'to'       => [['email_address' => ['address' => ADMIN_EMAIL_ADDRESS, 'name' => ADMIN_NAME]]],
-    'subject'  => 'Zeptomail Production Test',
-    'htmlbody' => '<p>Zeptomail working in production.</p>',
-]);
-
-$ch = curl_init(ZEPTOMAIL_API_URL);
-curl_setopt_array($ch, [
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST           => true,
-    CURLOPT_POSTFIELDS     => $payload,
-    CURLOPT_HTTPHEADER     => [
-        'Authorization: Zoho-enczapikey ' . ZEPTOMAIL_SMTP_TOKEN,
-        'Content-Type: application/json',
-        'Accept: application/json',
-    ],
-]);
-$response = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$curlErr  = curl_error($ch);
-curl_close($ch);
-
-echo "HTTP Code: $httpCode\n";
-echo "cURL Error: " . ($curlErr ?: 'none') . "\n";
-echo "Response: $response\n";
-echo "</pre>";
+echo $result
+    ? "<p style='color:green;font-size:18px;'>SUCCESS — test email sent to <b>" . ADMIN_EMAIL_ADDRESS . "</b>. Check your inbox.</p>"
+    : "<p style='color:red;font-size:18px;'>FAILED — check server error_log.</p>";
