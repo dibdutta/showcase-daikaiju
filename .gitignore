@@ -17,3 +17,7 @@ src/admin_templates_c
 # Terraform
 infra/.terraform/
 infra/.terraform.lock.hcl
+
+# Local secrets — never commit
+.env
+.env.local
