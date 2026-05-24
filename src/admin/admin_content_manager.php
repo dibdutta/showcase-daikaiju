@@ -7,7 +7,6 @@ ob_start();
 
 define ("INCLUDE_PATH", "../");
 require_once INCLUDE_PATH."lib/inc.php";
-require_once INCLUDE_PATH."FCKeditor/fckeditor.php";
 
 if(!isset($_SESSION['adminLoginID'])){
 	redirect_admin("admin_login.php");
@@ -313,21 +312,10 @@ function edit_content() {
 	$smarty->assign('page_header_name', trim($_POST['page_header_name'] ?? '')!=""?escape($_POST['page_header_name']):$pageDetails[PAGE_HEADER_NAME]);
 	$smarty->assign('page_name', $pageDetails[PAGE_NAME]);
 	
-	ob_start();
-	$oFCKeditor = new FCKeditor('page_content') ;
-	$oFCKeditor->BasePath = '../FCKeditor/';
-	$oFCKeditor->Value = $pageDetails[PAGE_CONTENT];
-	$oFCKeditor->Width  = '100%';
-	$oFCKeditor->Height = '500';
-	$oFCKeditor->Create() ;
-	$page_content = ob_get_contents();
-	ob_end_clean();
-	
-	$smarty->assign('page_content', $page_content);
-	
+	$smarty->assign('page_content', $pageDetails[PAGE_CONTENT]);
 	$smarty->assign('page_content_id', $_REQUEST['page_content_id'] ?? '');
 	$smarty->assign('type', $_REQUEST['type'] ?? '');
-		
+
 	$smarty->display('admin_edit_content_manager.tpl');
 }
 /**********	 END of edit_content Function	 *******************/
@@ -378,21 +366,10 @@ function add_content() {
 	$smarty->assign('page_header_name', trim($_POST['page_header_name'] ?? ''));
 	$smarty->assign('page_name', $pageDetails[PAGE_NAME]);
 
-	ob_start();
-	$oFCKeditor = new FCKeditor('page_content') ;
-	$oFCKeditor->BasePath = '../FCKeditor/';
-	$oFCKeditor->Value = $_POST['page_content'] ?? '';
-	$oFCKeditor->Width  = '100%';
-	$oFCKeditor->Height = '500';
-	$oFCKeditor->Create() ;
-	$page_content = ob_get_contents();
-	ob_end_clean();
-	
-	$smarty->assign('page_content', $page_content);
-	
+	$smarty->assign('page_content', $_POST['page_content'] ?? '');
 	$smarty->assign('page_id', $_REQUEST['page_id'] ?? '');
 	$smarty->assign('type', $_REQUEST['type'] ?? '');
-		
+
 	$smarty->display('admin_add_content_manager.tpl');
 }
 /**********	 END of edit_content Function	 *******************/

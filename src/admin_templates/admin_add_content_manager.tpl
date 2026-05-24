@@ -35,7 +35,17 @@
 											<td colspan="2" class="bold_text" height="10">Page Content :<br /></td>
 										</tr>
 										<tr>
-											<td width="100%" colspan="2">{$page_content}</td>
+											<td width="100%" colspan="2">
+												<textarea name="page_content" id="page_content" style="width:100%;">{$page_content|escape:'html'}</textarea>
+												<script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
+												{literal}
+												<script>
+												CKEDITOR.replace('page_content', {
+													height: 500
+												});
+												</script>
+												{/literal}
+											</td>
 										</tr>
 										<tr height="28">
 											<td align="center"><input type="submit" name="" value="Save Content" class="button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="" value="Cancel" class="button" onclick="javascript: location.href='{$actualPath}{$decoded_string}'; "></td>
