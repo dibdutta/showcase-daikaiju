@@ -427,31 +427,38 @@ function sendMail($toMail, $toName, $subject, $textContent) {
         return false;
     }
 
-    require_once __DIR__ . '/AWS/aws-autoloader.php';
+    $payload = json_encode([
+        'from'     => ['address' => SITE_EMAIL, 'name' => 'Kaijulink'],
+        'to'       => [['email_address' => ['address' => $toMail, 'name' => trim($toName)]]],
+        'subject'  => $subject,
+        'htmlbody' => $textContent,
+    ]);
 
-	$client = new Aws\Ses\SesClient([
-				'version' => 'latest',
-				'region'  => 'us-east-1'
-	]);
+    $ch = curl_init('https://api.zeptomail.in/v1.1/email');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => $payload,
+        CURLOPT_HTTPHEADER     => [
+            'Authorization: Zoho-enczapikey ' . ZEPTOMAIL_SMTP_TOKEN,
+            'Content-Type: application/json',
+            'Accept: application/json',
+        ],
+    ]);
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlErr  = curl_error($ch);
+    curl_close($ch);
 
-	$ses_sender = SITE_EMAIL_SENDER;
-	$ses_recipient = trim($toName) !== '' ? $toName . '<' . $toMail . '>' : $toMail;
-
-	$request = array();
-	$request['Source'] = $ses_sender;
-	$request['Destination']['ToAddresses'] = array($ses_recipient);
-	$request['Message']['Subject']['Data'] = $subject;
-	$request['Message']['Subject']['Charset'] = 'utf-8';
-	$request['Message']['Body']['Html']['Data'] = $textContent;
-	$request['Message']['Body']['Html']['Charset'] = 'utf-8';
-	try{
-		$result = $client->sendEmail($request);
-		return true;
-	} catch (Exception $e) {
-		error_log('SES sendMail error: ' . $e->getMessage());
-		return false;
-	}
-
+    if ($curlErr) {
+        error_log('Zeptomail sendMail curl error: ' . $curlErr);
+        return false;
+    }
+    if ($httpCode < 200 || $httpCode >= 300) {
+        error_log('Zeptomail sendMail error ' . $httpCode . ': ' . $response);
+        return false;
+    }
+    return true;
 }
 
 ////////////// sendMail function END    ///////////////////////////////
@@ -1559,30 +1566,6 @@ function chkTimeOut(){}
  function chkLoginNow(){}
  
  function sendMailAWS($toMail, $toName, $subject, $textContent){
- 	require_once __DIR__ . '/AWS/aws-autoloader.php';
-
-	$client = new Aws\Ses\SesClient([
-				'version' => 'latest',
-				'region'  => 'us-east-1'
-	]);
-
-	$ses_sender = SITE_EMAIL_SENDER;
-	$ses_recipient = $toName.'<'.$toMail.'>';
-
-	$request = array();
-	$request['Source'] = $ses_sender;
-	$request['Destination']['ToAddresses'] = array($ses_recipient);
-	$request['Message']['Subject']['Data'] = $subject;
-	$request['Message']['Subject']['Charset'] = 'utf-8';
-	$request['Message']['Body']['Html']['Data'] = $textContent;
-	$request['Message']['Body']['Html']['Charset'] = 'utf-8';
-	try{
-		$result = $client->sendEmail($request);
-		return true;
-	} catch (Exception $e) {
-		error_log('SES sendMailAWS error: ' . $e->getMessage());
-		return false;
-	}
-
+    return sendMail($toMail, $toName, $subject, $textContent);
  }
 ?>

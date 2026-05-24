@@ -49,22 +49,9 @@ define ('MAIL_BODY_BOTTOM', '</td></tr>
 
 
 function sendMailSES($toMail, $toName, $subject, $textContent) {
-    require_once __DIR__ . '/../../lib/AWS/aws-autoloader.php';
-    $client = new Aws\Ses\SesClient([
-        'version' => 'latest',
-        'region'  => 'us-east-1',
-    ]);
-    $request = [];
-    $request['Source'] = SITE_EMAIL_SENDER;
-    $request['Destination']['ToAddresses'] = [$toName . ' <' . $toMail . '>'];
-    $request['Message']['Subject']['Data'] = $subject;
-    $request['Message']['Subject']['Charset'] = 'utf-8';
-    $request['Message']['Body']['Html']['Data'] = $textContent;
-    $request['Message']['Body']['Html']['Charset'] = 'utf-8';
-    // Fire-and-forget: promise resolved after bid response is returned to client
-    $promise = $client->sendEmailAsync($request);
-    register_shutdown_function(function() use ($promise) {
-        try { $promise->wait(); } catch (Exception $e) { error_log("SES outbid error: " . $e->getMessage()); }
+    // Fire-and-forget: SMTP send runs after bid response is returned to client
+    register_shutdown_function(function() use ($toMail, $toName, $subject, $textContent) {
+        sendMail($toMail, $toName, $subject, $textContent);
     });
 }
 

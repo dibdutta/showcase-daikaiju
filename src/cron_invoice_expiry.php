@@ -79,6 +79,9 @@ $row = mysqli_fetch_array($res);
 
 define ("ADMIN_NAME", $row[CONFIG_ADMIN_NAME]);
 define ("ADMIN_EMAIL_ADDRESS", $row[CONFIG_ADMIN_EMAIL]);
+define ('ZEPTOMAIL_SMTP_TOKEN', getenv('ZEPTOMAIL_SMTP_TOKEN') ?: '');
+
+require_once __DIR__ . "/lib/function.php";
 
 checkExpiredInvoice();
 
@@ -125,17 +128,7 @@ function checkExpiredInvoice(){
         
         $textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
         $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
-        // To send HTML mail, the Content-type header must be set
-        $headers  = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-
-        // Additional headers
-        //$headers .= 'To: '.$toNameSeller.' <'.$toMailSeller.'>' . "\r\n";
-        $headers .= 'From: '.ADMIN_NAME.' <'.ADMIN_EMAIL_ADDRESS.'>' . "\r\n";
-        //$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
-        //$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
-
-        mail('"'.$toName.'" <'.$toMail.'>', $subject, $textContent, $headers);
+        sendMail($toMail, $toName, $subject, $textContent);
         $i++;
     }
 }

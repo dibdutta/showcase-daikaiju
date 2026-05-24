@@ -110,27 +110,17 @@ $row = mysqli_fetch_array($res);
 
 define ("ADMIN_NAME", $row[CONFIG_ADMIN_NAME]);
 define ("ADMIN_EMAIL_ADDRESS", $row[CONFIG_ADMIN_EMAIL]);
+define ('ZEPTOMAIL_SMTP_TOKEN', getenv('ZEPTOMAIL_SMTP_TOKEN') ?: '');
+
+require_once __DIR__ . "/lib/function.php";
 
 process_offers();
 updateBidCronJob();
 
 function sendMailCron($toMail, $toName, $subject, $textContent) {
-    require_once __DIR__ . '/lib/AWS/aws-autoloader.php';
-    $client = new Aws\Ses\SesClient([
-        'version' => 'latest',
-        'region'  => 'us-east-1',
-    ]);
-    $request = [];
-    $request['Source'] = SITE_EMAIL_SENDER;
-    $request['Destination']['ToAddresses'] = [$toName . '<' . $toMail . '>'];
-    $request['Message']['Subject']['Data'] = $subject;
-    $request['Message']['Subject']['Charset'] = 'utf-8';
-    $request['Message']['Body']['Html']['Data'] = $textContent;
-    $request['Message']['Body']['Html']['Charset'] = 'utf-8';
-    try {
-        $client->sendEmail($request);
-    } catch (Exception $e) {
-        echo "SES error: " . $e->getMessage() . "\n";
+    $result = sendMail($toMail, $toName, $subject, $textContent);
+    if (!$result) {
+        echo "Zeptomail error: sendMail() returned false for $toMail\n";
     }
 }
 
