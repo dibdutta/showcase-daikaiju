@@ -6,6 +6,7 @@
 		<meta name="history" content="">
 		<meta name="author" content="Verdana Core, phpdoc.net Inc.">
 		<title>{$smarty.const.ADMIN_PAGE_TITLE}</title>
+		<link rel="shortcut icon" href="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/favicon/111624e5-c88b-4ca0-8e89-53a48821379c.jpg/:/rs=w:24,h:24,m">
 		<link href="{$adminStaticPath}/adminStyle.css" rel="stylesheet">
         <link href="{$adminStaticPath}/dropdown_menu.css" rel="stylesheet">
         <script src="{$actualPathJSCSS}js/jquery.min.js"></script>
