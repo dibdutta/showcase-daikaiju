@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Image Viewer</title>
+<link rel="shortcut icon" href="https://img1.wsimg.com/isteam/ip/92d26c02-334b-45d8-a4c8-8d3a1ef3f97b/favicon/111624e5-c88b-4ca0-8e89-53a48821379c.jpg/:/rs=w:24,h:24,m">
 		<link rel="stylesheet" href="{$actualPath}/javascript/pagination/pagination.css" />
         <link rel="stylesheet" href="{$actualPath}/javascript/pagination/demo.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
@@ -80,6 +86,8 @@
             
         </script>
 		{/literal}
+</head>
+<body>
 		 <div style="font-family:Arial, Helvetica, sans-serif; color:#CC0000; font-size:16px;"><b>USE MOUSE TO DRAG AND PAN IMAGE</b></div>
 			{if $total_images >1}	
 			<div class="pagination">		
@@ -110,5 +118,7 @@
 		
 				<br style="clear:both;" />
 			</div>
-			
+</body>
+</html>
+
 			
