@@ -70,6 +70,7 @@ document.getElementById("frm1").submit();
             </div>
             
              <div id="fg_rightdiv">
+             {* MAILING LIST — commented out, will use later
              <div class="newsletter">
              <h3>Join Our Mailing List</h3>
              <form name="ccoptin" id="frm1" action="https://visitor.r20.constantcontact.com/d.jsp" target="_blank" method="post" style="margin-bottom:2;">
@@ -83,6 +84,7 @@ document.getElementById("frm1").submit();
 				<!--<input type="submit" name="go" value="Go" class="submit" style="font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; font-size:10pt;">-->
 			</form>
              </div>
+             *}
              <div class="clear"></div>
              <div class="bannersidebar pb12"><table width="315" border="0" cellspacing="0" cellpadding="0">
   <tr>

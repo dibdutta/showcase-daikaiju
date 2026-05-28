@@ -97,6 +97,7 @@ function updateArrows(wrap) {
         </div>
 
         <div id="fg_rightdiv">
+            {* MAILING LIST — commented out, will use later
             <div class="newsletter">
                 <h3>Join Our Mailing List</h3>
                 <form name="ccoptin" id="frm1" action="https://visitor.r20.constantcontact.com/d.jsp" target="_blank" method="post" style="margin-bottom:2;">
@@ -109,6 +110,7 @@ function updateArrows(wrap) {
                     </div>
                 </form>
             </div>
+            *}
             <div class="clear"></div>
             <div class="bannersidebar pb12">
                 <table width="315" border="0" cellspacing="0" cellpadding="0">
