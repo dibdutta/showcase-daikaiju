@@ -169,6 +169,104 @@ The site supports two PayPal payment paths. The modern path (REST v2) is the def
 
 **Carousel sections** — jCarousel 1.3.4. CSS and JS must be loaded via `{$actualPathJSCSS}` (not `DOMAIN_PATH`) to avoid mixed content blocking. Resources live at `src/javascript/slider/`.
 
+## Database Table Reference
+
+All table name constants are defined in `src/lib/var.inc.php`.
+
+### Master / Reference Tables (never truncate)
+
+| Table | Purpose |
+|---|---|
+| `config_table` | Global site config — admin name/email, PayPal credentials, tax rates, auction timing, meta tags |
+| `admin_table` | Admin user accounts — login, password, name, email, super-admin flag |
+| `admin_access_table` | Admin permission grants — maps admins to sections they can access |
+| `admin_section_table` | Admin dashboard section definitions |
+| `user_table` | Buyer/seller accounts — credentials, contact info, billing + shipping addresses |
+| `country_table` | Country reference — name, flag, currency, country code |
+| `card_details` | Saved card payment info linked to users |
+| `page_table` | CMS page registry — page filename, custom flag, SSL/permission settings |
+| `page_content_table` | CMS page content — header, body HTML, meta tags per page |
+| `tbl_auction_type` | Auction type lookup: 1=Fixed Price, 2=Weekly Live, 3=Monthly, 4=Stills |
+| `tbl_category` | Poster attribute categories (Size, Genre, Decade, Country, Condition) |
+| `tbl_category_type` | Category type definitions — types 1–5 used by `tbl_category` |
+| `tbl_subcategory` | Newer subcategory system for finer poster classification |
+| `tbl_shop_category` | Shop-level categories for storefront organisation |
+| `tbl_us_state` | US state reference for shipping address validation |
+| `tbl_package_dimention` | Package size/dimension options for shipping calculation |
+| `tbl_size_weight_cost_master` | Shipping cost lookup by category + size + weight combination |
+| `tbl_cond_desc` | Condition grade descriptions linked to condition category IDs |
+| `tbl_blog` | Blog/article posts — title, slug, HTML content, featured image, status |
+| `tbl_blog_comments` | Comments on blog posts — text, commenter info, approval status |
+| `tbl_email_temp` | Email template configuration records |
+| `tbl_email_temp_item_specific` | Item-specific email template overrides |
+| `tbl_blacklist` | Blacklisted users/items for fraud prevention |
+
+### Transactional Tables (truncated by `admin_reset_auction_data.php`)
+
+**Poster & Auction**
+
+| Table | Purpose |
+|---|---|
+| `tbl_poster` | Fixed-price listing details — title, description, attributes, approval status |
+| `tbl_poster_live` | Active copy of poster promoted by cron when auction goes live |
+| `tbl_poster_images` | Image filenames for fixed-price posters (filename only, no path — use `CLOUD_POSTER_*` constants) |
+| `tbl_poster_images_live` | Image filenames for live auction posters |
+| `tbl_auction` | Fixed-price auction records — asking/reserve/buy-now price, status flags, payment status |
+| `tbl_auction_live` | Active live/timed auction records (types 2–4) promoted by cron |
+| `tbl_auction_archive` | Completed auctions moved here by cron after close |
+| `tbl_auction_mapping` | Maps old auction IDs to new IDs created during cron promotion |
+| `tbl_auction_week` | Weekly auction schedule windows — `auction_week_start_date`, `auction_week_end_date` |
+| `tbl_auction_calender` | Admin-configurable auction calendar display entries |
+| `tbl_event` | Monthly auction event groupings — live auctions attach via `fk_event_id` |
+
+**Category Junctions**
+
+| Table | Purpose |
+|---|---|
+| `tbl_poster_to_category` | Links fixed-price posters to their categories (size, genre, decade, etc.) |
+| `tbl_poster_to_category_live` | Same junction for live auction posters |
+| `tbl_poster_to_subcategory` | Links posters to subcategories |
+| `tbl_poster_to_subcategory_live` | Same junction for live auction posters |
+| `tbl_poster_to_shop_category` | Links posters to shop categories |
+| `tbl_poster_to_shop_category_live` | Same junction for live auction posters |
+
+**Bidding & Offers**
+
+| Table | Purpose |
+|---|---|
+| `tbl_bid` | Live bid records — user, auction, amount, timestamp, `bid_is_won` flag |
+| `tbl_bid_archive` | Bids moved here by cron when auction closes |
+| `tbl_proxy_bid` | Proxy (auto-increment) bid configuration for fixed-price auctions |
+| `tbl_proxy_bid_live` | Proxy bids for active live auctions |
+| `tbl_offer` | Buyer offer records against fixed-price listings — amount, acceptance status |
+
+**User Activity**
+
+| Table | Purpose |
+|---|---|
+| `tbl_watching` | User watchlists — auctions a user is monitoring |
+| `tbl_wantlist` | User want-lists — desired item titles + categories for match notifications |
+| `tbl_wantlist_category` | Junction linking wantlist entries to desired categories |
+| `tbl_messages` | User-to-user and buyer/seller messages |
+| `tbl_cart_history` | Shopping cart items and transaction history |
+
+**Invoices & Payments**
+
+| Table | Purpose |
+|---|---|
+| `tbl_invoice` | Invoice records — `is_paid`, `is_approved`, `is_cancelled`, `tracking_number`, `total_amount` |
+| `tbl_invoice_to_auction` | Links an invoice to one or more auction items (combined invoices) |
+| `tbl_sold_archive` | Sold item records archived by cron after auction close |
+| `tbl_mpe_admin_payment_to_seller` | Records of MPE commission-deducted payments sent to sellers |
+
+**Temp / Working**
+
+| Table | Purpose |
+|---|---|
+| `tbl_temp` | Short-lived working table used by `sold_item.php` for processing |
+| `tbl_lossing_temp_table` | Temp table for tracking losing bids during `my_bid.php` display |
+| `tbl_pending_bulkuploads` | Queue of pending bulk poster import jobs |
+
 ## Known Codebase Constraints
 
 - **Raw SQL everywhere** — queries use string concatenation, not prepared statements. Be careful when modifying queries to avoid worsening injection surface.
