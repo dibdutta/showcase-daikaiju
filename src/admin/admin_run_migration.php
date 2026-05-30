@@ -103,25 +103,24 @@ if (mysqli_num_rows($colCheck3) == 0) {
 }
 
 // 9. Fix duplicate is_default=1 rows in tbl_poster_images.
-// Root cause: dynamicPosterUpload() did not check for an existing default before
-// setting is_default=1 on newly added images. For each affected poster we keep
-// the row with the highest poster_image_id and clear is_default on the rest.
-$dupeRs = mysqli_query($db,
-    "SELECT fk_poster_id FROM tbl_poster_images
-     WHERE is_default = '1'
-     GROUP BY fk_poster_id
-     HAVING COUNT(*) > 1"
-);
-if ($dupeRs && mysqli_num_rows($dupeRs) > 0) {
-    while ($dupeRow = mysqli_fetch_assoc($dupeRs)) {
-        $pid = (int)$dupeRow['fk_poster_id'];
-        $maxRs = mysqli_query($db, "SELECT MAX(poster_image_id) AS keep_id FROM tbl_poster_images WHERE fk_poster_id=$pid AND is_default='1'");
-        $keepId = (int)mysqli_fetch_assoc($maxRs)['keep_id'];
-        runSql($db, "UPDATE tbl_poster_images SET is_default=0 WHERE fk_poster_id=$pid AND is_default='1' AND poster_image_id != $keepId", $results);
-    }
-    $results[] = "OK: duplicate is_default rows cleaned up.";
+// For each poster that has more than one is_default=1 image, keep only the one
+// with the highest poster_image_id (most recently added) and set the rest to '0'.
+$fixSql = "UPDATE tbl_poster_images pi1
+           INNER JOIN (
+               SELECT fk_poster_id, MAX(poster_image_id) AS keep_id
+               FROM tbl_poster_images
+               WHERE is_default = '1'
+               GROUP BY fk_poster_id
+               HAVING COUNT(*) > 1
+           ) AS dupes ON pi1.fk_poster_id = dupes.fk_poster_id
+                      AND pi1.poster_image_id <> dupes.keep_id
+           SET pi1.is_default = '0'
+           WHERE pi1.is_default = '1'";
+if (mysqli_query($db, $fixSql)) {
+    $affected = mysqli_affected_rows($db);
+    $results[] = "OK: fixed duplicate is_default rows — $affected row(s) cleared.";
 } else {
-    $results[] = "OK: no duplicate is_default rows found.";
+    $results[] = "ERROR fixing duplicate is_default: " . mysqli_error($db);
 }
 
 echo "<pre>" . implode("\n", $results) . "\n\nMigration complete. Delete this file.</pre>";
