@@ -1410,11 +1410,22 @@ function increment_amount($buy_now){
 		}
 	}
 
+	// If this poster already has a default image, don't auto-assign a new default.
+	// The edit flows (edit_myauction.php etc.) handle default assignment explicitly
+	// via UPDATE after calling this function. Prevents duplicate is_default=1 rows
+	// when images are added to an existing poster.
+	$existingDefaultRs = mysqli_query($GLOBALS['db_connect'],
+		"SELECT COUNT(*) AS cnt FROM tbl_poster_images WHERE fk_poster_id = $poster_id AND is_default = '1'");
+	$hasExistingDefault = ($existingDefaultRs && mysqli_fetch_assoc($existingDefaultRs)['cnt'] > 0);
+
 	foreach($posterArr as $key => $value){
 
 		$extParts = explode('.', $value);
 		$imageExt = $fileExt = end($extParts);
-		if ($has_default) {
+		if ($hasExistingDefault) {
+			// Poster already has a default — leave all new images as non-default
+			$set_default = 0;
+		} elseif ($has_default) {
 			$set_default = ($value == $is_default) ? 1 : 0;
 		} else {
 			// No valid default selected — set first image as default
