@@ -483,21 +483,26 @@ function email_template(){
 		require_once INCLUDE_PATH."lib/adminCommon.php";
 		
 		 	$db = $GLOBALS['db_connect'];
-	 	$sql= "UPDATE tbl_auction_calender SET
-	 				auction_1='".mysqli_real_escape_string($db,$_REQUEST['upcoming_1'] ?? '')."',
-	 				auction_2='".mysqli_real_escape_string($db,$_REQUEST['upcoming_2'] ?? '')."',
-	 				auction_3='".mysqli_real_escape_string($db,$_REQUEST['upcoming_3'] ?? '')."',
-	 				auction_4='".mysqli_real_escape_string($db,$_REQUEST['upcoming_4'] ?? '')."',
-	 				auction_5='".mysqli_real_escape_string($db,$_REQUEST['upcoming_5'] ?? '')."',
-	 				auction_1_link='".mysqli_real_escape_string($db,$_REQUEST['upcoming_link_1'] ?? '')."',
-	 				auction_2_link='".mysqli_real_escape_string($db,$_REQUEST['upcoming_link_2'] ?? '')."',
-	 				auction_3_link='".mysqli_real_escape_string($db,$_REQUEST['upcoming_link_3'] ?? '')."',
-	 				auction_4_link='".mysqli_real_escape_string($db,$_REQUEST['upcoming_link_4'] ?? '')."',
-	 				auction_5_link='".mysqli_real_escape_string($db,$_REQUEST['upcoming_link_5'] ?? '')."'
-	 			WHERE id=1";
-			//echo $sql;
-			//exit();
-		 	$resSql= mysqli_query($GLOBALS['db_connect'],$sql);
+	 	$a1  = mysqli_real_escape_string($db, $_REQUEST['upcoming_1']      ?? '');
+	 	$a2  = mysqli_real_escape_string($db, $_REQUEST['upcoming_2']      ?? '');
+	 	$a3  = mysqli_real_escape_string($db, $_REQUEST['upcoming_3']      ?? '');
+	 	$a4  = mysqli_real_escape_string($db, $_REQUEST['upcoming_4']      ?? '');
+	 	$a5  = mysqli_real_escape_string($db, $_REQUEST['upcoming_5']      ?? '');
+	 	$l1  = mysqli_real_escape_string($db, $_REQUEST['upcoming_link_1'] ?? '');
+	 	$l2  = mysqli_real_escape_string($db, $_REQUEST['upcoming_link_2'] ?? '');
+	 	$l3  = mysqli_real_escape_string($db, $_REQUEST['upcoming_link_3'] ?? '');
+	 	$l4  = mysqli_real_escape_string($db, $_REQUEST['upcoming_link_4'] ?? '');
+	 	$l5  = mysqli_real_escape_string($db, $_REQUEST['upcoming_link_5'] ?? '');
+	 	$sql = "INSERT INTO tbl_auction_calender
+	 				(id, auction_1, auction_2, auction_3, auction_4, auction_5,
+	 				 auction_1_link, auction_2_link, auction_3_link, auction_4_link, auction_5_link)
+	 			VALUES
+	 				(1, '$a1', '$a2', '$a3', '$a4', '$a5', '$l1', '$l2', '$l3', '$l4', '$l5')
+	 			ON DUPLICATE KEY UPDATE
+	 				auction_1='$a1', auction_2='$a2', auction_3='$a3', auction_4='$a4', auction_5='$a5',
+	 				auction_1_link='$l1', auction_2_link='$l2', auction_3_link='$l3',
+	 				auction_4_link='$l4', auction_5_link='$l5'";
+		 	$resSql= mysqli_query($db, $sql);
 		 
 		 $sqlTemp = "Select * from  tbl_auction_calender WHERE id=1 ";
 		 $ressql= mysqli_query($GLOBALS['db_connect'],$sqlTemp);
