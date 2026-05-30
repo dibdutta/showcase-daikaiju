@@ -307,10 +307,16 @@ function save_user()
         $fromName = ADMIN_NAME;
         
         //$textContent = "Thanks for registering with us. Please click on the link below to complete the registration process.<br /><br /><a href='".DOMAIN_PATH."/register.php?mode=verify&username=".$_POST['username']."&vcode=".$obj->verifyCode."'><b>Validate</b></a><br /><br />";
-		$textContent = "Thanks for registering with us. Your login credentials are given below.<br /><br />";
-        $textContent .= "<b>Username : </b>".$_POST['username']."<br />";
-        $textContent .= "<b>Password : </b>".$password."<br /><br />";
-        $textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;    
+        $textContent  = "<p style='margin:0 0 16px 0; color:#333333;'>Dear " . htmlspecialchars($_POST['firstname']) . ",</p>";
+        $textContent .= "<p style='margin:0 0 16px 0; color:#333333;'>Welcome to <strong>KaijuLink</strong> &mdash; your destination for rare movie posters and Godzilla/kaiju collectibles. Your account has been created successfully.</p>";
+        $textContent .= "<p style='margin:0 0 12px 0; color:#333333;'>Here are your login credentials:</p>";
+        $textContent .= "<table style='background:#f9f9f9; border:1px solid #e0e0e0; border-radius:4px; margin:0 0 20px 0; border-collapse:collapse;'>";
+        $textContent .= "<tr><td style='padding:10px 20px; color:#666666; font-size:13px; border-bottom:1px solid #e0e0e0;'><strong>Username</strong></td><td style='padding:10px 20px; color:#333333; font-size:13px; border-bottom:1px solid #e0e0e0;'>" . htmlspecialchars($_POST['username']) . "</td></tr>";
+        $textContent .= "<tr><td style='padding:10px 20px; color:#666666; font-size:13px;'><strong>Password</strong></td><td style='padding:10px 20px; color:#333333; font-size:13px;'>" . htmlspecialchars($password) . "</td></tr>";
+        $textContent .= "</table>";
+        $textContent .= "<p style='margin:0 0 16px 0;'><a href='https://www.kaijulink.com/auth.php' style='display:inline-block; background:#c0392b; color:#ffffff; padding:10px 24px; border-radius:4px; text-decoration:none; font-weight:bold; font-size:14px;'>Log In to Your Account</a></p>";
+        $textContent .= "<p style='margin:20px 0 8px 0; color:#333333;'>If you have any questions, please contact us at <a href='mailto:" . ADMIN_EMAIL_ADDRESS . "' style='color:#c0392b;'>" . ADMIN_EMAIL_ADDRESS . "</a>.</p>";
+        $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>" . ADMIN_NAME . "</strong><br />KaijuLink Team</p>";    
         $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
         $check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
         
