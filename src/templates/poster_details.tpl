@@ -87,11 +87,57 @@ function toggleDiv(id,flagit,type,track) {
 		});
 	}
 	function open_new_window(){
-		index_id = $('#photo_index').val();
-		window.open('{/literal}{$actualPath}{literal}/auction_images_large?mode=auction_images_large&id={/literal}{$auctionDetails[0].poster_id}{literal}&auction_id={/literal}{$auctionDetails[0].auction_id}{literal}&page_index='+index_id,'_blank').focus();
-		//window.open('{/literal}{$actualPath}{literal}/auction_images_large?mode=auction_images_large&id={/literal}{$auctionDetails[0].poster_id}{literal}&auction_id={/literal}{$auctionDetails[0].auction_id}{literal}&page_index='+index_id,'mywindow','menubar=1,resizable=1,width={/literal}{$width+100}{literal},height={/literal}{$height+100}{literal},scrollbars=yes','_blank').focus();
-		
+		var index_id = $('#photo_index').val();
+		var w = Math.min(screen.availWidth - 60, 1200);
+		var h = Math.min(screen.availHeight - 60, 900);
+		window.open('{/literal}{$actualPath}{literal}/auction_images_large?mode=auction_images_large&id={/literal}{$auctionDetails[0].poster_id}{literal}&auction_id={/literal}{$auctionDetails[0].auction_id}{literal}&page_index='+index_id,'posterviewer','menubar=0,toolbar=0,resizable=1,scrollbars=yes,width='+w+',height='+h);
 	}
+	// Inline lightbox: zoom + pan without leaving the page
+	var lbScale=1, lbX=0, lbY=0, lbDragging=false, lbDragSX, lbDragSY;
+	function openLightbox(){
+		var src=$('#org_id').attr('src');
+		if(!src) return;
+		lbScale=1; lbX=0; lbY=0;
+		$('#lb-img').attr('src',src).css('transform','');
+		$('#poster-lb').fadeIn(150);
+		$('body').css('overflow','hidden');
+	}
+	function closeLightbox(){
+		$('#poster-lb').fadeOut(150);
+		$('body').css('overflow','');
+	}
+	function lbApply(){
+		$('#lb-img').css('transform','translate('+lbX+'px,'+lbY+'px) scale('+lbScale+')');
+	}
+	$(document).ready(function(){
+		$('#poster-lb').on('wheel',function(e){
+			e.preventDefault();
+			var oe=e.originalEvent, factor=oe.deltaY<0?1.12:0.89;
+			var ns=Math.max(0.5,Math.min(8,lbScale*factor));
+			var cx=oe.clientX-$(this).width()/2, cy=oe.clientY-$(this).height()/2;
+			lbX=cx-(cx-lbX)*(ns/lbScale); lbY=cy-(cy-lbY)*(ns/lbScale); lbScale=ns;
+			lbApply();
+		});
+		$('#lb-img').on('mousedown',function(e){
+			if(e.button!==0) return;
+			e.preventDefault(); lbDragging=true;
+			lbDragSX=e.clientX-lbX; lbDragSY=e.clientY-lbY;
+			$(this).css('cursor','grabbing');
+		});
+		$(document).on('mousemove.lb',function(e){
+			if(!lbDragging) return;
+			lbX=e.clientX-lbDragSX; lbY=e.clientY-lbDragSY; lbApply();
+		}).on('mouseup.lb',function(){
+			lbDragging=false; $('#lb-img').css('cursor','grab');
+		});
+		$('#lb-img').on('dblclick',function(e){
+			e.preventDefault(); lbScale=1; lbX=0; lbY=0; lbApply();
+		});
+		$('#poster-lb').on('click',function(e){
+			if($(e.target).closest('#lb-img').length===0) closeLightbox();
+		});
+		$(document).on('keydown.lb',function(e){ if(e.key==='Escape') closeLightbox(); });
+	});
 </script>
 <style type="text/css">.div {position:absolute;  min-width:120px; left:200px; top:50px; list-style-type:none; visibility:hidden;background-color:#881318;color:white; z-index:50;font-size:12px; padding:6px; outline:4px solid #881318; border: 1px solid #a3595c;}
 .popDiv_Auction{position:absolute;  min-width:120px; left:140px; top:50px; list-style-type:none; visibility:hidden;background-color:#881318;color:white; z-index:50;font-size:12px; margin-left:80px; padding:6px; outline:4px solid #881318; border: 1px solid #a3595c;}
@@ -169,7 +215,7 @@ function toggleDiv(id,flagit,type,track) {
                                 <div class="buygrid_big">
                                        <div>
                                    								
-									<img class="image-brdr" src="{$auctionDetails[0].large_image}"   border="0"  style="cursor:pointer;width:318px;"    onclick="open_new_window()" id="org_id" />
+									<img class="image-brdr" src="{$auctionDetails[0].large_image}" border="0" style="cursor:zoom-in;width:318px;" onclick="openLightbox()" id="org_id" title="Click to zoom &amp; pan" />
 									</div></div>
                             </td></tr></tbody></table>
                                
@@ -710,4 +756,12 @@ function toggleDiv(id,flagit,type,track) {
 		</div>
 		<div class="clear"></div>
    </div>
+<!-- Poster image lightbox: zoom + pan -->
+<div id="poster-lb" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.93);z-index:9999;">
+  <button onclick="closeLightbox()" title="Close (Esc)" style="position:absolute;top:12px;right:18px;background:none;border:none;color:#fff;font-size:40px;cursor:pointer;line-height:1;z-index:10000;padding:0 6px;">&times;</button>
+  <p style="position:absolute;bottom:14px;left:0;width:100%;text-align:center;color:#888;font-size:12px;margin:0;pointer-events:none;">Scroll to zoom &bull; Drag to pan &bull; Double-click to reset &bull; Esc to close</p>
+  <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+    <img id="lb-img" src="" alt="" draggable="false" style="max-width:none;max-height:none;cursor:grab;user-select:none;-webkit-user-drag:none;transform-origin:center center;" />
+  </div>
+</div>
 {include file="foot.tpl"}
