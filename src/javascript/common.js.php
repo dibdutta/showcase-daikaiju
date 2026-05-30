@@ -725,10 +725,20 @@ function timeLeftPosterDetails(dataArr)
                 ids += ','; 
             }
         }
+        // Build original-type map from PHP-rendered data (authoritative).
+        // The AJAX stored proc may return a different type if the item also
+        // exists in tbl_auction_live (e.g. a fixed-price item returned as type 2).
+        var origTypes = {};
+        for(var k=0; k<dataArr.length; k++){
+            origTypes[dataArr[k]['auction_id']] = parseInt(dataArr[k]['fk_auction_type_id']);
+        }
         var curr_user = '<?php echo $_SESSION['sessUserID'];?>';
         $.get(url, {mode : 'time_left', ids : ids,list:list}, function(data, textStatus){
             bidDataArr = eval(data);
             for(var i=0; i<bidDataArr.length; i++){
+                // Use the original type from PHP data; fall back to AJAX value only if unknown
+                var origType = origTypes[bidDataArr[i]['auction_id']];
+                if(origType !== undefined) bidDataArr[i]['fk_auction_type_id'] = origType;
                 if(parseInt(bidDataArr[i]['auction_is_sold']) != 0 && parseInt(bidDataArr[i]['auction_is_sold']) != 3){
                     if(parseInt(bidDataArr[i]['fk_auction_type_id']) != 1 && parseInt(bidDataArr[i]['fk_auction_type_id']) != 4){
                         $('#cd_'+bidDataArr[i]['auction_id']).countdown('destroy');
