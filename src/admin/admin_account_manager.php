@@ -482,11 +482,19 @@ function email_template(){
 	function save_calender_template(){
 		require_once INCLUDE_PATH."lib/adminCommon.php";
 		
-		 	$sql= "UPDATE  tbl_auction_calender SET auction_1='".($_REQUEST['upcoming_1'] ?? '')."',auction_2='".($_REQUEST['upcoming_2'] ?? '')."',
-					auction_3='".($_REQUEST['upcoming_3'] ?? '')."',auction_4= '".($_REQUEST['upcoming_4'] ?? '')."',auction_5= '".($_REQUEST['upcoming_5'] ?? '')."',
-					auction_1_link='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_1'] ?? '')."',auction_2_link='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_2'] ?? '')."',
-					auction_3_link='".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_3'] ?? '')."',auction_4_link= '".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_4'] ?? '')."',auction_4_link= '".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['upcoming_link_5'] ?? '')."'
-					WHERE id=1 ";
+		 	$db = $GLOBALS['db_connect'];
+	 	$sql= "UPDATE tbl_auction_calender SET
+	 				auction_1='".mysqli_real_escape_string($db,$_REQUEST['upcoming_1'] ?? '')."',
+	 				auction_2='".mysqli_real_escape_string($db,$_REQUEST['upcoming_2'] ?? '')."',
+	 				auction_3='".mysqli_real_escape_string($db,$_REQUEST['upcoming_3'] ?? '')."',
+	 				auction_4='".mysqli_real_escape_string($db,$_REQUEST['upcoming_4'] ?? '')."',
+	 				auction_5='".mysqli_real_escape_string($db,$_REQUEST['upcoming_5'] ?? '')."',
+	 				auction_1_link='".mysqli_real_escape_string($db,$_REQUEST['upcoming_link_1'] ?? '')."',
+	 				auction_2_link='".mysqli_real_escape_string($db,$_REQUEST['upcoming_link_2'] ?? '')."',
+	 				auction_3_link='".mysqli_real_escape_string($db,$_REQUEST['upcoming_link_3'] ?? '')."',
+	 				auction_4_link='".mysqli_real_escape_string($db,$_REQUEST['upcoming_link_4'] ?? '')."',
+	 				auction_5_link='".mysqli_real_escape_string($db,$_REQUEST['upcoming_link_5'] ?? '')."'
+	 			WHERE id=1";
 			//echo $sql;
 			//exit();
 		 	$resSql= mysqli_query($GLOBALS['db_connect'],$sql);
