@@ -314,7 +314,7 @@ function save_user()
         $textContent .= "<tr><td style='padding:10px 20px; color:#666666; font-size:13px; border-bottom:1px solid #e0e0e0;'><strong>Username</strong></td><td style='padding:10px 20px; color:#333333; font-size:13px; border-bottom:1px solid #e0e0e0;'>" . htmlspecialchars($_POST['username']) . "</td></tr>";
         $textContent .= "<tr><td style='padding:10px 20px; color:#666666; font-size:13px;'><strong>Password</strong></td><td style='padding:10px 20px; color:#333333; font-size:13px;'>" . htmlspecialchars($password) . "</td></tr>";
         $textContent .= "</table>";
-        $textContent .= "<p style='margin:0 0 16px 0;'><a href='https://www.kaijulink.com/auth.php' style='display:inline-block; background:#c0392b; color:#ffffff; padding:10px 24px; border-radius:4px; text-decoration:none; font-weight:bold; font-size:14px;'>Log In to Your Account</a></p>";
+        $textContent .= "<p style='margin:0 0 16px 0;'><a href='https://www.kaijulink.com' style='display:inline-block; background:#c0392b; color:#ffffff; padding:10px 24px; border-radius:4px; text-decoration:none; font-weight:bold; font-size:14px;'>Log In to Your Account</a></p>";
         $textContent .= "<p style='margin:20px 0 8px 0; color:#333333;'>If you have any questions, please contact us at <a href='mailto:" . ADMIN_EMAIL_ADDRESS . "' style='color:#c0392b;'>" . ADMIN_EMAIL_ADDRESS . "</a>.</p>";
         $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>" . ADMIN_NAME . "</strong><br />KaijuLink Team</p>";    
         $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
