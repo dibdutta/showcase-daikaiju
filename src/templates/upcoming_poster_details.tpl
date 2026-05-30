@@ -56,7 +56,7 @@ function highlight()
             {if $extendedAuction != ""}					    
 						  <li {if $smarty.request.list == 'extended'} class="active" {/if}><a href="{$actualPath}/buy?list=extended&view_mode=grid"><span>Extended Auction {$extendedAuction}</span></a></li>
 						{/if}
-						<li {if $smarty.request.list == 'alternative'} class="active" {/if}><a href="{$actualPath}/buy?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>
+						{*<li {if $smarty.request.list == 'alternative'} class="active" {/if}><a href="{$actualPath}/buy?list=alternative&view_mode=grid"><span><i>Alternative</i></span></a></li>*}
 						{*<li {if $smarty.request.list == 'stills'} class="active" {/if}><a href="{$actualPath}/buy?list=stills"><span>Fixed Price Stills</span></a></li>*}
                     </ul>
 					
