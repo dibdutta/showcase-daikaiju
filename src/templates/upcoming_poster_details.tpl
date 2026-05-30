@@ -223,11 +223,9 @@ function highlight()
        <tr>
         <td class="pt10 pb10">
         	<div class="descrp-area">
-                <div class="desp-txt"><b>Size : </b> {$auctionDetails[0].poster_size}</div>
-                <div class="desp-txt"><b>Genre : </b> {$auctionDetails[0].genre}</div>
-                <div class="desp-txt"><b>Decade : </b> {$auctionDetails[0].decade}</div>
-                <div class="desp-txt"><b>Country : </b> {$auctionDetails[0].country}</div>
-                <div class="desp-txt"><b>Condition : </b> {$auctionDetails[0].cond}</div>
+                {if $auctionDetails[0].shop_cat_name}<div class="desp-txt"><b>Category : </b> {$auctionDetails[0].shop_cat_name}</div>{/if}
+                {if $auctionDetails[0].subcat_value}<div class="desp-txt"><b>Subcategory : </b> {$auctionDetails[0].subcat_value}</div>{/if}
+                {if $auctionDetails[0].cond}<div class="desp-txt"><b>Condition : </b> {$auctionDetails[0].cond}</div>{/if}
             </div>
         </td>
       </tr>
