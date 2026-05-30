@@ -7875,6 +7875,8 @@ div.features_menu_column div.features_selector div.trigger ul {
 #mainnav {
 	margin: 0px;
 	padding: 0px;
+	position: relative;
+	min-height: 35px;
 }
 
 #mainnav ul {
