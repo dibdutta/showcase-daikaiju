@@ -110,14 +110,14 @@ function toggleDiv(id,flagit,type,track) {
 		$('#lb-img').css('transform','translate('+lbX+'px,'+lbY+'px) scale('+lbScale+')');
 	}
 	$(document).ready(function(){
-		$('#poster-lb').on('wheel',function(e){
+		document.getElementById('poster-lb').addEventListener('wheel', function(e){
 			e.preventDefault();
-			var oe=e.originalEvent, factor=oe.deltaY<0?1.12:0.89;
+			var factor=e.deltaY<0?1.12:0.89;
 			var ns=Math.max(0.5,Math.min(8,lbScale*factor));
-			var cx=oe.clientX-$(this).width()/2, cy=oe.clientY-$(this).height()/2;
+			var cx=e.clientX-this.offsetWidth/2, cy=e.clientY-this.offsetHeight/2;
 			lbX=cx-(cx-lbX)*(ns/lbScale); lbY=cy-(cy-lbY)*(ns/lbScale); lbScale=ns;
 			lbApply();
-		});
+		}, {passive:false});
 		$('#lb-img').on('mousedown',function(e){
 			if(e.button!==0) return;
 			e.preventDefault(); lbDragging=true;
