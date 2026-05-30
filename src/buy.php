@@ -145,6 +145,10 @@ function displayList()
 		}
 		######  Should have these chnaged due to auction deleted ########
 		if($list=='weekly' && $total==0 && $auctionWeeks==0){
+			if($upcomingTotal > 0){
+				header("location: buy.php?list=upcoming");
+				exit;
+			}
 			$total = $objAuction->countExpiredAuctions($list);
 			$auctionItems = $objAuction->fetchExperiedAuctions($list,'',$_SESSION['sessAuctionView']);
 			$smarty->assign('is_expired', '1');

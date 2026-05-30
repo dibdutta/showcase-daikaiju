@@ -43,8 +43,8 @@
                     	{*<li {if $smarty.request.list == 'monthly'}class="active"{/if}><a href="{$actualPath}/buy?list=monthly"><span>Event Auctions</span></a></li>*}
                     	{if $upcomingTotal >0}
                     		<li {if $smarty.request.list == 'upcoming'}class="active"{/if}><a href="{$actualPath}/buy?list=upcoming"><span>Upcoming Auction(s)</span></a></li>
-						{else}
-							<li {if $smarty.request.track_is_expired == '1'}class="active"{/if}><a href="{$actualPath}/buy?list=weekly&track_is_expired=1"><span> {$latestEndedAuction} Results</span></a></li>
+						{elseif $smarty.request.track_is_expired == '1'}
+							<li class="active"><a href="{$actualPath}/buy?list=weekly&track_is_expired=1"><span>{$latestEndedAuction} Results</span></a></li>
 						{/if}
 						{elseif $live_count>1}
 							<li {if $smarty.request.auction_week_id ==$auctionWeeksData[0].auction_week_id} class="active"{/if}><a href="{$actualPath}/buy?list=weekly&auction_week_id={$auctionWeeksData[0].auction_week_id}"><span>{$auctionWeeksData[0].auction_week_title}</span></a></li>
