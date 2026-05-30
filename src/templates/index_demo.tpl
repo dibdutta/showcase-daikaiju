@@ -260,14 +260,14 @@ function updateArrows(wrap) {
                             <div class="hp-card-img-wrap">
                                 <img src="{$dataArrFixed[counter].large_image}"
                                      alt="{$dataArrFixed[counter].poster_title}"
-                                     onclick="redirect_poster_details({$dataArrFixed[counter].auction_id});">
+                                     onclick="redirect_poster_details({$dataArrFixed[counter].auction_id}, 1);">
                             </div>
                             <div class="hp-card-body">
                                 {if $smarty.session.sessUserID <> ""}
                                 <div class="hp-card-price">${$dataArrFixed[counter].auction_asked_price|number_format:2}</div>
                                 {/if}
                                 <div class="hp-card-title">
-                                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrFixed[counter].auction_id}"
+                                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrFixed[counter].auction_id}&fixed=1"
                                        title="{$dataArrFixed[counter].poster_title}"
                                        id="tipsy_{$dataArrFixed[counter].auction_id}"
                                        onmouseover="tipsy(this.id)">{$dataArrFixed[counter].poster_title}</a>
