@@ -335,7 +335,7 @@
 	</div> 
     
         	<div class="clb fll">
-            <div id="mainnav" style="z-index:100000; width:995px;" >
+            <div id="mainnav">
         <ul style="margin-left:8px; width:972px;">
         <li class="pr10 mr10 fll">
             <div class="features_menu_column mr10">

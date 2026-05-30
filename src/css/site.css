@@ -1586,7 +1586,7 @@ ul {
 	width: 995px;
 	padding: 0px;
 	margin: 0 auto;
-	overflow: hidden;
+	display: flow-root;
 }
 
 /*19/04/12 Starts*/
@@ -7785,12 +7785,14 @@ div.features_menu_column div.features_selector {
 	-ms-border-radius: 4px;
 	-khtml-border-radius: 4px;
 	border-radius: 4px;
-	position: relative;
-	width: 146px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 170px;
 	z-index: 1000;
 	background-image: url(https://d294w6g1afjpvs.cloudfront.net/images/select_arrow.png);
 	background-repeat: no-repeat;
-	background-position: 152px 12px;
+	background-position: 175px 12px;
 }
 
 div.features_menu_column2 div.features_selector2 {
@@ -7804,8 +7806,10 @@ div.features_menu_column2 div.features_selector2 {
 	-ms-border-radius: 4px;
 	-khtml-border-radius: 4px;
 	border-radius: 4px;
-	position: relative;
-	width: 111px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 135px;
 	z-index: 1000;
 }
 
@@ -7882,9 +7886,11 @@ div.features_menu_column div.features_selector div.trigger ul {
 
 #mainnav {
 	margin: 0px;
-	padding: 0px;
+	padding: 4px 0;
 	position: relative;
 	min-height: 35px;
+	background-color: #fff;
+	width: 100%;
 }
 
 #mainnav ul {
