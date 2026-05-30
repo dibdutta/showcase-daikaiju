@@ -126,7 +126,7 @@ function checkExpiredInvoice(){
         $textContent = 'Dear '.$row['firstname'].' '.$row['lastname'].',<br><br>';
         $textContent .= "Item: <b>".$posterArr[$i]."</b> has been removed from your invoice section,as payment has not occurred in the allotted 72 hours. Item has returned to selling state.<br /><br/>";
         
-        $textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+        $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
         $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
         sendMail($toMail, $toName, $subject, $textContent);
         $i++;
@@ -157,8 +157,8 @@ function checkExpiredInvoice(){
                 $subjectBuyer = "Kaijulink::Poster Relisted - ".$rowBuyer['poster_title']." ";
 				$textContentBuyer = 'Dear '.$rowBuyer['firstname'].' '.$rowBuyer['lastname'].',<br><br>';
                 $textContentBuyer .= $rowBuyer['poster_title'].' has been relisted again.<br /><br />';
-                $textContentBuyer .= 'For more details, please <a href="http://'.HOST_NAME.'">login</a><br /><br />';
-                $textContentBuyer .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+                $textContentBuyer .= 'For more details, please <a href="https://'.HOST_NAME.'">login</a><br /><br />';
+                $textContentBuyer .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
                 $textContentBuyer = MAIL_BODY_TOP.$textContentBuyer.MAIL_BODY_BOTTOM;
                 
 				mail('"'.$toNameBuyer.'" <'.$toMailBuyer.'>', $subjectBuyer, $textContentBuyer, $headers);

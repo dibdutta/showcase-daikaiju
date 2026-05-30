@@ -57,7 +57,7 @@ function save_contactus()
 		/*$textContent .= "Enquiry On: ".$qtype."<br />";*/
 		$textContent .= "Comments: ".$comments."<br /><br />";
 		
-		$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;	
+		$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 		$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 		$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 		if($check){

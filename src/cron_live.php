@@ -183,7 +183,7 @@ function sendOfferMailCron($row, $status)
         $textContent .= 'For more details, please <a href="'.SITE_URL.'">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Buying/My Incoming Counters.<br /><br />';
     }
     
-	$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;    
+	$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";    
 	$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM; 
 	//$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 	
@@ -276,9 +276,9 @@ function updateBidCronJob(){
 		
 							$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
 							$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
-							$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
-							$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction posters, please click the following link:<br/> <a href="http://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-							$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+							$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="https://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
+							$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction posters, please click the following link:<br/> <a href="https://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
+							$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 							$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;		
 		
 							// To send HTML mail, the Content-type header must be set
@@ -527,9 +527,9 @@ function processExpiredAuction($auction_id, $bid_id)
         $textContent = 'Dear '.$row['firstname'].' '.$row['lastname'].',<br /><br />';
         $textContent .= 'Congratulations! You have won the following item:<b> '.$row['poster_title'].'</b><br /><br />';
         $textContent .= 'To view this and all other items that you placed bids on, please login to your account and in <b>User Section</b> select <b>My Closed Items</b>,  located under the <b>My Buying</b> section.<br /><br />';
-        $textContent .= '<a href="http://'.HOST_NAME.'/buy.php">Click Here to log in. </a><br /><br />';
+        $textContent .= '<a href="https://'.HOST_NAME.'/buy.php">Click Here to log in. </a><br /><br />';
         $textContent .= 'You will receive an email when your invoice is ready with payment instructions. Once generated, invoices are also viewable in <b>User Section</b> under <b>My Account/Invoices</b>.<br /><br />';
-        $textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+        $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
         $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
         //$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 
@@ -559,8 +559,8 @@ function processExpiredAuction($auction_id, $bid_id)
         $textContentSeller = 'Dear '.$rowSeller['firstname'].' '.$rowSeller['lastname'].',<br /><br />';
         $textContentSeller.= 'Congratulations! Your Poster <b>(Poster Title : '.$row['poster_title'].'</b>) has been sold.To view this as well as any other items you have sold please login to your account and select <b>Sold</b>, located in <b>User Panel</b>, under <b>My Selling</b>.  <br /><br/>';
         //$textContentSeller.= 'Please Ship item promptly so that we may expedite shipment to buyer and payment to you. Ship to:<br /><br/>';
-		$textContentSeller.= 'Click <a href="http://'.HOST_NAME.'/buy.php"> Here </a> to go to site.<br /><br />';
-        $textContentSeller.= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+		$textContentSeller.= 'Click <a href="https://'.HOST_NAME.'/buy.php"> Here </a> to go to site.<br /><br />';
+        $textContentSeller.= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
         $textContentSeller= MAIL_BODY_TOP.$textContentSeller.MAIL_BODY_BOTTOM;
         //$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 
@@ -581,7 +581,7 @@ function processExpiredAuction($auction_id, $bid_id)
 
 
         $textContentAdmin.= 'This Poster <b>(Poster Title : '.$row['poster_title'].'</b>) has been sold.<br />';
-        $textContentAdmin.= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+        $textContentAdmin.= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
         $textContentAdmin= MAIL_BODY_TOP.$textContentAdmin.MAIL_BODY_BOTTOM;
         //$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 

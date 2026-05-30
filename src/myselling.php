@@ -731,9 +731,9 @@ function save_fixed_auction()
 				//$textContent .= '<b>Poster Title : </b>'.$invoice['poster_title'].'<br />';
 	$textContent .= 'Poster Title :'.$poster_title.'<br />';
 	$textContent .= 'Congratulations! Your item has been successfully listed.<br />';
-	$textContent .= 'You may view this item and any other items listed by logging in to your account <a href="http://'.HOST_NAME.'/">HERE</a> and placing your mouse over the Welcome, located in top red banner and selecting my selling/selling.<br /><br />';
+	$textContent .= 'You may view this item and any other items listed by logging in to your account <a href="https://'.HOST_NAME.'/">HERE</a> and placing your mouse over the Welcome, located in top red banner and selecting my selling/selling.<br /><br />';
 				
-	$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+	$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 	$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 	//$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 
@@ -1713,7 +1713,7 @@ function images_next(){
         $fromName = ADMIN_NAME;
         
 		$textContent = "New zip file has been uploaded by ".$row['firstname']."  ".$row['lastname']." (".$row['username'].").<br /><br />";
-        $textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;    
+        $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";    
         $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
         if($check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1)){
 		$_SESSION['Err'] = "Uploaded successfully.";

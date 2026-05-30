@@ -833,7 +833,7 @@ function postBid($username, $password,$auction_id,$bid_amount) {
 									$outbid_body  = 'Dear ' . $row_outbid['firstname'] . ' ' . $row_outbid['lastname'] . ',<br /><br />';
 									$outbid_body .= '<b>You have been outbid on: </b>' . $row_outbid['poster_title'] . '<br /><br />';
 									$outbid_body .= 'To increase your bid, click: <a href="http://' . HOST_NAME . '/buy.php?mode=poster_details&auction_id=' . $auction_id . '">View Item</a><br /><br />';
-									$outbid_body .= "Thanks & Regards,<br /><br />" . ADMIN_NAME . "<br />" . ADMIN_EMAIL_ADDRESS;
+									$outbid_body .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:" . ADMIN_EMAIL_ADDRESS . "' style='color:#c0392b;'>" . ADMIN_EMAIL_ADDRESS . "</a></p>;
 									$outbid_body  = MAIL_BODY_TOP . $outbid_body . MAIL_BODY_BOTTOM;
 									sendMailSES($row_outbid['email'], $row_outbid['firstname'] . ' ' . $row_outbid['lastname'], $outbid_subject, $outbid_body);
 								}

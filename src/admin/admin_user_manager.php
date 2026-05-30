@@ -647,10 +647,14 @@ function save_user()
 		$fromMail = ADMIN_EMAIL_ADDRESS;
 		$fromName = ADMIN_NAME;
 
-		$textContent = "An account hasbeen creted for you by Kaijulink Admin.<br /><br />";
-		$textContent .= "<b>Username : </b>".($_POST['username'] ?? '')."<br />";
-		$textContent .= "<b>Password : </b>".$password."<br /><br />";
-		$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;	
+		$textContent  = "<p style='margin:0 0 16px 0; color:#333333;'>Dear " . htmlspecialchars($toName) . ",</p>";
+		$textContent .= "<p style='margin:0 0 16px 0; color:#333333;'>An account has been created for you on KaijuLink by our admin team. Your login credentials are below.</p>";
+		$textContent .= "<table style='background:#f9f9f9; border:1px solid #e0e0e0; border-radius:4px; margin:0 0 20px 0; border-collapse:collapse;'>";
+		$textContent .= "<tr><td style='padding:10px 20px; color:#666666; font-size:13px; border-bottom:1px solid #e0e0e0;'><strong>Username</strong></td><td style='padding:10px 20px; color:#333333; font-size:13px; border-bottom:1px solid #e0e0e0;'>" . htmlspecialchars($_POST['username'] ?? '') . "</td></tr>";
+		$textContent .= "<tr><td style='padding:10px 20px; color:#666666; font-size:13px;'><strong>Password</strong></td><td style='padding:10px 20px; color:#333333; font-size:13px;'>" . htmlspecialchars($password) . "</td></tr>";
+		$textContent .= "</table>";
+		$textContent .= "<p style='margin:0 0 16px 0;'><a href='https://www.kaijulink.com' style='display:inline-block; background:#c0392b; color:#ffffff; padding:10px 24px; border-radius:4px; text-decoration:none; font-weight:bold; font-size:14px;'>Log In to Your Account</a></p>";
+		$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";	
 		$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 		$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 		/****************************** Email End ********************************/
@@ -740,10 +744,14 @@ function update_password()
 		$subject = "New Password";
 		$fromMail = ADMIN_EMAIL_ADDRESS;
 		$fromName = ADMIN_NAME;
-		$textContent = "Hello,<br /><br />Your password is changed. Here is your new password,<br /><br />";
-		$textContent .= "Username : ".($_POST['username'] ?? '')."<br />";
-		$textContent .= "Password : ".($_POST['newpassword'] ?? '')."<br />";
-		$textContent .= "<br /><br />Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+		$textContent  = "<p style='margin:0 0 16px 0; color:#333333;'>Dear " . htmlspecialchars($row[FIRSTNAME]) . ",</p>";
+		$textContent .= "<p style='margin:0 0 12px 0; color:#333333;'>Your KaijuLink password has been updated by our admin team. Your new credentials are below.</p>";
+		$textContent .= "<table style='background:#f9f9f9; border:1px solid #e0e0e0; border-radius:4px; margin:0 0 20px 0; border-collapse:collapse;'>";
+		$textContent .= "<tr><td style='padding:10px 20px; color:#666666; font-size:13px; border-bottom:1px solid #e0e0e0;'><strong>Username</strong></td><td style='padding:10px 20px; color:#333333; font-size:13px; border-bottom:1px solid #e0e0e0;'>" . htmlspecialchars($_POST['username'] ?? '') . "</td></tr>";
+		$textContent .= "<tr><td style='padding:10px 20px; color:#666666; font-size:13px;'><strong>New Password</strong></td><td style='padding:10px 20px; color:#333333; font-size:13px;'>" . htmlspecialchars($_POST['newpassword'] ?? '') . "</td></tr>";
+		$textContent .= "</table>";
+		$textContent .= "<p style='margin:0 0 16px 0;'><a href='https://www.kaijulink.com' style='display:inline-block; background:#c0392b; color:#ffffff; padding:10px 24px; border-radius:4px; text-decoration:none; font-weight:bold; font-size:14px;'>Log In to Your Account</a></p>";
+		$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 		$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 		sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 

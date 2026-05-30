@@ -316,7 +316,7 @@ function save_user()
         $textContent .= "</table>";
         $textContent .= "<p style='margin:0 0 16px 0;'><a href='https://www.kaijulink.com' style='display:inline-block; background:#c0392b; color:#ffffff; padding:10px 24px; border-radius:4px; text-decoration:none; font-weight:bold; font-size:14px;'>Log In to Your Account</a></p>";
         $textContent .= "<p style='margin:20px 0 8px 0; color:#333333;'>If you have any questions, please contact us at <a href='mailto:" . ADMIN_EMAIL_ADDRESS . "' style='color:#c0392b;'>" . ADMIN_EMAIL_ADDRESS . "</a>.</p>";
-        $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>" . ADMIN_NAME . "</strong><br />KaijuLink Team</p>";    
+        $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>" . ADMIN_NAME . "</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";    
         $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
         $check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
         
@@ -331,7 +331,7 @@ function save_user()
 		$textContentAdmin .="Name: ".$_POST['firstname']." ".$_POST['lastname'].".<br/>";
 		$textContentAdmin .="Address: ".$_POST['address1'].",".$country_name.",".$_POST['city']."-".$_POST['zipcode'].".<br/>";
 		$textContentAdmin .="Email: ".$_POST['email'].".<br/><br/>";
-        $textContentAdmin .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+        $textContentAdmin .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
         $textContentAdmin = MAIL_BODY_TOP.$textContentAdmin.MAIL_BODY_BOTTOM;
 		
         $check = sendMail($fromMail, $fromName, $subjectAdmin, $textContentAdmin, $fromMail, $fromName, $html=1);

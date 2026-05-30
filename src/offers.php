@@ -877,7 +877,7 @@ function sendOfferMail($offer_id, $status)
         $textContentSeller .= 'Buyer will be invoiced and you will be notified via email when we receive payment.<br /><br />';
         $textContentAdmin .= $rowSeller['firstname'].' '.$rowSeller['lastname'].'&#39;s counter-offer of $'.$row['offer_amount'].' has been accepted.<br />';
         $textContentAdmin .= $rowCOfferData['firstname'].' '.$rowCOfferData['lastname'].' has been accepted the counter-offer of '.$row['poster_title'].'.<br /><br />';
-        //$textContent .= 'For more details, please <a href="http://'.HOST_NAME.'">login</a><br /><br />';
+        //$textContent .= 'For more details, please <a href="https://'.HOST_NAME.'">login</a><br /><br />';
     }elseif($status == "accept_offer"){
 		$subject = "Kaijulink::Offer Accepted - ".$row['poster_title']." ";
         $textContent .= 'Congratulations! Your offer of $'.$row['offer_amount'].' has been accepted.<br /><br />';
@@ -887,35 +887,35 @@ function sendOfferMail($offer_id, $status)
 		$textContentSeller .= 'Buyer will be invoiced and you will be notified via email when we receive payment.<br /><br />';
         $textContentAdmin .= $row['firstname'].' '.$row['lastname'].'&#39;s offer of $'.$row['offer_amount'].' has been accepted.<br />';
         $textContentAdmin .= $rowSeller['firstname'].' '.$rowSeller['lastname'].' has been accepted the offer of '.$row['poster_title'].'.<br />';
-        //$textContent .= 'For more details, please <a href="http://'.HOST_NAME.'">login</a><br /><br />';
+        //$textContent .= 'For more details, please <a href="https://'.HOST_NAME.'">login</a><br /><br />';
     }elseif($status == "reject_counter_offer"){
 		$subject = "Kaijulink::Counter Offer Rejected - ".$row['poster_title']." ";
 		$textContent .= 'You have rejected the counter offer of $'.$row['offer_amount'].'<br /><br />';
         $textContentSeller .= 'Your counter offer of $'.$row['offer_amount'].' has been rejected.<br /><br />';
-        //$textContent .= 'For more details, please <a href="http://'.HOST_NAME.'">login</a><br /><br />';
+        //$textContent .= 'For more details, please <a href="https://'.HOST_NAME.'">login</a><br /><br />';
     }elseif($status == "reject_offer"){
 		$subject = "Kaijulink::Offer Rejected - ".$row['poster_title']." ";
         $textContent .= 'Your offer of $'.$row['offer_amount'].' has been rejected.<br /><br />';
 		$textContentSeller .= 'You have rejected the offer of $'.$row['offer_amount'].'<br /><br />';
-        //$textContent .= 'For more details, please <a href="http://'.HOST_NAME.'">login</a><br /><br />';
+        //$textContent .= 'For more details, please <a href="https://'.HOST_NAME.'">login</a><br /><br />';
     }elseif($status == "counter_offer_made"){
 		$subject = "Kaijulink::Counter Offer Made - ".$row['poster_title']." ";
         $textContent .= 'Counter offer of $'.$row['offer_amount'].' has been made against your offer.<br /><br />';
 		$textContentSeller .= 'You have made a counter offer of $'.$row['offer_amount'].'<br /><br />';
-        //$textContent .= 'For more details, please <a href="http://'.HOST_NAME.'">login</a><br /><br />';
+        //$textContent .= 'For more details, please <a href="https://'.HOST_NAME.'">login</a><br /><br />';
     }
 	
 	$textContent .= 'Please contact us at <a href="mailto:'.SITE_EMAIL.'">'.SITE_EMAIL.'</a> if you have any questions.<br /><br />';    
-    $textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;    
+    $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";    
     $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 	
-	$textContentSeller .= 'For more details, please <a href="http://'.HOST_NAME.'">login</a><br /><br />';    
-    $textContentSeller .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;    
+	$textContentSeller .= 'For more details, please <a href="https://'.HOST_NAME.'">login</a><br /><br />';    
+    $textContentSeller .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";    
     $textContentSeller = MAIL_BODY_TOP.$textContentSeller.MAIL_BODY_BOTTOM;
 	
 	//echo $textContent."<br>".$textContentSeller;
 	//die;
-	$textContentAdmin .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;    
+	$textContentAdmin .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";    
     $textContentAdmin = MAIL_BODY_TOP.$textContentAdmin.MAIL_BODY_BOTTOM;
     
     

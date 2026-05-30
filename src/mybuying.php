@@ -78,7 +78,7 @@ $auctionObj= new Auction();
 			$textContent .= 'Your offer of $'.$row['offer_amount'].' has been submitted. The seller has 72 hours to respond.<br />';
 			$textContent .= 'You may view this and any other submitted offers by logging in and choosing <b>Outgoing Offers</b> located in <b>User Section</b> under <b>My Buying/My Outgoing Offers</b>.<br /><br />';
 			$textContent .= 'Please contact us at <a href="mailto:'.SITE_EMAIL.'">'.SITE_EMAIL.'</a> if you have any questions.<br /><br />';    
-			$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;    
+			$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";    
 			$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 			//echo $textContent;
 			//die;
@@ -89,7 +89,7 @@ $auctionObj= new Auction();
 			//$textContentSeller .= $row['firstname'].' has been made an offer of $'.$row['offer_amount'].'<br /><br />';
 			$textContentSeller .= 'An offer of $'.$row['offer_amount'].' has been made on your item.You have 72 hours to respond. <br /><br />';
 			$textContentSeller .= 'For more details, please <a href="http://'.HOST_NAME.'">login</a> and go to your User Panel(place mouse over Welcome for dropdown panel) and view under My Selling/My incoming offers.<br /><br />';    
-    		$textContentSeller .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;    
+    		$textContentSeller .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";    
     		$textContentSeller = MAIL_BODY_TOP.$textContentSeller.MAIL_BODY_BOTTOM;
 			
 			$checkSeller = sendMail($toMailSeller, $toNameSeller, $subject, $textContentSeller, $fromMail, $fromName, $html=1);
@@ -304,7 +304,7 @@ function postBid($lastBid)
 							$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
 							$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
 							$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction items, please click the following link:<br/> <a href="http://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-							$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+							$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 							$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;							
 							$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 						}
@@ -357,7 +357,7 @@ function postBid($lastBid)
 							$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
 							$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
 							$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction items, please click the following link:<br/> <a href="http://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-							$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+							$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 							$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;							
 							$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 
@@ -418,7 +418,7 @@ function postBid($lastBid)
 							$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
 							$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
 							$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction posters, please click the following link:<br/> <a href="http://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-							$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+							$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 							$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;							
 							$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 
@@ -467,7 +467,7 @@ function postBid($lastBid)
                     $textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
                     $textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
                     $textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction posters, please click the following link:<br/> <a href="http://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-                    $textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+                    $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
                     $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
                     //echo $textContent;
                     //die;
@@ -630,7 +630,7 @@ function postBid($lastBid)
 						$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
 						$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
 						$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction posters, please click the following link:<br/> <a href="http://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-						$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+						$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 						$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 						$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 					}elseif($highest_bid_amnt > $highest_proxy_amnt){
@@ -654,7 +654,7 @@ function postBid($lastBid)
 						$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
 						$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
 						$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction posters, please click the following link:<br/> <a href="http://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-						$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+						$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 						$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 						$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 					}
@@ -977,7 +977,7 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
 							$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
 							$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
 							$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction posters, please click the following link:<br/> <a href="http://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-							$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+							$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 							$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;							
 							$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 						}
@@ -1029,7 +1029,7 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
 							$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
 							$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
 							$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction posters, please click the following link:<br/> <a href="http://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-							$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+							$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 							$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;							
 							$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
                         }
@@ -1091,7 +1091,7 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
 							$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
 							$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
 							$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction posters, please click the following link:<br/> <a href="http://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-							$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+							$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 							$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;							
 							$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
                     }
@@ -1139,7 +1139,7 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
                     $textContent .= '<b>Poster Title : </b>'.$rowOutbid['poster_title'].'<br />';
                     $textContent .= 'Your bid of $'.$second_highest_val.' have been outbid.<br /><br />';
                     $textContent .= 'For more details, please <a href="http://'.HOST_NAME.'/">login</a><br /><br />';
-                    $textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+                    $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
                     $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
                     //echo $textContent;
                     //die;
@@ -1303,7 +1303,7 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
 						$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
 						$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
 						$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction items, please click the following link:<br/> <a href="http://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-						$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+						$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 						$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 						$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 					}elseif($highest_proxy_amnt!='' && $highest_bid_amnt > $highest_proxy_amnt){
@@ -1327,7 +1327,7 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
 						$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
 						$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
 						$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction items, please click the following link:<br/> <a href="http://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-						$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+						$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 						$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 						$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 					}

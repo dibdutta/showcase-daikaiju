@@ -629,7 +629,7 @@ function pay_now()
 			    $textContentSeller = 'Dear '.$rowSeller['firstname'].' '.$rowSeller['lastname'].',<br /><br />';
 			    $textContentSeller.= 'Congratulations!Your Poster <b>(Poster Title : '.$rowSeller['poster_title'].'</b>) has been sold.<br />';
 			    $textContentSeller .= 'For more details, please <a href="http://'.HOST_NAME.'">login </a><br /><br />';
-			    $textContentSeller.= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;    
+			    $textContentSeller.= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";    
 				$textContentSeller= MAIL_BODY_TOP.$textContentSeller.MAIL_BODY_BOTTOM; 
 				$check = sendMail($toMailSeller, $toNameSeller, $subject, $textContentSeller, $fromMail, $fromName, $html=1);
 			$invoiceObj->updateData(TBL_CART_HISTORY, array('is_paid' => '1'), array('fk_auction_id' => $value['auction_id']), true);

@@ -129,8 +129,8 @@ function change_auction_status(){
 		if(($_REQUEST['is_approved'] ?? 0)==1){
 			$subject = "Item approved";
 			$textContent = 'Dear '.$row['firstname'].' '.$row['lastname'].',<br><br>';
-			$textContent .= 'Your poster (<strong>Poster Title:</strong> '.$row['poster_title'].', <strong>Poster SKU:</strong> '.$row['poster_sku'].') has been Approved. For more details, please <a href="http://'.HOST_NAME.'">login </a><br /><br />';
-			//$textContent = 'Your poster has been Approved. For more details, please <a href="http://'.HOST_NAME.'">login </a><br /><br />Poster Title: '.$row['poster_title'].'<br />Poster SKU: '.$row['poster_sku'].'<br /><br />';
+			$textContent .= 'Your poster (<strong>Poster Title:</strong> '.$row['poster_title'].', <strong>Poster SKU:</strong> '.$row['poster_sku'].') has been approved. You can view it by <a href="https://www.kaijulink.com" style="color:#c0392b;">logging in to your account</a>.<br /><br />';
+			//$textContent = 'Your poster has been Approved. For more details, please <a href="https://'.HOST_NAME.'">login </a><br /><br />Poster Title: '.$row['poster_title'].'<br />Poster SKU: '.$row['poster_sku'].'<br /><br />';
 			if($row['fk_auction_type_id'] == 3){
 			$subject = "Poster / Auction Approved";	
 			$textContent .= 'Please ship your posters to Kaijulink for monthly auction .<br /><br />';
@@ -139,12 +139,12 @@ function change_auction_status(){
 			$subject = "Item not approved";
 			$textContent = 'Dear '.$row['firstname'].' '.$row['lastname'].',<br><br>';
 			$textContent .= 'Your item (<strong>Title:</strong> '.$row['poster_title'].', <strong>Poster SKU:</strong> '.$row['poster_sku'].') has not been approved for one or more of the following reasons:<br/> 1. Photo lacks appropriate clarity/definition.<br/> 2. Description is inaccurate or vague.<br/> 3. Item authenticity is indeterminate. <br/> 4. Inappropriate type of item(props, other non-paper related movie material). <br/>Please contact us for further information.<br /><br />';
-			//$textContent = 'Your poster has been disapproved. For more details, please <a href="http://'.HOST_NAME.'">login </a><br /><br />Poster Title: '.$row['poster_title'].'<br />Poster SKU: '.$row['poster_sku'].'<br /><br />';
+			//$textContent = 'Your poster has been disapproved. For more details, please <a href="https://'.HOST_NAME.'">login </a><br /><br />Poster Title: '.$row['poster_title'].'<br />Poster SKU: '.$row['poster_sku'].'<br /><br />';
 		}
-		$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;	
+		$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 		$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 		$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
-		
+
 		/****************************** Email End ********************************/
 		echo "done";
 	}else{
@@ -175,10 +175,8 @@ function change_poster_received_status(){
 		$fromMail = ADMIN_EMAIL_ADDRESS;
 		$fromName = ADMIN_NAME;
 		$textContent = 'Dear '.$row['firstname'].' '.$row['lastname'].',<br><br>';
-		$textContent.= 'Your poster (<strong>Poster Title:</strong> '.$row['poster_title'].', <strong>Poster SKU:</strong> '.$row['poster_sku'].') has been received and approved for monthly auction.For more details, please <a href="http://'.HOST_NAME.'">login </a> <br /><br />';
-		//$textContent = 'Your poster has been received and approved for monthly auction.For more details, please <a href="http://'.HOST_NAME.'">login </a><br /><br />Poster Title: '.$row['poster_title'].'<br />Poster SKU: '.$row['poster_sku'].'<br /><br />';
-		
-		$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;	
+		$textContent.= 'Your poster (<strong>Poster Title:</strong> '.$row['poster_title'].', <strong>Poster SKU:</strong> '.$row['poster_sku'].') has been received and approved for our monthly auction. <a href="https://www.kaijulink.com" style="color:#c0392b;">Log in to your account</a> to view its status.<br /><br />';
+		$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";	
 		$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 		$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 		

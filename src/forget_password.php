@@ -96,11 +96,13 @@ function send_password()
 			 $subject = "Forget Password";
 			 $fromMail = ADMIN_EMAIL_ADDRESS;
 			 $fromName = ADMIN_NAME;
-			$textContent = "Please click in the url to reset your new password <br/>";
-			$textContent.= '<a href="http://'.HOST_NAME.'/forget_password.php?mode=retrieve_pass&varify_id='.$newPassword.'" target="_blank">http://'.HOST_NAME.'/forget_password.php?mode=retrieve_pass&varify_id='.$newPassword."</a><br /><br />";
-			//$textContent .= "<b>Username : </b>".$_POST['username']."<br />";
-			//$textContent .= "<b>Password : </b>".$password."<br /><br />";
-			$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;	
+			$resetUrl = 'https://'.HOST_NAME.'/forget_password.php?mode=retrieve_pass&varify_id='.$newPassword;
+			$textContent  = "<p style='margin:0 0 16px 0; color:#333333;'>Dear " . htmlspecialchars($row['firstname']) . ",</p>";
+			$textContent .= "<p style='margin:0 0 16px 0; color:#333333;'>We received a request to reset your KaijuLink password. Click the button below to set a new password. This link is valid for a limited time.</p>";
+			$textContent .= "<p style='margin:0 0 20px 0;'><a href='" . $resetUrl . "' style='display:inline-block; background:#c0392b; color:#ffffff; padding:10px 24px; border-radius:4px; text-decoration:none; font-weight:bold; font-size:14px;'>Reset My Password</a></p>";
+			$textContent .= "<p style='margin:0 0 16px 0; color:#999999; font-size:12px;'>If the button doesn't work, copy and paste this link into your browser:<br /><a href='" . $resetUrl . "' style='color:#c0392b;'>" . $resetUrl . "</a></p>";
+			$textContent .= "<p style='margin:0 0 16px 0; color:#333333;'>If you did not request a password reset, you can safely ignore this email.</p>";
+			$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";	
 			$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 			$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 			
@@ -120,7 +122,7 @@ function send_password()
 function retrieve_pass(){
 	require_once INCLUDE_PATH."lib/common.php";
 	$objUser = new User();
-	$objUser->primaryKey=user_id;
+	$objUser->primaryKey=USER_ID;
 	$count=$objUser->countData(USER_TABLE,array("user_setpass_code"=>md5($_REQUEST['varify_id'])));
 	if($count > 0){
 		$show_ind=1;
@@ -134,7 +136,7 @@ function retrieve_pass(){
 function reset_password(){
 	require_once INCLUDE_PATH."lib/common.php";
 	$objUser = new User();
-	$objUser->primaryKey=user_id;
+	$objUser->primaryKey=USER_ID;
 	$actual_code=$_REQUEST['user_setpass_code'];
 	$user_setpass_code=md5($_REQUEST['user_setpass_code']);
 	$pass=md5($_REQUEST['password']);

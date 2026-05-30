@@ -827,8 +827,8 @@ class Invoice extends DBCommon{
 				$textContent .= "Please provide method of shipping and tracking information.<br /><br />";
 				$textContent .= $email_template;
 				
-				$textContent .= '<br /><br />For more details, please <a href="http://'.HOST_NAME.'/">login </a> and go to <b> My Selling/Sold </b> <br /><br />';
-				$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+				$textContent .= '<br /><br />For more details, please <a href="https://'.HOST_NAME.'/">login </a> and go to <b> My Selling/Sold </b> <br /><br />';
+				$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 				$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 				$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 			
@@ -848,8 +848,8 @@ class Invoice extends DBCommon{
 				$textContent .= 'POB 123<br /><br />';
 				$textContent .= 'Gibsonville, NC 27249 <br /><br />';
 				$textContent .= 'Please ship promptly so that we may expedite transaction and issue payment to you! If Kaijulink is currently holding item then please disregard. <br /><br />';
-				$textContent .= 'For more details, please <a href="http://'.HOST_NAME.'/">login </a> and go to <b> My Selling/Sold </b> <br /><br />';
-				$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+				$textContent .= 'For more details, please <a href="https://'.HOST_NAME.'/">login </a> and go to <b> My Selling/Sold </b> <br /><br />';
+				$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 				$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 				//$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);		
 			
@@ -1100,7 +1100,7 @@ class Invoice extends DBCommon{
 		$fromName = ADMIN_NAME;
 		
 		$textContent = $email_template;
-		$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;	
+		$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";	
 		$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 		$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 		
@@ -1119,7 +1119,7 @@ class Invoice extends DBCommon{
 		$fromName = ADMIN_NAME;
 		
 		$textContent = $email_template;
-		$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;	
+		$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";	
 		$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 		$check = sendMail($toMail, $toNameAdmin, $subject, $textContent, $fromMail, $fromName, $html=1);
 		
@@ -1133,7 +1133,7 @@ class Invoice extends DBCommon{
 			$fromName = ADMIN_NAME;
 			
 			$textContent = $email_template;
-			$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;	
+			$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";	
 			$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 			if(isset($toMailSean) && $toMailSean!=''){
 				$check = sendMail($toMailSean, $toNameSean, $subject, $textContent, $fromMail, $fromName, $html=1);
@@ -1147,7 +1147,7 @@ class Invoice extends DBCommon{
 			$fromName = ADMIN_NAME;
 			
 			$textContent = $email_template;
-			$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;	
+			$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";	
 			$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 			if(isset($toMailPeter) && $toMailPeter!=''){
 				$check = sendMail($toMailPeter, $toNamePeter, $subject, $textContent, $fromMail, $fromName, $html=1);
@@ -1166,7 +1166,7 @@ class Invoice extends DBCommon{
 			$fromName = ADMIN_NAME;
 			
 			$textContent = $email_template;
-			$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;	
+			$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";	
 			$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 			if(isset($toMailSean) && $toMailSean!=''){
 				$check = sendMail($toMailSean, $toNameSean, $subject, $textContent, $fromMail, $fromName, $html=1);
@@ -1180,7 +1180,7 @@ class Invoice extends DBCommon{
 			$fromName = ADMIN_NAME;
 			
 			$textContent = $email_template;
-			$textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;	
+			$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";	
 			$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 			if(isset($toMailPeter) && $toMailPeter!=''){
 				$check = sendMail($toMailPeter, $toNamePeter, $subject, $textContent, $fromMail, $fromName, $html=1);

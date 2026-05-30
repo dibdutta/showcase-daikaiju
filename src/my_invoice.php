@@ -1101,8 +1101,8 @@ function generate_buy_now_invoice(){
                 $subjectBuyer = "Kaijulink::Offer Rejected - ".$rowBuyer['poster_title']." ";
 				$textContentBuyer = 'Dear '.$rowBuyer['firstname'].' '.$rowBuyer['lastname'].',<br><br>';
                 $textContentBuyer .= 'Your offer of $'.$rowBuyer['offer_amount'].' has been rejected.<br /><br />As '.$rowBuyer['poster_title'].' has been sold.<br/><br/>';
-                $textContentBuyer .= 'For more details, please <a href="http://'.HOST_NAME.'">login</a><br /><br />';
-                $textContentBuyer .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+                $textContentBuyer .= 'For more details, please <a href="https://'.HOST_NAME.'">login</a><br /><br />';
+                $textContentBuyer .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
                 $textContentBuyer = MAIL_BODY_TOP.$textContentBuyer.MAIL_BODY_BOTTOM;
                 //$check = sendMail($toMailBuyer, $toNameBuyer, $subjectBuyer, $textContentBuyer, $fromMail, $fromName, $html=1);
             }
@@ -1121,8 +1121,8 @@ function generate_buy_now_invoice(){
 			$textContentSeller = 'Dear '.$rowSeller['firstname'].' '.$rowSeller['lastname'].',<br><br>';
 			$textContentSeller .= 'Poster Title :'.$rowSeller['poster_title'].'<br />';
 			$textContentSeller .= 'Congratulations! Your item has been opted for Buy Now. You will receive an email confirmation when payment is received.<br />';
-			$textContentSeller .= 'You may view this item and any other items listed by logging in to your account <a href="http://'.HOST_NAME.'/">HERE</a> and placing your mouse over the User Panel, located in top red banner and selecting MY SELLING/Sale Pending.<br /><br />';
-			$textContentSeller .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+			$textContentSeller .= 'You may view this item and any other items listed by logging in to your account <a href="https://'.HOST_NAME.'/">HERE</a> and placing your mouse over the User Panel, located in top red banner and selecting MY SELLING/Sale Pending.<br /><br />';
+			$textContentSeller .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
             $textContentSeller = MAIL_BODY_TOP.$textContentSeller.MAIL_BODY_BOTTOM;
             //$checkSeller = sendMail($toMailSeller, $toNameSeller, $subjectSeller, $textContentSeller, $fromMail, $fromName, $html=1);
         }
@@ -1139,7 +1139,7 @@ function generate_buy_now_invoice(){
         $textContent .= 'To give you the ability to combine with other purchases/wins, you may wait up to 72 hours to make payment. Your invoice expires on '.date('m-d-Y H:i:s',strtotime($expiredate)).'<br/>';
 		$textContent .= 'You will receive this invoice via email. You can also view it by logging into your account and selecting <b>Invoices/Reconciliations</b> located in <b>User Section</b> under <b>My Account</b>.<br/>';
 		$textContent .= 'If you have made payment, please disregard this email.<br /><br />';
-        $textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+        $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
         $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
         //$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
         unset($_SESSION['cart']);

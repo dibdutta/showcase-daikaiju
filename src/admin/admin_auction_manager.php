@@ -2085,8 +2085,8 @@ function delete_invoice_charge(){
 			 $textContent = 'Dear '.$row['firstname'].' '.$row['lastname'].',<br><br>';
 			 $textContent.= 'Your invoice for the '.$row['auction_week_title'].' is ready. Please login to your account and go to <b>User Section</b>. Under <b>My Account</b>, select <b>Invoices/Reconciliations </b> and follow prompts. Please note that if you have multiple outstanding invoices you can combine by clicking checkbox for each invoice and selecting <b>Combine Invoices</b> button. <br /><br />';
 			 
-			 $textContent .= '<a href="http://'.HOST_NAME.'/buy.php">Click Here to log in. </a><br /><br />';
-			 $textContent .= "Thanks & Regards,<br /><br />".ADMIN_NAME."<br />".ADMIN_EMAIL_ADDRESS;
+			 $textContent .= '<a href="https://'.HOST_NAME.'/buy.php">Click Here to log in. </a><br /><br />';
+			 $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 			 $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
 			 //$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 			 
