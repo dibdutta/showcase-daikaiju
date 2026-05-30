@@ -1134,6 +1134,7 @@ if(isset($_SESSION['sessUserID'])){
 			   $itemImageArry[$i]['big_image']=CLOUD_POSTER.$itemImageArry[$i]['poster_image'];                 
             }else{
                $itemImageArry[$i]['image_path']=CLOUD_POSTER_THUMB.$itemImageArry[$i]['poster_image'];
+			   $itemImageArry[$i]['big_image']=CLOUD_POSTER.$itemImageArry[$i]['poster_image'];
 			   $itemImageArry[$i]['large_image']=CLOUD_POSTER.$itemImageArry[$i]['poster_image'];
 			   $itemImageArry[$i]['disp_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$itemImageArry[$i]['poster_image'];
             }

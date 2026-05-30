@@ -81,11 +81,10 @@ function toggleDiv(id,flagit,type,track) {
 		$('#bid_bttn_'+newData[2]).unbind('click');
 	}
 	function changeImage(src,id){
-		$("#org_id").fadeOut();
-		$("#org_id").fadeIn();
-		$('#org_id').attr('src', src);
 		$('#photo_index').val(id);
-		
+		$("#org_id").fadeOut(200, function(){
+			$(this).attr('src', src).fadeIn(200);
+		});
 	}
 	function open_new_window(){
 		index_id = $('#photo_index').val();
