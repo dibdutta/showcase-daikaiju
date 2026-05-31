@@ -123,5 +123,38 @@ if (mysqli_query($db, $fixSql)) {
     $results[] = "ERROR fixing duplicate is_default: " . mysqli_error($db);
 }
 
+// 10. Remove phantom tbl_poster_images rows caused by dynamicPosterUpload('weekly') bug.
+// The bug always inserted into tbl_poster_images AND tbl_poster_images_live when
+// type='weekly'. For a live-auction poster the correct records are in _live; the
+// matching rows in tbl_poster_images are spurious duplicates.
+// Safe match key: same fk_poster_id + original_filename in both tables.
+// Rows legitimately in tbl_poster_images (fixed-price uploads) will NOT have a
+// matching original_filename in tbl_poster_images_live, so they are untouched.
+
+// Dry-run: count affected rows first.
+$countRs = mysqli_query($db,
+    "SELECT COUNT(*) AS cnt
+     FROM tbl_poster_images pi
+     INNER JOIN tbl_poster_images_live pil
+         ON pi.fk_poster_id = pil.fk_poster_id
+        AND pi.original_filename = pil.original_filename");
+$countRow = $countRs ? mysqli_fetch_assoc($countRs) : null;
+$dupCount = $countRow ? (int)$countRow['cnt'] : 0;
+
+if ($dupCount === 0) {
+    $results[] = "OK: no phantom tbl_poster_images rows found — nothing to clean up.";
+} else {
+    $cleanSql = "DELETE pi FROM tbl_poster_images pi
+                 INNER JOIN tbl_poster_images_live pil
+                     ON pi.fk_poster_id = pil.fk_poster_id
+                    AND pi.original_filename = pil.original_filename";
+    if (mysqli_query($db, $cleanSql)) {
+        $deleted = mysqli_affected_rows($db);
+        $results[] = "OK: removed $deleted phantom row(s) from tbl_poster_images (were duplicated in tbl_poster_images_live).";
+    } else {
+        $results[] = "ERROR cleaning phantom poster images: " . mysqli_error($db);
+    }
+}
+
 echo "<pre>" . implode("\n", $results) . "\n\nMigration complete. Delete this file.</pre>";
 ?>
