@@ -141,6 +141,9 @@ $(document).ready(function() {
     }
 
 	function submitForm(){
+		if (typeof CKEDITOR !== 'undefined' && CKEDITOR.instances.poster_desc) {
+			CKEDITOR.instances.poster_desc.updateElement();
+		}
 		var all = $(".plupload_file_name").map(function() {
 			return this.title;
 		}).get();
@@ -158,6 +161,7 @@ $(document).ready(function() {
 
 </script>
 {/literal}
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td width="100%">
@@ -246,7 +250,9 @@ $(document).ready(function() {
 											<tr class="tr_bgcolor">
 												<td class="bold_text" valign="top"><span class="err">*</span>Description :</td>
 												<td class="smalltext">
-												{$poster_desc}<br /><span class="err">{$poster_desc_err}</span>
+													<textarea name="poster_desc" id="poster_desc" rows="10" style="width:98%;">{$poster_desc}</textarea>
+													{literal}<script>CKEDITOR.replace('poster_desc');</script>{/literal}
+													<br /><span class="err">{$poster_desc_err}</span>
 												</td>
 											</tr>
                                             <tr class="tr_bgcolor">
