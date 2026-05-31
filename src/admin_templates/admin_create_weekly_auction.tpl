@@ -248,7 +248,7 @@ $(document).ready(function() {
 												<td class="bold_text" valign="top"><span class="err">*</span>Description :</td>
 												<td class="smalltext">
 													<textarea name="poster_desc" id="poster_desc" rows="10" style="width:98%;">{$poster_desc}</textarea>
-													<script>CKEDITOR.replace('poster_desc', {toolbar: 'Full'});</script>
+													{literal}<script>CKEDITOR.replace('poster_desc');</script>{/literal}
 													<br /><span class="err">{$poster_desc_err}</span>
 												</td>
 											</tr>
