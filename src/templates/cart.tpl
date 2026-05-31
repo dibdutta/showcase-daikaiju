@@ -140,7 +140,7 @@ function chkQuantity(id,quantity,inputId){
                                 </tr>-->
                                 <tr>
                                     <th width="15%" align="left"><strong>Remove</strong></th>
-                                    <th width="55%" align="left"><strong>Poster</strong></th>
+                                    <th width="55%" align="left"><strong>Item</strong></th>
                                     <th width="30%" align="left"><strong>Amount</strong></th>
 									
                                 </tr>
@@ -231,7 +231,7 @@ function chkQuantity(id,quantity,inputId){
                     		<td colspan="3" align="center" style="font-size:11px; font-weight:bold;color:red;">This cart items are already opted for Buy Now.</td>
                     	</tr>
                     	<tr>
-                             <td width="55%" align="left"><strong>Poster</strong></td>
+                             <td width="55%" align="left"><strong>Item</strong></td>
                              <td width="30%" align="left" colspan="2"><strong>Amount</strong></td>
                         </tr>
                    {section name=counter loop=$sold_item}

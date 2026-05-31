@@ -217,7 +217,7 @@
                                     <tr>
                                         <th width="25px"></th>
                                         <th width="45px" class="tac">Sl No</th>
-                                        <th class="tal">Poster Title</th>
+                                        <th class="tal">Item</th>
                                         <th width="80px" class="tac">Billing Date</th>                                    
                                         <th width="70px" class="tac pr10">Price</th>
                                         <th width="100px" class="tac">Action</th>

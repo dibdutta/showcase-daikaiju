@@ -536,7 +536,9 @@ function chooseOptionForPayment()
 		eval('$smarty->assign("'.$key.'_err", $GLOBALS["'.$key.'_err"]);');
 	}
 
-	$smarty->display('choose_option_for_payment_invoice.tpl');
+	$invoice_id = $_POST['invoice_id'] ?? '';
+	header('Location: my_invoice?mode=do_paypal_v2&invoice_id=' . urlencode($invoice_id));
+	exit;
 }
 function validatePaymentOption()
 {
