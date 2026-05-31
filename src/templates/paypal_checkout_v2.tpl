@@ -101,7 +101,7 @@
 </div>
 
 <!-- PayPal JS SDK v6: card-fields replaces deprecated hosted-fields -->
-<script src="https://www.paypal.com/sdk/js?client-id={$paypal_client_id}&currency=USD&components=buttons,card-fields&intent=capture"></script>
+<script src="https://www.paypal.com/sdk/js?client-id={$paypal_client_id}&currency=USD&components=buttons,card-fields&intent=capture&enable-funding=card"></script>
 
 <!-- Expose Smarty-rendered values as plain JS vars before the literal block -->
 <script>
