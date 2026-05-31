@@ -1,6 +1,43 @@
-{include file="header.tpl"}    
-	
-	<script type="text/javascript" src="{$actualPathJSCSS}js/jquery.mousewheel-3.0.6.pack.js"></script>
+{include file="header.tpl"}
+
+{* Payment result toast *}
+{if $smarty.request.payment == 'success' || $smarty.request.payment == 'failed'}
+<style>
+#payment-toast {
+    position: fixed; top: 24px; right: 24px; z-index: 999999;
+    min-width: 280px; max-width: 420px;
+    padding: 16px 20px; border-radius: 6px; box-shadow: 0 4px 16px rgba(0,0,0,.18);
+    font-family: Arial, sans-serif; font-size: 14px; font-weight: 600; color: #fff;
+    opacity: 0; transition: opacity .4s ease;
+}
+#payment-toast.show { opacity: 1; }
+</style>
+<div id="payment-toast"
+     style="background:{if $smarty.request.payment == 'success'}#28a745{else}#dc3545{/if};">
+    {if $smarty.request.payment == 'success'}
+        &#10003;&nbsp; Payment successful! Your invoice has been marked as paid.
+    {else}
+        &#10007;&nbsp; Payment failed. Please try again or contact support.
+    {/if}
+</div>
+{literal}
+<script>
+(function(){
+    var t = document.getElementById('payment-toast');
+    if (!t) return;
+    setTimeout(function(){ t.classList.add('show'); }, 100);
+    setTimeout(function(){ t.classList.remove('show'); }, 5000);
+    // Clean up the URL so refresh doesn't re-show the toast
+    if (window.history && window.history.replaceState) {
+        var url = window.location.href.replace(/[?&]payment=(success|failed)/, '').replace(/\?$/, '');
+        window.history.replaceState(null, '', url);
+    }
+})();
+</script>
+{/literal}
+{/if}
+
+<script type="text/javascript" src="{$actualPathJSCSS}js/jquery.mousewheel-3.0.6.pack.js"></script>
 	<script type="text/javascript" src="{$actualPathJSCSS}js/jquery.fancybox.js?v=2.1.5"></script>
 	<link rel="stylesheet" type="text/css" href="{$actualPathJSCSS}css/jquery.fancybox.css?v=2.1.5" media="screen" />
 	<style type="text/css">

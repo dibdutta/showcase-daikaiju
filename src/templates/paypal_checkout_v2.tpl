@@ -108,7 +108,7 @@
 var _pp = {
   invoiceId:  {$invoice_id},
   endpoint:   '{$actualPath}/paypal_orders.php',
-  returnUrl:  '{$actualPath}/my_invoice',
+  returnUrl:  '{$actualPath}/my_invoice?payment=success',
   totalLabel: 'Pay ${$total_amount|string_format:"%.2f"} with Card'
 };
 </script>
@@ -148,14 +148,14 @@ var _pp = {
           if (result.success) {
             window.location.href = pp.returnUrl;
           } else {
-            alert('Payment failed: ' + (result.error || 'Unknown error'));
+            window.location.href = pp.returnUrl.replace('payment=success', 'payment=failed');
           }
         });
     },
 
     onError: function (err) {
       console.error('PayPal Buttons error', err);
-      alert('A payment error occurred. Please try again or contact support.');
+      window.location.href = pp.returnUrl.replace('payment=success', 'payment=failed');
     }
   }).render('#paypal-button-container');
 
