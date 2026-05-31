@@ -210,11 +210,9 @@
       <tr>
         <td class="pb10">
         	<div class="descrp-area">
-                <div class="desp-txt"><b>Size : </b> {$auctionItems[counter].poster_size}</div>
-                <div class="desp-txt"><b>Genre : </b> {$auctionItems[counter].genre}</div>
-                <div class="desp-txt"><b>Decade : </b> {$auctionItems[counter].decade}</div>
-                <div class="desp-txt"><b>Country : </b> {$auctionItems[counter].country}</div>
-                <div class="desp-txt"><b>Condition : </b> {$auctionItems[counter].cond}</div>
+                {if $auctionItems[counter].shop_cat_name}<div class="desp-txt"><b>Category : </b> {$auctionItems[counter].shop_cat_name}</div>{/if}
+                {if $auctionItems[counter].subcat_value}<div class="desp-txt"><b>Subcategory : </b> {$auctionItems[counter].subcat_value}</div>{/if}
+                {if $auctionItems[counter].cond}<div class="desp-txt"><b>Condition : </b> {$auctionItems[counter].cond}</div>{/if}
             </div>
         </td>
       </tr>

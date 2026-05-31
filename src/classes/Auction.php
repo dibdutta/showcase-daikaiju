@@ -1688,11 +1688,9 @@ class Auction extends DBCommon{
         }
 		if($auctionStatus == 'upcoming' || $auctionStatus == 'selling'){
 			
-			$sql = "SELECT 
-				c.cat_value AS poster_size,
-  				c1.cat_value AS genre,
-  				poster_size_auction(p.poster_id) AS country,
-  				cond_auction(p.poster_id) AS cond,
+			$sql = "SELECT
+				cond_auction(p.poster_id) AS cond,
+				sc.shop_cat_name, su.subcat_value,
 				count(tw.watching_id) AS watch_indicator,a.auction_id,a.fk_poster_id,a.auction_is_approved, a.fk_auction_type_id, a.auction_asked_price, a.auction_reserve_offer_price,
 				a.is_offer_price_percentage, a.auction_buynow_price,a.auction_note, a.auction_actual_start_datetime, a.auction_actual_end_datetime,aw.auction_week_title,
 				(UNIX_TIMESTAMP(a.auction_actual_start_datetime) - UNIX_TIMESTAMP()) AS seconds_left,a.auction_is_sold,
@@ -1701,17 +1699,10 @@ class Auction extends DBCommon{
 				LEFT JOIN tbl_poster_images_live pi ON a.fk_poster_id = pi.fk_poster_id
 				LEFT JOIN ".TBL_AUCTION_WEEK." aw ON a.fk_auction_week_id = aw.auction_week_id
 				LEFT JOIN ".TBL_WATCHING." tw ON a.auction_id = tw.auction_id AND tw.user_id = '".$Sessionuser_id."'
-				LEFT JOIN (tbl_poster_to_category ptc 
-				             RIGHT JOIN tbl_category c ON ptc.fk_cat_id = c.cat_id 
-							  AND c.fk_cat_type_id = 1 ) 
-				  ON a.fk_poster_id = ptc.fk_poster_id
-				  		
-							   
-				  LEFT JOIN (tbl_poster_to_category ptc1 
-				  		RIGHT JOIN tbl_category c1 ON ptc1.fk_cat_id = c1.cat_id 
-							  AND c1.fk_cat_type_id = 2)
-				  ON a.fk_poster_id = ptc1.fk_poster_id			  
-							  
+				LEFT JOIN tbl_poster_to_shop_category_live ptsc ON a.fk_poster_id = ptsc.fk_poster_id
+				LEFT JOIN ".TBL_SHOP_CATEGORY." sc ON ptsc.fk_shop_cat_id = sc.shop_cat_id
+				LEFT JOIN tbl_poster_to_subcategory_live ptsu ON a.fk_poster_id = ptsu.fk_poster_id
+				LEFT JOIN ".TBL_SUBCATEGORY." su ON ptsu.fk_subcat_id = su.subcat_id
 				WHERE pi.is_default = '1'";
 		
 		}else{
