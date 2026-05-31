@@ -2496,101 +2496,147 @@ function delete_auction()
 	define ("PAGE_HEADER_TEXT", "Admin Auction Manager");
 	require_once INCLUDE_PATH."lib/adminCommon.php";
 
-	$smarty->assign ("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
-	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
-	extract($_REQUEST);
-	
-	$auctionObj = new Auction();
-	$chkLive=$auctionObj->isLiveAuctionItem($_REQUEST['auction_id']);
-	if($chkLive >0){
-		$auctionData = $auctionObj->selectData('tbl_auction_live', array('fk_poster_id', 'auction_is_approved','fk_auction_type_id','auction_is_sold','reopen_auction_id'), array('auction_id' => $auction_id));
-		$auctionObj->deleteData(TBL_BID, array('bid_fk_auction_id' => $_REQUEST['auction_id']));
-		$auctionObj->deleteData('tbl_proxy_bid_live', array('fk_auction_id' => $_REQUEST['auction_id']));
-		
-		$type=$auctionData[0]['fk_auction_type_id'];		
-		$countPoster=$auctionObj->countData('tbl_auction_live',array('fk_poster_id' => $auctionData[0]['fk_poster_id']),array('auction_id'=>$_REQUEST['auction_id'])) ;
-		
-		if($countPoster == 0){
-			$posterImages = $auctionObj->selectData('tbl_poster_images_live', array('poster_image', 'poster_thumb'), array('fk_poster_id' => $auctionData[0]['fk_poster_id']));
-			foreach($posterImages as $key => $value){
-				
-					$posterLarge = "../poster_photo/".$value['poster_image'];
-					$posterThumb = "../poster_photo/thumbnail/".$value['poster_thumb'];	
-					$posterThumbBuy = "../poster_photo/thumb_buy/".$value['poster_thumb'];
-					$posterThumbBuyGallery = "../poster_photo/thumb_buy_gallery/".$value['poster_thumb'];
-								
-					@unlink($posterLarge);
-					@unlink($posterThumb);
-					@unlink($posterThumbBuy);
-					@unlink($posterThumbBuyGallery);
-				
-			}
-			$auctionObj->deleteData('tbl_poster_live', array('poster_id' => $auctionData[0]['fk_poster_id']));
-			$auctionObj->deleteData('tbl_poster_images_live', array('fk_poster_id' => $auctionData[0]['fk_poster_id']));
-			$auctionObj->deleteData('tbl_poster_to_category_live', array('fk_poster_id' => $auctionData[0]['fk_poster_id']));
-		}
-		$auctionObj->deleteData('tbl_auction_live', array('auction_id' => $auction_id));
-		$auctionObj->deleteData(TBL_CART_HISTORY, array('fk_auction_id' => $auction_id));
-		$auctionObj->deleteData(TBL_WATCHING, array('auction_id' => $auction_id));
-		
-	}else{
-		$auctionData = $auctionObj->selectData(TBL_AUCTION, array('fk_poster_id', 'auction_is_approved','fk_auction_type_id','auction_is_sold','reopen_auction_id'), array('auction_id' => $auction_id));
-	
-		
-		$auctionObj->deleteData(TBL_OFFER, array('offer_fk_auction_id' => $_REQUEST['auction_id']));	
-		
-		$auctionObj->deleteData(TBL_BID, array('bid_fk_auction_id' => $_REQUEST['auction_id']));
-		$auctionObj->deleteData(TBL_PROXY_BID, array('fk_auction_id' => $_REQUEST['auction_id']));
-		
-		
-		$invoiceTblData = $auctionObj->selectData(TBL_INVOICE_TO_AUCTION, array('fk_invoice_id'), array('fk_auction_id' => $_REQUEST['auction_id']));
-		$tot_record=count($invoiceTblData);
-		for($i=0;$i<$tot_record;$i++){
-			$auctionObj->deleteData(TBL_INVOICE, array('invoice_id' => $invoiceTblData[$i]['fk_invoice_id']));
-		}
-		$auctionObj->deleteData(TBL_INVOICE_TO_AUCTION, array('fk_auction_id' => $_REQUEST['auction_id']));
-		
-		$type=$auctionData[0]['fk_auction_type_id'];
-		
-		$countPoster=$auctionObj->countData(TBL_AUCTION,array('fk_poster_id' => $auctionData[0]['fk_poster_id']),array('auction_id'=>$_REQUEST['auction_id'])) ;
-		if($countPoster == 0){
-			$posterImages = $auctionObj->selectData(TBL_POSTER_IMAGES, array('poster_image', 'poster_thumb'), array('fk_poster_id' => $auctionData[0]['fk_poster_id']));
-			foreach($posterImages as $key => $value){
-				
-					$posterLarge = "../poster_photo/".$value['poster_image'];
-					$posterThumb = "../poster_photo/thumbnail/".$value['poster_thumb'];	
-					$posterThumbBuy = "../poster_photo/thumb_buy/".$value['poster_thumb'];
-					$posterThumbBuyGallery = "../poster_photo/thumb_buy_gallery/".$value['poster_thumb'];
-								
-					@unlink($posterLarge);
-					@unlink($posterThumb);
-					@unlink($posterThumbBuy);
-					@unlink($posterThumbBuyGallery);
-				
-			}
-			$auctionObj->deleteData(TBL_POSTER, array('poster_id' => $auctionData[0]['fk_poster_id']));
-			$auctionObj->deleteData(TBL_POSTER_IMAGES, array('fk_poster_id' => $auctionData[0]['fk_poster_id']));
-			$auctionObj->deleteData(TBL_POSTER_TO_CATEGORY, array('fk_poster_id' => $auctionData[0]['fk_poster_id']));
-		}
-		$auctionObj->deleteData(TBL_AUCTION, array('auction_id' => $auction_id));
-		$auctionObj->deleteData(TBL_CART_HISTORY, array('fk_auction_id' => $auction_id));
-		$auctionObj->deleteData(TBL_WATCHING, array('auction_id' => $auction_id));
-		
-		$sql_delete_sold = "DELETE FROM tbl_sold_archive WHERE auction_id =".$auction_id ;
-		mysqli_query($GLOBALS['db_connect'],$sql_delete_sold);
-		
-	}
-	
-		
-		$_SESSION['adminErr'] = "Auction deleted successfully.";
-	
-	if($type=='1'){
+	$auction_id   = (int)($_REQUEST['auction_id']   ?? 0);
+	$auction_type = (int)($_REQUEST['auction_type'] ?? 0);
+
+	if (!$auction_id) {
+		$_SESSION['adminErr'] = "Invalid auction ID.";
 		header("location: ".PHP_SELF."?mode=fixed");
-	}elseif($type=='2'){
-		header("location: ".PHP_SELF."?mode=weekly");
-	}else{
-		header("location: ".PHP_SELF."?mode=monthly");
-	}	
+		exit;
+	}
+
+	$auctionObj = new Auction();
+
+	// ── Fixed price (type 1) — tbl_auction / tbl_poster ──────────────────────
+	if ($auction_type === 1) {
+		$auctionData = $auctionObj->selectData(TBL_AUCTION,
+			array('fk_poster_id', 'fk_auction_type_id'),
+			array('auction_id' => $auction_id));
+
+		$auctionObj->deleteData(TBL_OFFER,     array('offer_fk_auction_id' => $auction_id));
+		$auctionObj->deleteData(TBL_PROXY_BID, array('fk_auction_id'       => $auction_id));
+
+		$invoiceTblData = $auctionObj->selectData(TBL_INVOICE_TO_AUCTION,
+			array('fk_invoice_id'), array('fk_auction_id' => $auction_id));
+		foreach ($invoiceTblData as $inv) {
+			$auctionObj->deleteData(TBL_INVOICE, array('invoice_id' => $inv['fk_invoice_id']));
+		}
+		$auctionObj->deleteData(TBL_INVOICE_TO_AUCTION, array('fk_auction_id' => $auction_id));
+
+		$poster_id   = (int)($auctionData[0]['fk_poster_id'] ?? 0);
+		$countPoster = $poster_id ? $auctionObj->countData(TBL_AUCTION,
+			array('fk_poster_id' => $poster_id),
+			array('auction_id'   => $auction_id)) : 1;
+
+		if ($countPoster == 0) {
+			$posterImages = $auctionObj->selectData(TBL_POSTER_IMAGES,
+				array('poster_image', 'poster_thumb'),
+				array('fk_poster_id' => $poster_id));
+			foreach ($posterImages as $img) {
+				@unlink("../poster_photo/".$img['poster_image']);
+				@unlink("../poster_photo/thumbnail/".$img['poster_thumb']);
+				@unlink("../poster_photo/thumb_buy/".$img['poster_thumb']);
+				@unlink("../poster_photo/thumb_buy_gallery/".$img['poster_thumb']);
+			}
+			$auctionObj->deleteData(TBL_POSTER,             array('poster_id'    => $poster_id));
+			$auctionObj->deleteData(TBL_POSTER_IMAGES,      array('fk_poster_id' => $poster_id));
+			$auctionObj->deleteData(TBL_POSTER_TO_CATEGORY, array('fk_poster_id' => $poster_id));
+		}
+
+		$auctionObj->deleteData(TBL_AUCTION,      array('auction_id'    => $auction_id));
+		$auctionObj->deleteData(TBL_CART_HISTORY, array('fk_auction_id' => $auction_id));
+		$auctionObj->deleteData(TBL_WATCHING,     array('auction_id'    => $auction_id));
+		mysqli_query($GLOBALS['db_connect'], "DELETE FROM tbl_sold_archive WHERE auction_id=$auction_id");
+
+		$redirect = 'fixed';
+
+	// ── Weekly / Monthly / Stills (types 2, 3, 4) ───────────────────────────
+	// Item may be in tbl_auction_live (still active) OR tbl_auction (expired,
+	// moved back by cron after auction closed) — use isLiveAuctionItem to decide.
+	} else {
+		$chkLive = $auctionObj->isLiveAuctionItem($auction_id);
+
+		if ($chkLive > 0) {
+			// Still active — lives in tbl_auction_live
+			$auctionData = $auctionObj->selectData('tbl_auction_live',
+				array('fk_poster_id', 'fk_auction_type_id'),
+				array('auction_id' => $auction_id));
+
+			$auctionObj->deleteData(TBL_BID,              array('bid_fk_auction_id' => $auction_id));
+			$auctionObj->deleteData('tbl_proxy_bid_live', array('fk_auction_id'     => $auction_id));
+
+			$poster_id   = (int)($auctionData[0]['fk_poster_id'] ?? 0);
+			$countPoster = $poster_id ? $auctionObj->countData('tbl_auction_live',
+				array('fk_poster_id' => $poster_id),
+				array('auction_id'   => $auction_id)) : 1;
+
+			if ($countPoster == 0) {
+				$posterImages = $auctionObj->selectData('tbl_poster_images_live',
+					array('poster_image', 'poster_thumb'),
+					array('fk_poster_id' => $poster_id));
+				foreach ($posterImages as $img) {
+					@unlink("../poster_photo/".$img['poster_image']);
+					@unlink("../poster_photo/thumbnail/".$img['poster_thumb']);
+					@unlink("../poster_photo/thumb_buy/".$img['poster_thumb']);
+					@unlink("../poster_photo/thumb_buy_gallery/".$img['poster_thumb']);
+				}
+				$auctionObj->deleteData('tbl_poster_live',             array('poster_id'    => $poster_id));
+				$auctionObj->deleteData('tbl_poster_images_live',      array('fk_poster_id' => $poster_id));
+				$auctionObj->deleteData('tbl_poster_to_category_live', array('fk_poster_id' => $poster_id));
+			}
+
+			$auctionObj->deleteData('tbl_auction_live', array('auction_id'    => $auction_id));
+			$auctionObj->deleteData(TBL_CART_HISTORY,   array('fk_auction_id' => $auction_id));
+			$auctionObj->deleteData(TBL_WATCHING,       array('auction_id'    => $auction_id));
+
+		} else {
+			// Expired — cron moved it back to tbl_auction
+			$auctionData = $auctionObj->selectData(TBL_AUCTION,
+				array('fk_poster_id', 'fk_auction_type_id'),
+				array('auction_id' => $auction_id));
+
+			$auctionObj->deleteData(TBL_BID,       array('bid_fk_auction_id' => $auction_id));
+			$auctionObj->deleteData(TBL_PROXY_BID, array('fk_auction_id'     => $auction_id));
+
+			$invoiceTblData = $auctionObj->selectData(TBL_INVOICE_TO_AUCTION,
+				array('fk_invoice_id'), array('fk_auction_id' => $auction_id));
+			foreach ($invoiceTblData as $inv) {
+				$auctionObj->deleteData(TBL_INVOICE, array('invoice_id' => $inv['fk_invoice_id']));
+			}
+			$auctionObj->deleteData(TBL_INVOICE_TO_AUCTION, array('fk_auction_id' => $auction_id));
+
+			$poster_id   = (int)($auctionData[0]['fk_poster_id'] ?? 0);
+			$countPoster = $poster_id ? $auctionObj->countData(TBL_AUCTION,
+				array('fk_poster_id' => $poster_id),
+				array('auction_id'   => $auction_id)) : 1;
+
+			if ($countPoster == 0) {
+				$posterImages = $auctionObj->selectData(TBL_POSTER_IMAGES,
+					array('poster_image', 'poster_thumb'),
+					array('fk_poster_id' => $poster_id));
+				foreach ($posterImages as $img) {
+					@unlink("../poster_photo/".$img['poster_image']);
+					@unlink("../poster_photo/thumbnail/".$img['poster_thumb']);
+					@unlink("../poster_photo/thumb_buy/".$img['poster_thumb']);
+					@unlink("../poster_photo/thumb_buy_gallery/".$img['poster_thumb']);
+				}
+				$auctionObj->deleteData(TBL_POSTER,             array('poster_id'    => $poster_id));
+				$auctionObj->deleteData(TBL_POSTER_IMAGES,      array('fk_poster_id' => $poster_id));
+				$auctionObj->deleteData(TBL_POSTER_TO_CATEGORY, array('fk_poster_id' => $poster_id));
+			}
+
+			$auctionObj->deleteData(TBL_AUCTION,      array('auction_id'    => $auction_id));
+			$auctionObj->deleteData(TBL_CART_HISTORY, array('fk_auction_id' => $auction_id));
+			$auctionObj->deleteData(TBL_WATCHING,     array('auction_id'    => $auction_id));
+			mysqli_query($GLOBALS['db_connect'], "DELETE FROM tbl_sold_archive WHERE auction_id=$auction_id");
+		}
+
+		$type     = $auctionData[0]['fk_auction_type_id'] ?? $auction_type;
+		$redirect = ($type == 3) ? 'monthly' : (($type == 4) ? 'stills' : 'weekly');
+	}
+
+	$_SESSION['adminErr'] = "Auction deleted successfully.";
+	header("location: ".PHP_SELF."?mode=".$redirect);
 	exit;
 }
 function create_fixed(){
