@@ -770,10 +770,15 @@ function timeLeftPosterDetails(dataArr, listType)
                         $('#auction_data_'+bidDataArr[i]['auction_id']).show();
                         /* Offer data ends */
                     }else if(auctionType == 1){
-                        /* Fixed price with no offers — show nothing */
-                    	dispData = '<input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0">';
-                        $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
-                        $('#auction_data_'+bidDataArr[i]['auction_id']).show();
+                        // instantUpdateOfferAuction returns two rows per auction:
+                        // a bid row (no offer_count field) and an offer row (offer_count >= 0).
+                        // Skip the bid row entirely — it has no offer data and would
+                        // clear the div before the offer row gets a chance to render.
+                        if(typeof bidDataArr[i]['offer_count'] !== 'undefined'){
+                            dispData = '<input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0">';
+                            $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
+                            $('#auction_data_'+bidDataArr[i]['auction_id']).show();
+                        }
                     }else if(auctionType == 4){
                     	dispData = '<div class="auction-row" style="padding:0px;"><input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="0"><div class="buy-text bold"><span class="CurrentBidOffer" style="font-size:13px; color:#000;">Starting Bid:</span></div><div class="buy-text offer_buyprice" style="font-size:13px;">$'+parseFloat(bidDataArr[i]['auction_asked_price']).toFixed(2)+'</div></div>';
                         $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
