@@ -833,7 +833,7 @@ function timeLeftPosterDetails(dataArr, listType)
                     }
                 }
             }
-			setTimeout(function() { timeLeftPosterDetails(dataArr); }, 1500);
+			setTimeout(function() { timeLeftPosterDetails(dataArr, listType); }, 3000);
         });
     }
 }

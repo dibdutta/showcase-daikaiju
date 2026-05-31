@@ -2592,29 +2592,14 @@ class Auction extends DBCommon{
                 }
             }
         }elseif($list=='fixed' || $list=='stills'){
-            $sql = "SELECT a.auction_id,a.auction_asked_price, a.fk_auction_type_id, a.auction_is_sold, a.auction_actual_end_datetime,a.in_cart,
-                    (UNIX_TIMESTAMP(a.auction_actual_end_datetime) - UNIX_TIMESTAMP()) AS seconds_left,
-                    MAX(b.bid_id) AS last_bid_id, COUNT(b.bid_id) AS bid_count,	MAX(b.bid_amount) AS last_bid_amount,highest_user(a.auction_id) as highest_user
-                    FROM ".TBL_AUCTION." a LEFT JOIN ".TBL_BID." b ON a.auction_id = b.bid_fk_auction_id
-                    WHERE a.auction_id IN ($auction_ids)
-                    GROUP BY a.auction_id";
-
-            if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
-                while($row = mysqli_fetch_assoc($rs)){
-                    $dataArr[] = $row;
-                }
-            }
-
-            // Data fetched for Offers
-            $sql = "SELECT a.auction_id, a.fk_auction_type_id, a.auction_is_sold, a.auction_actual_end_datetime,a.in_cart,
+            // Fixed-price auctions use offers only — no bids
+            $sql = "SELECT a.auction_id, a.fk_auction_type_id, a.auction_is_sold, a.auction_actual_end_datetime, a.in_cart,
                     COUNT(o.offer_id) AS offer_count, MAX(o.offer_amount) AS last_offer_amount
-                    FROM ".TBL_AUCTION." a LEFT JOIN ".TBL_BID." b ON a.auction_id = b.bid_fk_auction_id
-                    LEFT JOIN ".TBL_OFFER." o ON a.auction_id = o.offer_fk_auction_id
+                    FROM ".TBL_AUCTION." a
+                    LEFT JOIN ".TBL_OFFER." o ON a.auction_id = o.offer_fk_auction_id AND o.offer_parent_id = 0
                     WHERE a.auction_id IN ($auction_ids)
-                    AND o.offer_parent_id = 0
                     GROUP BY a.auction_id";
 
-            // All data (Bids & Offers) marged
             if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
                 while($row = mysqli_fetch_assoc($rs)){
                     $dataArr[] = $row;
