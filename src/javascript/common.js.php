@@ -710,15 +710,15 @@ function timeLeftGallery(dataArr,list)
     }
 }
 
-function timeLeftPosterDetails(dataArr)
+function timeLeftPosterDetails(dataArr, listType)
 {
     if(dataArr != null){
         var bidDataArr = new Array();
         var dispData = '';
         var datetime;
         var url = "ajax";
-        var ids = ''; 
-		var list = "details";
+        var ids = '';
+		var list = listType || "details";
         for(var k=0; k<dataArr.length; k++){
             ids += dataArr[k]['auction_id'];
             if(k < (dataArr.length -1)){
