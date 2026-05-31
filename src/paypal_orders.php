@@ -94,6 +94,7 @@ if ($action === 'create_order') {
 
     $token = paypalAccessToken();
     if (!$token) {
+        error_log('[PayPal][create_order] FAILED auth — invoice=' . $invoice_id . ' user=' . $esc_usr);
         jsonOut(['error' => 'PayPal authentication failed — check Client ID and Secret in admin config'], 502);
     }
 
@@ -114,8 +115,10 @@ if ($action === 'create_order') {
     ], $token);
 
     if ($result['status'] === 201 && !empty($result['body']['id'])) {
+        error_log('[PayPal][create_order] OK — invoice=' . $invoice_id . ' order_id=' . $result['body']['id'] . ' amount=$' . $total . ' user=' . $esc_usr);
         jsonOut(['id' => $result['body']['id']]);
     }
+    error_log('[PayPal][create_order] FAILED — invoice=' . $invoice_id . ' HTTP=' . $result['status'] . ' body=' . json_encode($result['body']));
     jsonOut(['error' => 'Order creation failed', 'details' => $result['body']], 502);
 }
 
@@ -129,14 +132,17 @@ if ($action === 'capture_order') {
 
     $token = paypalAccessToken();
     if (!$token) {
+        error_log('[PayPal][capture_order] FAILED auth — invoice=' . $invoice_id . ' order_id=' . $order_id . ' user=' . $esc_usr);
         jsonOut(['error' => 'PayPal authentication failed'], 502);
     }
+
+    error_log('[PayPal][capture_order] START — invoice=' . $invoice_id . ' order_id=' . $order_id . ' user=' . $esc_usr);
 
     $result = paypalRequest('POST', '/v2/checkout/orders/' . rawurlencode($order_id) . '/capture', null, $token);
 
     // 1. Top-level order status must be COMPLETED
     if (!in_array($result['status'], [200, 201]) || ($result['body']['status'] ?? '') !== 'COMPLETED') {
-        error_log('PayPal capture failed for invoice ' . $invoice_id . ': HTTP ' . $result['status'] . ' body=' . json_encode($result['body']));
+        error_log('[PayPal][capture_order] FAILED top-level — invoice=' . $invoice_id . ' order_id=' . $order_id . ' HTTP=' . $result['status'] . ' body=' . json_encode($result['body']));
         jsonOut(['error' => 'Capture failed', 'details' => $result['body']], 502);
     }
 
@@ -144,19 +150,19 @@ if ($action === 'capture_order') {
     $capture    = $result['body']['purchase_units'][0]['payments']['captures'][0] ?? null;
     $capture_id = $capture['id'] ?? null;
     if (!$capture_id || ($capture['status'] ?? '') !== 'COMPLETED') {
-        error_log('PayPal capture incomplete for invoice ' . $invoice_id . ': capture=' . json_encode($capture));
+        error_log('[PayPal][capture_order] FAILED capture object — invoice=' . $invoice_id . ' order_id=' . $order_id . ' capture=' . json_encode($capture));
         jsonOut(['error' => 'Payment capture incomplete — no transaction recorded'], 502);
     }
 
     // 3. Captured amount must match the expected invoice total
-    $sessKey2     = 'invoice_' . $invoice_id;
-    $si2          = $_SESSION[$sessKey2]['shipping_info'] ?? [];
-    $rs3          = mysqli_query($GLOBALS['db_connect'], "SELECT total_amount FROM " . TBL_INVOICE . " WHERE invoice_id = $esc_inv");
-    $invBase      = (float)(mysqli_fetch_assoc($rs3)['total_amount'] ?? 0);
-    $expectedTotal = round($invBase + (float)($si2['shipping_charge'] ?? 0) + (float)($si2['sale_tax_amount'] ?? 0), 2);
+    $sessKey2      = 'invoice_' . $invoice_id;
+    $si2           = $_SESSION[$sessKey2]['shipping_info'] ?? [];
+    $rs3           = mysqli_query($GLOBALS['db_connect'], "SELECT total_amount FROM " . TBL_INVOICE . " WHERE invoice_id = $esc_inv");
+    $invBase       = (float)(mysqli_fetch_assoc($rs3)['total_amount'] ?? 0);
+    $expectedTotal  = round($invBase + (float)($si2['shipping_charge'] ?? 0) + (float)($si2['sale_tax_amount'] ?? 0), 2);
     $capturedAmount = round((float)($capture['amount']['value'] ?? 0), 2);
     if ($capturedAmount !== $expectedTotal) {
-        error_log('PayPal amount mismatch for invoice ' . $invoice_id . ': expected=' . $expectedTotal . ' captured=' . $capturedAmount . ' capture_id=' . $capture_id);
+        error_log('[PayPal][capture_order] FAILED amount mismatch — invoice=' . $invoice_id . ' order_id=' . $order_id . ' expected=$' . $expectedTotal . ' captured=$' . $capturedAmount . ' capture_id=' . $capture_id);
         jsonOut(['error' => 'Payment amount mismatch'], 502);
     }
 
@@ -231,6 +237,8 @@ if ($action === 'capture_order') {
     $invoiceObj->generateSellerInvoice($invoice_id);
     $invoiceObj->mailInvoice($invoice_id, 'invoice');
     unset($_SESSION[$sessKey]);
+
+    error_log('[PayPal][capture_order] SUCCESS — invoice=' . $invoice_id . ' order_id=' . $order_id . ' capture_id=' . $capture_id . ' amount=$' . $capturedAmount . ' user=' . $esc_usr);
 
     jsonOut(['success' => true]);
 }
