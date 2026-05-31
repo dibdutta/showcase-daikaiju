@@ -13,19 +13,16 @@ $(document).ready(function(){
 		 {if $liveStilltrack ==1}
 	{literal}
 			dataArr = {/literal}{$json_arr}{literal};
+			//setInterval(function() { timeLeftPosterDetails(dataArr); }, 1500);	
 			setTimeout(function() { timeLeftPosterDetails(dataArr); }, 3000);
 	{/literal}
 		 {/if}
-		{elseif $auctionDetails[0].fk_auction_type_id == 1}
-	{literal}
-			dataArr = {/literal}{$json_arr}{literal};
-			setTimeout(function() { timeLeftPosterDetails(dataArr, 'fixed'); }, 3000);
-	{/literal}
 		{else}
-	{literal}
+	{literal}	
 			dataArr = {/literal}{$json_arr}{literal};
 			setTimeout(function() { timeLeftPosterDetails(dataArr); }, 3000);
-	{/literal}
+			//setInterval(function() { timeLeftPosterDetails(dataArr); }, 1500);	
+	{/literal}		
 		{/if}
 	{literal}				   
 })
