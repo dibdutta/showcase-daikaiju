@@ -1410,11 +1410,12 @@ function increment_amount($buy_now){
 		}
 	}
 
-	// Check for an existing default in the correct table so we don't create
-	// duplicate is_default=1 rows when adding images to an existing poster.
-	$imgTable        = ($type === 'weekly') ? 'tbl_poster_images_live' : 'tbl_poster_images';
+	// If this poster already has a default image, don't auto-assign a new default.
+	// The edit flows (edit_myauction.php etc.) handle default assignment explicitly
+	// via UPDATE after calling this function. Prevents duplicate is_default=1 rows
+	// when images are added to an existing poster.
 	$existingDefaultRs = mysqli_query($GLOBALS['db_connect'],
-		"SELECT COUNT(*) AS cnt FROM $imgTable WHERE fk_poster_id = $poster_id AND is_default = '1'");
+		"SELECT COUNT(*) AS cnt FROM tbl_poster_images WHERE fk_poster_id = $poster_id AND is_default = '1'");
 	$hasExistingDefault = ($existingDefaultRs && mysqli_fetch_assoc($existingDefaultRs)['cnt'] > 0);
 
 	foreach($posterArr as $key => $value){
@@ -1429,11 +1430,22 @@ function increment_amount($buy_now){
 			$set_default = ($key === array_key_first($posterArr)) ? 1 : 0;
 		}
 		mysqli_query($GLOBALS['db_connect'], 'START TRANSACTION');
-		// Insert into the correct table only — never both.
-		// weekly = live-auction edit  → tbl_poster_images_live only
-		// ''     = fixed/new auction  → tbl_poster_images only
-		mysqli_query($GLOBALS['db_connect'], "INSERT INTO $imgTable (fk_poster_id,poster_thumb,poster_image,is_default,FileExtention,original_filename,is_cloud,is_big) VALUES ($poster_id,'".addslashes($value)."','".addslashes($value)."','".$set_default."','".$imageExt."','".addslashes($value)."','1','1')");
-		$poster_image_id = mysqli_insert_id($GLOBALS['db_connect']);
+        //$poster_image_id=$obj->updateData(TBL_POSTER_IMAGES, array("fk_poster_id" => $poster_id, "poster_thumb" => addslashes($value),
+                                                  //"poster_image" => addslashes($value), "is_default" => $set_default,"FileExtention"=>$imageExt,"original_filename"=>addslashes($value),"is_cloud"=>'1',"is_big"=>'1'));
+		mysqli_query($GLOBALS['db_connect'], "Insert into tbl_poster_images (fk_poster_id,poster_thumb,poster_image,is_default,FileExtention,original_filename,is_cloud,is_big)  Values ($poster_id,'".addslashes($value)."','".addslashes($value)."','".$set_default."','".$imageExt."','".addslashes($value)."','1','1') ");
+
+		$poster_image_id=mysqli_insert_id($GLOBALS['db_connect']);
+		$live_poster_image_id = null;
+		if($type=='weekly'){
+		$sql="select * from tbl_poster_images where poster_image_id=".$poster_image_id;
+		$rowPosterImages=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'], $sql));
+
+		mysqli_query($GLOBALS['db_connect'], "Insert into tbl_poster_images_live (fk_poster_id,poster_thumb,poster_image,is_default,FileExtention,original_filename,is_cloud,is_big)  Values ($poster_id,'".addslashes($rowPosterImages['poster_thumb'])."','".addslashes($rowPosterImages['poster_thumb'])."','".$set_default."','".$imageExt."','".addslashes($value)."','1','1') ");
+		$live_poster_image_id = mysqli_insert_id($GLOBALS['db_connect']);
+
+		// Live images belong only in tbl_poster_images_live — remove the intermediate tbl_poster_images row
+		mysqli_query($GLOBALS['db_connect'], "DELETE FROM tbl_poster_images WHERE poster_image_id=$poster_image_id");
+		}
 
 		mysqli_query($GLOBALS['db_connect'], 'COMMIT');										  
 			$imgNewName=$poster_image_id.'.'.$imageExt;
