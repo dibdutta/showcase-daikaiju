@@ -134,8 +134,30 @@ if ($action === 'capture_order') {
 
     $result = paypalRequest('POST', '/v2/checkout/orders/' . rawurlencode($order_id) . '/capture', null, $token);
 
+    // 1. Top-level order status must be COMPLETED
     if (!in_array($result['status'], [200, 201]) || ($result['body']['status'] ?? '') !== 'COMPLETED') {
+        error_log('PayPal capture failed for invoice ' . $invoice_id . ': HTTP ' . $result['status'] . ' body=' . json_encode($result['body']));
         jsonOut(['error' => 'Capture failed', 'details' => $result['body']], 502);
+    }
+
+    // 2. Individual capture object must also be COMPLETED and have a capture ID
+    $capture    = $result['body']['purchase_units'][0]['payments']['captures'][0] ?? null;
+    $capture_id = $capture['id'] ?? null;
+    if (!$capture_id || ($capture['status'] ?? '') !== 'COMPLETED') {
+        error_log('PayPal capture incomplete for invoice ' . $invoice_id . ': capture=' . json_encode($capture));
+        jsonOut(['error' => 'Payment capture incomplete — no transaction recorded'], 502);
+    }
+
+    // 3. Captured amount must match the expected invoice total
+    $sessKey2     = 'invoice_' . $invoice_id;
+    $si2          = $_SESSION[$sessKey2]['shipping_info'] ?? [];
+    $rs3          = mysqli_query($GLOBALS['db_connect'], "SELECT total_amount FROM " . TBL_INVOICE . " WHERE invoice_id = $esc_inv");
+    $invBase      = (float)(mysqli_fetch_assoc($rs3)['total_amount'] ?? 0);
+    $expectedTotal = round($invBase + (float)($si2['shipping_charge'] ?? 0) + (float)($si2['sale_tax_amount'] ?? 0), 2);
+    $capturedAmount = round((float)($capture['amount']['value'] ?? 0), 2);
+    if ($capturedAmount !== $expectedTotal) {
+        error_log('PayPal amount mismatch for invoice ' . $invoice_id . ': expected=' . $expectedTotal . ' captured=' . $capturedAmount . ' capture_id=' . $capture_id);
+        jsonOut(['error' => 'Payment amount mismatch'], 502);
     }
 
     // Mirror pay_now() DB updates exactly
@@ -194,6 +216,7 @@ if ($action === 'capture_order') {
         'total_amount'       => $total_amount,
         'is_paid'            => '1',
         'paid_on'            => date('Y-m-d H:i:s'),
+        'paypal_capture_id'  => $capture_id,
     ], ['invoice_id' => $invoice_id], true);
 
     $linked = $invoiceObj->selectData(TBL_INVOICE_TO_AUCTION, ['fk_auction_id'], ['fk_invoice_id' => $invoice_id]);
