@@ -4,12 +4,14 @@
 <head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPH241HM6Q"></script>
+{literal}
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-QPH241HM6Q');
 </script>
+{/literal}
 <title>::{$smarty.const.SITE_TITLE}::</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"  >
 <meta name="description" content="{$metaDescription}" >
