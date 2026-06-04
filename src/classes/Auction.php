@@ -6531,6 +6531,7 @@ function fetchStillsLiveAuctions($view_mode=''){
 		// --- First poster for slider ---
 		$firstPosterSql = "SELECT
 								a.auction_id,
+								a.fk_auction_type_id,
 								p.poster_title,
 								tsa.soldamnt,
 								tpi.poster_thumb,
@@ -6566,6 +6567,7 @@ function fetchStillsLiveAuctions($view_mode=''){
 
 		$sql = "SELECT
 					a.auction_id,
+					a.fk_auction_type_id,
 					p.poster_title,
 					tsa.soldamnt,
 					tpi.poster_thumb,

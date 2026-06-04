@@ -299,14 +299,14 @@ function updateArrows(wrap) {
                             <div class="hp-card-img-wrap">
                                 <img src="{$dataJstFinishedAuction[counter].large_image}"
                                      alt="{$dataJstFinishedAuction[counter].poster_title}"
-                                     onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});">
+                                     onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id}{if $dataJstFinishedAuction[counter].fk_auction_type_id == 1}, 1{/if});">
                             </div>
                             <div class="hp-card-body">
                                 {if $smarty.session.sessUserID <> ""}
                                 <div class="hp-card-price">Sold: ${if $dataJstFinishedAuction[counter].soldamnt == ''}0.00{else}{$dataJstFinishedAuction[counter].soldamnt}{/if}</div>
                                 {/if}
                                 <div class="hp-card-title">
-                                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}"
+                                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}{if $dataJstFinishedAuction[counter].fk_auction_type_id == 1}&fixed=1{/if}"
                                        title="{$dataJstFinishedAuction[counter].poster_title}"
                                        id="tipsy_{$dataJstFinishedAuction[counter].auction_id}"
                                        onmouseover="tipsy(this.id)">{$dataJstFinishedAuction[counter].poster_title}</a>
