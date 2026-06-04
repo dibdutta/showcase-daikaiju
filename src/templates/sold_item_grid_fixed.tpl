@@ -116,8 +116,8 @@ function show_text(){
                                              <div class="inner-cntnt-each-poster">
                                                 <div id="gallery_{$smarty.section.counter.index}" class="image-hldr">
                                                      <div class="buygridtb">
-                                       <div><img class="image-brdr" src="{$dataJstFinishedAuction[counter].image_path}" onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});" style="cursor:pointer;" /></div></div>
-                                                                                            <div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" style="cursor:pointer;" >{$dataJstFinishedAuction[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</a> </h3></div>	
+                                       <div><img class="image-brdr" src="{$dataJstFinishedAuction[counter].image_path}" onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id}, 1);" style="cursor:pointer;" /></div></div>
+                                                                                            <div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}&fixed=1" style="cursor:pointer;" >{$dataJstFinishedAuction[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</a> </h3></div>	
                                                 
                                              </div>										
                                             <div class="inner-cntnt-each-poster">                                        

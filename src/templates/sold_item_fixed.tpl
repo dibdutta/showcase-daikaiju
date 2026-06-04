@@ -109,7 +109,7 @@ function show_text(){
 								  <tr>
 									
 									<td width="200" class="buylisttb">
-									<div><img  class="image-brdr" src="{$dataJstFinishedAuction[counter].image_path}"  onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});" style="cursor:pointer;" /></div>
+									<div><img  class="image-brdr" src="{$dataJstFinishedAuction[counter].image_path}"  onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id}, 1);" style="cursor:pointer;" /></div>
 									 
 																   
 																 
@@ -117,7 +117,7 @@ function show_text(){
 									</td>
 									<td valign="top" class="pr10"><table width="100%" border="0" cellspacing="0" cellpadding="0">
 									  <tr>
-										<td class="pb20"><a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" style="cursor:pointer;" ><h1>{$dataJstFinishedAuction[counter].poster_title}&nbsp;</h1></a></td>
+										<td class="pb20"><a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}&fixed=1" style="cursor:pointer;" ><h1>{$dataJstFinishedAuction[counter].poster_title}&nbsp;</h1></a></td>
 									  </tr>
 									  <tr>
 										<td class="buylisttbtopbg"></td>
