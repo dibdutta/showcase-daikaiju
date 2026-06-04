@@ -1688,43 +1688,31 @@ function view_details_offer(){
 	$smarty->assign ("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
 	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 	$obj = new Auction();
-	$auctionArr=$obj->select_details_auction($auction_id);
-    if (file_exists("../poster_photo/" . $auctionArr[0]['poster_thumb'])){
-        $auctionArr[0]['image_path']=CLOUD_POSTER_THUMB.$auctionArr[0]['poster_thumb'];
-    }else{
-        $auctionArr[0]['image_path']=CLOUD_POSTER_THUMB.$auctionArr[0]['poster_thumb'];
-    }
-	if($auctionArr[0]['auction_is_sold']=='0'){
-		$objOffer= new Offer();
-		$auctionArr=$objOffer->fetchOffersById($auctionArr);
-		$objOffer->fetch_OfferCount_MaxOffer($auctionArr);
-		$countBid=count($auctionArr[0]['offers']);
+	// Always query tbl_auction (fixed-price table) — this is a fixed-price admin view.
+	// Without is_fixed=1, select_details_auction queries tbl_auction_live if the
+	// auction_id also exists there, returning no data when the live poster has no
+	// default image set (is_default='1'), which caused a 500.
+	$auctionArr = $obj->select_details_auction($auction_id, 1);
+	if (empty($auctionArr[0])) {
+		$smarty->assign("auctionArr", []);
+		$smarty->assign("total", 0);
+		$smarty->display('admin_view_fixed_auction_details.tpl');
+		return;
 	}
-	if($auctionArr[0]['auction_is_sold']=='1'){
-		$objOffer= new Offer();
-		$auctionArr=$objOffer->fetchOffersById($auctionArr);
+	$auctionArr[0]['image_path'] = CLOUD_POSTER_THUMB . ($auctionArr[0]['poster_thumb'] ?? '');
+	$countBid = 0;
+	$sold = $auctionArr[0]['auction_is_sold'] ?? '';
+	if (in_array($sold, ['0','1','2','3'])) {
+		$objOffer = new Offer();
+		$auctionArr = $objOffer->fetchOffersById($auctionArr);
 		$objOffer->fetch_OfferCount_MaxOffer($auctionArr);
-		$countBid=count($auctionArr[0]['offers']);
-		$objInvoice = new Invoice();
-		$invoiceData=$objInvoice->auctionWinnerForDetail($auctionArr[0]['auction_id']);
-		$smarty->assign("invoiceData", $invoiceData);
+		$countBid = count($auctionArr[0]['offers'] ?? []);
+		if (in_array($sold, ['1','2'])) {
+			$objInvoice = new Invoice();
+			$invoiceData = $objInvoice->auctionWinnerForDetail($auctionArr[0]['auction_id']);
+			$smarty->assign("invoiceData", $invoiceData);
+		}
 	}
-	if($auctionArr[0]['auction_is_sold']=='2'){
-		$objOffer= new Offer();
-		$auctionArr=$objOffer->fetchOffersById($auctionArr);
-		$objOffer->fetch_OfferCount_MaxOffer($auctionArr);
-		$countBid=count($auctionArr[0]['offers']);
-		$objInvoice = new Invoice();
-		$invoiceData=$objInvoice->auctionWinnerForDetail($auctionArr[0]['auction_id']);
-		$smarty->assign("invoiceData", $invoiceData);
-		//print_r($invoiceData);
-	}
-	if($auctionArr[0]['auction_is_sold']=='3'){
-        $objOffer= new Offer();
-        $auctionArr=$objOffer->fetchOffersById($auctionArr);
-        $objOffer->fetch_OfferCount_MaxOffer($auctionArr);
-        $countBid=count($auctionArr[0]['offers']);
-    }
 	$smarty->assign("auctionArr", $auctionArr);
 	$smarty->assign("total", $countBid);
 	$smarty->display('admin_view_fixed_auction_details.tpl');
