@@ -10,6 +10,93 @@
 	background: #7a3050;
 }
 
+/* ── Fixed-price card modernisation ── */
+.fp-card {
+	background: #fff;
+	border: 1px solid #e8e8e8;
+	border-radius: 10px;
+	box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+	overflow: hidden;
+	transition: box-shadow 0.2s, transform 0.2s;
+	display: flex;
+	flex-direction: column;
+	width: 210px;
+	margin: 6px;
+}
+.fp-card:hover {
+	box-shadow: 0 6px 22px rgba(0,0,0,0.14);
+	transform: translateY(-2px);
+}
+.fp-card .fp-img-wrap {
+	width: 100%;
+	height: 200px;
+	overflow: hidden;
+	background: #f5f5f5;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.fp-card .fp-img-wrap img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	transition: transform 0.3s;
+}
+.fp-card:hover .fp-img-wrap img {
+	transform: scale(1.04);
+}
+.fp-card .fp-body {
+	padding: 10px 12px 12px;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+.fp-card .fp-title {
+	font-size: 13px;
+	font-weight: 700;
+	color: #1a1a1a;
+	line-height: 1.35;
+	min-height: 36px;
+	margin: 0 0 10px;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-decoration: none;
+}
+.fp-card .fp-title:hover { color: #bd1a21; }
+.fp-card .fp-price-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: auto;
+}
+.fp-card .fp-price {
+	font-size: 17px;
+	font-weight: 800;
+	color: #1a7a3f;
+	letter-spacing: -0.3px;
+}
+.fp-card .fp-buy-btn {
+	display: inline-block;
+	background: #bd1a21;
+	color: #fff !important;
+	font-size: 12px;
+	font-weight: 700;
+	padding: 6px 13px;
+	border-radius: 20px;
+	text-decoration: none;
+	letter-spacing: 0.3px;
+	transition: background 0.2s;
+	white-space: nowrap;
+}
+.fp-card .fp-buy-btn:hover { background: #8e1219; color: #fff !important; }
+
+/* Outer wrapper for each fixed-price card item */
+.fp-card-outer {
+	display: inline-block;
+	vertical-align: top;
+}
 </style>
 
 {/literal}
@@ -169,14 +256,30 @@
                             </div>
                             
                             				
-                            <div class="display-listing-main buygrid"> 
- 
+                            <div class="display-listing-main buygrid{if $smarty.request.list=='fixed'} fixed-price-grid{/if}">
 
-                            <div>  
-                            <div class="btomgrey-bg"></div>                 
-                                {section name=counter loop=$auctionItems}	
-                               
-                                    <div>							
+
+                            <div>
+                            <div class="btomgrey-bg"></div>
+                                {section name=counter loop=$auctionItems}
+
+                                    <div{if $smarty.request.list=='fixed' && $auctionItems[counter].fk_auction_type_id=='1'} class="fp-card-outer"{/if}>
+                                    {if $smarty.request.list=='fixed' && $auctionItems[counter].fk_auction_type_id=='1'}
+                                    {* ── Modern fixed-price card ── *}
+                                    <div class="fp-card">
+                                        <a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1" class="fp-img-wrap">
+                                            <img src="{$auctionItems[counter].image_path}" alt="{$auctionItems[counter].poster_title}" />
+                                        </a>
+                                        <div class="fp-body">
+                                            <a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1" class="fp-title">{$auctionItems[counter].poster_title}</a>
+                                            <div class="fp-price-row">
+                                                <span class="fp-price">${$auctionItems[counter].auction_asked_price}</span>
+                                                <a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1" class="fp-buy-btn">Buy Now &rsaquo;</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {else}
+                                    {* ── Original non-fixed-price card layout ── *}
                                     <div {if $smarty.session.sessUserID == ""} class="grid-view-main gridMrgn" {else} class="grid-view-main " {/if} style="padding:4px 0;">
 
                                         <div class="poster-area">
@@ -191,12 +294,12 @@
 														{else}
 															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
 														{/if}
-                                                        
+
                                                         </div>
                                                       </div>
                                                         {if ($smarty.request.list=='alternative' || $smarty.request.list=='') && $auctionItems[counter].fk_auction_type_id == 6}
                                                         <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
-														 <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].artist}</a></h3></div>	
+														 <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].artist}</a></h3></div>
 														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_size}</a></h3></div>
 														{if $auctionItems[counter].field_1 <> ''}
 														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].field_1}</a></h3></div>
@@ -207,16 +310,14 @@
 														{if $auctionItems[counter].field_3 <> ''}
 														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].field_3}</a></h3></div>
 														{/if}
-														{elseif $smarty.request.list=='fixed'}
-															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
 														{elseif $smarty.request.list=='extended'}
 															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&extended=true" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
 														{else}
 															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
-														{/if}	
+														{/if}
                                                          {if $is_expired=='0' && $is_expired_stills !='1' && $smarty.request.list!='alternative' &&  $smarty.request.list!=''}
 														   {if $auctionItems[counter].fk_auction_type_id <> '1'}
-                                            				<div class="inner-cntnt-each-poster pt10  pb05 pl10 pr10">                                        
+                                            				<div class="inner-cntnt-each-poster pt10  pb05 pl10 pr10">
                                                 			  <div style="display:flex; align-items:center; justify-content:space-between;">
 																{if $auctionItems[counter].watch_indicator ==0}
 																  {if $smarty.request.list!='extendded'}
@@ -237,19 +338,19 @@
 															<div class="pb05 pl10 pr10 tac" ><h3>Buy Now Price:&nbsp;${$auctionItems[counter].auction_asked_price}</h3></div>
 															{/if}
 														{/if}
-                                            
+
                                             	<div class="inner-cntnt-each-poster pb05 pl10 pr10">
-                                            {if $auctionItems[counter].fk_auction_type_id == 1 }	
+                                            {if $auctionItems[counter].fk_auction_type_id == 1 }
                                                 <div id="auction_data_{$auctionItems[counter].auction_id}">
                                                     {if $auctionItems[counter].offer_count > 0}
                                                         <div class="auction-row">
-                                                            
+
                                                         </div>
                                                     {/if}
                                                 </div>
 												<!--   popup starts -->
 												<div id="{$auctionItems[counter].auction_id}" class="popDiv_Auction">
-												
+
                                     			</div>
 												<!--   popup ends -->
                                             {elseif $auctionItems[counter].fk_auction_type_id == 2 || $auctionItems[counter].fk_auction_type_id == 5}
@@ -335,13 +436,14 @@
                                         </div>
                                        
                                     </div>
+                                    {/if}{* end fixed-price card / original card branch *}
                                     </div>
                                     {if ($smarty.section.counter.index) != 0}
-                                        {if (($smarty.section.counter.index +1) % 4) == 0} 
+                                        {if (($smarty.section.counter.index +1) % 4) == 0}
                                          <!--<img class="grid-divider" src="images/grid-divider.png" width="756" height="4" border="0" />-->
                                          <div class="btomgrey-bg"></div> {/if}
-                                    {/if} 
-                                {/section} 
+                                    {/if}
+                                {/section}
                                   <div class="btomgrey-bg"></div>  
                                 </div>
                             </div>
