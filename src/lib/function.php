@@ -932,50 +932,7 @@ function create_thumbnail_for_big_slider($newpath,$imgpath,$fileName,$resize_wid
     $thumb->save($new_up_path);    // save my  thumbnail to file "huhu.jpg" in directory "/www/thumb
 }
 
-function sendOfferMailCron($row, $status)
-{
-    $toMail = $row['email'];
-    $toName = $row['firstname'].' '.$row['lastname'];
-    $subject = "Kaijulink::Offer Accepted - ".$row['poster_title']." (#".$row['poster_sku'].")";
-    $fromMail = ADMIN_EMAIL_ADDRESS;
-    $fromName = ADMIN_NAME;
-    
-    $textContent = 'Dear '.$row['firstname'].' '.$row['lastname'].',<br /><br />';
-    $textContent .= '<b>Poster Title : </b>'.$row['poster_title'].'<br />';
-    $textContent .= '<b>Poster Title : </b>'.$row['poster_sku'].'<br /><br />';
-    if($status == "accept_counter_offer"){
-        $textContent .= 'Your counter offer has been accepted.<br /><br />';
-        $textContent .= 'For more details, please login <a href="http://'.HOST_NAME.'">';
-    }elseif($status == "accept_offer"){
-        $textContent .= 'Your offer has been accepted.<br /><br />';
-        $textContent .= 'For more details, please login <a href="http://'.HOST_NAME.'">';
-    }elseif($status == "reject_counter_offer"){
-        $textContent .= 'Your counter offer has been rejected.<br /><br />';
-        $textContent .= 'For more details, please login <a href="http://'.HOST_NAME.'">';
-    }elseif($status == "reject_offer"){
-        $textContent .= 'Your offer has been rejected.<br /><br />';
-        $textContent .= 'For more details, please login <a href="http://'.HOST_NAME.'">';
-    }elseif($status == "counter_offer_made"){
-        $textContent .= 'Counter offer has been made against your offer.<br /><br />';
-        $textContent .= 'For more details, please login <a href="http://'.HOST_NAME.'">';
-    }elseif($status == "no_respose_from_seller"){
-        $textContent .= 'Your offer is rejected as there is no respose from your end for last 48 hrs.<br /><br />';
-        $textContent .= 'For more details, please login <a href="http://'.HOST_NAME.'">';
-    }elseif($status == "no_respose_from_buyer"){
-        $textContent .= 'Your offer is rejected as there is no respose from the buyer for last 48 hrs.<br /><br />';
-        $textContent .= 'For more details, please login <a href="http://'.HOST_NAME.'">';
-    }elseif($status == "reject_offer_seller"){
-        $textContent .= 'Your offer is rejected as there is no respone from the seller for last 48 hrs.<br /><br />';
-        $textContent .= 'For more details, please login <a href="http://'.HOST_NAME.'">';
-    }elseif($status == "reject_offer_buyer"){
-        $textContent .= 'Your offer is rejected as there is no respone from your end for last 48 hrs.<br /><br />';
-        $textContent .= 'For more details, please login <a href="http://'.HOST_NAME.'">';
-    }
-    
-    $textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";    
-     $textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM; 
-    $check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
-}
+
 function sendMailByUserid($mail_poster_title,$id,$date)
 {
     $sql = "SELECT u.username, u.firstname, u.lastname, u.email
