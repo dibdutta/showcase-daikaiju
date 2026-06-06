@@ -787,59 +787,7 @@ function generateInvoice($id, $is_bid,$auction_id='')
         return "false";
     }
 }
-function increment_amount($buy_now){
- 	if($buy_now < 10){
- 		return 1;
- 	}elseif(10 <= $buy_now && $buy_now <= 29){
- 		return 2;
- 	}elseif(30 <= $buy_now && $buy_now <= 49){
- 		return 3;
- 	}elseif(50 <= $buy_now && $buy_now <= 99){
- 		return 5;
- 	}elseif(100 <= $buy_now && $buy_now <= 199){
- 		return 10;
- 	}elseif(200 <= $buy_now && $buy_now <= 299){
- 		return 20;
- 	}elseif(300 <= $buy_now && $buy_now <= 499){
- 		return 25;
- 	}elseif(500 <= $buy_now && $buy_now <= 999){
- 		return 50;
- 	}elseif(1000 <= $buy_now && $buy_now <= 1999){
- 		return 100;
- 	}elseif(2000 <= $buy_now && $buy_now <= 2999){
- 		return 200;
- 	}elseif(3000 <= $buy_now && $buy_now <= 4999){
- 		return 250;
- 	}elseif(5000 <= $buy_now && $buy_now <= 9999){
- 		return 500;
- 	}elseif(10000 <= $buy_now && $buy_now <= 19999){
- 		return 1000;
- 	}elseif(20000 <= $buy_now && $buy_now <= 29999){
- 		return 2000;
- 	}elseif(30000 <= $buy_now && $buy_now <= 49999){
- 		return 2500;
- 	}elseif(50000 <= $buy_now && $buy_now <= 99999){
- 		return 5000;
- 	}elseif(100000 <= $buy_now && $buy_now <= 199999){
- 		return 10000;
- 	}elseif(200000 <= $buy_now && $buy_now <= 299999){
- 		return 20000;
- 	}elseif(300000 <= $buy_now && $buy_now <= 499999){
- 		return 25000;
- 	}elseif(500000 <= $buy_now && $buy_now <= 999999){
- 		return 50000;
- 	}elseif(1000000 <= $buy_now && $buy_now <= 1999999){
- 		return 100000;
- 	}elseif(2000000 <= $buy_now && $buy_now <= 2999999){
- 		return 200000;
- 	}elseif(3000000 <= $buy_now && $buy_now <= 4999999){
- 		return 250000;
- 	}elseif(5000000 <= $buy_now && $buy_now <= 9999999){
- 		return 500000;
- 	}elseif($buy_now >= 10000000){
- 		return 1000000;
- 	}
- }
+// increment_amount() lives in lib/function.php — no duplicate needed here
 //processExpiredAuction('2','2')
 function sync_auction_bid_fun($auction_ids){
 	$ids = join(",",$auction_ids);
