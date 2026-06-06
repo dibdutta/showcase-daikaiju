@@ -330,7 +330,7 @@ function toggleDiv(id,flagit,type,track) {
                                 {if $auctionDetails[0].count_offer == 0 && $auctionDetails[0].auction_reserve_offer_price < 1}
                                  <tr>
                                   <td valign="top" colspan="3" >
-                                   <div class="text bold" style="font-size:16px;">This poster has been sold.</div>
+                                   <div class="text bold" style="font-size:16px;">This item has been sold.</div>
                                   </td>
                                  </tr>
                                 {/if}
@@ -363,7 +363,7 @@ function toggleDiv(id,flagit,type,track) {
                                 {else}
                                 	<tr>
                                   	<td valign="top" colspan="3" >
-                                   	<div class="text bold" style="font-size:16px;">This poster has been sold.</div>
+                                   	<div class="text bold" style="font-size:16px;">This item has been sold.</div>
                                   	</td>
                                  	</tr>
                                 
