@@ -288,7 +288,7 @@ function toggleDiv(id,flagit,type,track) {
 											
 											 </div></td>
 										  <td><div>
-											<input type="button" id="buynow_bttn_{$watchingItems[counter].auction_id}" value="" onclick="redirect_to_cart({$watchingItems[counter].auction_id}, '{$watchingItems[counter].fk_user_id}')" class="bidnow-btn BuyNow" style="margin:1px 0 0 0;" />
+											<input type="button" id="buynow_bttn_{$watchingItems[counter].auction_id}" value="BUY NOW" onclick="redirect_to_cart({$watchingItems[counter].auction_id}, '{$watchingItems[counter].fk_user_id}')" class="bidnow-btn BuyNow" style="margin:1px 0 0 0;" />
 											</div></td>
 										  </tr>
 										</table>
@@ -388,7 +388,7 @@ function toggleDiv(id,flagit,type,track) {
 		}); {/literal}" onblur="test_blur_for_bid(this.id)"  />
 											<div class="CurrencyDecimal">.00</div> </div></td>
 										  <td><div>
-											<input type="button" id="bid_bttn_{$watchingItems[counter].auction_id}" value="" onclick="postBid({$watchingItems[counter].auction_id}, '{$watchingItems[counter].fk_user_id}',{$watchingItems[counter].auction_buynow_price});" class="bidnow-hammer-btn" style="margin:1px 0 0 0;" />
+											<input type="button" id="bid_bttn_{$watchingItems[counter].auction_id}" value="Bid Now!!" onclick="postBid({$watchingItems[counter].auction_id}, '{$watchingItems[counter].fk_user_id}',{$watchingItems[counter].auction_buynow_price});" class="bidnow-hammer-btn" style="margin:1px 0 0 0;" />
 											</div></td>
 										  </tr>
 										</table>
@@ -464,7 +464,7 @@ function toggleDiv(id,flagit,type,track) {
 							{else}
 							<!--<input type="text" name="add_note_text" id="add_note_text" />-->
 							&nbsp;&nbsp;<textarea name="add_note_text" id="add_note_text" style="width:400px;height:70px;"></textarea>
-							 <img  alt="Add Note" title="Add Note" src="http://3c514cb7d2d88d109eb9-1000d3d367b7fad333f1e36c27dd4ec3.r35.cf2.rackcdn.com/add_note.png" width="25" onclick="add_note({$watchingItems[counter].watching_id});" id="add_note_img" />	
+							 <img  alt="Add Note" title="Add Note" src="{$smarty.const.CLOUD_STATIC}add_note.png" width="25" onclick="add_note({$watchingItems[counter].watching_id});" id="add_note_img" />	
 							<span id="added_note"></span>
 							{/if}
 							</td></tr>
