@@ -10,7 +10,7 @@
 	background: #7a3050;
 }
 
-/* ── Fixed-price card modernisation ── */
+/* ── Fixed-price card modernisation css ── */
 .fp-card {
 	background: #fff;
 	border: 1px solid #e8e8e8;
