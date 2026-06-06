@@ -224,7 +224,7 @@ function sendOfferMailCron($row, $status)
 function updateBidCronJob(){
 	
 	$auction_week_id= fetchExpiredAuctions();
-	if($auction_week_id>1){
+	if($auction_week_id>0){
 			$sql_update_auction_week = "UPDATE tbl_auction_week  SET is_processing= '1' WHERE auction_week_id=".$auction_week_id;
 			$sql_update_res_auction=mysqli_query($GLOBALS['db_connect'],$sql_update_auction_week);
 
@@ -375,7 +375,7 @@ function fetchExpiredAuctionDetails($auction_week_id){
 			// echo $insert_poster ;
 			$poster_id_insert = mysqli_query($GLOBALS['db_connect'],$insert_poster);
 			$poster_id_new =mysqli_insert_id($GLOBALS['db_connect']);
-			if($poster_id_new>1){
+			if($poster_id_new>0){
 				$select_auction = "Select * from tbl_auction_live where fk_poster_id=".$row['poster_id'];
 				$rs_auction=mysqli_query($GLOBALS['db_connect'],$select_auction);
 				$row_auction=mysqli_fetch_array($rs_auction);
@@ -386,7 +386,7 @@ function fetchExpiredAuctionDetails($auction_week_id){
 				$auction_id_new_res=mysqli_query($GLOBALS['db_connect'],$insert_auction);
 				$auction_id_new= mysqli_insert_id($GLOBALS['db_connect']);
 				array_push($processed_items,$auction_id_new);
-				if($auction_id_new>1){
+				if($auction_id_new>0){
 				    ###################  tbl_proxy_bid_live to tbl_proxy_bid  ##########################################
 					$select_proxy ="Select * from tbl_proxy_bid_live where fk_auction_id=".$row['auction_id'];
 					if($rs_proxy = mysqli_query($GLOBALS['db_connect'],$select_proxy)){
@@ -404,11 +404,24 @@ function fetchExpiredAuctionDetails($auction_week_id){
 					
 					
 					################# tbl_poster_images_live to tbl_poster_images ######################################
-					$select_images ="Select poster_image,poster_image_id from tbl_poster_images_live where fk_poster_id=".$row['poster_id'];
+					$select_images ="Select * from tbl_poster_images_live where fk_poster_id=".$row['poster_id'];
 					if($rs_images = mysqli_query($GLOBALS['db_connect'],$select_images)){
 						while($row_images = mysqli_fetch_assoc($rs_images)){
-							$sql_update = " UPDATE tbl_poster_images set fk_poster_id= ".$poster_id_new." WHERE poster_image='".$row_images['poster_image']."' ";
-							if(mysqli_query($GLOBALS['db_connect'],$sql_update)){
+							// INSERT into tbl_poster_images (not UPDATE) — weekly upload stores images
+							// only in tbl_poster_images_live, so no existing row to UPDATE exists.
+							$sql_img_insert = "INSERT INTO tbl_poster_images
+								(fk_poster_id, poster_thumb, poster_image, is_default, FileExtention, original_filename, is_cloud, is_big)
+								VALUES (
+									".$poster_id_new.",
+									'".mysqli_real_escape_string($GLOBALS['db_connect'], $row_images['poster_thumb'])."',
+									'".mysqli_real_escape_string($GLOBALS['db_connect'], $row_images['poster_image'])."',
+									'".$row_images['is_default']."',
+									'".mysqli_real_escape_string($GLOBALS['db_connect'], $row_images['FileExtention'])."',
+									'".mysqli_real_escape_string($GLOBALS['db_connect'], $row_images['original_filename'])."',
+									'".$row_images['is_cloud']."',
+									'".$row_images['is_big']."'
+								)";
+							if(mysqli_query($GLOBALS['db_connect'], $sql_img_insert)){
 								$del_images="Delete from tbl_poster_images_live where poster_image_id=".$row_images['poster_image_id'];
 								mysqli_query($GLOBALS['db_connect'],$del_images);
 							}
@@ -838,7 +851,7 @@ function sync_auction_bid_fun($auction_ids){
 						(".$row['bid_fk_user_id'].",".$row['bid_fk_auction_id'].",".$row['bid_amount'].",'".$row['is_proxy']."','".$row['bid_is_won']."','".$row['post_date']."','".$row['post_ip']."','".$row['is_snipe']."' )" ;
 			mysqli_query($GLOBALS['db_connect'],$sql_insert);
 			$bid_id_new =mysqli_insert_id($GLOBALS['db_connect']);
-			if($bid_id_new>1){
+			if($bid_id_new>0){
 				$sql_del = "Delete from tbl_bid where bid_id=".$row['bid_id'];
 				mysqli_query($GLOBALS['db_connect'],$sql_del);
 			}
