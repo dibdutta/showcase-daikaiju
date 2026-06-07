@@ -8,8 +8,8 @@
     <div class="fll"><table width="138" border="0" cellspacing="0" cellpadding="0" style="border:0;">
   <tr>
     <td><img src="{$smarty.const.CLOUD_STATIC}followus.png" width="78" height="45" /></td>
-    <td><img src="{$smarty.const.CLOUD_STATIC}followus_tweter.png" alt="Follow us on Twitter" width="30" height="45" /></td>
-    <td><img src="{$smarty.const.CLOUD_STATIC}followus_fb.png" alt="Follow us on Facebook" width="30" height="45" /></td>
+    <td><a href="https://www.instagram.com/p/DY8ZfHGuG9B/?igsh=NmNtamZsNmFlMnpw" target="_blank" rel="noopener"><img src="{$smarty.const.CLOUD_STATIC}followus_instagram.png" alt="Follow us on Instagram" width="30" height="30" /></a></td>
+    <td><a href="https://www.facebook.com/KaijuLink" target="_blank" rel="noopener"><img src="{$smarty.const.CLOUD_STATIC}followus_fb.png" alt="Follow us on Facebook" width="30" height="45" /></a></td>
   </tr>
 </table>
 </div>
