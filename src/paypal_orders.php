@@ -98,17 +98,31 @@ if ($action === 'create_order') {
         jsonOut(['error' => 'PayPal authentication failed — check Client ID and Secret in admin config'], 502);
     }
 
+    $shipping_unit = [
+        'name'    => ['full_name' => trim(($si['shipping_firstname'] ?? '') . ' ' . ($si['shipping_lastname'] ?? ''))],
+        'address' => [
+            'address_line_1'  => $si['shipping_address1'] ?? '',
+            'address_line_2'  => $si['shipping_address2'] ?? '',
+            'admin_area_2'    => $si['shipping_city']     ?? '',
+            'admin_area_1'    => $si['shipping_state']    ?? '',
+            'postal_code'     => $si['shipping_zipcode']  ?? '',
+            'country_code'    => $si['shipping_country_code'] ?? 'US',
+        ],
+    ];
+
     $result = paypalRequest('POST', '/v2/checkout/orders', [
         'intent' => 'CAPTURE',
         'purchase_units' => [[
             'reference_id' => 'inv-' . $invoice_id,
             'description'  => 'Kaijulink Invoice #' . $invoice_id,
             'amount'       => ['currency_code' => 'USD', 'value' => $total],
+            'shipping'     => $shipping_unit,
         ]],
         'application_context' => [
             'brand_name'          => 'Kaijulink',
             'landing_page'        => 'NO_PREFERENCE',
             'user_action'         => 'PAY_NOW',
+            'shipping_preference' => 'SET_PROVIDED_ADDRESS',
             'return_url'          => SITE_URL . '/my_invoice',
             'cancel_url'          => SITE_URL . '/my_invoice',
         ],
