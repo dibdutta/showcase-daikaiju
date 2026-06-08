@@ -22,7 +22,7 @@
                     <div class="mid-rept-bg">
                         <div class="inner-area-general">
                          <div class="mandatoryTxt">
-                        <p>{$pageContent}</p>
+                        {$pageContent nofilter}
                         </div>
                         </div>
                         <div class="clear"></div>

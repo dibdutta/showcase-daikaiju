@@ -663,6 +663,14 @@ function datediff($interval, $datefrom, $dateto, $using_timestamps = false) {
 }
 
 
+function strip_word_html($html) {
+    $html = preg_replace('/<!--\[if[^>]*>.*?<!\[endif\]-->/si', '', $html);
+    $html = preg_replace('/<\/?(?:o|w|m):[^>]*>/si', '', $html);
+    $html = preg_replace('/<xml>.*?<\/xml>/si', '', $html);
+    $html = preg_replace('/\s*mso-[^;:"\']+(?::[^;]+)?;?/i', '', $html);
+    return $html;
+}
+
 ////////////   content Function START ///////////////////////
 function content() {
 
@@ -685,7 +693,7 @@ function content() {
         exit();
     }*/
 
-    $GLOBALS["pageContent"] = $row[PAGE_CONTENT];
+    $GLOBALS["pageContent"] = strip_word_html($row[PAGE_CONTENT]);
     $GLOBALS["pageTitle"] = $row[PAGE_TITLE];
     $GLOBALS["pageHeaderName"] = $row[PAGE_HEADER_NAME];
     $GLOBALS["metaKeywords"] = $row[META_KEYWORDS];
@@ -727,7 +735,7 @@ function customContent() {
         exit();
     }
 
-    $GLOBALS["pageContent"] = $row[PAGE_CONTENT];
+    $GLOBALS["pageContent"] = strip_word_html($row[PAGE_CONTENT]);
     $GLOBALS["pageTitle"] = $row[PAGE_TITLE];
     $GLOBALS["pageHeaderName"] = $row[PAGE_HEADER_NAME];
     $GLOBALS["metaKeywords"] = $row[META_KEYWORDS];
