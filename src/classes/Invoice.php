@@ -271,9 +271,11 @@ class Invoice extends DBCommon{
 	}	
 	function fetchInvoiceByAuctionId($auction_id, $user_id = '')
 	{
-		$sql = "SELECT a.auction_actual_end_datetime,inv.* FROM ".TBL_INVOICE." inv, ".TBL_INVOICE_TO_AUCTION." ita,tbl_auction a
-				WHERE inv.invoice_id = ita.fk_invoice_id
-				AND ita.fk_auction_id = '".$auction_id."' AND inv.is_buyers_copy='1' and a.auction_id=ita.fk_auction_id ";
+		$sql = "SELECT COALESCE(a.auction_actual_end_datetime, inv.invoice_generated_on) AS auction_actual_end_datetime, inv.*
+				FROM ".TBL_INVOICE." inv
+				JOIN ".TBL_INVOICE_TO_AUCTION." ita ON inv.invoice_id = ita.fk_invoice_id
+				LEFT JOIN tbl_auction a ON a.auction_id = ita.fk_auction_id
+				WHERE ita.fk_auction_id = '".$auction_id."' AND inv.is_buyers_copy='1'";
 		if($user_id != ''){
 			$sql .= " AND inv.fk_user_id = '".$user_id."'";
 		}
@@ -1007,20 +1009,6 @@ class Invoice extends DBCommon{
 												foreach($invoice['auction_details'] as $key => $value){
 												if($chk_item_type=='1'){
 													if ($seller_username !=$value['seller_username']){
-														if ($seller_username!=''){
-															$email_template .='<tr>
-                                                								<td align="right" colspan="2" style="border-top:1px solid #CCCCCC;">Shiiping Charge:</td>';
-															if($invoice['shipping_address']['shipping_country_name']=='Canada' || $invoice['shipping_address']['shipping_country_name']=='United States'){
-																				
-                                                			$email_template .='<td align="left" style="border-top:1px solid #CCCCCC;">$15</td>
-																				
-                                            	</tr>';
-												  }else{
-												  			$email_template .='<td align="left" style="border-top:1px solid #CCCCCC;">$21</td>
-																				
-                                            	</tr>';
-												  }
-														}
 														$email_template .='<tr>
 																		   <td colspan="3" style="border-top:1px solid #CCCCCC;">Seller : '.$value['seller_username'].'</td>
 																		   </tr>';
@@ -1037,21 +1025,6 @@ class Invoice extends DBCommon{
 													if($chk_item_type=='1' || $chk_item_type=='4'){
 														$seller_username=$value['seller_username'];
 													}
-												}
-												if($chk_item_type=='1' || $chk_item_type=='4'){
-													$email_template .='<tr>
-                                                					   <td align="right" colspan="2" style="border-top:1px solid #CCCCCC;border-left:1px solid #CCCCCC;">Shiiping Charge:</td>';
-                                                					   
-													if($invoice['shipping_address']['shipping_country_name']=='Canada' || $invoice['shipping_address']['shipping_country_name']=='United States'){
-																				
-                                                			$email_template .='<td align="left" style="border-top:1px solid #CCCCCC;">$15</td>
-																				
-                                            	</tr>';
-												  }else{
-												  			$email_template .='<td align="left" style="border-top:1px solid #CCCCCC;">$21</td>
-																				
-                                            	</tr>';
-												  }
 												}
 											}
 											$email_template .= '<tr>

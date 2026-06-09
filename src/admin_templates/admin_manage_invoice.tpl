@@ -304,7 +304,7 @@ function del_discount(id)
 					</tr>
 					<tr class="bgcolor" height="26" id="track_is_approved4">
 							<td align="left">&nbsp;Note:&nbsp;<textarea name="note" id="note">{$invoiceData.note}</textarea>&nbsp;<img id="add_note" src="{$smarty.const.CLOUD_STATIC_ADMIN}add_images.jpg"></td>
-							<td align="left">&nbsp;{$invoiceData.auction_actual_end_datetime|date_format:"%m%d%Y"}-{$invoiceData.invoice_id} </td>
+							<td align="left">&nbsp;{if $invoiceData.auction_actual_end_datetime}{$invoiceData.auction_actual_end_datetime|date_format:"%m%d%Y"}-{/if}{$invoiceData.invoice_id}</td>
 								
 					</tr>
                     <tr class="header_bgcolor" height="26">
@@ -382,20 +382,7 @@ function del_discount(id)
 									{section name=counter loop=$invoiceData.auction_details}
 									{if $chk_item_type=='1' }									
 									  {if $seller_username !=$invoiceData.auction_details[counter].seller_username}
-									  {if $seller_username!=''}	
-										
-										<tr>
-										<td align="right" colspan="2" class="billbrdr">Shiiping Charge:</td>
-										{if $invoiceData.shipping_address.shipping_country_name =='Canada' || $invoiceData.shipping_address.shipping_country_name =='United States'}
-											<td align="left" class="billbrdr">$15</td>
-											{assign var="ship_new_chrg" value=$ship_new_chrg+15}
-										{else}
-											<td align="left" class="billbrdr">$21</td>
-											{assign var="ship_new_chrg" value=$ship_new_chrg+21}
-										{/if}
-										
-										
-										</tr>
+									  {if $seller_username!=''}
 									  {/if}
 										<tr><td colspan="3" class="billbrdr">Seller : {$invoiceData.auction_details[counter].seller_username}</td></tr>
 									  
@@ -426,19 +413,7 @@ function del_discount(id)
 									{/if}
                                 {/section}
 								{if $chk_item_type=='1' || $chk_item_type=='4'}
-									<tr>
-									<td align="right" colspan="2" class="billbrdr">Shiiping Charge:</td>
-									{if $invoiceData.shipping_address.shipping_country_name =='Canada' || $invoiceData.shipping_address.shipping_country_name =='United States'}
-										<td align="left" class="billbrdr">$15.00</td>
-									{else}
-										<td align="left" class="billbrdr">$21.00</td>
-									{/if}
-									</tr>
-									{if $invoiceData.shipping_address.shipping_country_name =='Canada' || $invoiceData.shipping_address.shipping_country_name =='United States'}
-										{assign var="ship_new_chrg" value=$ship_new_chrg+15}
-									{else}
-										{assign var="ship_new_chrg" value=$ship_new_chrg+21}
-									{/if}
+									{* Shipping charge shown via additional_charges below *}
 								{else}	
 									<tr>
 										<td align="right" colspan="2"><b>Auction wise Total:</b></td>

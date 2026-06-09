@@ -95,18 +95,7 @@ margin:0px;
                                             {section name=counter loop=$invoiceData[cnt].auction_details}
 											{if $invoiceData[cnt].chk_item_type=='1' }									
 												{if $seller_username !=$invoiceData[cnt].auction_details[counter].seller_username}
-													{if $seller_username!=''}	
-										
-														<tr class="printer">
-															<td align="right" colspan="2" >Shiiping Charge:</td>
-														{if $invoiceData[cnt].shipping_address.shipping_country_name =='Canada' || $invoiceData[cnt].shipping_address.shipping_country_name =='United States'}
-															<td align="left" >$15</td>
-															{assign var="ship_new_chrg" value=$ship_new_chrg+15}
-														{else}
-															<td align="left" >$21</td>
-															{assign var="ship_new_chrg" value=$ship_new_chrg+21}
-														{/if}										
-														</tr>
+													{if $seller_username!=''}
 													{/if}
 													<tr><td colspan="3" >Seller : {$invoiceData[cnt].auction_details[counter].seller_username}</td></tr>									  
 												{/if}
@@ -137,19 +126,7 @@ margin:0px;
                                             {assign var="subTotal" value=$subTotal+$invoiceData[cnt].auction_details[counter].amount}
                                             {/section}
 											{if $invoiceData[cnt].chk_item_type=='1' || $invoiceData[cnt].chk_item_type=='4'}
-												<tr>
-													<td align="right" colspan="2" class="printer">Shiiping Charge:</td>
-													{if $invoiceData[cnt].shipping_address.shipping_country_name =='Canada' || $invoiceData[cnt].shipping_address.shipping_country_name =='United States'}
-														<td align="left" >$15.00</td>
-													{else}
-														<td align="left" >$21.00</td>
-													{/if}
-												</tr>
-												{if $invoiceData[cnt].shipping_address.shipping_country_name =='Canada' || $invoiceData[cnt].shipping_address.shipping_country_name =='United States'}
-													{assign var="ship_new_chrg" value=$ship_new_chrg+15}
-												{else}
-													{assign var="ship_new_chrg" value=$ship_new_chrg+21}
-												{/if}
+												{* Shipping charge shown via additional_charges below *}
 											{else}	
 												<tr class="printer">
 													<td align="right" colspan="2"><b>Auction wise Total:</b></td>
