@@ -809,7 +809,7 @@ function fetchProxyBids(&$dataArr){
 					  b.post_date
 					FROM user_table u,
 					  tbl_bid b  
-					  LEFT JOIN tbl_proxy_bid tp
+					  LEFT JOIN tbl_proxy_bid_live tp
 						ON b.bid_fk_auction_id=tp.fk_auction_id   AND b.bid_fk_user_id  = tp.fk_user_id  AND tp.is_override = '0'
 					WHERE  
 						b.bid_fk_user_id = u.user_id   
