@@ -53,7 +53,7 @@ if (!$row_check) {
                 a.auction_asked_price,
                 pi.poster_thumb,
                 pi.is_cloud,
-                COALESCE(i.total_amount, a.auction_asked_price)         AS soldamnt,
+                COALESCE(a.auction_asked_price, i.total_amount)         AS soldamnt,
                 COALESCE(i.invoice_generated_on, NOW())                 AS invoice_generated_on,
                 COALESCE(CONCAT(u.firstname, ' ', u.lastname), '')      AS winnerName
             FROM tbl_auction a
