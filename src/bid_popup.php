@@ -9,6 +9,15 @@ if($_REQUEST['mode'] == "bid_popup"){
 	chkPosterSizeCount();
 }
 
+function mask_username($username) {
+	if (strpos($username, '@') !== false) {
+		list($local, $domain) = explode('@', $username, 2);
+		$visible = min(3, strlen($local));
+		return substr($local, 0, $visible) . str_repeat('*', max(1, strlen($local) - $visible)) . '@' . $domain;
+	}
+	return $username;
+}
+
 function bid_popup(){
   $dataArr = array()	;
   $id=$_REQUEST['id'];
@@ -25,7 +34,7 @@ function bid_popup(){
 	//print_r(array_reverse($dataArr)); 
 	$dataArr = array_reverse($dataArr);  
 	foreach($dataArr as $key=>$val){
-		$html.='<li>&nbsp;<b>'.$dataArr[$key]['username'].':</b>&nbsp;$'.$dataArr[$key]['bid_amount'].'&nbsp;</li>';
+		$html.='<li>&nbsp;<b>'.mask_username($dataArr[$key]['username']).':</b>&nbsp;$'.$dataArr[$key]['bid_amount'].'&nbsp;</li>';
 	} 	
 	$html.='</ul>' ;
 	$html.='</div>' ;	
