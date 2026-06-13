@@ -309,22 +309,23 @@ class Invoice extends DBCommon{
 		$insert_key=true;
 		$insert_key_for_size=true;
 		$new_key=true;
-		$sql="SELECT p.flat_rolled,tpc.fk_cat_id 
+		$sql="SELECT p.flat_rolled,tpc.fk_cat_id
 					 FROM ".TBL_AUCTION." a , ".TBL_POSTER." p ,".TBL_INVOICE_TO_AUCTION." tia,tbl_poster_to_category tpc ,tbl_category tc
 		     			where tia.fk_invoice_id=$invoice_id
-		     			and tia.fk_auction_id=a.auction_id 
+		     			and tia.fk_auction_id=a.auction_id
 		     			and a.fk_poster_id = p.poster_id
 		     			and tpc.fk_poster_id =  p.poster_id
 		     			and tc.cat_id = tpc.fk_cat_id
 		     			and tc.fk_cat_type_id = 1
 		     			";
 		$res_sql=mysqli_query($GLOBALS['db_connect'], $sql);
-		
+
         while($row=mysqli_fetch_array($res_sql)){
             array_push($flat_rolled, substr($row['flat_rolled'],0,1));
             array_push($poster_size_id, $row['fk_cat_id']);
             $i++;
         }
+
 		//print_r($poster_size_id);
 		//print_r($flat_rolled);
 		//die();
@@ -336,17 +337,17 @@ class Invoice extends DBCommon{
 								 	where cat_id=".$poster_size_id[$j];
 			$sql_cat_val_res=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],$sql_cat_val));
 			$name=$sql_cat_val_res['cat_value'];
-			
+
 			$sql_count="SELECT COUNT(c.cat_id) AS counter,cw.size_weight_cost_id,cw.size_type,cw.length
-							   FROM tbl_category c,tbl_size_weight_cost_master cw 
-							   		WHERE c.cat_value='".$name."' 
-							   		and cw.size_weight_cost_id = c.fk_size_weight_cost_id 
+							   FROM tbl_category c,tbl_size_weight_cost_master cw
+							   		WHERE c.cat_value='".$name."'
+							   		and cw.size_weight_cost_id = c.fk_size_weight_cost_id
 							   		";
 			$sql_count_res=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],$sql_count));
 			$count=$sql_count_res['counter'];
-			
-			$size_weight_cost_id=$sql_count_res['size_weight_cost_id']; 
-			$length_main_id=$sql_count_res['length'];  
+
+			$size_weight_cost_id=$sql_count_res['size_weight_cost_id'];
+			$length_main_id=$sql_count_res['length'];
 			$size_type_main_id=$flat_rolled[$j];
 			if($count=='1'){
 				//$insert_key=true;
@@ -533,17 +534,17 @@ class Invoice extends DBCommon{
 								 	where cat_id=".$poster_size_id[$j];
 			$sql_cat_val_res=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],$sql_cat_val));
 			$name=$sql_cat_val_res['cat_value'];
-			
+
 			$sql_count="SELECT COUNT(c.cat_id) AS counter,cw.size_weight_cost_id,cw.size_type,cw.length
-							   FROM tbl_category c,tbl_size_weight_cost_master cw 
-							   		WHERE c.cat_value='".$name."' 
-							   		and cw.size_weight_cost_id = c.fk_size_weight_cost_id 
+							   FROM tbl_category c,tbl_size_weight_cost_master cw
+							   		WHERE c.cat_value='".$name."'
+							   		and cw.size_weight_cost_id = c.fk_size_weight_cost_id
 							   		";
 			$sql_count_res=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],$sql_count));
 			$count=$sql_count_res['counter'];
-			
-			$size_weight_cost_id=$sql_count_res['size_weight_cost_id']; 
-			$length_main_id=$sql_count_res['length'];  
+
+			$size_weight_cost_id=$sql_count_res['size_weight_cost_id'];
+			$length_main_id=$sql_count_res['length'];
 			$size_type_main_id=$flat_rolled[$j];
 			if($count=='1'){
 				//$insert_key=true;

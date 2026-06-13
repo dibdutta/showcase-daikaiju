@@ -1,115 +1,90 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
+
 if (!defined('INCLUDE_PATH')) define("INCLUDE_PATH", "../");
 require_once INCLUDE_PATH."lib/inc.php";
-function USPSParcelRate($dest,$width, $height, $length, $weight_lb,$weight_oz)
-{
-	// This script was written by Mark Sanborn at http://www.marksanborn.net
-	// If this script benefits you are your business please consider a donation
-	// You can donate at http://www.marksanborn.net/donate.  
-	
-	// ========== CHANGE THESE VALUES TO MATCH YOUR OWN ===========
-	
-	$userName = '530DUTTA1484'; // Your USPS Username
-	$orig_zip = '27249'; // Zipcode you are shipping FROM
-	
-	// =============== DON'T CHANGE BELOW THIS LINE ===============
-	
-	$url = "http://production.shippingapis.com/ShippingAPI.dll";
-	$ch = curl_init();
-	
-	// set the target url
-	curl_setopt($ch, CURLOPT_URL,$url);
-	curl_setopt($ch, CURLOPT_HEADER, 1);
-	curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-	
-	// parameters to post
-	curl_setopt($ch, CURLOPT_POST, 1);
-	
-//	 $data = "API=IntlRateV2&XML=<IntlRateV2Request USERID=\"$userName\">
-//	<Revision>2</Revision>
-//	<Package ID=\"1ST\">
-//	<Pounds>$weight</Pounds>
-//	<Ounces>0</Ounces>
-//	<Machinable>True</Machinable>
-//	<MailType>Package</MailType>
-//	<GXG>
-//	<POBoxFlag>Y</POBoxFlag>
-//	<GiftFlag>N</GiftFlag>
-//	</GXG>
-//	<ValueOfContents>0</ValueOfContents>
-//	<Country>$dest</Country>
-//	<Container>NONRECTANGULAR</Container>
-//	<Size>LARGE</Size>
-//	<Width>$width</Width>
-//	<Length>$length</Length>
-//	<Height>$height</Height>
-//	<Girth>$girth</Girth>
-//	<OriginZip>$orig_zip</OriginZip>
-//	<CommercialFlag>N</CommercialFlag>
-//	</Package>
-//	</IntlRateV2Request>";
 
-	$data = "API=IntlRateV2&XML=<IntlRateV2Request USERID=\"$userName\">
-  	<Package ID=\"1ST\">
-    <Pounds>$weight_lb</Pounds>
-    <Ounces>$weight_oz</Ounces>
-    <Machinable>True</Machinable>
-    <MailType>Package</MailType>
-    <GXG>
-          <POBoxFlag>Y</POBoxFlag>
-          <GiftFlag>N</GiftFlag>
-    </GXG>
-    <ValueOfContents>0</ValueOfContents>
-    <Country>$dest</Country>
-    <Container>NONRECTANGULAR</Container>
-    <Size>LARGE</Size>
-    <Width>$width</Width>
-    <Length>$length</Length>
-    <Height>$height</Height>
-    <Girth>$height</Girth>
-    <CommercialFlag>N</CommercialFlag>
-    </Package>
- 	</IntlRateV2Request>";
+function USPSGetTokenIntl() {
+    static $cached_token = null;
+    if ($cached_token !== null) {
+        return $cached_token;
+    }
 
-	// send the POST values to USPS
-	curl_setopt($ch, CURLOPT_POSTFIELDS,$data);
-	
-	$result=curl_exec ($ch);
-	//if (!$result=curl_exec ($ch)) 
-	//{
-	//print "cURL Failed to connect!";
-	//} 
-	//else {print "$result";}
-	$data = strstr($result, '<?');
-	// echo '<!-- '. $data. ' -->'; // Uncomment to show XML in comments
-	$xml_parser = xml_parser_create();
-	xml_parse_into_struct($xml_parser, $data, $vals, $index);
-	xml_parser_free($xml_parser);
-	$params = array();
-	$level = array();
-	foreach ($vals as $xml_elem) {
-		if ($xml_elem['type'] == 'open') {
-			if (array_key_exists('attributes',$xml_elem)) {
-				list($level[$xml_elem['level']],$extra) = array_values($xml_elem['attributes']);
-			} else {
-			$level[$xml_elem['level']] = $xml_elem['tag'];
-			}
-		}
-		if ($xml_elem['type'] == 'complete') {
-			$start_level = 1;
-			$php_stmt = '$params';
-			while($start_level < $xml_elem['level']) {
-				$php_stmt .= '[$level['.$start_level.']]';
-				$start_level++;
-			}
-			$php_stmt .= '[$xml_elem[\'tag\']] = $xml_elem[\'value\'];';
-			eval($php_stmt);
-		}
-	}
-	curl_close($ch);
-	//echo '<pre>'; print_r($params); echo'</pre>'; // Uncomment to see xml tags
-	return $params['INTLRATEV2RESPONSE']['1ST']['2']['POSTAGE'].'/'.$params['INTLRATEV2RESPONSE']['1ST']['2']['SVCCOMMITMENTS'];
-	
+    $clientId     = "7qILcfTnmqqNGPsauLPZUG86Y04EZPjSk7UaZuLAD1X5zz6W";
+    $clientSecret = "liwUXyKGX0XzG9hPaVWSwG8uSqE2cKouRJXw8Ahwq9z6uIYzGSjv3cgmc9Aowyn8";
 
+    $ch = curl_init('https://apis.usps.com/oauth2/v3/token');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+        'grant_type'    => 'client_credentials',
+        'client_id'     => $clientId,
+        'client_secret' => $clientSecret,
+    ]));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $data = json_decode($response, true);
+    $cached_token = $data['access_token'] ?? '';
+    return $cached_token;
 }
+
+function USPSParcelRate($dest_country_code, $width, $height, $length, $weight_lb, $weight_oz) {
+    $orig_zip  = '30188';
+    $weightLbs = (float)$weight_lb + round((float)$weight_oz / 16, 4);
+    if ($weightLbs <= 0) {
+        $weightLbs = 2.0;
+    }
+
+    $token = USPSGetTokenIntl();
+    if (empty($token)) {
+        return '/';
+    }
+
+    $payload = [
+        'originZIPCode'          => $orig_zip,
+        'foreignPostalCode'      => '',
+        'destinationCountryCode' => $dest_country_code,
+        'weight'             => round($weightLbs, 4),
+        'length'             => (float)$length  ?: 1.0,
+        'width'              => (float)$width   ?: 1.0,
+        'height'             => (float)$height  ?: 1.0,
+        'mailClass'                    => 'PRIORITY_MAIL_INTERNATIONAL',
+        'processingCategory'           => 'NON_MACHINABLE',
+        'destinationEntryFacilityType' => 'NONE',
+        'rateIndicator'                => 'SP',
+        'priceType'                    => 'RETAIL',
+    ];
+
+    $ch = curl_init('https://apis.usps.com/international-prices/v3/base-rates/search');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: Bearer ' . $token,
+        'Content-Type: application/json',
+    ]);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $data = json_decode($response, true);
+
+    if (empty($data['rates']) || !is_array($data['rates'])) {
+        return '/';
+    }
+
+    $rate = $data['rates'][0]['price'] ?? '';
+    if ($rate === '' || $rate === null) {
+        return '/';
+    }
+
+    $deliveryTime = 'Priority Mail International (6-10 Business Days)';
+
+    return $rate . '/' . $deliveryTime;
+}
+
+
 ?>

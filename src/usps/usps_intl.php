@@ -4,8 +4,9 @@ include("usps_calculator_intl.php");
 require_once INCLUDE_PATH."lib/inc.php";
 $totalPoster = max(1, (int)$_REQUEST['totalPoster']);
 $DeleveryTime = "10-14 Business Days";
-$sql=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],"Select country_name from country_table where country_id=".(int)$_REQUEST['country_id']));
+$sql=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],"Select country_name, country_code from country_table where country_id=".(int)$_REQUEST['country_id']));
 $dest=$sql['country_name'];
+$dest_country_code=strtoupper(trim($sql['country_code']));
 $weight_arr=explode(',', $_REQUEST['weights']);
 $i=0;
 $Price=0.00;
@@ -20,7 +21,7 @@ foreach($weight_arr as $key =>$val){
 	$weight_lb=$sql_fetch_shipping_details_res['weight_lb'];
 	$weight_oz=$sql_fetch_shipping_details_res['weight_oz'];
 	$packaging_cost=$sql_fetch_shipping_details_res['packaging_cost'];
-	$arrFromUsps=explode('/',USPSParcelRate($dest,$width, $height, $length, $weight_lb,$weight_oz));
+	$arrFromUsps=explode('/',USPSParcelRate($dest_country_code,$width, $height, $length, $weight_lb,$weight_oz));
 	if($arrFromUsps[0]==''){
 	 $err_ind=true;
 	}else{
