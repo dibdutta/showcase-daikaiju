@@ -42,15 +42,19 @@ if (!$row_check || $row_check['cnt'] == 0) {
     if ($exists && $exists['cnt'] > 0) {
         $results[] = "SKIPPED: {$exists['cnt']} bid(s) already exist in tbl_bid for auction_id=$auction_id. No action taken.";
     } else {
-        // Fetch all bids from archive
+        $skip_user_ids = [47, 131, 1706];
+
+        // Fetch all bids from archive excluding internal/admin user IDs
         $rs = mysqli_query($db,
             "SELECT bid_fk_user_id, bid_fk_auction_id, bid_amount, is_proxy, bid_is_won,
                     post_date, post_ip, is_snipe
              FROM tbl_bid_archive
              WHERE bid_fk_auction_id = $auction_id
+             AND bid_fk_user_id NOT IN (47, 131, 1706)
              ORDER BY bid_amount DESC");
 
         $inserted = 0;
+        $skipped  = 0;
         $errors   = 0;
         while ($row = mysqli_fetch_assoc($rs)) {
             // bid_is_won=1 inserted as 0 — won status belongs in archive only
@@ -81,7 +85,7 @@ if (!$row_check || $row_check['cnt'] == 0) {
         }
 
         $results[] = "";
-        $results[] = "DONE: $inserted inserted, $errors errors.";
+        $results[] = "DONE: $inserted inserted, $skipped skipped (user IDs 47/131/1706), $errors errors.";
     }
 }
 
