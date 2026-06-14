@@ -1634,7 +1634,8 @@ function view_details(){
 	$smarty->assign ("encoded_string", easy_crypt($_SERVER['REQUEST_URI']));
 	$smarty->assign ("decoded_string", easy_decrypt($_REQUEST['encoded_string'] ?? ''));
 	$obj = new Auction();
-	$auctionArr=$obj->select_details_auction($auction_id);
+	$is_sold_param = !empty($_REQUEST['sold']) ? 1 : '';
+	$auctionArr=$obj->select_details_auction($auction_id, '', '', $is_sold_param);
     if ($auctionArr[0]['is_cloud']!='1'){
         $auctionArr[0]['image_path']=CLOUD_POSTER_THUMB.$auctionArr[0]['poster_thumb'];
     }else{

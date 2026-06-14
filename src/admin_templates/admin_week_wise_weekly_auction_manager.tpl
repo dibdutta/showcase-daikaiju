@@ -331,7 +331,7 @@
                             <a href="{$adminActualPath}/admin_auction_manager.php?mode=view_weekly&auction_id={$auctionRows_sold[counter].auction_id}&encoded_string={$encoded_string}" class="view_link"><img src="{$smarty.const.CLOUD_STATIC_ADMIN}icon_open.gif" align="absmiddle" alt="Details" title="Details" border="0" class="changeStatus" /></a>
                             <!--&nbsp;|&nbsp;<a href="#" class="view_link"><img src="{$smarty.const.CLOUD_STATIC_ADMIN}delete_image.png" align="absmiddle" alt="Delete Poster" title="Delete Poster" border="0" class="changeStatus" /></a>-->
 
-                            &nbsp;&nbsp;<a href="{$adminActualPath}/admin_auction_manager.php?mode=view_details&auction_id={$auctionRows_sold[counter].auction_id}&encoded_string={$encoded_string}" class="view_link"><img src="{$smarty.const.CLOUD_STATIC_ADMIN}icon_view.gif" align="absmiddle" alt="View Bid Details" title="View Bid Details" border="0" class="changeStatus" /></a>
+                            &nbsp;&nbsp;<a href="{$adminActualPath}/admin_auction_manager.php?mode=view_details&auction_id={$auctionRows_sold[counter].auction_id}&sold=1&encoded_string={$encoded_string}" class="view_link"><img src="{$smarty.const.CLOUD_STATIC_ADMIN}icon_view.gif" align="absmiddle" alt="View Bid Details" title="View Bid Details" border="0" class="changeStatus" /></a>
                             {if $search == 'sold'}
                                 <a href="{$adminActualPath}/admin_auction_manager.php?mode=manage_invoice&auction_id={$auctionRows_sold[counter].auction_id}"><img src="{$smarty.const.CLOUD_STATIC_ADMIN}invoice.jpg" align="absmiddle" alt="Auction Reopened" title="Auction Reopened" border="0" class="changeStatus" width="20px" /></a>
                             {/if}

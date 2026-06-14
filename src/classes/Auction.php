@@ -2698,16 +2698,18 @@ class Auction extends DBCommon{
 	 * @param $auction_id=>Provides the auction id.
 	 */
 
-	function select_details_auction($auction_id,$is_fixed='',$is_extended='')
+	function select_details_auction($auction_id,$is_fixed='',$is_extended='',$is_sold='')
 	{
         if(!isset($_SESSION['sessUserID'])){
             $user_id='';
         }else{
             $user_id=$_SESSION['sessUserID'];
         }
-		
+
 		if($is_fixed==1){
 			$count='';
+		}elseif($is_sold==1){
+			$count=''; // sold weekly auction — force tbl_auction, skip isLiveAuctionItem
 		}elseif($is_extended==1){
 			$count=$this->isLiveAuctionItem($auction_id);
 			if($count<1){
