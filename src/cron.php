@@ -862,7 +862,6 @@ a.fk_poster_id=p.poster_id ";
 				// mysqli_query($GLOBALS['db_connect'],"update tbl_bid_archive set bid_is_won='1' where bid_id = ".$row_archive_bid_id['bid_id']);
 			}
 		}
-
 	}
 	set_default_images($res,$auction_ids);
  }
