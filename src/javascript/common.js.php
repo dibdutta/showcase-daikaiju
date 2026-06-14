@@ -1409,12 +1409,13 @@ function remove_dummy_password(){
     $('#password').val('');
 }
 
-function redirect_poster_details(auction_id,type)
+function redirect_poster_details(auction_id,type,sold)
 {
+	var soldParam = sold ? "&sold=1" : "";
 	if(type==1){
-		window.location="buy?mode=poster_details&auction_id="+auction_id+"&fixed=1";
+		window.location="buy?mode=poster_details&auction_id="+auction_id+"&fixed=1"+soldParam;
 	}else{
-		window.location="buy?mode=poster_details&auction_id="+auction_id;
+		window.location="buy?mode=poster_details&auction_id="+auction_id+soldParam;
 	}
 }
 

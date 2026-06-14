@@ -217,7 +217,7 @@ function show_text(){
 														</div>
 													</div>
 													<div class="pb05 pl10 pr10 tac" style="height:40px;">
-														<h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" style="cursor:pointer;" >{$dataJstFinishedAuction[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</a> </h3>
+														<h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}&sold=1" style="cursor:pointer;" >{$dataJstFinishedAuction[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</a> </h3>
 													</div>
                                                 </div>
 												
