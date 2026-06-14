@@ -303,22 +303,23 @@ function show_text(){
   </header>
   <div class="modal-body">
     <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut commodo at felis vitae facilisis. Cras volutpat fringilla nunc vitae hendrerit. Donec porta id augue quis sodales. Sed sit amet metus ornare, mattis sem at, dignissim arcu. Cras rhoncus ornare mollis. Ut tempor augue mi, sed luctus neque luctus non. Vestibulum mollis tristique blandit. Aenean condimentum in leo ac feugiat. Sed posuere, est at eleifend suscipit, erat ante pretium turpis, eget semper ex risus nec dolor. Etiam pellentesque nulla neque, ut ullamcorper purus facilisis at. Nam imperdiet arcu felis, eu placerat risus dapibus sit amet. Praesent at justo at lectus scelerisque mollis. Mauris molestie mattis tellus ut facilisis. Sed vel ligula ornare, posuere velit ornare, consectetur erat.</p>-->
-	<img src="https://d1o27s03otm3kw.cloudfront.net/62587.jpg" id="currImg" />
+	<img src="" id="currImg" />
   </div>
   <!--<footer> <a href="#" class="btn btn-small js-modal-close">Close</a> </footer>-->
 </div>
 
+<script>var _cloudPosterThumb = '{$smarty.const.CLOUD_POSTER_THUMB_BUY_GALLERY}';</script>
 {literal}
 <script>
 
 $(function(){
-	
+
 	var appendthis =  ("<div class='modal-overlay js-modal-close'></div>");
 	$('a[data-modal-id]').mouseenter(function(e) {
 	if($('#on-off-switch-val').val()=='true'){
 		e.preventDefault();
 		imgArr=e.target.src.split('/')
-		currImg='https://d1o27s03otm3kw.cloudfront.net/'+imgArr[imgArr.length-1]
+		currImg=_cloudPosterThumb+imgArr[imgArr.length-1]
 		$('#img_title').text(e.target.id);
 		$('#currImg').attr('src', currImg);
 		$("body").append(appendthis);
