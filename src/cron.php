@@ -399,10 +399,19 @@ function fetchExpiredAuctionDetails($auction_week_id){
 							 }
 						}
 					}
-					###################  tbl_bid to tbl_bid  ##########################################
-					$update_bid = " Update tbl_bid set bid_fk_auction_id=".$auction_id_new." WHERE bid_fk_auction_id = ".$row['auction_id'];
-					mysqli_query($GLOBALS['db_connect'],$update_bid);	
-					
+					###################  tbl_bid to tbl_bid_archive  ##########################################
+					$select_bids = "SELECT * FROM tbl_bid WHERE bid_fk_auction_id = ".$row['auction_id'];
+					if($rs_bids = mysqli_query($GLOBALS['db_connect'], $select_bids)){
+						while($row_bid = mysqli_fetch_assoc($rs_bids)){
+							$sql_bid_archive = "INSERT INTO tbl_bid_archive (bid_fk_user_id, bid_fk_auction_id, bid_amount, is_proxy, bid_is_won, post_date, post_ip, is_snipe)
+								VALUES (".$row_bid['bid_fk_user_id'].",".$auction_id_new.",".$row_bid['bid_amount'].",'".$row_bid['is_proxy']."','".$row_bid['bid_is_won']."','".$row_bid['post_date']."','".$row_bid['post_ip']."','".$row_bid['is_snipe']."')";
+							if(mysqli_query($GLOBALS['db_connect'], $sql_bid_archive)){
+								$sql_del_bid = "DELETE FROM tbl_bid WHERE bid_id = ".$row_bid['bid_id'];
+								mysqli_query($GLOBALS['db_connect'], $sql_del_bid);
+							}
+						}
+					}
+
 					
 					################# tbl_poster_images_live to tbl_poster_images ######################################
 					$select_images ="Select * from tbl_poster_images_live where fk_poster_id=".$row['poster_id'];
