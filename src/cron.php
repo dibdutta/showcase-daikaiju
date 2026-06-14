@@ -423,6 +423,15 @@ function fetchExpiredAuctionDetails($auction_week_id){
 									'".$row_images['is_big']."'
 								)";
 							if(mysqli_query($GLOBALS['db_connect'], $sql_img_insert)){
+								// Restore original filenames overwritten by the BEFORE INSERT trigger on tbl_poster_images
+								// which replaces poster_thumb/poster_image with {auto_increment_id}.{ext}
+								$new_img_id = mysqli_insert_id($GLOBALS['db_connect']);
+								$sql_img_fix = "UPDATE tbl_poster_images SET
+									poster_thumb = '".mysqli_real_escape_string($GLOBALS['db_connect'], $row_images['poster_thumb'])."',
+									poster_image = '".mysqli_real_escape_string($GLOBALS['db_connect'], $row_images['poster_image'])."'
+									WHERE poster_image_id = ".$new_img_id;
+								mysqli_query($GLOBALS['db_connect'], $sql_img_fix);
+
 								$del_images="Delete from tbl_poster_images_live where poster_image_id=".$row_images['poster_image_id'];
 								mysqli_query($GLOBALS['db_connect'],$del_images);
 							}
