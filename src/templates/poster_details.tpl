@@ -9,6 +9,7 @@ $(document).ready(function(){
 	
 	
 	{/literal}
+	{if !$is_sold_view}
 	    {if $itemType=='Stills'}
 		 {if $liveStilltrack ==1}
 	{literal}
@@ -27,6 +28,7 @@ $(document).ready(function(){
 			setTimeout(function() { timeLeftPosterDetails(dataArr); }, 3000);
 	{/literal}
 		{/if}
+	{/if}
 	{literal}				   
 })
 </script>

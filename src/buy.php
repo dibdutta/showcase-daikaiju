@@ -1054,13 +1054,16 @@ if(isset($_SESSION['sessUserID'])){
 		$smarty->assign('extendedAuction', $extended);
 	    ##########################    Overlapping New Add  ##########################
 		
-	if(isset($_REQUEST['fixed']) && $_REQUEST['fixed']==1){
+	if(isset($_REQUEST['sold']) && $_REQUEST['sold']==1){
+		$auctionDetails=$objAuction->select_details_auction($auction_id,'','',1);
+	}elseif(isset($_REQUEST['fixed']) && $_REQUEST['fixed']==1){
 		$auctionDetails=$objAuction->select_details_auction($auction_id,1);
 	}elseif(isset($_REQUEST['extended']) && $_REQUEST['extended']=="true") {
 		$auctionDetails=$objAuction->select_details_auction($auction_id,'',1);
 	}else{
 		$auctionDetails=$objAuction->select_details_auction($auction_id);
 	}
+	$smarty->assign('is_sold_view', !empty($_REQUEST['sold']) ? 1 : 0);
 	
 	 
 	$auctionDetails[0]['poster_desc']=strip_slashes($auctionDetails[0]['poster_desc']);
