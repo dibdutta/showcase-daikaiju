@@ -814,7 +814,13 @@ function sync_auction_bid_fun($auction_ids){
 	$rs= mysqli_query($GLOBALS['db_connect'],$sql);
 	while($row=mysqli_fetch_array($rs)){
 		if($row['bid_fk_user_id'] >0){
-			$sql_insert = "Insert into tbl_bid_archive (`bid_fk_user_id`,`bid_fk_auction_id`,`bid_amount`,`is_proxy`,`bid_is_won`,`post_date`,`post_ip`,`is_snipe`) values 
+			// Skip bids belonging to still-active live auctions — their auction_id may collide with
+			// a newly created tbl_auction ID, but they must not be touched until that auction closes.
+			$check_live = "SELECT auction_id FROM tbl_auction_live WHERE auction_id=".$row['bid_fk_auction_id']." LIMIT 1";
+			if(mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'], $check_live))){
+				continue;
+			}
+			$sql_insert = "Insert into tbl_bid_archive (`bid_fk_user_id`,`bid_fk_auction_id`,`bid_amount`,`is_proxy`,`bid_is_won`,`post_date`,`post_ip`,`is_snipe`) values
 						(".$row['bid_fk_user_id'].",".$row['bid_fk_auction_id'].",".$row['bid_amount'].",'".$row['is_proxy']."','".$row['bid_is_won']."','".$row['post_date']."','".$row['post_ip']."','".$row['is_snipe']."' )" ;
 			mysqli_query($GLOBALS['db_connect'],$sql_insert);
 			$bid_id_new =mysqli_insert_id($GLOBALS['db_connect']);
