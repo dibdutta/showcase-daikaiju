@@ -60,6 +60,16 @@ resource "aws_ssm_parameter" "db_password" {
   value = data.aws_secretsmanager_secret_version.db_password.secret_string
 }
 
+data "aws_ssm_parameter" "zeptomail_smtp_token" {
+  name = "/${var.project_name}/${var.environment}/ZEPTOMAIL_SMTP_TOKEN"
+}
+
+resource "aws_ssm_parameter" "zeptomail_api_url" {
+  name  = "/${var.project_name}/${var.environment}/ZEPTOMAIL_API_URL"
+  type  = "String"
+  value = "https://api.zeptomail.com/v1.1/email"
+}
+
 ################################################################################
 # Web Task Definition
 ################################################################################
@@ -96,10 +106,12 @@ resource "aws_ecs_task_definition" "web" {
       ]
 
       secrets = [
-        { name = "DB_SERVER", valueFrom = aws_ssm_parameter.db_server.arn },
-        { name = "DB_NAME", valueFrom = aws_ssm_parameter.db_name.arn },
-        { name = "DB_USER", valueFrom = aws_ssm_parameter.db_user.arn },
-        { name = "DB_PASSWORD", valueFrom = aws_ssm_parameter.db_password.arn }
+        { name = "DB_SERVER",            valueFrom = aws_ssm_parameter.db_server.arn },
+        { name = "DB_NAME",              valueFrom = aws_ssm_parameter.db_name.arn },
+        { name = "DB_USER",              valueFrom = aws_ssm_parameter.db_user.arn },
+        { name = "DB_PASSWORD",          valueFrom = aws_ssm_parameter.db_password.arn },
+        { name = "ZEPTOMAIL_SMTP_TOKEN", valueFrom = data.aws_ssm_parameter.zeptomail_smtp_token.arn },
+        { name = "ZEPTOMAIL_API_URL",    valueFrom = aws_ssm_parameter.zeptomail_api_url.arn }
       ]
 
       mountPoints = [
@@ -254,10 +266,12 @@ resource "aws_ecs_task_definition" "cron" {
       ]
 
       secrets = [
-        { name = "DB_SERVER", valueFrom = aws_ssm_parameter.db_server.arn },
-        { name = "DB_NAME", valueFrom = aws_ssm_parameter.db_name.arn },
-        { name = "DB_USER", valueFrom = aws_ssm_parameter.db_user.arn },
-        { name = "DB_PASSWORD", valueFrom = aws_ssm_parameter.db_password.arn }
+        { name = "DB_SERVER",            valueFrom = aws_ssm_parameter.db_server.arn },
+        { name = "DB_NAME",              valueFrom = aws_ssm_parameter.db_name.arn },
+        { name = "DB_USER",              valueFrom = aws_ssm_parameter.db_user.arn },
+        { name = "DB_PASSWORD",          valueFrom = aws_ssm_parameter.db_password.arn },
+        { name = "ZEPTOMAIL_SMTP_TOKEN", valueFrom = data.aws_ssm_parameter.zeptomail_smtp_token.arn },
+        { name = "ZEPTOMAIL_API_URL",    valueFrom = aws_ssm_parameter.zeptomail_api_url.arn }
       ]
 
       logConfiguration = {
