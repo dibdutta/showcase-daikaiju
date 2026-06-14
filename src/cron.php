@@ -113,9 +113,6 @@ define ("ADMIN_EMAIL_ADDRESS", $row[CONFIG_ADMIN_EMAIL]);
 define ('ZEPTOMAIL_SMTP_TOKEN', getenv('ZEPTOMAIL_SMTP_TOKEN') ?: '');
 define ('ZEPTOMAIL_API_URL',   getenv('ZEPTOMAIL_API_URL')   ?: 'https://api.zeptomail.in/v1.1/email');
 
-error_log('[CRON] ZEPTOMAIL_SMTP_TOKEN=' . (ZEPTOMAIL_SMTP_TOKEN !== '' ? 'SET(' . strlen(ZEPTOMAIL_SMTP_TOKEN) . ' chars)' : 'EMPTY'));
-error_log('[CRON] ZEPTOMAIL_API_URL=' . ZEPTOMAIL_API_URL);
-
 require_once __DIR__ . "/lib/function.php";
 
 process_offers();
