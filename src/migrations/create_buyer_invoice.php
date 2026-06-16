@@ -131,27 +131,6 @@ $results[] = "INFO: Amount — \${$row['amount']}";
 
 $winner_name = $row['firstname'] . ' ' . $row['lastname'];
 
-// tbl_sold_archive entry
-$sql_sold = "INSERT INTO tbl_sold_archive
-                (auction_id, invoice_generated_on, fk_auction_type_id, poster_id,
-                 winnerName, soldamnt, is_cloud, auction_week_id, poster_thumb)
-             VALUES (
-                '" . (int)$row['auction_id'] . "',
-                '" . date("Y-m-d H:i:s") . "',
-                '2',
-                '" . (int)$row['poster_id'] . "',
-                '" . mysqli_real_escape_string($db, $winner_name) . "',
-                '" . (float)$row['amount'] . "',
-                '1',
-                '" . (int)$row['fk_auction_week_id'] . "',
-                '" . mysqli_real_escape_string($db, $row['poster_thumb']) . "'
-             )";
-if (mysqli_query($db, $sql_sold)) {
-    $results[] = "OK: tbl_sold_archive row inserted.";
-} else {
-    $results[] = "WARNING: tbl_sold_archive insert failed — " . mysqli_error($db) . " (continuing)";
-}
-
 // Serialize billing + shipping addresses
 $billing_address = serialize([
     'billing_firstname'    => $row['firstname'],
