@@ -399,7 +399,7 @@ function showTimer1(list,id){
                    <li><a href="{$actualPath}/my_bid" >My Active Bids</a></li>
                     <li><a  href="{$actualPath}/offers">My Outgoing Offers&nbsp;&nbsp;({$totalUnReadOutgoingOffer})</a></li>
                     <li><a  href="{$actualPath}/offers?mode=incoming_counters" {if $totalUnReadIncomingCounters > 0} style="color:#FF4E09;" {/if}>My Incoming Counters&nbsp;&nbsp;({$totalUnReadIncomingCounters})</a></li>
-                    <li><a  href="{$actualPath}/my_bid?mode=closed">My Closed Items</a></li>
+                    <li><a  href="{$actualPath}/my_bid?mode=closed&type=winning">My Closed Items</a></li>
                     <li><a  href="{$actualPath}/user_watching">Watch List&nbsp;&nbsp;({$count_watching})</a></li>
                 </ul>   
                  
