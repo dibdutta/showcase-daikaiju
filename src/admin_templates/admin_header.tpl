@@ -67,6 +67,7 @@
 								<li><a href="{$smart.const.DOMAIN_PATH}/admin/admin_account_manager.php?mode=calender_template">Auction Calender</a></li>
 								<li><a href="{$smart.const.DOMAIN_PATH}/admin/admin_account_manager.php?mode=blacklist">Blacklist</a></li>
 								<li><a href="{$smart.const.DOMAIN_PATH}/admin/admin_account_manager.php?mode=shipping">Year wise Shipping Collection</a></li>
+								<li><a href="{$smart.const.DOMAIN_PATH}/admin/admin_generate_sitemap.php">Generate Sitemap</a></li>
                                 {php}}{/php}
                             </ul>
                         </li>
