@@ -1,5 +1,7 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
+define("PAGE_HEADER_TEXT", "Generate Sitemap");
+
 ob_start();
 
 define("INCLUDE_PATH", "../");
@@ -10,22 +12,18 @@ if (!isset($_SESSION['adminLoginID'])) {
     redirect_admin("admin_login.php");
 }
 
-if (isset($_POST['generate'])) {
-    dispmiddle(true);
-} else {
-    dispmiddle(false);
-}
+dispmiddle();
 
 ob_end_flush();
 
-function dispmiddle($doGenerate)
+function dispmiddle()
 {
     require_once INCLUDE_PATH . "lib/adminCommon.php";
 
     $message = '';
     $count   = 0;
 
-    if ($doGenerate) {
+    if (isset($_POST['generate'])) {
         set_time_limit(120);
         $result  = generate_sitemap_xml($GLOBALS['db_connect'], SITE_URL);
         $outFile = INCLUDE_PATH . 'sitemap.xml';
