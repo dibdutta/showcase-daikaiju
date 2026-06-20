@@ -10,7 +10,7 @@ $(document).ready(function(){
 
 function redirect_poster_details(auction_id)
 {
-	window.location="buy?mode=poster_details&auction_id="+auction_id;
+	window.location="poster/"+auction_id;
 }
 function lightbox_images_poster(){
     $(function() {

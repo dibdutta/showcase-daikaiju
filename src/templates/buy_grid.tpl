@@ -267,14 +267,14 @@
                                     {if $smarty.request.list=='fixed' && $auctionItems[counter].fk_auction_type_id=='1'}
                                     {* ── Modern fixed-price card ── *}
                                     <div class="fp-card">
-                                        <a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1" class="fp-img-wrap">
+                                        <a href="{$auctionItems[counter].poster_url}" class="fp-img-wrap">
                                             <img src="{$auctionItems[counter].image_path}" alt="{$auctionItems[counter].poster_title}" />
                                         </a>
                                         <div class="fp-body">
-                                            <a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1" class="fp-title">{$auctionItems[counter].poster_title}</a>
+                                            <a href="{$auctionItems[counter].poster_url}" class="fp-title">{$auctionItems[counter].poster_title}</a>
                                             <div class="fp-price-row">
                                                 <span class="fp-price">${$auctionItems[counter].auction_asked_price}</span>
-                                                <a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1" class="fp-buy-btn">Buy Now &rsaquo;</a>
+                                                <a href="{$auctionItems[counter].poster_url}" class="fp-buy-btn">Buy Now &rsaquo;</a>
                                             </div>
                                         </div>
                                     </div>
@@ -288,32 +288,32 @@
                                                      <div class="buygridtb" style="padding:2px; text-align:center; height:210px;">
                                        					<div style="padding:2px; margin-bottom:2px;">
 														{if $auctionItems[counter].fk_auction_type_id=='1'}
-															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
+															<a href="{$auctionItems[counter].poster_url}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
 														{elseif $smarty.request.list=='extended'}
-															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&extended=true"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
+															<a href="{$auctionItems[counter].poster_url}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
 														{else}
-															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
+															<a href="{$auctionItems[counter].poster_url}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
 														{/if}
 
                                                         </div>
                                                       </div>
                                                         {if ($smarty.request.list=='alternative' || $smarty.request.list=='') && $auctionItems[counter].fk_auction_type_id == 6}
-                                                        <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
-														 <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].artist}</a></h3></div>
-														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_size}</a></h3></div>
+                                                        <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$auctionItems[counter].poster_url}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
+														 <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$auctionItems[counter].poster_url}" style="cursor:pointer;" >{$auctionItems[counter].artist}</a></h3></div>
+														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$auctionItems[counter].poster_url}" style="cursor:pointer;" >{$auctionItems[counter].poster_size}</a></h3></div>
 														{if $auctionItems[counter].field_1 <> ''}
-														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].field_1}</a></h3></div>
+														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$auctionItems[counter].poster_url}" style="cursor:pointer;" >{$auctionItems[counter].field_1}</a></h3></div>
 														{/if}
 														{if $auctionItems[counter].field_2 <> ''}
-														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].field_2}</a></h3></div>
+														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$auctionItems[counter].poster_url}" style="cursor:pointer;" >{$auctionItems[counter].field_2}</a></h3></div>
 														{/if}
 														{if $auctionItems[counter].field_3 <> ''}
-														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].field_3}</a></h3></div>
+														<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$auctionItems[counter].poster_url}" style="cursor:pointer;" >{$auctionItems[counter].field_3}</a></h3></div>
 														{/if}
 														{elseif $smarty.request.list=='extended'}
-															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&extended=true" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
+															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$auctionItems[counter].poster_url}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
 														{else}
-															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
+															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$auctionItems[counter].poster_url}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}</a></h3></div>
 														{/if}
                                                          {if $is_expired=='0' && $is_expired_stills !='1' && $smarty.request.list!='alternative' &&  $smarty.request.list!=''}
 														   {if $auctionItems[counter].fk_auction_type_id <> '1'}

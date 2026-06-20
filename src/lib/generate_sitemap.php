@@ -3,6 +3,17 @@
  * Generates sitemap XML and writes it to src/sitemap.xml.
  * Called by admin/admin_generate_sitemap.php or CLI.
  */
+function _sitemap_slug($title) {
+    if (function_exists('generatePosterSlug')) {
+        return generatePosterSlug($title);
+    }
+    $slug = mb_strtolower($title ?? '', 'UTF-8');
+    $slug = preg_replace('/[^\x00-\x7F]/u', '', $slug);
+    $slug = preg_replace('/[^a-z0-9]+/', '-', $slug);
+    $slug = trim($slug, '-');
+    return substr($slug, 0, 60);
+}
+
 function generate_sitemap_xml($db, $base)
 {
     $urls = [];
@@ -25,8 +36,9 @@ function generate_sitemap_xml($db, $base)
 
     // Fixed-price listings from tbl_auction (type 1)
     $r = mysqli_query($db,
-        "SELECT a.auction_id, a.auction_actual_start_datetime
+        "SELECT a.auction_id, a.auction_actual_start_datetime, p.poster_title
          FROM tbl_auction a
+         LEFT JOIN tbl_poster p ON a.fk_poster_id = p.poster_id
          WHERE a.auction_is_approved = '1'
            AND a.fk_auction_type_id = '1'
          ORDER BY a.auction_id DESC
@@ -37,8 +49,9 @@ function generate_sitemap_xml($db, $base)
             $lastmod = !empty($row['auction_actual_start_datetime'])
                 ? date('Y-m-d', strtotime($row['auction_actual_start_datetime']))
                 : date('Y-m-d');
+            $slug = _sitemap_slug($row['poster_title'] ?? '');
             $urls[] = [
-                'loc'        => $base . '/buy?mode=poster_details&auction_id=' . (int)$row['auction_id'] . '&fixed=1',
+                'loc'        => $base . '/poster/' . (int)$row['auction_id'] . '/' . $slug,
                 'lastmod'    => $lastmod,
                 'changefreq' => 'weekly',
                 'priority'   => '0.8',
@@ -48,8 +61,9 @@ function generate_sitemap_xml($db, $base)
 
     // Completed live auctions (types 2,3,4) from tbl_auction
     $r = mysqli_query($db,
-        "SELECT a.auction_id, a.auction_actual_start_datetime
+        "SELECT a.auction_id, a.auction_actual_start_datetime, p.poster_title
          FROM tbl_auction a
+         LEFT JOIN tbl_poster p ON a.fk_poster_id = p.poster_id
          WHERE a.auction_is_approved = '1'
            AND a.fk_auction_type_id IN ('2','3','4')
            AND a.auction_is_sold != '0'
@@ -61,8 +75,9 @@ function generate_sitemap_xml($db, $base)
             $lastmod = !empty($row['auction_actual_start_datetime'])
                 ? date('Y-m-d', strtotime($row['auction_actual_start_datetime']))
                 : date('Y-m-d');
+            $slug = _sitemap_slug($row['poster_title'] ?? '');
             $urls[] = [
-                'loc'        => $base . '/buy?mode=poster_details&auction_id=' . (int)$row['auction_id'] . '&sold=1',
+                'loc'        => $base . '/poster/' . (int)$row['auction_id'] . '/' . $slug,
                 'lastmod'    => $lastmod,
                 'changefreq' => 'monthly',
                 'priority'   => '0.6',
@@ -72,8 +87,9 @@ function generate_sitemap_xml($db, $base)
 
     // Currently live auctions from tbl_auction_live
     $r = mysqli_query($db,
-        "SELECT a.auction_id, a.auction_actual_start_datetime
+        "SELECT a.auction_id, a.auction_actual_start_datetime, p.poster_title
          FROM tbl_auction_live a
+         LEFT JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
          WHERE a.auction_is_approved = '1'
            AND a.auction_is_sold = '0'
          ORDER BY a.auction_id DESC
@@ -84,8 +100,9 @@ function generate_sitemap_xml($db, $base)
             $lastmod = !empty($row['auction_actual_start_datetime'])
                 ? date('Y-m-d', strtotime($row['auction_actual_start_datetime']))
                 : date('Y-m-d');
+            $slug = _sitemap_slug($row['poster_title'] ?? '');
             $urls[] = [
-                'loc'        => $base . '/buy?mode=poster_details&auction_id=' . (int)$row['auction_id'],
+                'loc'        => $base . '/poster/' . (int)$row['auction_id'] . '/' . $slug,
                 'lastmod'    => $lastmod,
                 'changefreq' => 'daily',
                 'priority'   => '0.9',

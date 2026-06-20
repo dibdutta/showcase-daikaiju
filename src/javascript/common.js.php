@@ -1411,12 +1411,7 @@ function remove_dummy_password(){
 
 function redirect_poster_details(auction_id,type,sold)
 {
-	var soldParam = sold ? "&sold=1" : "";
-	if(type==1){
-		window.location="buy?mode=poster_details&auction_id="+auction_id+"&fixed=1"+soldParam;
-	}else{
-		window.location="buy?mode=poster_details&auction_id="+auction_id+soldParam;
-	}
+	window.location="poster/"+auction_id;
 }
 
 function redirect_to_cart(auction_id, user_id)

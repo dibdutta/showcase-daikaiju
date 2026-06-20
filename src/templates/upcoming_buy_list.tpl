@@ -189,7 +189,7 @@
   <tr>
     <td width="25" valign="top" class="pt10 tac"><input name="" type="checkbox" value="" /></td>
     <td width="200" class="buylisttb">
-    <div><a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"  /></a></div>
+    <div><a href="{$auctionItems[counter].poster_url}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"  /></a></div>
      
                                     <!--<input type="button" class="bidnow-btn" value="Details" onclick="redirect_poster_details({$auctionItems[counter].auction_id});"/>-->
                                     {if $auctionItems[counter].watch_indicator ==0}
@@ -202,7 +202,7 @@
     </td>
     <td valign="top" class="pr10"><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td class="pb20"><a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" ><h1>{$auctionItems[counter].poster_title}&nbsp;</h1></a></td>
+        <td class="pb20"><a href="{$auctionItems[counter].poster_url}" style="cursor:pointer;" ><h1>{$auctionItems[counter].poster_title}&nbsp;</h1></a></td>
       </tr>
       <tr>
         <td class="buylisttbtopbg"></td>

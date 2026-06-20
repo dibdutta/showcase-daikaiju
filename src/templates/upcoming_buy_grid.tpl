@@ -200,11 +200,11 @@
                                                 <div id="gallery_{$smarty.section.counter.index}" class="image-hldr">
                                                      <div class="buygridtb">
                                       					<div>
-                                       						<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
+                                       						<a href="{$auctionItems[counter].poster_url}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
                                                          </div>
                                                      </div>
                                                      
-                                                     <div class="pb05 pl10 pr10"><h3> <a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$auctionItems[counter].poster_sku}){/if*}</a></h3></div>	
+                                                     <div class="pb05 pl10 pr10"><h3> <a class="gridView" href="{$auctionItems[counter].poster_url}" style="cursor:pointer;" >{$auctionItems[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$auctionItems[counter].poster_sku}){/if*}</a></h3></div>	
                                                 </div>   
                                                 
                                                 <div class="inner-cntnt-each-poster pt10  pb05 pl10 pr10">                                        

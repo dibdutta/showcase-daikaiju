@@ -12,6 +12,9 @@ RewriteRule ^ - [L]
 # Serve sitemap.xml from sitemap.php
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
+# SEO-friendly poster detail URLs: /poster/{id}/{slug}
+RewriteRule ^poster/(\d+)(/[^/]*)?/?$ buy.php?mode=poster_details&auction_id=$1 [QSA,L]
+
 # If request + .php exists, rewrite internally
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L]

@@ -125,7 +125,7 @@ function tipsy(id){
                
                 <div class="poster-detail">${$dataArrFixed[counter].auction_asked_price|number_format:2}</div>
                 <div class="poster-det-caraousel">
-                <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrFixed[counter].auction_id}" title="{$dataArrFixed[counter].poster_title}"  id="tipsy_{$dataArrFixed[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataArrFixed[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataArrFixed[counter].poster_sku}){/if*}</a>
+                <a href="{$dataArrFixed[counter].poster_url}" title="{$dataArrFixed[counter].poster_title}"  id="tipsy_{$dataArrFixed[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataArrFixed[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataArrFixed[counter].poster_sku}){/if*}</a>
 				</div>
                     {if $dataArrFixed[counter].watch_indicator == 0}
                     <div class="poster-area-list" style="margin-left:28px;">		
@@ -191,7 +191,7 @@ function tipsy(id){
                 
                 
                 <div class="poster-detail">${if $dataJstFinishedAuction[counter].soldamnt==''}0.00{else}{$dataJstFinishedAuction[counter].soldamnt}{/if}</div>
-                <div class="poster-det-caraousel"><a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}" title="{$dataJstFinishedAuction[counter].poster_title}" id="tipsy_{$dataJstFinishedAuction[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataJstFinishedAuction[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</a></div>
+                <div class="poster-det-caraousel"><a href="{$dataJstFinishedAuction[counter].poster_url}" title="{$dataJstFinishedAuction[counter].poster_title}" id="tipsy_{$dataJstFinishedAuction[counter].auction_id}" onMouseOver="tipsy(this.id)" >{$dataJstFinishedAuction[counter].poster_title|substr:0:10}..&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$dataJstFinishedAuction[counter].poster_sku}){/if*}</a></div>
                 </div>
                 
                 </li>

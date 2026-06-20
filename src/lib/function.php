@@ -51,6 +51,20 @@ else {
 
 
 
+////////////   SEO URL helpers START here //////////////
+function generatePosterSlug($title) {
+    $slug = mb_strtolower($title ?? '', 'UTF-8');
+    $slug = preg_replace('/[^\x00-\x7F]/u', '', $slug);   // strip non-ASCII (Japanese etc.)
+    $slug = preg_replace('/[^a-z0-9]+/', '-', $slug);      // non-alphanumeric → hyphen
+    $slug = trim($slug, '-');
+    return substr($slug, 0, 60);
+}
+
+function posterUrl($auctionId, $title) {
+    return PAGE_LINK . '/poster/' . (int)$auctionId . '/' . generatePosterSlug($title);
+}
+////////////   SEO URL helpers END here //////////////
+
 ////////////   Redirect Function START here //////////////
 function redirect_admin($url) {
     header("Location: ".ADMIN_PAGE_LINK."/".$url."");

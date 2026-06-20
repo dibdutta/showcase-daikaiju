@@ -265,6 +265,9 @@ function displayList()
 	$smarty->assign('offset', $offset);
 	$smarty->assign('toshow', $toshow);
 	
+	foreach ($auctionItems as $i => $item) {
+		$auctionItems[$i]['poster_url'] = posterUrl($item['auction_id'], $item['poster_title']);
+	}
 	$smarty->assign('auctionItems', $auctionItems);
 	//var_dump($auctionItems);
 	$smarty->assign('json_arr', json_encode($auctionItems));
@@ -1165,10 +1168,22 @@ if(isset($_SESSION['sessUserID'])){
 	$_auctionId   = (int)($auctionDetails[0]['auction_id'] ?? $auction_id);
 	$_isFixed     = ($auctionDetails[0]['fk_auction_type_id'] ?? '') == 1;
 	$_canonicalSuffix = $_isFixed ? '&fixed=1' : '';
+	$_posterSlugUrl = posterUrl($_auctionId, $_posterTitle);
+
+	// 301 redirect old query-string URL to the new SEO-friendly URL.
+	// When Apache rewrites /poster/ID/slug internally, REQUEST_URI starts with /poster/.
+	// When the user hits the old /buy?mode=poster_details URL, REQUEST_URI starts with /buy.
+	$_requestUri = $_SERVER['REQUEST_URI'] ?? '';
+	if (!empty($_posterTitle) && strpos($_requestUri, '/poster/') !== 0) {
+		header('HTTP/1.1 301 Moved Permanently');
+		header('Location: ' . $_posterSlugUrl);
+		exit;
+	}
+
 	$smarty->assign('pageTitle', $_posterTitle . ' | Original Movie Poster | ' . SITE_TITLE);
 	$smarty->assign('pageMetaDescription', $_posterDesc);
 	$smarty->assign('ogImage', $auctionDetails[0]['large_image'] ?? '');
-	$smarty->assign('canonicalUrl', PAGE_LINK . '/buy?mode=poster_details&auction_id=' . $_auctionId . $_canonicalSuffix);
+	$smarty->assign('canonicalUrl', $_posterSlugUrl);
 
 	// JSON-LD structured data (Product schema)
 	$_sold      = $auctionDetails[0]['auction_is_sold'] ?? '0';
@@ -1181,7 +1196,7 @@ if(isset($_SESSION['sessUserID'])){
 	$_available = ($_sold === '0' || $_sold === '3')
 	                ? 'https://schema.org/InStock'
 	                : 'https://schema.org/OutOfStock';
-	$_canonicalUrl = PAGE_LINK . '/buy?mode=poster_details&auction_id=' . $_auctionId . $_canonicalSuffix;
+	$_canonicalUrl = $_posterSlugUrl;
 	$_jsonLd = [
 		'@context' => 'https://schema.org',
 		'@type'    => 'Product',

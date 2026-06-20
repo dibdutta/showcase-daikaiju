@@ -249,9 +249,9 @@ function toggleDiv(id,flagit,type,track) {
                                  <td width="200" class="buylisttb">
 <div>
 {if $auctionItems[counter].fk_auction_type_id==1}
-	<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
+	<a href="{$auctionItems[counter].poster_url}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
 {else}
-	<a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
+	<a href="{$auctionItems[counter].poster_url}"><img  class="image-brdr"  src="{$auctionItems[counter].image_path}"   /></a>
 {/if}
                                            
 										   </div>
@@ -267,9 +267,9 @@ function toggleDiv(id,flagit,type,track) {
                   <!--3rd td-->  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 								    <tr>
 									{if $smarty.request.list=='fixed'}
-										<td class="pb20"><h1><a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}&fixed=1" style="cursor:pointer;" ><strong>{$auctionItems[counter].poster_title}&nbsp;</strong></a> </h1></td>
+										<td class="pb20"><h1><a href="{$auctionItems[counter].poster_url}" style="cursor:pointer;" ><strong>{$auctionItems[counter].poster_title}&nbsp;</strong></a> </h1></td>
 									{else}
-										<td class="pb20"><h1><a href="{$actualPath}/buy?mode=poster_details&auction_id={$auctionItems[counter].auction_id}" style="cursor:pointer;" ><strong>{$auctionItems[counter].poster_title}&nbsp;</strong></a> </h1></td>
+										<td class="pb20"><h1><a href="{$auctionItems[counter].poster_url}" style="cursor:pointer;" ><strong>{$auctionItems[counter].poster_title}&nbsp;</strong></a> </h1></td>
 									{/if}	
       							  </tr>
 								    <tr>

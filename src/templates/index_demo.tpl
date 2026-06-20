@@ -81,7 +81,7 @@ function updateArrows(wrap) {
               <div class="slides_container slides_containerbg" style="width:570px;">
                 {section name=counterslider loop=$dataArrSlider}
                   <div class="slide">
-                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrSlider[counterslider].auction_id}"
+                    <a href="{$dataArrSlider[counterslider].poster_url}"
                        title="{$dataArrSlider[counterslider].poster_title}">
                       <img src="{$dataArrSlider[counterslider].big_image}" alt="Slide">
                     </a>
@@ -189,7 +189,7 @@ function updateArrows(wrap) {
                                 <div class="hp-card-price">${if $dataArrWeekly[counter].last_bid_amount > 0}{$dataArrWeekly[counter].last_bid_amount|number_format:2}{else}{$dataArrWeekly[counter].auction_asked_price|number_format:2}{/if}</div>
                                 {/if}
                                 <div class="hp-card-title">
-                                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrWeekly[counter].auction_id}"
+                                    <a href="{$dataArrWeekly[counter].poster_url}"
                                        title="{$dataArrWeekly[counter].poster_title}"
                                        id="tipsy_{$dataArrWeekly[counter].auction_id}"
                                        onmouseover="tipsy(this.id)">{$dataArrWeekly[counter].poster_title}</a>
@@ -228,7 +228,7 @@ function updateArrows(wrap) {
                                 <div class="hp-card-price">${$dataArrUpcoming[counter].auction_asked_price|number_format:2}</div>
                                 {/if}
                                 <div class="hp-card-title">
-                                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrUpcoming[counter].auction_id}"
+                                    <a href="{$dataArrUpcoming[counter].poster_url}"
                                        title="{$dataArrUpcoming[counter].poster_title}"
                                        id="tipsy_{$dataArrUpcoming[counter].auction_id}"
                                        onmouseover="tipsy(this.id)">{$dataArrUpcoming[counter].poster_title}</a>
@@ -267,7 +267,7 @@ function updateArrows(wrap) {
                                 <div class="hp-card-price">${$dataArrFixed[counter].auction_asked_price|number_format:2}</div>
                                 {/if}
                                 <div class="hp-card-title">
-                                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataArrFixed[counter].auction_id}&fixed=1"
+                                    <a href="{$dataArrFixed[counter].poster_url}"
                                        title="{$dataArrFixed[counter].poster_title}"
                                        id="tipsy_{$dataArrFixed[counter].auction_id}"
                                        onmouseover="tipsy(this.id)">{$dataArrFixed[counter].poster_title}</a>
@@ -306,7 +306,7 @@ function updateArrows(wrap) {
                                 <div class="hp-card-price">Sold: ${if $dataJstFinishedAuction[counter].soldamnt == ''}0.00{else}{$dataJstFinishedAuction[counter].soldamnt}{/if}</div>
                                 {/if}
                                 <div class="hp-card-title">
-                                    <a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}{if $dataJstFinishedAuction[counter].fk_auction_type_id == 1}&fixed=1{/if}&sold=1"
+                                    <a href="{$dataJstFinishedAuction[counter].poster_url}"
                                        title="{$dataJstFinishedAuction[counter].poster_title}"
                                        id="tipsy_{$dataJstFinishedAuction[counter].auction_id}"
                                        onmouseover="tipsy(this.id)">{$dataJstFinishedAuction[counter].poster_title}</a>

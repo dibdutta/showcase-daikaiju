@@ -63,15 +63,11 @@ function dispmiddle(){
 	$k=0;
 	while($rs && $row = mysqli_fetch_assoc($rs)){
 			   $dataArrSlider[] = $row;
-			   if($row['is_cloud']=='1'){
-			   	$dataArrSlider[$k]['big_image']=CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
-			   }else{
-			   	$dataArrSlider[$k]['big_image']=CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
-			   }
-			   
+			   $dataArrSlider[$k]['big_image']=CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
+			   $dataArrSlider[$k]['poster_url']=posterUrl($row['auction_id'], $row['poster_title']);
 			   $k++;
 		   }
-	
+
 	$sql="Select p.poster_title,tpi.poster_thumb,a.auction_id ,tpi.is_cloud
 				from tbl_auction_live a,tbl_poster_live p,tbl_poster_images_live tpi
 				WHERE a.fk_poster_id=p.poster_id
@@ -83,12 +79,8 @@ function dispmiddle(){
 	if($rs){
 		while($row = mysqli_fetch_assoc($rs)){
 				   $dataArrSlider[] = $row;
-				   if($row['is_cloud']=='1'){
-					$dataArrSlider[$k]['big_image']=CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
-				   }else{
-					$dataArrSlider[$k]['big_image']=CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
-				   }
-				   
+				   $dataArrSlider[$k]['big_image']=CLOUD_POSTER_THUMB_BIG_GALLERY.$row['poster_thumb'];
+				   $dataArrSlider[$k]['poster_url']=posterUrl($row['auction_id'], $row['poster_title']);
 				   $k++;
 			   }
 	}		   			
@@ -100,9 +92,10 @@ function dispmiddle(){
 	if(!empty($dataArrFixed)){
 
         $totFixed=count($dataArrFixed);
-        for($i=0;$i<$totFixed;$i++){           
+        for($i=0;$i<$totFixed;$i++){
 			$dataArrFixed[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$dataArrFixed[$i]['poster_thumb'];
-			$dataArrFixed[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$dataArrFixed[$i]['poster_thumb'];            
+			$dataArrFixed[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$dataArrFixed[$i]['poster_thumb'];
+			$dataArrFixed[$i]['poster_url']=posterUrl($dataArrFixed[$i]['auction_id'], $dataArrFixed[$i]['poster_title']);
         }
         $smarty->assign("dataArrFixed", $dataArrFixed);
         $smarty->assign("totFixed", $totFixed);
@@ -114,6 +107,7 @@ function dispmiddle(){
         for($i=0;$i<$totWeekly;$i++){
             $dataArrWeekly[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$dataArrWeekly[$i]['poster_thumb'];
             $dataArrWeekly[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$dataArrWeekly[$i]['poster_thumb'];
+            $dataArrWeekly[$i]['poster_url']=posterUrl($dataArrWeekly[$i]['auction_id'], $dataArrWeekly[$i]['poster_title']);
         }
         $smarty->assign("dataArrWeekly", $dataArrWeekly);
         $smarty->assign("totWeekly", $totWeekly);
@@ -124,6 +118,7 @@ function dispmiddle(){
             for($i=0;$i<$totUpcoming;$i++){
 				$dataArrUpcoming[$i]['image_path']=CLOUD_POSTER_THUMB_BUY.$dataArrUpcoming[$i]['poster_thumb'];
                 $dataArrUpcoming[$i]['large_image']=CLOUD_POSTER_THUMB_BUY_GALLERY.$dataArrUpcoming[$i]['poster_thumb'];
+                $dataArrUpcoming[$i]['poster_url']=posterUrl($dataArrUpcoming[$i]['auction_id'], $dataArrUpcoming[$i]['poster_title']);
 			}
             $smarty->assign("dataArrUpcoming", $dataArrUpcoming);
             $smarty->assign("totUpcoming", $totUpcoming);
@@ -147,6 +142,7 @@ function dispmiddle(){
         for($i = 0; $i < $totJstFinished; $i++){
             $dataJstFinishedAuction[$i]['image_path'] = CLOUD_POSTER_THUMB_BUY . $dataJstFinishedAuction[$i]['poster_thumb'];
             $dataJstFinishedAuction[$i]['large_image'] = CLOUD_POSTER_THUMB_BUY_GALLERY . $dataJstFinishedAuction[$i]['poster_thumb'];
+            $dataJstFinishedAuction[$i]['poster_url'] = posterUrl($dataJstFinishedAuction[$i]['auction_id'], $dataJstFinishedAuction[$i]['poster_title']);
         }
         $smarty->assign("dataJstFinishedAuction", $dataJstFinishedAuction);
         $smarty->assign("totJstFinished", $totJstFinished);
