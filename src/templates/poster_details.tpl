@@ -1,4 +1,5 @@
 {include file="header.tpl"}
+{if $jsonLd}<script type="application/ld+json">{$jsonLd nofilter}</script>{/if}
 <link href="{$actualPathJSCSS}css/jquery.countdown.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="{$actualPathJSCSS}js/jquery.countdown.js"></script>
 
@@ -103,7 +104,7 @@ function toggleDiv(id,flagit,type,track) {
 		var src=$('#org_id').attr('src');
 		if(!src) return;
 		lbScale=1; lbX=0; lbY=0;
-		$('#lb-img').attr('src',src).css('transform','');
+		$('#lb-img').attr('src',src).attr('alt',$('#org_id').attr('alt')).css('transform','');
 		$('#poster-lb').fadeIn(150);
 		$('body').css('overflow','hidden');
 	}
@@ -222,7 +223,7 @@ function toggleDiv(id,flagit,type,track) {
                                 <div class="buygrid_big">
                                        <div>
                                    								
-									<img class="image-brdr" src="{$auctionDetails[0].large_image}" border="0" style="cursor:zoom-in;width:318px;" onclick="openLightbox()" id="org_id" title="Click to zoom &amp; pan" />
+									<img class="image-brdr" src="{$auctionDetails[0].large_image}" border="0" style="cursor:zoom-in;width:318px;" onclick="openLightbox()" id="org_id" title="Click to zoom &amp; pan" alt="{$auctionDetails[0].poster_title|escape:'html'}" />
 									</div></div>
                             </td></tr></tbody></table>
                                
@@ -235,7 +236,7 @@ function toggleDiv(id,flagit,type,track) {
 								</div>*}
 								<div style="text-align:left; margin-left:10px;">
 								 {section name=counter loop=$itemImageArry}
-								 	<img src="{$itemImageArry[counter].image_path}" width="80px;" style="cursor:pointer;" onclick="changeImage('{$itemImageArry[counter].big_image}','{$smarty.section.counter.index}')"  />
+								 	<img src="{$itemImageArry[counter].image_path}" width="80px;" style="cursor:pointer;" onclick="changeImage('{$itemImageArry[counter].big_image}','{$smarty.section.counter.index}')" alt="{$auctionDetails[0].poster_title|escape:'html'} — image {$smarty.section.counter.index+1}" />
 									{if ($smarty.section.counter.index) != 0}
                                         {if (($smarty.section.counter.index +1) % 4) == 0}                                         
                                          </div> 

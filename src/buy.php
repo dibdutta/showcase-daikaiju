@@ -1170,6 +1170,38 @@ if(isset($_SESSION['sessUserID'])){
 	$smarty->assign('ogImage', $auctionDetails[0]['large_image'] ?? '');
 	$smarty->assign('canonicalUrl', PAGE_LINK . '/buy?mode=poster_details&auction_id=' . $_auctionId . $_canonicalSuffix);
 
+	// JSON-LD structured data (Product schema)
+	$_sold      = $auctionDetails[0]['auction_is_sold'] ?? '0';
+	$_typeId    = (int)($auctionDetails[0]['fk_auction_type_id'] ?? 1);
+	$_price     = $_typeId === 1
+	                ? ($auctionDetails[0]['auction_asked_price'] ?? 0)
+	                : ($auctionDetails[0]['auction_buynow_price'] > 0
+	                    ? $auctionDetails[0]['auction_buynow_price']
+	                    : $auctionDetails[0]['auction_asked_price'] ?? 0);
+	$_available = ($_sold === '0' || $_sold === '3')
+	                ? 'https://schema.org/InStock'
+	                : 'https://schema.org/OutOfStock';
+	$_canonicalUrl = PAGE_LINK . '/buy?mode=poster_details&auction_id=' . $_auctionId . $_canonicalSuffix;
+	$_jsonLd = [
+		'@context' => 'https://schema.org',
+		'@type'    => 'Product',
+		'name'     => $_posterTitle,
+		'description' => $_posterDesc,
+		'image'    => [$auctionDetails[0]['large_image'] ?? ''],
+		'sku'      => $auctionDetails[0]['poster_sku'] ?? '',
+		'brand'    => ['@type' => 'Brand', 'name' => SITE_TITLE],
+		'offers'   => [
+			'@type'           => 'Offer',
+			'url'             => $_canonicalUrl,
+			'priceCurrency'   => 'USD',
+			'price'           => number_format((float)$_price, 2, '.', ''),
+			'availability'    => $_available,
+			'itemCondition'   => 'https://schema.org/UsedCondition',
+			'seller'          => ['@type' => 'Organization', 'name' => SITE_TITLE],
+		],
+	];
+	$smarty->assign('jsonLd', json_encode($_jsonLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+
 	$smarty->assign('auctionDetails', $auctionDetails);
 	$smarty->assign('json_arr', json_encode($auctionDetails));
 	if($auctionDetails[0]['total_poster']>1){
