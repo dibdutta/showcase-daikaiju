@@ -256,37 +256,34 @@ function updateBidCronJob(){
 							if($second_highest_val > $auctionItems[$i]['max_bid_amount']){
 									$next_bid = $second_highest_val + increment_amount($second_highest_val);
 									if($next_bid > $auctionItems[$i]['proxy_amount']){
-										$next_bid = $auctionItems[$i]['proxy_amount'];
+										$next_bid = $auctionItems[$i]['proxy_amount']; 
 									}
-									// Skip if capped next_bid equals current max — no new bid needed, winner already set
-									if($next_bid > 0 && $next_bid != $auctionItems[$i]['max_bid_amount']){
+									if($next_bid > 0){
 										$sql_insert="Insert into tbl_bid (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,bid_is_won,post_date,post_ip) values ('".$auctionItems[$i]['highest_user']."','".$auction_id."','".$second_highest_val."','0','0','".date('Y-m-d H:i:s')."','".$_SERVER['REMOTE_ADDR']."')";
-										mysqli_query($GLOBALS['db_connect'],$sql_insert);
-										archive_bid_immediately(mysqli_insert_id($GLOBALS['db_connect']));
-
+										$sql_insert_res=mysqli_query($GLOBALS['db_connect'],$sql_insert);
+								
 										$sql_insert="Insert into tbl_bid (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,bid_is_won,post_date,post_ip) values ('".$auctionItems[$i]['fk_user_id']."','".$auction_id."','".$next_bid."','1','1','".date('Y-m-d H:i:s')."','".$_SERVER['REMOTE_ADDR']."')";
-										mysqli_query($GLOBALS['db_connect'],$sql_insert);
+										$sql_insert_res=mysqli_query($GLOBALS['db_connect'],$sql_insert);
+									
 										$last_bid_id = mysqli_insert_id($GLOBALS['db_connect']);
-										// Do NOT archive yet — processExpiredAuction reads tbl_bid to generate invoice
-
+									
 										$update_sql_latest="Update tbl_auction set highest_user ='".$auctionItems[$i]['fk_user_id']."',max_bid_amount='".$next_bid."',bid_count=bid_count + 2 where auction_id='".$auction_id."'";
 										mysqli_query($GLOBALS['db_connect'],$update_sql_latest);
 										}
 							}else{
 									$next_bid = $auctionItems[$i]['max_bid_amount'] + increment_amount($auctionItems[$i]['max_bid_amount']);
 									if($next_bid > $auctionItems[$i]['proxy_amount']){
-										$next_bid = $auctionItems[$i]['proxy_amount'];
+										$next_bid = $auctionItems[$i]['proxy_amount']; 
 									}
-									// Skip if capped next_bid equals current max — no new bid needed, winner already set
-									if($next_bid > 0 && $next_bid != $auctionItems[$i]['max_bid_amount']){
+									if($next_bid > 0){
 										$sql_insert="Insert into tbl_bid (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,bid_is_won,post_date,post_ip) values ('".$auctionItems[$i]['fk_user_id']."','".$auction_id."','".$next_bid."','1','1','".date('Y-m-d H:i:s')."','".$_SERVER['REMOTE_ADDR']."')";
-										mysqli_query($GLOBALS['db_connect'],$sql_insert);
+										$sql_insert_res=mysqli_query($GLOBALS['db_connect'],$sql_insert);
+									
 										$last_bid_id = mysqli_insert_id($GLOBALS['db_connect']);
-										// Do NOT archive yet — processExpiredAuction reads tbl_bid to generate invoice
-
+									
 										$update_sql_latest="Update tbl_auction set highest_user ='".$auctionItems[$i]['fk_user_id']."',max_bid_amount='".$next_bid."',bid_count=bid_count + 1 where auction_id='".$auction_id."'";
 										mysqli_query($GLOBALS['db_connect'],$update_sql_latest);
-									}
+									}	
 								}
 							$sqlForOutbid ="SELECT usr.firstname, usr.lastname, usr.email,p.poster_title
 											FROM ".USER_TABLE." usr,".TBL_AUCTION." a,".TBL_POSTER." p
@@ -321,37 +318,17 @@ function updateBidCronJob(){
 							//$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
 		
 							sendMailCron($toMail, $toName, $subject, $textContent);
-							processExpiredAuction($auctionItems[$i]['auction_id'], $last_bid_id);
-							// Archive the proxy winner bid AFTER invoice is generated (generateInvoice reads tbl_bid)
-							if($last_bid_id > 0){ archive_bid_immediately($last_bid_id); }
-
-					   }elseif($auctionItems[$i]['max_bid_amount'] > $auctionItems[$i]['bid_amount_from_bid']
-					           && $auctionItems[$i]['highest_user'] == $auctionItems[$i]['fk_user_id']){
-					        // Proxy holder IS the tbl_auction winner — insert their formal closing bid
+							processExpiredAuction($auctionItems[$i]['auction_id'], $last_bid_id);	
+							
+					   }elseif($auctionItems[$i]['max_bid_amount'] > $auctionItems[$i]['bid_amount_from_bid']){
 							$sql_insert="Insert into tbl_bid (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,post_date,post_ip) values ('".$auctionItems[$i]['fk_user_id']."','".$auctionItems[$i]['auction_id']."','".$auctionItems[$i]['max_bid_amount']."','1','".date('Y-m-d H:i:s')."','".$_SERVER['REMOTE_ADDR']."')";
-							mysqli_query($GLOBALS['db_connect'],$sql_insert);
+							$sql_insert_res=mysqli_query($GLOBALS['db_connect'],$sql_insert);
 							$last_bid_id = mysqli_insert_id($GLOBALS['db_connect']);
-							// Archive AFTER processExpiredAuction so generateInvoice can read from tbl_bid
+							
 							processExpiredAuction($auctionItems[$i]['auction_id'], $last_bid_id);
-							archive_bid_immediately($last_bid_id);
-					   }
+					   }			   
 					   else{
-					        // Non-proxy winner: highest_user already has a real bid in tbl_bid — find it and mark it won
-					        $rs_existing = mysqli_query($GLOBALS['db_connect'],
-					            "SELECT bid_id FROM tbl_bid
-					             WHERE bid_fk_user_id='".$auctionItems[$i]['highest_user']."'
-					               AND bid_fk_auction_id='".$auctionItems[$i]['auction_id']."'
-					               AND bid_amount='".$auctionItems[$i]['max_bid_amount']."'
-					               AND is_proxy='0'
-					             ORDER BY bid_id DESC LIMIT 1");
-					        $existing_bid = $rs_existing ? mysqli_fetch_assoc($rs_existing) : null;
-					        if($existing_bid){
-					            $winner_bid_id = (int)$existing_bid['bid_id'];
-					            mysqli_query($GLOBALS['db_connect'],
-					                "UPDATE tbl_bid SET bid_is_won='1' WHERE bid_id='".$winner_bid_id."'");
-					            processExpiredAuction($auctionItems[$i]['auction_id'], $winner_bid_id);
-					            archive_bid_immediately($winner_bid_id);
-					        }
+							processExpiredAuction($auctionItems[$i]['auction_id'], $auctionItems[$i]['last_bid_id']);
 						}
 							
 					}elseif($auctionItems[$i]['fk_auction_type_id'] == '3' && $auctionItems[$i]['auction_reserve_offer_price'] <= $auctionItems[$i]['last_bid_amount']){
@@ -422,19 +399,10 @@ function fetchExpiredAuctionDetails($auction_week_id){
 							 }
 						}
 					}
-					###################  tbl_bid to tbl_bid_archive  ##########################################
-					$select_bids = "SELECT * FROM tbl_bid WHERE bid_fk_auction_id = ".$row['auction_id'];
-					if($rs_bids = mysqli_query($GLOBALS['db_connect'], $select_bids)){
-						while($row_bid = mysqli_fetch_assoc($rs_bids)){
-							$sql_bid_archive = "INSERT INTO tbl_bid_archive (bid_fk_user_id, bid_fk_auction_id, bid_amount, is_proxy, bid_is_won, post_date, post_ip, is_snipe)
-								VALUES (".$row_bid['bid_fk_user_id'].",".$auction_id_new.",".$row_bid['bid_amount'].",'".$row_bid['is_proxy']."','".$row_bid['bid_is_won']."','".$row_bid['post_date']."','".$row_bid['post_ip']."','".$row_bid['is_snipe']."')";
-							if(mysqli_query($GLOBALS['db_connect'], $sql_bid_archive)){
-								$sql_del_bid = "DELETE FROM tbl_bid WHERE bid_id = ".$row_bid['bid_id'];
-								mysqli_query($GLOBALS['db_connect'], $sql_del_bid);
-							}
-						}
-					}
-
+					###################  tbl_bid to tbl_bid  ##########################################
+					$update_bid = " Update tbl_bid set bid_fk_auction_id=".$auction_id_new." WHERE bid_fk_auction_id = ".$row['auction_id'];
+					mysqli_query($GLOBALS['db_connect'],$update_bid);	
+					
 					
 					################# tbl_poster_images_live to tbl_poster_images ######################################
 					$select_images ="Select * from tbl_poster_images_live where fk_poster_id=".$row['poster_id'];
@@ -829,20 +797,6 @@ function generateInvoice($id, $is_bid,$auction_id='')
         return "false";
     }
 }
-// Immediately archive a just-inserted tbl_bid row by bid_id, then delete it.
-// Used for proxy-resolved bids inserted during cron processing so they never linger
-// in tbl_bid under a new tbl_auction ID that may collide with an active live auction ID.
-function archive_bid_immediately($bid_id){
-	$row = mysqli_fetch_assoc(mysqli_query($GLOBALS['db_connect'], "SELECT * FROM tbl_bid WHERE bid_id=".$bid_id." LIMIT 1"));
-	if(!$row) return;
-	$sql_archive = "INSERT INTO tbl_bid_archive (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,bid_is_won,post_date,post_ip,is_snipe)
-		VALUES (".$row['bid_fk_user_id'].",".$row['bid_fk_auction_id'].",".$row['bid_amount'].",'".$row['is_proxy']."','".$row['bid_is_won']."','".$row['post_date']."','".$row['post_ip']."','".$row['is_snipe']."')";
-	mysqli_query($GLOBALS['db_connect'], $sql_archive);
-	if(mysqli_insert_id($GLOBALS['db_connect']) > 0){
-		mysqli_query($GLOBALS['db_connect'], "DELETE FROM tbl_bid WHERE bid_id=".$bid_id);
-	}
-}
-
 // increment_amount() lives in lib/function.php — no duplicate needed here
 //processExpiredAuction('2','2')
 function sync_auction_bid_fun($auction_ids){
@@ -851,7 +805,7 @@ function sync_auction_bid_fun($auction_ids){
 	$rs= mysqli_query($GLOBALS['db_connect'],$sql);
 	while($row=mysqli_fetch_array($rs)){
 		if($row['bid_fk_user_id'] >0){
-			$sql_insert = "Insert into tbl_bid_archive (`bid_fk_user_id`,`bid_fk_auction_id`,`bid_amount`,`is_proxy`,`bid_is_won`,`post_date`,`post_ip`,`is_snipe`) values
+			$sql_insert = "Insert into tbl_bid_archive (`bid_fk_user_id`,`bid_fk_auction_id`,`bid_amount`,`is_proxy`,`bid_is_won`,`post_date`,`post_ip`,`is_snipe`) values 
 						(".$row['bid_fk_user_id'].",".$row['bid_fk_auction_id'].",".$row['bid_amount'].",'".$row['is_proxy']."','".$row['bid_is_won']."','".$row['post_date']."','".$row['post_ip']."','".$row['is_snipe']."' )" ;
 			mysqli_query($GLOBALS['db_connect'],$sql_insert);
 			$bid_id_new =mysqli_insert_id($GLOBALS['db_connect']);
@@ -893,6 +847,7 @@ a.fk_poster_id=p.poster_id ";
 				// mysqli_query($GLOBALS['db_connect'],"update tbl_bid_archive set bid_is_won='1' where bid_id = ".$row_archive_bid_id['bid_id']);
 			}
 		}
+
 	}
 	set_default_images($res,$auction_ids);
  }

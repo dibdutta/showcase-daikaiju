@@ -184,6 +184,35 @@ function displayList()
 	$smarty->assign('totalLiveWeekly', $totalLiveWeekly);
 	$smarty->assign('total', $total);
 	$smarty->assign('list',$list);
+
+	// Per-page SEO meta for listing pages
+	$_listTitles = [
+		'weekly'   => 'Weekly Live Auction — Original Movie Posters | ' . SITE_TITLE,
+		'extended' => 'Extended Auction — Original Movie Posters | ' . SITE_TITLE,
+		'fixed'    => 'Shop Original Movie Posters & Collectibles | ' . SITE_TITLE,
+		'stills'   => 'Movie Stills & Photography | ' . SITE_TITLE,
+		'monthly'  => 'Monthly Auction — Original Movie Posters | ' . SITE_TITLE,
+		'upcoming' => 'Upcoming Auctions — Original Movie Posters | ' . SITE_TITLE,
+	];
+	$_listDescriptions = [
+		'weekly'   => 'Bid on rare original movie posters in our weekly live auction. Godzilla, kaiju, and classic film memorabilia closing soon.',
+		'fixed'    => 'Browse original movie posters and collectibles available for immediate purchase. Godzilla, kaiju, and vintage film art.',
+		'stills'   => 'Shop authentic movie stills and photography from classic films. Rare original prints and lobby cards.',
+		'monthly'  => 'Join our monthly auction featuring curated original movie posters and rare film collectibles.',
+		'upcoming' => 'Preview upcoming original movie poster auctions. Register now to bid on Godzilla, kaiju, and vintage film art.',
+	];
+	$_listCanonical = [
+		'weekly'   => PAGE_LINK . '/buy?list=weekly',
+		'extended' => PAGE_LINK . '/buy?list=weekly',
+		'fixed'    => PAGE_LINK . '/buy?list=fixed',
+		'stills'   => PAGE_LINK . '/buy?list=stills',
+		'monthly'  => PAGE_LINK . '/buy?list=monthly',
+		'upcoming' => PAGE_LINK . '/buy?list=upcoming',
+	];
+	$smarty->assign('pageTitle',           $_listTitles[$list]       ?? ('Buy Original Movie Posters | ' . SITE_TITLE));
+	$smarty->assign('pageMetaDescription', $_listDescriptions[$list] ?? $GLOBALS['metaDescription']);
+	$smarty->assign('canonicalUrl',        $_listCanonical[$list]    ?? (PAGE_LINK . '/buy'));
+
 	if(!empty($auctionItems)) for($i=0;$i<count($auctionItems);$i++){
         /*if($list!='weekly'){*/
             if ($auctionItems[$i]['is_cloud']!='1'){
@@ -1127,6 +1156,20 @@ if(isset($_SESSION['sessUserID'])){
 	}
 	$totalLiveWeekly = $objAuction->countLiveWeeklyAuctions();
 	$smarty->assign('totalLiveWeekly', $totalLiveWeekly);
+
+	// Per-page SEO meta
+	$_posterTitle = $auctionDetails[0]['poster_title'] ?? '';
+	$_posterDesc  = strip_tags($auctionDetails[0]['poster_desc'] ?? '');
+	$_posterDesc  = preg_replace('/\s+/', ' ', $_posterDesc);
+	$_posterDesc  = substr(trim($_posterDesc), 0, 155);
+	$_auctionId   = (int)($auctionDetails[0]['auction_id'] ?? $auction_id);
+	$_isFixed     = ($auctionDetails[0]['fk_auction_type_id'] ?? '') == 1;
+	$_canonicalSuffix = $_isFixed ? '&fixed=1' : '';
+	$smarty->assign('pageTitle', $_posterTitle . ' | Original Movie Poster | ' . SITE_TITLE);
+	$smarty->assign('pageMetaDescription', $_posterDesc);
+	$smarty->assign('ogImage', $auctionDetails[0]['large_image'] ?? '');
+	$smarty->assign('canonicalUrl', PAGE_LINK . '/buy?mode=poster_details&auction_id=' . $_auctionId . $_canonicalSuffix);
+
 	$smarty->assign('auctionDetails', $auctionDetails);
 	$smarty->assign('json_arr', json_encode($auctionDetails));
 	if($auctionDetails[0]['total_poster']>1){

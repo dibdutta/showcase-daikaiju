@@ -12,10 +12,21 @@
   gtag('config', 'G-QPH241HM6Q');
 </script>
 {/literal}
-<title>::{$smarty.const.SITE_TITLE}::</title>
+<title>{if $pageTitle}{$pageTitle}{else}{$smarty.const.SITE_TITLE}{/if}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"  >
-<meta name="description" content="{$metaDescription}" >
+<meta name="description" content="{if $pageMetaDescription}{$pageMetaDescription}{else}{$metaDescription}{/if}" >
 <meta name="keywords" content="{$metaKeywords}" >
+{if $canonicalUrl}<link rel="canonical" href="{$canonicalUrl}" />{/if}
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="{$smarty.const.SITE_TITLE}" />
+<meta property="og:title" content="{if $pageTitle}{$pageTitle}{else}{$smarty.const.SITE_TITLE}{/if}" />
+<meta property="og:description" content="{if $pageMetaDescription}{$pageMetaDescription}{else}{$metaDescription}{/if}" />
+{if $ogImage}<meta property="og:image" content="{$ogImage}" />{/if}
+{if $canonicalUrl}<meta property="og:url" content="{$canonicalUrl}" />{/if}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{if $pageTitle}{$pageTitle}{else}{$smarty.const.SITE_TITLE}{/if}" />
+<meta name="twitter:description" content="{if $pageMetaDescription}{$pageMetaDescription}{else}{$metaDescription}{/if}" />
+{if $ogImage}<meta name="twitter:image" content="{$ogImage}" />{/if}
 
 
 <!-- round corner start here  -->

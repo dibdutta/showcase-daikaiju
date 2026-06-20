@@ -458,7 +458,7 @@ class User extends DBCommon{
 				}else{
 					$_SESSION['session_time'] = time();
 					$_SESSION['sessUserID'] = $row[USER_ID];
-					$_SESSION['sessUsername'] = $row[USERNAME];
+					$_SESSION['sessUsername'] = !empty($row[USERNAME]) ? $row[USERNAME] : $row[FIRSTNAME];
 				
 					if(isset($_SESSION['sessUserID']) && $_SESSION['sessUserID']!='' && !isset($_COOKIE['UserCookieName'])){	
 						setcookie("UserCookieName", $_SESSION['sessUserID'], time() + (3600*24*30*12), "/");

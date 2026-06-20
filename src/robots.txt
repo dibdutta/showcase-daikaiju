@@ -1,2 +1,20 @@
 User-agent: *
-Disallow: /
+Disallow: /admin/
+Disallow: /admin_templates/
+Disallow: /admin_templates_c/
+Disallow: /templates_c/
+Disallow: /auth
+Disallow: /ajax.php
+Disallow: /cart
+Disallow: /my_invoice
+Disallow: /my_bid
+Disallow: /my_offer
+Disallow: /user-panel
+Disallow: /bid_popup
+Disallow: /paypal_orders.php
+Disallow: /combine
+Disallow: /check.php
+Disallow: /webservice/
+Allow: /
+
+Sitemap: https://www.kaijulink.com/sitemap.xml
