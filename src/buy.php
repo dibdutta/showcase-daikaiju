@@ -1093,7 +1093,24 @@ if(isset($_SESSION['sessUserID'])){
 	}elseif(isset($_REQUEST['extended']) && $_REQUEST['extended']=="true") {
 		$auctionDetails=$objAuction->select_details_auction($auction_id,'',1);
 	}else{
-		$auctionDetails=$objAuction->select_details_auction($auction_id);
+		// tbl_auction and tbl_auction_live have independent auto-increment sequences so their
+		// auction_ids can collide. We use the slug from the URL as a tie-breaker:
+		//   1. Try tbl_auction first (master/archive table).
+		//   2. If a slug was passed, verify it matches the title found. A mismatch means the
+		//      numeric ID belongs to a *different* item in tbl_auction_live, so try that table.
+		//   3. If tbl_auction returned nothing, fall back to auto-detect (checks tbl_auction_live).
+		$_urlSlug = isset($_REQUEST['poster_slug']) ? trim($_REQUEST['poster_slug']) : '';
+		$auctionDetails=$objAuction->select_details_auction($auction_id,1);
+		if(!empty($auctionDetails[0]['auction_id']) && $_urlSlug !== ''){
+			$_foundSlug = generatePosterSlug($auctionDetails[0]['poster_title'] ?? '');
+			if($_foundSlug !== $_urlSlug){
+				// Slug mismatch: ID collision — this auction_id belongs to a live-table item
+				$auctionDetails=$objAuction->select_details_auction($auction_id);
+			}
+		}elseif(empty($auctionDetails[0]['auction_id'])){
+			// Not in tbl_auction at all — must be an active live auction
+			$auctionDetails=$objAuction->select_details_auction($auction_id);
+		}
 	}
 	$smarty->assign('is_sold_view', !empty($_REQUEST['sold']) ? 1 : 0);
 	
