@@ -9,6 +9,9 @@ RewriteRule ^ - [L]
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
+# Serve sitemap.xml from sitemap.php
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
 # If request + .php exists, rewrite internally
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L]
