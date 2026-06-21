@@ -35,7 +35,7 @@ class BedrockRuntime
 
         $endpoint = "https://bedrock-runtime.{$this->region}.amazonaws.com/model/" . urlencode(self::MODEL_ID) . "/invoke";
         $host     = "bedrock-runtime.{$this->region}.amazonaws.com";
-        $service  = 'bedrock-runtime';
+        $service  = 'bedrock';
 
         $body = json_encode([
             'anthropic_version' => 'bedrock-2023-05-31',
