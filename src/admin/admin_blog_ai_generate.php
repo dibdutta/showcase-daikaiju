@@ -225,7 +225,7 @@ function show_page(): void
         ['topic' => 'How to Buy Authentic Toho Movie Posters',                        'keywords' => 'toho,godzilla'],
     ];
 
-    $suggestionsJson = htmlspecialchars(json_encode($suggestions), ENT_QUOTES);
+    $suggestionsJson = json_encode($suggestions, JSON_HEX_TAG | JSON_HEX_AMP);
     ?>
 <!DOCTYPE html>
 <html>
