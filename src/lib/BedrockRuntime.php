@@ -3,12 +3,15 @@
  * Minimal AWS Bedrock Runtime client using raw HTTP + AWS Signature V4.
  * No SDK dependency — credentials come from env vars (local) or ECS task role (production).
  *
- * Model: anthropic.claude-3-5-haiku-20241022-v1:0
- * Cost:  ~$0.001/1K input tokens, $0.005/1K output tokens (~$0.007 per blog post)
+ * To update the model: change MODEL_ID below to any active Bedrock model ID.
+ * Check available models: AWS Console → Bedrock → Foundation models → filter Anthropic.
+ *
+ * Model: anthropic.claude-haiku-4-5-20251001-v1:0
+ * Cost:  ~$0.0008/1K input tokens, $0.004/1K output tokens (~$0.006 per blog post)
  */
 class BedrockRuntime
 {
-    const MODEL_ID = 'anthropic.claude-3-5-haiku-20241022-v1:0';
+    const MODEL_ID = 'us.anthropic.claude-haiku-4-5-20251001-v1:0';
 
     private string $region;
     private string $accessKey;

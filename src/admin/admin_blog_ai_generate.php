@@ -313,7 +313,7 @@ textarea { resize: vertical; }
         The AI will write a 700–950 word post embedding actual product images from your shop.
         The post will be saved as a <strong>draft</strong> — you review and publish from the Blog Manager.
     </p>
-    <p class="model-note">Model: Claude 3.5 Haiku on AWS Bedrock (us-east-1) &mdash; ~$0.007 per post</p>
+    <p class="model-note">Model: Claude Haiku 4.5 on AWS Bedrock (us-east-1) &mdash; ~$0.006 per post</p>
     <button class="btn btn-primary" onclick="generate()" id="gen-btn">Generate Draft Post</button>
     <div id="gen-status"></div>
 </div>
