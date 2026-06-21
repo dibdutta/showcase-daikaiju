@@ -120,7 +120,7 @@ function generate_sitemap_xml($db, $base)
                 ? date('Y-m-d', strtotime($row['post_date']))
                 : date('Y-m-d');
             $urls[] = [
-                'loc'        => $base . '/blog?slug=' . urlencode($row['slug']),
+                'loc'        => $base . '/blog/' . rawurlencode($row['slug']),
                 'lastmod'    => $lastmod,
                 'changefreq' => 'monthly',
                 'priority'   => '0.6',

@@ -16,6 +16,9 @@ RewriteRule ^sitemap\.xml$ sitemap.php [L]
 RewriteRule ^poster/(\d+)/([^/]*)/?$ buy.php?mode=poster_details&auction_id=$1&poster_slug=$2 [QSA,L]
 RewriteRule ^poster/(\d+)/?$ buy.php?mode=poster_details&auction_id=$1 [QSA,L]
 
+# SEO-friendly blog post URLs: /blog/{slug}
+RewriteRule ^blog/([^/]+)/?$ blog.php?slug=$1 [QSA,L]
+
 # If request + .php exists, rewrite internally
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L]

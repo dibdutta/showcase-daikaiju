@@ -1,3 +1,4 @@
+{if $jsonLd}<script type="application/ld+json">{$jsonLd nofilter}</script>{/if}
 {include file="header.tpl"}
 <div id="forinnerpage-container">
     <div id="wrapper">
@@ -34,7 +35,7 @@
                                 </div>
 
                                 <div style="margin-top:16px; padding-top:10px; border-top:1px solid #e0e0e0;">
-                                    <a href="{$smarty.const.DOMAIN_PATH}/blog.php" style="font-size:12px; color:#bd1a21; font-weight:bold;">&laquo; Back to Articles</a>
+                                    <a href="/blog" style="font-size:12px; color:#bd1a21; font-weight:bold;">&laquo; Back to Articles</a>
                                 </div>
 
                                 <div class="clear"></div>

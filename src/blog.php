@@ -26,10 +26,47 @@ function dispmiddle() {
         // Single post view
         $post = $blog->fetchBlogBySlug($slug);
         if (!$post) {
-            header('Location: ' . 'https://' . $_SERVER['HTTP_HOST'] . '/blog.php');
+            header('Location: ' . 'https://' . $_SERVER['HTTP_HOST'] . '/blog');
             exit;
         }
+
+        // 301 redirect old ?slug= URL to /blog/{slug}
+        $_requestUri = $_SERVER['REQUEST_URI'] ?? '';
+        if (strpos($_requestUri, '/blog/') !== 0) {
+            header('HTTP/1.1 301 Moved Permanently');
+            header('Location: ' . PAGE_LINK . '/blog/' . rawurlencode($slug));
+            exit;
+        }
+
         $comments = $blog->fetchComments($post['blog_id'], 1); // approved only
+
+        // SEO meta
+        $_blogDesc = substr(trim(preg_replace('/\s+/', ' ', strip_tags($post['content'] ?? ''))), 0, 155);
+        $_blogUrl  = PAGE_LINK . '/blog/' . rawurlencode($post['slug']);
+        $_ogImage  = !empty($post['featured_image']) ? $post['featured_image'] : '';
+        $smarty->assign('pageTitle',           $post['title'] . ' | ' . SITE_TITLE);
+        $smarty->assign('pageMetaDescription', $_blogDesc);
+        $smarty->assign('canonicalUrl',        $_blogUrl);
+        $smarty->assign('ogImage',             $_ogImage);
+
+        // JSON-LD Article schema
+        $_jsonLd = [
+            '@context'      => 'https://schema.org',
+            '@type'         => 'Article',
+            'headline'      => $post['title'],
+            'description'   => $_blogDesc,
+            'url'           => $_blogUrl,
+            'datePublished' => date('c', strtotime($post['post_date'])),
+            'dateModified'  => date('c', strtotime($post['update_date'] ?? $post['post_date'])),
+            'author'        => ['@type' => 'Organization', 'name' => SITE_TITLE],
+            'publisher'     => [
+                '@type' => 'Organization',
+                'name'  => SITE_TITLE,
+                'url'   => PAGE_LINK,
+            ],
+        ];
+        if ($_ogImage) $_jsonLd['image'] = $_ogImage;
+        $smarty->assign('jsonLd', json_encode($_jsonLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
 
         $smarty->assign('post', $post);
         $smarty->assign('comments', $comments);
@@ -81,7 +118,7 @@ function post_comment() {
         $_SESSION['comment_ok'] = 'Thank you! Your comment has been submitted and is awaiting approval.';
     }
 
-    header('Location: ' . 'https://' . $_SERVER['HTTP_HOST'] . '/blog.php?slug=' . urlencode($slug));
+    header('Location: ' . PAGE_LINK . '/blog/' . rawurlencode($slug));
     exit;
 }
 ?>
