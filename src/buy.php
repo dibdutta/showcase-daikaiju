@@ -1256,37 +1256,51 @@ if(isset($_SESSION['sessUserID'])){
 		$smarty->assign('itemImageArry', $itemImageArry);
 		
 	}
-	// Related items: same genre (cat_type 2) or same decade (cat_type 3)
-	// Live items use tbl_poster_to_category_live; fixed use tbl_poster_to_category
+	// Related items matched by shop category (e.g. "Designer Sofubi Vinyl Figures") and/or
+	// subcategory (e.g. "M1go"). These are the user-visible "Category / Subcategory" fields.
+	// Live items use the _live junction tables; fixed items use the regular ones.
 	$_relatedItems = [];
-	$_posterId  = (int)($auctionDetails[0]['poster_id'] ?? 0);
+	$_posterId   = (int)($auctionDetails[0]['poster_id'] ?? 0);
 	$_isLiveItem = (int)($auctionDetails[0]['fk_auction_type_id'] ?? 1) !== 1;
-	$_catTable  = $_isLiveItem ? 'tbl_poster_to_category_live' : 'tbl_poster_to_category';
+	$_shopCatJoin = $_isLiveItem ? 'tbl_poster_to_shop_category_live' : 'tbl_poster_to_shop_category';
+	$_subcatJoin  = $_isLiveItem ? 'tbl_poster_to_subcategory_live'   : 'tbl_poster_to_subcategory';
 
 	if ($_posterId > 0) {
-		$_catRs = mysqli_query($GLOBALS['db_connect'],
-			"SELECT ptc.fk_cat_id FROM {$_catTable} ptc
-			 JOIN tbl_category c ON ptc.fk_cat_id = c.cat_id
-			 WHERE ptc.fk_poster_id = $_posterId AND c.fk_cat_type_id IN (2,3)"
+		// Fetch shop category IDs for this poster
+		$_shopCatIds = [];
+		$_scRs = mysqli_query($GLOBALS['db_connect'],
+			"SELECT fk_shop_cat_id FROM {$_shopCatJoin} WHERE fk_poster_id = $_posterId"
 		);
-		$_catIds = [];
-		while ($_catRs && $_cr = mysqli_fetch_assoc($_catRs)) {
-			$_catIds[] = (int)$_cr['fk_cat_id'];
+		while ($_scRs && $_scr = mysqli_fetch_assoc($_scRs)) {
+			$_shopCatIds[] = (int)$_scr['fk_shop_cat_id'];
 		}
 
-		if (!empty($_catIds)) {
-			$_catIdStr = implode(',', $_catIds);
+		// Fetch subcategory IDs for this poster
+		$_subcatIds = [];
+		$_suRs = mysqli_query($GLOBALS['db_connect'],
+			"SELECT fk_subcat_id FROM {$_subcatJoin} WHERE fk_poster_id = $_posterId"
+		);
+		while ($_suRs && $_sur = mysqli_fetch_assoc($_suRs)) {
+			$_subcatIds[] = (int)$_sur['fk_subcat_id'];
+		}
 
-			// 1. Fixed-price / archived items from tbl_auction
-			// Exclude current poster only when it is itself a fixed item (same ID space)
+		if (!empty($_shopCatIds) || !empty($_subcatIds)) {
+			// Build OR conditions for shop cat and subcat matches
+			$_orParts = [];
+			if (!empty($_shopCatIds)) $_orParts[] = 'ptsc.fk_shop_cat_id IN (' . implode(',', $_shopCatIds) . ')';
+			if (!empty($_subcatIds))  $_orParts[] = 'ptsu.fk_subcat_id IN ('  . implode(',', $_subcatIds)  . ')';
+			$_whereOr = implode(' OR ', $_orParts);
+
+			// 1. Fixed-price / archived from tbl_auction
 			$_excFixed = $_isLiveItem ? '' : "AND p.poster_id != $_posterId";
 			$_relFixRs = mysqli_query($GLOBALS['db_connect'],
 				"SELECT DISTINCT a.auction_id, p.poster_title, pi.poster_thumb, a.auction_asked_price
 				 FROM tbl_auction a
 				 JOIN tbl_poster p ON a.fk_poster_id = p.poster_id
 				 JOIN tbl_poster_images pi ON p.poster_id = pi.fk_poster_id AND pi.is_default = '1'
-				 JOIN tbl_poster_to_category ptc ON p.poster_id = ptc.fk_poster_id
-				 WHERE ptc.fk_cat_id IN ($_catIdStr)
+				 LEFT JOIN tbl_poster_to_shop_category ptsc ON p.poster_id = ptsc.fk_poster_id
+				 LEFT JOIN tbl_poster_to_subcategory   ptsu ON p.poster_id = ptsu.fk_poster_id
+				 WHERE ($_whereOr)
 				   AND a.auction_is_approved = '1'
 				   AND a.auction_is_sold IN ('0','3')
 				   $_excFixed
@@ -1299,18 +1313,18 @@ if(isset($_SESSION['sessUserID'])){
 				$_relatedItems[] = $_rel;
 			}
 
-			// 2. Active live auction items from tbl_auction_live (fill remaining slots)
+			// 2. Active live auctions from tbl_auction_live (fill remaining slots up to 8)
 			$_needed = max(0, 8 - count($_relatedItems));
 			if ($_needed > 0) {
-				// Exclude current poster only when it is itself a live item (same ID space)
 				$_excLive = $_isLiveItem ? "AND p.poster_id != $_posterId" : '';
 				$_relLiveRs = mysqli_query($GLOBALS['db_connect'],
 					"SELECT DISTINCT a.auction_id, p.poster_title, pi.poster_thumb, a.auction_asked_price
 					 FROM tbl_auction_live a
 					 JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
 					 JOIN tbl_poster_images_live pi ON p.poster_id = pi.fk_poster_id AND pi.is_default = '1'
-					 JOIN tbl_poster_to_category_live ptc ON p.poster_id = ptc.fk_poster_id
-					 WHERE ptc.fk_cat_id IN ($_catIdStr)
+					 LEFT JOIN tbl_poster_to_shop_category_live ptsc ON p.poster_id = ptsc.fk_poster_id
+					 LEFT JOIN tbl_poster_to_subcategory_live   ptsu ON p.poster_id = ptsu.fk_poster_id
+					 WHERE ($_whereOr)
 					   AND a.auction_is_approved = '1'
 					   AND a.auction_is_sold = '0'
 					   $_excLive
