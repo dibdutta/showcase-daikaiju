@@ -1256,6 +1256,77 @@ if(isset($_SESSION['sessUserID'])){
 		$smarty->assign('itemImageArry', $itemImageArry);
 		
 	}
+	// Related items: same genre (cat_type 2) or same decade (cat_type 3)
+	// Live items use tbl_poster_to_category_live; fixed use tbl_poster_to_category
+	$_relatedItems = [];
+	$_posterId  = (int)($auctionDetails[0]['poster_id'] ?? 0);
+	$_isLiveItem = (int)($auctionDetails[0]['fk_auction_type_id'] ?? 1) !== 1;
+	$_catTable  = $_isLiveItem ? 'tbl_poster_to_category_live' : 'tbl_poster_to_category';
+
+	if ($_posterId > 0) {
+		$_catRs = mysqli_query($GLOBALS['db_connect'],
+			"SELECT ptc.fk_cat_id FROM {$_catTable} ptc
+			 JOIN tbl_category c ON ptc.fk_cat_id = c.cat_id
+			 WHERE ptc.fk_poster_id = $_posterId AND c.fk_cat_type_id IN (2,3)"
+		);
+		$_catIds = [];
+		while ($_catRs && $_cr = mysqli_fetch_assoc($_catRs)) {
+			$_catIds[] = (int)$_cr['fk_cat_id'];
+		}
+
+		if (!empty($_catIds)) {
+			$_catIdStr = implode(',', $_catIds);
+
+			// 1. Fixed-price / archived items from tbl_auction
+			// Exclude current poster only when it is itself a fixed item (same ID space)
+			$_excFixed = $_isLiveItem ? '' : "AND p.poster_id != $_posterId";
+			$_relFixRs = mysqli_query($GLOBALS['db_connect'],
+				"SELECT DISTINCT a.auction_id, p.poster_title, pi.poster_thumb, a.auction_asked_price
+				 FROM tbl_auction a
+				 JOIN tbl_poster p ON a.fk_poster_id = p.poster_id
+				 JOIN tbl_poster_images pi ON p.poster_id = pi.fk_poster_id AND pi.is_default = '1'
+				 JOIN tbl_poster_to_category ptc ON p.poster_id = ptc.fk_poster_id
+				 WHERE ptc.fk_cat_id IN ($_catIdStr)
+				   AND a.auction_is_approved = '1'
+				   AND a.auction_is_sold IN ('0','3')
+				   $_excFixed
+				 ORDER BY a.auction_id DESC
+				 LIMIT 8"
+			);
+			while ($_relFixRs && $_rel = mysqli_fetch_assoc($_relFixRs)) {
+				$_rel['image_path'] = CLOUD_POSTER_THUMB_BUY . $_rel['poster_thumb'];
+				$_rel['poster_url'] = posterUrl($_rel['auction_id'], $_rel['poster_title']);
+				$_relatedItems[] = $_rel;
+			}
+
+			// 2. Active live auction items from tbl_auction_live (fill remaining slots)
+			$_needed = max(0, 8 - count($_relatedItems));
+			if ($_needed > 0) {
+				// Exclude current poster only when it is itself a live item (same ID space)
+				$_excLive = $_isLiveItem ? "AND p.poster_id != $_posterId" : '';
+				$_relLiveRs = mysqli_query($GLOBALS['db_connect'],
+					"SELECT DISTINCT a.auction_id, p.poster_title, pi.poster_thumb, a.auction_asked_price
+					 FROM tbl_auction_live a
+					 JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
+					 JOIN tbl_poster_images_live pi ON p.poster_id = pi.fk_poster_id AND pi.is_default = '1'
+					 JOIN tbl_poster_to_category_live ptc ON p.poster_id = ptc.fk_poster_id
+					 WHERE ptc.fk_cat_id IN ($_catIdStr)
+					   AND a.auction_is_approved = '1'
+					   AND a.auction_is_sold = '0'
+					   $_excLive
+					 ORDER BY a.auction_id DESC
+					 LIMIT $_needed"
+				);
+				while ($_relLiveRs && $_rel = mysqli_fetch_assoc($_relLiveRs)) {
+					$_rel['image_path'] = CLOUD_POSTER_THUMB_BUY . $_rel['poster_thumb'];
+					$_rel['poster_url'] = posterUrl($_rel['auction_id'], $_rel['poster_title']);
+					$_relatedItems[] = $_rel;
+				}
+			}
+		}
+	}
+	$smarty->assign('relatedItems', $_relatedItems);
+
 	if($auctionDetails[0]['is_upcoming'] == 1){
 		$smarty->display("upcoming_poster_details.tpl");
 	}else{

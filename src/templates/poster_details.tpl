@@ -758,7 +758,29 @@ function toggleDiv(id,flagit,type,track) {
             
              </div></div></div>
             
-        </div>  
+        </div>
+
+{if $relatedItems}
+<div class="clear"></div>
+<div style="padding:30px 20px 10px;max-width:1100px;margin:0 auto;">
+  <h3 style="font-size:16px;font-weight:bold;border-bottom:2px solid #c0392b;padding-bottom:8px;margin-bottom:18px;text-transform:uppercase;letter-spacing:1px;">You May Also Like</h3>
+  <div style="display:flex;flex-wrap:wrap;gap:16px;">
+    {section name=ri loop=$relatedItems}
+    <div style="width:150px;text-align:center;">
+      <a href="{$relatedItems[ri].poster_url}">
+        <img src="{$relatedItems[ri].image_path}" alt="{$relatedItems[ri].poster_title|escape:'html'}" style="width:130px;height:130px;object-fit:contain;border:1px solid #ddd;background:#fafafa;" loading="lazy" />
+      </a>
+      <div style="margin-top:6px;font-size:11px;line-height:1.3;">
+        <a href="{$relatedItems[ri].poster_url}" style="color:#333;text-decoration:none;">{$relatedItems[ri].poster_title|truncate:50:'...'}</a>
+      </div>
+      <div style="margin-top:3px;font-size:12px;color:#c0392b;font-weight:bold;">${$relatedItems[ri].auction_asked_price|number_format:2}</div>
+    </div>
+    {/section}
+  </div>
+</div>
+<div class="clear"></div>
+{/if}
+
 		{include file="gavelsnipe.tpl"}
 		<!-- page listing ends -->
 		</div>
