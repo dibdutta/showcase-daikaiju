@@ -36,37 +36,39 @@ function fetch_items(array $keywords): array
     }
     $where = implode(' OR ', $parts);
 
-    // Fixed price
+    // All items from tbl_auction (active, sold, relisted) — blog content can reference any item
     $r = mysqli_query($db,
-        "SELECT a.auction_id, p.poster_title, p.poster_desc, a.auction_asked_price, pi.poster_thumb
+        "SELECT a.auction_id, p.poster_title, p.poster_desc, a.auction_asked_price, pi.poster_thumb,
+                a.auction_is_sold
          FROM tbl_auction a
          JOIN tbl_poster p ON a.fk_poster_id = p.poster_id
          LEFT JOIN tbl_poster_images pi ON p.poster_id = pi.fk_poster_id AND pi.is_default = '1'
          WHERE ($where)
-           AND a.auction_is_approved = '1' AND a.auction_is_sold IN ('0','3')
-         ORDER BY a.auction_id DESC LIMIT 15"
+           AND a.auction_is_approved = '1'
+         ORDER BY a.auction_is_sold ASC, a.auction_id DESC LIMIT 15"
     );
     while ($r && $row = mysqli_fetch_assoc($r)) {
         $row['poster_url'] = PAGE_LINK . '/poster/' . (int)$row['auction_id'] . '/' . generatePosterSlug($row['poster_title']);
         $row['image_url']  = CLOUD_POSTER_THUMB_BUY . $row['poster_thumb'];
-        $row['type']       = 'Fixed Price';
+        $row['type']       = $row['auction_is_sold'] == '0' ? 'Fixed Price' : 'Sold';
         $items[]           = $row;
     }
 
-    // Live auctions
+    // Live auctions (active and recently closed)
     $r = mysqli_query($db,
-        "SELECT a.auction_id, p.poster_title, p.poster_desc, a.auction_asked_price, pi.poster_thumb
+        "SELECT a.auction_id, p.poster_title, p.poster_desc, a.auction_asked_price, pi.poster_thumb,
+                a.auction_is_sold
          FROM tbl_auction_live a
          JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
          LEFT JOIN tbl_poster_images_live pi ON p.poster_id = pi.fk_poster_id AND pi.is_default = '1'
          WHERE ($where)
-           AND a.auction_is_approved = '1' AND a.auction_is_sold = '0'
-         ORDER BY a.auction_id DESC LIMIT 15"
+           AND a.auction_is_approved = '1'
+         ORDER BY a.auction_is_sold ASC, a.auction_id DESC LIMIT 15"
     );
     while ($r && $row = mysqli_fetch_assoc($r)) {
         $row['poster_url'] = PAGE_LINK . '/poster/' . (int)$row['auction_id'] . '/' . generatePosterSlug($row['poster_title']);
         $row['image_url']  = CLOUD_POSTER_THUMB_BUY . $row['poster_thumb'];
-        $row['type']       = 'Live Auction';
+        $row['type']       = $row['auction_is_sold'] == '0' ? 'Live Auction' : 'Sold';
         $items[]           = $row;
     }
 
