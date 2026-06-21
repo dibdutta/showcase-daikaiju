@@ -120,6 +120,15 @@ define ("ADMIN_SECTION_DESCRIPTION", "section_description");
 /***************************************************/
 
 
+/*****************  Language Table *************/
+
+define ("LANGUAGE_TABLE", "language_table");
+define ("LANGUAGE_ID", "language_id");
+define ("LANGUAGE_NAME", "language_name");
+
+/***************************************************/
+
+
 /*****************  Page content Table *************/
 
 define ("PAGE_CONTENT_TABLE", "page_content_table");
