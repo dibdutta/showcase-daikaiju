@@ -81,7 +81,8 @@ class BedrockRuntime
         if ($curlErr) return ['error' => "cURL error: $curlErr"];
 
         $data = json_decode($response, true);
-        if (!empty($data['message'])) return ['error' => $data['message']];
+        $errMsg = $data['message'] ?? $data['Message'] ?? '';
+        if ($errMsg) return ['error' => $errMsg];
         $text = $data['content'][0]['text'] ?? '';
         if (!$text)   return ['error' => 'Empty response from Bedrock: ' . $response];
 
