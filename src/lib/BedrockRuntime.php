@@ -99,9 +99,12 @@ class BedrockRuntime
         }
         $signedHeaders = implode(';', $signedHeadersList);
 
-        $parsedUrl     = parse_url($url);
-        $canonicalUri  = $parsedUrl['path'] ?? '/';
-        $canonicalQs   = '';
+        $parsedUrl    = parse_url($url);
+        // AWS Sig V4 requires each path segment to be rawurlencode()'d against the
+        // already-percent-encoded path — e.g. the ':' in the model ID is encoded as
+        // %3A in the URL, and then that % must be encoded again to %25 → %253A.
+        $canonicalUri = implode('/', array_map('rawurlencode', explode('/', $parsedUrl['path'] ?? '/')));
+        $canonicalQs  = '';
         $payloadHash   = hash('sha256', $body);
 
         $canonicalRequest = implode("\n", [
