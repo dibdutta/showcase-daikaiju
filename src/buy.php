@@ -605,7 +605,7 @@ function displayKeySearchGlobal()
 	require_once INCLUDE_PATH."lib/common.php";
     $valueNew='';
 	$valueAuction='';
-	$total='';
+	$total=0;
 	if(isset($_SESSION['sessUserID'])){
 		$smarty->assign('user_id', $_SESSION['sessUserID']);
 	}else{
