@@ -760,9 +760,14 @@ function toggleDiv(id,flagit,type,track) {
             
         </div>
 
+		{include file="gavelsnipe.tpl"}
+		<!-- page listing ends -->
+		</div>
+		<div class="clear"></div>
+   </div>
+
 {if $relatedItems}
-<div class="clear"></div>
-<div style="padding:30px 20px 10px;max-width:1100px;margin:0 auto;">
+<div style="padding:30px 20px 20px;margin-right:240px;">
   <h3 style="font-size:16px;font-weight:bold;border-bottom:2px solid #c0392b;padding-bottom:8px;margin-bottom:18px;text-transform:uppercase;letter-spacing:1px;">You May Also Like</h3>
   <div style="display:flex;flex-wrap:wrap;gap:16px;">
     {section name=ri loop=$relatedItems}
@@ -778,14 +783,7 @@ function toggleDiv(id,flagit,type,track) {
     {/section}
   </div>
 </div>
-<div class="clear"></div>
 {/if}
-
-		{include file="gavelsnipe.tpl"}
-		<!-- page listing ends -->
-		</div>
-		<div class="clear"></div>
-   </div>
 <!-- Poster image lightbox: zoom + pan -->
 <div id="poster-lb" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.93);z-index:9999;">
   <button onclick="closeLightbox()" title="Close (Esc)" style="position:absolute;top:12px;right:18px;background:none;border:none;color:#fff;font-size:40px;cursor:pointer;line-height:1;z-index:10000;padding:0 6px;">&times;</button>
