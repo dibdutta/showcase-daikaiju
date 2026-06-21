@@ -146,6 +146,22 @@ resource "aws_iam_role_policy" "ecs_task_ses" {
   })
 }
 
+resource "aws_iam_role_policy" "ecs_task_bedrock" {
+  name = "${local.name_prefix}-bedrock-access"
+  role = aws_iam_role.ecs_task.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = "bedrock:InvokeModel"
+        Resource = "arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-5-haiku-20241022-v1:0"
+      }
+    ]
+  })
+}
+
 ################################################################################
 # EventBridge Scheduler Role (for cron tasks)
 ################################################################################

@@ -26,7 +26,11 @@
 
                                 {if $post.featured_image != ""}
                                 <div style="margin-bottom:16px;">
+                                    {if $post.featured_image|substr:0:4 == 'http'}
+                                    <img src="{$post.featured_image}" alt="{$post.title|escape}" style="max-width:100%; border:1px solid #ddd;" />
+                                    {else}
                                     <img src="{$smarty.const.BLOG_IMAGE_BASE_URL}{$post.featured_image}" alt="{$post.title|escape}" style="max-width:100%; border:1px solid #ddd;" />
+                                    {/if}
                                 </div>
                                 {/if}
 
