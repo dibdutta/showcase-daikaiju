@@ -7,6 +7,8 @@
                     <td align="center">
                         <a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_blog_manager.php?mode=create" class="action_link"><strong>+ Create New Blog Post</strong></a>
                         &nbsp;&nbsp;&nbsp;
+                        <a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_blog_ai_generate.php" class="action_link" style="color:#1a6e3c;">&#x2728; AI Blog Generator</a>
+                        &nbsp;&nbsp;&nbsp;
                         <a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_blog_manager.php?mode=comments" class="action_link">
                             Manage All Comments {if $pendingComments > 0}<span class="err">({$pendingComments} pending)</span>{/if}
                         </a>

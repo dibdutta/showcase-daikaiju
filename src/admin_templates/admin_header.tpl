@@ -75,7 +75,12 @@
                             <ul>
                                 <li><a href="{$smart.const.DOMAIN_PATH}/admin/admin_content_manager.php?type=fixed">Content Manager</a></li>
                                 <li><a href="{$smart.const.DOMAIN_PATH}/admin/admin_meta_manager.php?type=fixed">Meta Manager</a></li>
-                                <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_blog_manager.php">Blog / Articles</a></li>
+                                <li><a href="#">Blog / Articles</a>
+                                    <ul>
+                                        <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_blog_manager.php">Manage Posts</a></li>
+                                        <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_blog_ai_generate.php">AI Blog Generator</a></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
                         <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_user_manager.php">USER MANAGER</a></li>
