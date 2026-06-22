@@ -601,7 +601,6 @@ function displayKeySearch()
 
 function displayKeySearchGlobal()
 {
-
 	require_once INCLUDE_PATH."lib/common.php";
     $valueNew='';
 	$valueAuction='';
@@ -717,6 +716,9 @@ function displayKeySearchGlobal()
 	
 		
 	
+	foreach ($auctionItems as $i => $item) {
+		$auctionItems[$i]['poster_url'] = posterUrl($item['auction_id'], $item['poster_title']);
+	}
 	$smarty->assign('auctionItems', $auctionItems);
 	$smarty->assign('json_arr', json_encode($auctionItems));
 
