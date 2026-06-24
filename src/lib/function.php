@@ -1421,7 +1421,8 @@ function increment_amount($buy_now){
 		$live_poster_image_id = null;
 		if($type=='weekly'){
 		$sql="select * from tbl_poster_images where poster_image_id=".$poster_image_id;
-		$rowPosterImages=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'], $sql));
+		$rsImg = mysqli_query($GLOBALS['db_connect'], $sql);
+		$rowPosterImages = $rsImg ? mysqli_fetch_array($rsImg) : null;
 		// Fall back to computed name if information_schema AUTO_INCREMENT was NULL at trigger time
 		$liveThumb = !empty($rowPosterImages['poster_thumb']) ? $rowPosterImages['poster_thumb'] : ($poster_image_id . '.' . $imageExt);
 
