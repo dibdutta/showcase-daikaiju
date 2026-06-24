@@ -1199,7 +1199,7 @@ if(isset($_SESSION['sessUserID'])){
 		exit;
 	}
 
-	$smarty->assign('pageTitle', $_posterTitle . ' | Original Movie Poster | ' . SITE_TITLE);
+	$smarty->assign('pageTitle', $_posterTitle . ' | Kaiju Memorabilia | ' . SITE_TITLE);
 	$smarty->assign('pageMetaDescription', $_posterDesc);
 	$smarty->assign('ogImage', $auctionDetails[0]['large_image'] ?? '');
 	$smarty->assign('canonicalUrl', $_posterSlugUrl);
