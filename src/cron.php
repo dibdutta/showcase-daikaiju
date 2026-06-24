@@ -330,23 +330,25 @@ function updateBidCronJob(){
 					        // Proxy holder IS the tbl_auction winner.
 					        // fetchExpiredAuctionDetails moves bids to tbl_bid_archive before this runs,
 					        // so check there first to avoid inserting a duplicate closing bid.
-					        $rs_proxy_arch = mysqli_query($GLOBALS['db_connect'],
+					        // Check for ANY bid at the winning amount — direct (is_proxy=0) or proxy (is_proxy=1).
+					        // The winner may have won with a direct bid even though they also hold a proxy,
+					        // so filtering is_proxy='1' would miss their real bid and cause a duplicate.
+					        $rs_arch_bid = mysqli_query($GLOBALS['db_connect'],
 					            "SELECT bid_id FROM tbl_bid_archive
 					             WHERE bid_fk_user_id='".$auctionItems[$i]['fk_user_id']."'
 					               AND bid_fk_auction_id='".$auctionItems[$i]['auction_id']."'
 					               AND bid_amount='".$auctionItems[$i]['max_bid_amount']."'
-					               AND is_proxy='1'
 					             ORDER BY bid_id DESC LIMIT 1");
-					        $proxy_arch_bid = $rs_proxy_arch ? mysqli_fetch_assoc($rs_proxy_arch) : null;
-					        if($proxy_arch_bid){
-					            $last_bid_id = (int)$proxy_arch_bid['bid_id'];
+					        $arch_bid = $rs_arch_bid ? mysqli_fetch_assoc($rs_arch_bid) : null;
+					        if($arch_bid){
+					            $last_bid_id = (int)$arch_bid['bid_id'];
 					        } else {
 							    $sql_insert="Insert into tbl_bid (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,post_date,post_ip) values ('".$auctionItems[$i]['fk_user_id']."','".$auctionItems[$i]['auction_id']."','".$auctionItems[$i]['max_bid_amount']."','1','".date('Y-m-d H:i:s')."','".$_SERVER['REMOTE_ADDR']."')";
 							    mysqli_query($GLOBALS['db_connect'],$sql_insert);
 							    $last_bid_id = mysqli_insert_id($GLOBALS['db_connect']);
 					        }
 							processExpiredAuction($auctionItems[$i]['auction_id'], $last_bid_id);
-							if(!$proxy_arch_bid){ archive_bid_immediately($last_bid_id); }
+							if(!$arch_bid){ archive_bid_immediately($last_bid_id); }
 					   }
 					   else{
 					        // Non-proxy winner: find their real bid — check tbl_bid first, then tbl_bid_archive
@@ -623,7 +625,10 @@ function processExpiredAuction($auction_id, $bid_id)
     mysqli_query($GLOBALS['db_connect'], "UPDATE tbl_bid_archive SET bid_is_won='1' WHERE bid_id='".$bid_id."'");
     $status = generateInvoice($bid_id, true, $auction_id);
      if($status=='true'){
-        $sql_winnerMail="Select u.email,u.firstname,u.lastname,p.poster_title from tbl_poster p,user_table u ,tbl_bid b,tbl_auction a
+        $bid_union_winner = "(SELECT bid_id,bid_fk_user_id,bid_fk_auction_id FROM tbl_bid WHERE bid_id='".$bid_id."'
+                             UNION ALL
+                             SELECT bid_id,bid_fk_user_id,bid_fk_auction_id FROM tbl_bid_archive WHERE bid_id='".$bid_id."') b";
+        $sql_winnerMail="Select u.email,u.firstname,u.lastname,p.poster_title from tbl_poster p,user_table u ,".$bid_union_winner.",tbl_auction a
                         where b.bid_id='".$bid_id."' and b.bid_fk_user_id = u.user_id and a.auction_id=b.bid_fk_auction_id and a.fk_poster_id=p.poster_id";
         $res_sql_winnerMail=mysqli_query($GLOBALS['db_connect'],$sql_winnerMail);
         $row=mysqli_fetch_array($res_sql_winnerMail);
