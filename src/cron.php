@@ -327,28 +327,44 @@ function updateBidCronJob(){
 
 					   }elseif($auctionItems[$i]['max_bid_amount'] > $auctionItems[$i]['bid_amount_from_bid']
 					           && $auctionItems[$i]['highest_user'] == $auctionItems[$i]['fk_user_id']){
-					        // Proxy holder IS the tbl_auction winner — insert their formal closing bid
-							$sql_insert="Insert into tbl_bid (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,post_date,post_ip) values ('".$auctionItems[$i]['fk_user_id']."','".$auctionItems[$i]['auction_id']."','".$auctionItems[$i]['max_bid_amount']."','1','".date('Y-m-d H:i:s')."','".$_SERVER['REMOTE_ADDR']."')";
-							mysqli_query($GLOBALS['db_connect'],$sql_insert);
-							$last_bid_id = mysqli_insert_id($GLOBALS['db_connect']);
-							// Archive AFTER processExpiredAuction so generateInvoice can read from tbl_bid
-							processExpiredAuction($auctionItems[$i]['auction_id'], $last_bid_id);
-							archive_bid_immediately($last_bid_id);
-					   }
-					   else{
-					        // Non-proxy winner: highest_user already has a real bid in tbl_bid — find it and mark it won
-					        $rs_existing = mysqli_query($GLOBALS['db_connect'],
-					            "SELECT bid_id FROM tbl_bid
-					             WHERE bid_fk_user_id='".$auctionItems[$i]['highest_user']."'
+					        // Proxy holder IS the tbl_auction winner.
+					        // fetchExpiredAuctionDetails moves bids to tbl_bid_archive before this runs,
+					        // so check there first to avoid inserting a duplicate closing bid.
+					        $rs_proxy_arch = mysqli_query($GLOBALS['db_connect'],
+					            "SELECT bid_id FROM tbl_bid_archive
+					             WHERE bid_fk_user_id='".$auctionItems[$i]['fk_user_id']."'
 					               AND bid_fk_auction_id='".$auctionItems[$i]['auction_id']."'
 					               AND bid_amount='".$auctionItems[$i]['max_bid_amount']."'
-					               AND is_proxy='0'
+					               AND is_proxy='1'
 					             ORDER BY bid_id DESC LIMIT 1");
+					        $proxy_arch_bid = $rs_proxy_arch ? mysqli_fetch_assoc($rs_proxy_arch) : null;
+					        if($proxy_arch_bid){
+					            $last_bid_id = (int)$proxy_arch_bid['bid_id'];
+					        } else {
+							    $sql_insert="Insert into tbl_bid (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,post_date,post_ip) values ('".$auctionItems[$i]['fk_user_id']."','".$auctionItems[$i]['auction_id']."','".$auctionItems[$i]['max_bid_amount']."','1','".date('Y-m-d H:i:s')."','".$_SERVER['REMOTE_ADDR']."')";
+							    mysqli_query($GLOBALS['db_connect'],$sql_insert);
+							    $last_bid_id = mysqli_insert_id($GLOBALS['db_connect']);
+					        }
+							processExpiredAuction($auctionItems[$i]['auction_id'], $last_bid_id);
+							if(!$proxy_arch_bid){ archive_bid_immediately($last_bid_id); }
+					   }
+					   else{
+					        // Non-proxy winner: find their real bid — check tbl_bid first, then tbl_bid_archive
+					        // (fetchExpiredAuctionDetails moves bids to archive before this branch runs)
+					        $winner_where = "bid_fk_user_id='".$auctionItems[$i]['highest_user']."'
+					               AND bid_fk_auction_id='".$auctionItems[$i]['auction_id']."'
+					               AND bid_amount='".$auctionItems[$i]['max_bid_amount']."'
+					               AND is_proxy='0'";
+					        $rs_existing = mysqli_query($GLOBALS['db_connect'],
+					            "SELECT bid_id FROM tbl_bid WHERE $winner_where ORDER BY bid_id DESC LIMIT 1");
 					        $existing_bid = $rs_existing ? mysqli_fetch_assoc($rs_existing) : null;
+					        if(!$existing_bid){
+					            $rs_arch = mysqli_query($GLOBALS['db_connect'],
+					                "SELECT bid_id FROM tbl_bid_archive WHERE $winner_where ORDER BY bid_id DESC LIMIT 1");
+					            $existing_bid = $rs_arch ? mysqli_fetch_assoc($rs_arch) : null;
+					        }
 					        if($existing_bid){
 					            $winner_bid_id = (int)$existing_bid['bid_id'];
-					            mysqli_query($GLOBALS['db_connect'],
-					                "UPDATE tbl_bid SET bid_is_won='1' WHERE bid_id='".$winner_bid_id."'");
 					            processExpiredAuction($auctionItems[$i]['auction_id'], $winner_bid_id);
 					            archive_bid_immediately($winner_bid_id);
 					        }
@@ -601,11 +617,11 @@ function fetchExpiredAuctionDetailsList($auction_ids)
 
 function processExpiredAuction($auction_id, $bid_id)
 {
-    $sql = "UPDATE ".TBL_BID." b SET  b.bid_is_won='1'
-                    WHERE b.bid_id='".$bid_id."'";
-	if(mysqli_query($GLOBALS['db_connect'],$sql)){
-        $status=generateInvoice($bid_id, true,$auction_id);
-	}
+    // Mark won in both tables — bid may be in tbl_bid (newly inserted by proxy branches)
+    // or already in tbl_bid_archive (moved by fetchExpiredAuctionDetails before the loop ran).
+    mysqli_query($GLOBALS['db_connect'], "UPDATE ".TBL_BID." SET bid_is_won='1' WHERE bid_id='".$bid_id."'");
+    mysqli_query($GLOBALS['db_connect'], "UPDATE tbl_bid_archive SET bid_is_won='1' WHERE bid_id='".$bid_id."'");
+    $status = generateInvoice($bid_id, true, $auction_id);
      if($status=='true'){
         $sql_winnerMail="Select u.email,u.firstname,u.lastname,p.poster_title from tbl_poster p,user_table u ,tbl_bid b,tbl_auction a
                         where b.bid_id='".$bid_id."' and b.bid_fk_user_id = u.user_id and a.auction_id=b.bid_fk_auction_id and a.fk_poster_id=p.poster_id";
@@ -694,13 +710,18 @@ function processExpiredAuction($auction_id, $bid_id)
 function generateInvoice($id, $is_bid,$auction_id='')
 {
 	if($is_bid){
+		// Union both tables so the invoice can be generated whether the bid is still in tbl_bid
+		// or has already been moved to tbl_bid_archive by fetchExpiredAuctionDetails.
+		$bid_source = "(SELECT * FROM tbl_bid WHERE bid_id='".intval($id)."'
+		               UNION ALL
+		               SELECT * FROM tbl_bid_archive WHERE bid_id='".intval($id)."') b";
 		$sql = "SELECT u.user_id, u.firstname, u.lastname, u.country_id, u.city, u.state,
 				u.address1, u.address2, u.zipcode, c.country_name, c.country_code,
 				u.shipping_country_id, u.shipping_city, u.shipping_state, u.shipping_address1,
 				u.shipping_address2, u.shipping_zipcode, c.country_name AS shipping_country_name,
 				c.country_code AS shipping_country_code,b.bid_fk_auction_id, b.bid_amount AS amount,
 				p.poster_id, p.poster_sku, p.poster_title, p.fk_user_id,a.auction_id,a.fk_auction_week_id,pi.poster_thumb
-				FROM ".USER_TABLE." u, ".TBL_BID." b, ".COUNTRY_TABLE." c, ".TBL_POSTER." p, ".TBL_AUCTION." a,tbl_poster_images pi
+				FROM ".USER_TABLE." u, $bid_source, ".COUNTRY_TABLE." c, ".TBL_POSTER." p, ".TBL_AUCTION." a,tbl_poster_images pi
 				WHERE b.bid_id = '".$id."'
 				AND u.country_id = c.country_id
 				AND b.bid_fk_auction_id = a.auction_id
@@ -845,6 +866,10 @@ function archive_bid_immediately($bid_id){
 
 // increment_amount() lives in lib/function.php — no duplicate needed here
 //processExpiredAuction('2','2')
+// Safety net: moves any tbl_bid rows that were not archived during the main processing loop.
+// In normal operation this finds nothing — Branches A and B both call archive_bid_immediately()
+// on every bid they insert, and fetchExpiredAuctionDetails() moves pre-existing bids to
+// tbl_bid_archive before the loop runs. Kept as a catch-all for unexpected edge cases.
 function sync_auction_bid_fun($auction_ids){
 	$ids = join(",",$auction_ids);
 	$sql = "Select * from tbl_bid b where b.bid_fk_auction_id  IN (".$ids.")";
@@ -864,6 +889,12 @@ function sync_auction_bid_fun($auction_ids){
 	}
 	sync_auction_bids($auction_ids);
 }
+// Legacy workaround: marks bid_is_won=1 in tbl_bid_archive for sold auctions that have no
+// invoice entry. This existed because Branch C of updateBidCronJob() queried tbl_bid for the
+// winning bid, which was already empty (bids moved to tbl_bid_archive by fetchExpiredAuctionDetails),
+// so processExpiredAuction/generateInvoice were never called. This function patched the symptom
+// (bid_is_won=0) but never generated the missing invoice. Branch C now checks tbl_bid_archive
+// as a fallback, so this function is effectively a no-op for correctly processed auctions.
 function sync_auction_bids($auction_ids){
 	$ids = join(",",$auction_ids);
 	$sql = " SELECT a.auction_id,a.fk_poster_id,a.max_bid_amount,p.poster_title,a.highest_user FROM tbl_auction a,tbl_poster p WHERE a.auction_id IN (".$ids.") AND a.auction_is_sold='1' AND 
