@@ -150,6 +150,7 @@ function toggleDiv(id,flagit,type,track) {
 </style>
 
 {/literal}
+{literal}
 <script type="text/javascript">
 // Fix relative AJAX/navigation URLs for the /poster/{id}/{slug} deep URL path.
 // common.js.php uses relative strings (e.g. "mybuying", "ajax") that resolve
@@ -161,16 +162,15 @@ $.ajaxPrefilter(function(options) {
         options.url = '/' + options.url;
     }
 });
+var _sessUID = '{/literal}{$smarty.session.sessUserID}{literal}';
 function redirect_to_cart(auction_id, user_id) {
-    if ('{$smarty.session.sessUserID}' == '') {
+    if (_sessUID == '') {
         showLogIn();
-    } else if (user_id == '{$smarty.session.sessUserID}') {
+    } else if (user_id == _sessUID) {
         alert("Seller cannot buy his own poster.");
     } else {
-        var in_cart;
         $.post('ajax', { auction_id: auction_id, mode: 'chkcart' }, function(data) {
-            in_cart = data;
-            if (in_cart == '1') {
+            if (data == '1') {
                 alert("This Item is already added in cart by other user.");
             } else {
                 window.location = '/cart?id=' + auction_id;
@@ -182,7 +182,7 @@ function redirect_watchlist(id) {
     window.location = '/user_watching#' + id;
 }
 function add_watchlist(id) {
-    if ('{$smarty.session.sessUserID}' == '') {
+    if (_sessUID == '') {
         showLogIn();
     } else {
         if (document.getElementById('watch_' + id).value == 'Watch this item') {
@@ -195,6 +195,7 @@ function add_watchlist(id) {
     }
 }
 </script>
+{/literal}
 
 <div id="forinnerpage-container">
  {if $errorMessage<>""}<div class="messageBox">{$errorMessage}</div>{/if}	
