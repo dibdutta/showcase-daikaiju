@@ -318,24 +318,24 @@ function postBid(auction_id, user_id,buy_now)
       buttons: {
         "Confirm": function() {
 		  
-		  if(buy_now > 1){		  	
+		  if(buy_now > 1){
 			if(bid_price < buy_now){
-				var url = "mybuying";   
+				var url = "mybuying";
 				$.post(url, {mode : 'post_bid', auction_id : auction_id,curr_bid:curr_bid,next_increment:next_increment, bid_amount : bid_price,secs_left:secs_left}, function(data, textStatus){
 		    			var txt=data;
 		    			var clr="green";
 					showalert(txt,clr,'');
-				}); 
+				});
 			}else{
        			window.location="cart?id="+auction_id;
-       		}		  	 
-		  }else{		  	
-			var url = "mybuying";   
+       		}
+		  }else{
+			var url = "mybuying";
 			$.post(url, {mode : 'post_bid', auction_id : auction_id,curr_bid:curr_bid,next_increment:next_increment, bid_amount : bid_price,secs_left:secs_left}, function(data, textStatus){
 				var txt=data;
 				var clr="green";
 				showalert(txt,clr,'');
-			});       
+			});
 		  }
 		  $( this ).dialog( "close" );
 		  },
@@ -716,7 +716,7 @@ function timeLeftPosterDetails(dataArr, listType)
         var bidDataArr = new Array();
         var dispData = '';
         var datetime;
-        var url = "/ajax";
+        var url = "ajax";
         var ids = '';
 		var list = listType || "details";
         for(var k=0; k<dataArr.length; k++){
@@ -1228,7 +1228,7 @@ function add_watchlist(id)
 			$.post('buy', {mode : 'select_watchlist',is_track : id}, function(data, textStatus){
 			//window.location.reload();
 			document.getElementById('watch_'+id).value="You are watching";
-			}) 
+			})
 		}else{
 			window.location="user_watching#"+id;
 		}
@@ -1424,7 +1424,7 @@ function redirect_to_cart(auction_id, user_id)
 		alert("Seller cannot buy his own poster.");
 	}else{
 		var in_cart;
-	    $.post("ajax", { auction_id:auction_id,mode:"chkcart" }, function(data){		 
+	    $.post("ajax", { auction_id:auction_id,mode:"chkcart" }, function(data){
   	 	 in_cart = data;
 		 if(in_cart=='1'){
 			alert("This Item is already added in cart by other user.");

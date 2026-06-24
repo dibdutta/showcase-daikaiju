@@ -150,6 +150,51 @@ function toggleDiv(id,flagit,type,track) {
 </style>
 
 {/literal}
+<script type="text/javascript">
+// Fix relative AJAX/navigation URLs for the /poster/{id}/{slug} deep URL path.
+// common.js.php uses relative strings (e.g. "mybuying", "ajax") that resolve
+// correctly from root-level pages but break here. The prefilter rewrites them
+// to absolute paths for all $.post / $.get calls on this page. Functions that
+// also do window.location assignments are overridden below.
+$.ajaxPrefilter(function(options) {
+    if (options.url && !/^(https?:\/\/|\/)/.test(options.url)) {
+        options.url = '/' + options.url;
+    }
+});
+function redirect_to_cart(auction_id, user_id) {
+    if ('{$smarty.session.sessUserID}' == '') {
+        showLogIn();
+    } else if (user_id == '{$smarty.session.sessUserID}') {
+        alert("Seller cannot buy his own poster.");
+    } else {
+        var in_cart;
+        $.post('ajax', { auction_id: auction_id, mode: 'chkcart' }, function(data) {
+            in_cart = data;
+            if (in_cart == '1') {
+                alert("This Item is already added in cart by other user.");
+            } else {
+                window.location = '/cart?id=' + auction_id;
+            }
+        });
+    }
+}
+function redirect_watchlist(id) {
+    window.location = '/user_watching#' + id;
+}
+function add_watchlist(id) {
+    if ('{$smarty.session.sessUserID}' == '') {
+        showLogIn();
+    } else {
+        if (document.getElementById('watch_' + id).value == 'Watch this item') {
+            $.post('buy', { mode: 'select_watchlist', is_track: id }, function(data) {
+                document.getElementById('watch_' + id).value = 'You are watching';
+            });
+        } else {
+            window.location = '/user_watching#' + id;
+        }
+    }
+}
+</script>
 
 <div id="forinnerpage-container">
  {if $errorMessage<>""}<div class="messageBox">{$errorMessage}</div>{/if}	
