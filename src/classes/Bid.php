@@ -596,7 +596,7 @@ class Bid extends DBCommon{
 		}
 		$auctions_ids = trim($auctions_ids, ',');
 		 $sql = "SELECT ut.firstname,ut.username,ut.lastname,b.bid_fk_auction_id,b.post_date,b.is_proxy, b.bid_is_won, b.bid_amount FROM tbl_bid_archive b,".USER_TABLE." ut
-				WHERE b.bid_fk_auction_id IN (".$auctions_ids.") and ut.user_id=b.bid_fk_user_id and b.bid_amount!=0  ORDER BY b.bid_amount  DESC ";
+				WHERE b.bid_fk_auction_id IN (".$auctions_ids.") and ut.user_id=b.bid_fk_user_id and b.bid_amount!=0  ORDER BY b.bid_is_won DESC, b.bid_amount DESC ";
 
 	    $bidsArr = [];
 	    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
