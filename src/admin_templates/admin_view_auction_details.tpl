@@ -93,18 +93,18 @@
                                             <td align="center" class="smalltext">${$auctionArr[0].bids[counter].bid_amount|number_format:2}</td>
                                             <td align="center" class="bold_text">
 	                                            {if $max_amount_no==0}
-	                                            {if ($auctionArr[0].bids[counter].bid_is_won=='1' || $auctionArr[0].highest_bid <= $auctionArr[0].bids[counter].bid_amount) && $auctionArr[0].auction_is_sold <>'2'}
+	                                            {if $auctionArr[0].bids[counter].bid_is_won=='1' && $auctionArr[0].auction_is_sold <>'2'}
 	                                            &nbsp;&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}winning-bid-img.png" border="0" title="winning" />
 	                                            {/if}
 	                                            {else}
-	                                            {if ($auctionArr[0].bids[counter].bid_is_won=='1' || $auctionArr[0].highest_bid <= $auctionArr[0].bids[counter].bid_amount) && $auctionArr[0].auction_is_sold <>'2' && $auctionArr[0].bids[counter].is_proxy=='1'}
+	                                            {if $auctionArr[0].bids[counter].bid_is_won=='1' && $auctionArr[0].auction_is_sold <>'2' && $auctionArr[0].bids[counter].is_proxy=='1'}
 	                                            &nbsp;&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}winning-bid-img.png" border="0" title="winning" />
 	                                            {/if}
-	                                            {if ($auctionArr[0].bids[counter].bid_is_won=='1' || $auctionArr[0].highest_bid <= $auctionArr[0].bids[counter].bid_amount) && $auctionArr[0].auction_is_sold <>'2' && $auctionArr[0].bids[counter].is_proxy=='0'}
+	                                            {if $auctionArr[0].bids[counter].bid_is_won=='1' && $auctionArr[0].auction_is_sold <>'2' && $auctionArr[0].bids[counter].is_proxy=='0'}
 	                                            &nbsp;&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}losing-bid-img.png" border="0" title="winning" />
 	                                            {/if}
 	                                            {/if}
-	                                            {if ($auctionArr[0].bids[counter].bid_is_won=='1' || $auctionArr[0].highest_bid <= $auctionArr[0].bids[counter].bid_amount) && $auctionArr[0].auction_is_sold =='2'}
+	                                            {if $auctionArr[0].bids[counter].bid_is_won=='1' && $auctionArr[0].auction_is_sold =='2'}
 	                                            &nbsp;&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}losing-bid-img.png" border="0" title="winning" />
 	                                            {/if}
 	                                            {if $auctionArr[0].highest_bid > $auctionArr[0].bids[counter].bid_amount}
@@ -154,18 +154,18 @@
                                             <td align="center" class="smalltext" width="12%">${$auctionArr[0].bids[counter].bid_amount|number_format:2}</td>
                                             <td align="center" class="bold_text" width="8%">
 	                                            {if $max_amount_no==0}
-	                                            {if ($auctionArr[0].bids[counter].bid_is_won=='1' || $auctionArr[0].highest_bid <= $auctionArr[0].bids[counter].bid_amount) && $auctionArr[0].auction_is_sold <>'2'}
+	                                            {if $auctionArr[0].bids[counter].bid_is_won=='1' && $auctionArr[0].auction_is_sold <>'2'}
 	                                            &nbsp;&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}winning-bid-img.png" border="0" title="winning" />
 	                                            {/if}
 	                                            {else}
-	                                            {if ($auctionArr[0].bids[counter].bid_is_won=='1' || $auctionArr[0].highest_bid <= $auctionArr[0].bids[counter].bid_amount) && $auctionArr[0].auction_is_sold <>'2' && $auctionArr[0].bids[counter].is_proxy=='1'}
+	                                            {if $auctionArr[0].bids[counter].bid_is_won=='1' && $auctionArr[0].auction_is_sold <>'2' && $auctionArr[0].bids[counter].is_proxy=='1'}
 	                                            &nbsp;&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}winning-bid-img.png" border="0" title="winning" />
 	                                            {/if}
-	                                            {if ($auctionArr[0].bids[counter].bid_is_won=='1' || $auctionArr[0].highest_bid <= $auctionArr[0].bids[counter].bid_amount) && $auctionArr[0].auction_is_sold <>'2' && $auctionArr[0].bids[counter].is_proxy=='0'}
+	                                            {if $auctionArr[0].bids[counter].bid_is_won=='1' && $auctionArr[0].auction_is_sold <>'2' && $auctionArr[0].bids[counter].is_proxy=='0'}
 	                                            &nbsp;&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}losing-bid-img.png" border="0" title="winning" />
 	                                            {/if}
 	                                            {/if}
-	                                            {if ($auctionArr[0].bids[counter].bid_is_won=='1' || $auctionArr[0].highest_bid <= $auctionArr[0].bids[counter].bid_amount) && $auctionArr[0].auction_is_sold =='2'}
+	                                            {if $auctionArr[0].bids[counter].bid_is_won=='1' && $auctionArr[0].auction_is_sold =='2'}
 	                                            &nbsp;&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}losing-bid-img.png" border="0" title="winning" />
 	                                            {/if}
 	                                            {if $auctionArr[0].highest_bid > $auctionArr[0].bids[counter].bid_amount}
@@ -183,18 +183,18 @@
                                             <td align="center" class="smalltext">${$auctionArr[0].bids[counter].bid_amount|number_format:2}</td>
                                             <td align="center" class="bold_text">
 	                                            {if $max_amount_no==0}
-	                                            {if ($auctionArr[0].bids[counter].bid_is_won=='1' || $auctionArr[0].highest_bid <= $auctionArr[0].bids[counter].bid_amount) && $auctionArr[0].auction_is_sold <>'2'}
+	                                            {if $auctionArr[0].bids[counter].bid_is_won=='1' && $auctionArr[0].auction_is_sold <>'2'}
 	                                            &nbsp;&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}winning-bid-img.png" border="0" title="winning" />
 	                                            {/if}
 	                                            {else}
-	                                            {if ($auctionArr[0].bids[counter].bid_is_won=='1' || $auctionArr[0].highest_bid <= $auctionArr[0].bids[counter].bid_amount) && $auctionArr[0].auction_is_sold <>'2' && $auctionArr[0].bids[counter].is_proxy=='1'}
+	                                            {if $auctionArr[0].bids[counter].bid_is_won=='1' && $auctionArr[0].auction_is_sold <>'2' && $auctionArr[0].bids[counter].is_proxy=='1'}
 	                                            &nbsp;&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}winning-bid-img.png" border="0" title="winning" />
 	                                            {/if}
-	                                            {if ($auctionArr[0].bids[counter].bid_is_won=='1' || $auctionArr[0].highest_bid <= $auctionArr[0].bids[counter].bid_amount) && $auctionArr[0].auction_is_sold <>'2' && $auctionArr[0].bids[counter].is_proxy=='0'}
+	                                            {if $auctionArr[0].bids[counter].bid_is_won=='1' && $auctionArr[0].auction_is_sold <>'2' && $auctionArr[0].bids[counter].is_proxy=='0'}
 	                                            &nbsp;&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}losing-bid-img.png" border="0" title="winning" />
 	                                            {/if}
 	                                            {/if}
-	                                            {if ($auctionArr[0].bids[counter].bid_is_won=='1' || $auctionArr[0].highest_bid <= $auctionArr[0].bids[counter].bid_amount) && $auctionArr[0].auction_is_sold =='2'}
+	                                            {if $auctionArr[0].bids[counter].bid_is_won=='1' && $auctionArr[0].auction_is_sold =='2'}
 	                                            &nbsp;&nbsp;<img src="{$smarty.const.CLOUD_STATIC_ADMIN}losing-bid-img.png" border="0" title="winning" />
 	                                            {/if}
 	                                            {if $auctionArr[0].highest_bid > $auctionArr[0].bids[counter].bid_amount}
