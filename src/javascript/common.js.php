@@ -716,7 +716,7 @@ function timeLeftPosterDetails(dataArr, listType)
         var bidDataArr = new Array();
         var dispData = '';
         var datetime;
-        var url = "ajax";
+        var url = "/ajax";
         var ids = '';
 		var list = listType || "details";
         for(var k=0; k<dataArr.length; k++){
