@@ -1393,8 +1393,12 @@ function increment_amount($buy_now){
 	// The edit flows (edit_myauction.php etc.) handle default assignment explicitly
 	// via UPDATE after calling this function. Prevents duplicate is_default=1 rows
 	// when images are added to an existing poster.
+	// Weekly items use tbl_poster_images_live (not tbl_poster_images) — checking the
+	// wrong table would find images from a fixed-price poster that shares the same poster_id
+	// and incorrectly suppress the first-image default flag.
+	$imageTable = ($type == 'weekly') ? 'tbl_poster_images_live' : 'tbl_poster_images';
 	$existingDefaultRs = mysqli_query($GLOBALS['db_connect'],
-		"SELECT COUNT(*) AS cnt FROM tbl_poster_images WHERE fk_poster_id = $poster_id AND is_default = '1'");
+		"SELECT COUNT(*) AS cnt FROM $imageTable WHERE fk_poster_id = $poster_id AND is_default = '1'");
 	$hasExistingDefault = ($existingDefaultRs && mysqli_fetch_assoc($existingDefaultRs)['cnt'] > 0);
 
 	foreach($posterArr as $key => $value){
@@ -1418,8 +1422,10 @@ function increment_amount($buy_now){
 		if($type=='weekly'){
 		$sql="select * from tbl_poster_images where poster_image_id=".$poster_image_id;
 		$rowPosterImages=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'], $sql));
+		// Fall back to computed name if information_schema AUTO_INCREMENT was NULL at trigger time
+		$liveThumb = !empty($rowPosterImages['poster_thumb']) ? $rowPosterImages['poster_thumb'] : ($poster_image_id . '.' . $imageExt);
 
-		mysqli_query($GLOBALS['db_connect'], "Insert into tbl_poster_images_live (fk_poster_id,poster_thumb,poster_image,is_default,FileExtention,original_filename,is_cloud,is_big)  Values ($poster_id,'".addslashes($rowPosterImages['poster_thumb'])."','".addslashes($rowPosterImages['poster_thumb'])."','".$set_default."','".$imageExt."','".addslashes($value)."','1','1') ");
+		mysqli_query($GLOBALS['db_connect'], "Insert into tbl_poster_images_live (fk_poster_id,poster_thumb,poster_image,is_default,FileExtention,original_filename,is_cloud,is_big)  Values ($poster_id,'".addslashes($liveThumb)."','".addslashes($liveThumb)."','".$set_default."','".$imageExt."','".addslashes($value)."','1','1') ");
 		$live_poster_image_id = mysqli_insert_id($GLOBALS['db_connect']);
 
 		// Live images belong only in tbl_poster_images_live — remove the intermediate tbl_poster_images row
