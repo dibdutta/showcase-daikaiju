@@ -40,7 +40,7 @@ function highlight()
 			document.getElementById('highlight').style.backgroundColor="#64FE2E";
 		}
 function toggleDiv(id,flagit,type,track) {
- 	 var url = "bid_popup";
+ 	 var url = "/bid_popup";
 	 if(type==1 && track==1){
 	 	$.post(url, {mode : 'offer_popup', id : id}, function(data){
 			$('#'+id).html(data);
