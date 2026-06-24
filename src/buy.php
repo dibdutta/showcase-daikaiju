@@ -187,12 +187,12 @@ function displayList()
 
 	// Per-page SEO meta for listing pages
 	$_listTitles = [
-		'weekly'   => 'Weekly Live Auction — Original Movie Posters | ' . SITE_TITLE,
-		'extended' => 'Extended Auction — Original Movie Posters | ' . SITE_TITLE,
-		'fixed'    => 'Shop Original Movie Posters & Collectibles | ' . SITE_TITLE,
+		'weekly'   => SITE_TITLE.': Our Event Auctions',
+		'extended' => SITE_TITLE.': Extended Auction',
+		'fixed'    => SITE_TITLE.': Browse Kaiju Memorabilia',
 		'stills'   => 'Movie Stills & Photography | ' . SITE_TITLE,
 		'monthly'  => 'Monthly Auction — Original Movie Posters | ' . SITE_TITLE,
-		'upcoming' => 'Upcoming Auctions — Original Movie Posters | ' . SITE_TITLE,
+		'upcoming' => SITE_TITLE.': Upcoming Auctions' ,
 	];
 	$_listDescriptions = [
 		'weekly'   => 'Bid on rare original movie posters in our weekly live auction. Godzilla, kaiju, and classic film memorabilia closing soon.',

@@ -190,7 +190,7 @@ function dispmiddle(){
 
 	$smarty->assign("dataArrSmall", $dataArr);
 
-	$smarty->assign('pageTitle', 'Original Movie Posters & Kaiju Collectibles for Sale | ' . SITE_TITLE);
+	$smarty->assign('pageTitle', SITE_TITLE.': The Online Marketplace for Kaiju Collectors');
 	$smarty->assign('pageMetaDescription', 'Buy and sell original vintage movie posters, Godzilla memorabilia, and kaiju collectibles. Weekly live auctions and fixed-price shop at Kaijulink.');
 	$smarty->assign('canonicalUrl', SITE_URL . '/');
 
