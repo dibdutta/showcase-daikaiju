@@ -734,7 +734,7 @@ function timeLeftPosterDetails(dataArr, listType)
         }
         var curr_user = '<?php echo $_SESSION['sessUserID'];?>';
         $.get(url, {mode : 'time_left', ids : ids,list:list}, function(data, textStatus){
-            bidDataArr = eval(data);
+            try { bidDataArr = eval(data); } catch(e) { bidDataArr = []; }
             for(var i=0; i<bidDataArr.length; i++){
                 // Use the original type from PHP data; fall back to AJAX value only if unknown
                 var origType = origTypes[bidDataArr[i]['auction_id']];
@@ -833,6 +833,7 @@ function timeLeftPosterDetails(dataArr, listType)
                     }
                 }
             }
+        }).always(function() {
 			setTimeout(function() { timeLeftPosterDetails(dataArr, listType); }, 3000);
         });
     }

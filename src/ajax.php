@@ -135,6 +135,7 @@ function autocomplete(){
 
 function time_left()
 {
+    ob_start();
     extract($_REQUEST);
     if(isset($list) && $list!=''){
        $list=  $_REQUEST['list'];
@@ -220,6 +221,7 @@ function time_left()
 			}
 		}
 		$json_arr = json_encode($data);
+		ob_clean();
 		echo $json_arr;
 	}
 		
