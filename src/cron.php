@@ -305,7 +305,7 @@ function updateBidCronJob(){
 		
 							$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
 							$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
-							$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="https://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'</a><br /><br />';
+							$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="https://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'&live=1">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'&live=1</a><br /><br />';
 							$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction posters, please click the following link:<br/> <a href="https://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
 							$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
 							$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;		
