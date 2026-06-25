@@ -467,7 +467,7 @@ function del_discount(id)
                                 </tr>
                                 {if $invoiceData.is_approved =='0' && $invoiceData.is_cancelled=='0' && $invoiceData.is_paid == '0'}
                                     <tr style="height:40px;">
-                                        <td align="left" colspan="3">&nbsp;NB: Shipping charges(and sales tax if you reside in GA or NC) will be applied at checkout. Please note that shipping charges may reflect the cost of separate packages(flat vs rolled).</td>
+                                        <td align="left" colspan="3">&nbsp;NB: Shipping charges(and sales tax if you reside in GA) will be applied at checkout. Please note that shipping charges may reflect the cost of separate packages(flat vs rolled).</td>
                                     </tr>
                                 {/if}
                                 {if $invoiceData.is_approved =='0' && $invoiceData.is_cancelled=='0' && $invoiceData.is_paid == '0'}

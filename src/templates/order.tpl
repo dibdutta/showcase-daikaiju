@@ -137,7 +137,7 @@
                                                 <td align="left" class="billbrdr">${$subTotal|number_format:2}</td>
                                             </tr>
                                             <tr style="height:40px;">
-                                            	<td class="billbrdr" align="left" colspan="3"><strong>NB: Shipping charges(and sales tax if you reside in GA or NC) will be applied at checkout. Please note that shipping charges may reflect the cost of separate packages(flat vs rolled).</strong></td>
+                                            	<td class="billbrdr" align="left" colspan="3"><strong>NB: Shipping charges(and sales tax if you reside in GA) will be applied at checkout. Please note that shipping charges may reflect the cost of separate packages(flat vs rolled).</strong></td>
                                             </tr>
                                          </table>                                        
                                     </td>

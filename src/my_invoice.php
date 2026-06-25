@@ -515,12 +515,6 @@ function chooseOptionForPayment()
 					$invoiceRows = $invoiceObj->selectData(TBL_INVOICE, array('total_amount'), array('invoice_id' => $_REQUEST['invoice_id']));
 					$_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info']['sale_tax_amount'] = ($invoiceRows[0]['total_amount']*SALE_TAX_GA/100);
 					
-				}elseif($_POST['shipping_state_select'] == 'North Carolina' || $_POST['shipping_state_select'] == 'NC'){
-					$_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info']['sale_tax_percentage'] = SALE_TAX_NC;
-
-					$invoiceRows = $invoiceObj->selectData(TBL_INVOICE, array('total_amount'), array('invoice_id' => $_REQUEST['invoice_id']));
-					$_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info']['sale_tax_amount'] = ($invoiceRows[0]['total_amount']*SALE_TAX_NC/100);
-						
 				}else{
 					unset($_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info']['sale_tax_percentage']);
 					unset($_SESSION['invoice_'.$_POST['invoice_id']]['shipping_info']['sale_tax_amount']);

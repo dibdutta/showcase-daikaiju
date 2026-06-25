@@ -155,16 +155,14 @@ class Invoice extends DBCommon{
 		$shipping_charge = array('description' => 'Shipping Charge ('.strtoupper($shipping_info['shipping_methods'])." - ".$shipping_info['shipping_desc'].')',
 								 'amount' => $shipping_info['shipping_charge']);
 		
+		$sale_tax = array('description' => 'Sales Tax', 'amount' => 0);
 		if($shipping_info['shipping_state'] == 'Georgia'){
 			$sale_tax =  array('description' => 'Sales Tax', 'amount' => ($subTotal*SALE_TAX_GA/100));
-			$additional_charges = serialize(array(0 => $shipping_charge, 1 => $sale_tax));
-		}elseif($shipping_info['shipping_state'] == 'North Carolina'){
-			$sale_tax =  array('description' => 'Sales Tax', 'amount' => ($subTotal*SALE_TAX_NC/100));
 			$additional_charges = serialize(array(0 => $shipping_charge, 1 => $sale_tax));
 		}else{
 			$additional_charges = serialize(array(0 => $shipping_charge));
 		}
-		
+
 		$total_amount = $subTotal + $shipping_info['shipping_charge'] + $sale_tax['amount'];
 		
 		$data = array('fk_user_id' => $user_id, 'billing_address' => $billing_address, 'shipping_address' => $shipping_address,
