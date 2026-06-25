@@ -152,7 +152,7 @@ function time_left()
         //}
 		$auctionObj = new Auction();
 	    $data = $auctionObj->instantUpdateOfferAuction($ids,$list);
-    }elseif($list=='weekly'){
+    }elseif($list=='weekly' || $list=='extended'){
         $rs=mysqli_query($GLOBALS['db_connect'],"CALL spGetAuction('".$ids."',',')");
 		if($rs){
 			while($row = mysqli_fetch_assoc($rs)){

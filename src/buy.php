@@ -1088,6 +1088,18 @@ if(isset($_SESSION['sessUserID'])){
 		$smarty->assign('extendedAuction', $extended);
 	    ##########################    Overlapping New Add  ##########################
 		
+	// Email/outbid links use the live auction_id (tbl_auction_live). After the auction
+	// ends, cron deletes that record and writes auction_id_old→auction_id_new into
+	// tbl_auction_mapping. Resolve the old live ID before any other lookup so the user
+	// always lands on their original item, not a colliding tbl_auction record.
+	if(!isset($_REQUEST['sold']) && !isset($_REQUEST['fixed']) && !isset($_REQUEST['extended'])){
+		$_mapped_new = $objAuction->getAfterSoldAuctionID($auction_id);
+		if($_mapped_new){
+			header('Location: /buy?mode=poster_details&auction_id='.intval($_mapped_new).'&sold=1');
+			exit;
+		}
+	}
+
 	if(isset($_REQUEST['sold']) && $_REQUEST['sold']==1){
 		$auctionDetails=$objAuction->select_details_auction($auction_id,'','',1);
 	}elseif(isset($_REQUEST['fixed']) && $_REQUEST['fixed']==1){
