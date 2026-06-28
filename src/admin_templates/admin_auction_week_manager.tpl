@@ -69,6 +69,8 @@ function sync_missing(id){
 													<a href="{$smarty.const.SITE_URL}/admin/sync_missing_item.php?week_id={$auction_week[counter].auction_week_id}" target="_blank" ><img src="{$smarty.const.CLOUD_STATIC}sync-missing.png" align="absmiddle" target="_blank" alt="Sync Auction Bids" title="Sync Missing Sold Items" border="0" class="changeStatus" width="20px"  /> </a>
 													&nbsp;&nbsp;
 													<a href="{$adminActualPath}/admin_manage_auction_week.php?mode=view_snipes&week_id={$auction_week[counter].auction_week_id}" target="_blank" ><img src="{$smarty.const.CLOUD_STATIC}snipes.png" align="absmiddle" target="_blank" alt="View All Snipes" title="View All Snipes" border="0" class="changeStatus" width="20px"  /> </a>
+													&nbsp;&nbsp;
+													<a href="{$adminActualPath}/admin_outbid_reminder.php?mode=preview&week_id={$auction_week[counter].auction_week_id}" title="Send Outbid Reminder Emails" style="display:inline-block;background:#e94560;color:#fff;font-size:10px;font-weight:bold;padding:2px 7px;border-radius:3px;text-decoration:none;vertical-align:middle;">&#9993; Remind</a>
 													
 													
                                                 </td>
