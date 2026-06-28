@@ -33,8 +33,10 @@ function get_live_weeks() {
          GROUP BY aw.auction_week_id
          ORDER BY aw.auction_week_start_date DESC");
     $rows = [];
-    while ($r = mysqli_fetch_assoc($rs)) {
-        $rows[] = $r;
+    if ($rs) {
+        while ($r = mysqli_fetch_assoc($rs)) {
+            $rows[] = $r;
+        }
     }
     return $rows;
 }
@@ -57,33 +59,34 @@ function get_losing_bidders($week_id) {
          LEFT  JOIN tbl_poster_images_live pil
                 ON pl.poster_id = pil.fk_poster_id AND pil.is_default = '1'
          WHERE a.fk_auction_week_id = $week_id
-           AND a.auction_is_sold    = '0'
+           AND a.auction_is_sold     = '0'
            AND a.auction_is_approved = '1'
            AND a.highest_user       != b.bid_fk_user_id
          GROUP BY u.user_id, a.auction_id
          ORDER BY u.user_id, a.auction_id");
 
-    // Group by user
     $users = [];
-    while ($row = mysqli_fetch_assoc($rs)) {
-        $uid = $row['user_id'];
-        if (!isset($users[$uid])) {
-            $users[$uid] = [
-                'user_id'   => $uid,
-                'email'     => $row['email'],
-                'firstname' => $row['firstname'],
-                'lastname'  => $row['lastname'],
-                'items'     => [],
+    if ($rs) {
+        while ($row = mysqli_fetch_assoc($rs)) {
+            $uid = $row['user_id'];
+            if (!isset($users[$uid])) {
+                $users[$uid] = [
+                    'user_id'   => $uid,
+                    'email'     => $row['email'],
+                    'firstname' => $row['firstname'],
+                    'lastname'  => $row['lastname'],
+                    'items'     => [],
+                ];
+            }
+            $users[$uid]['items'][] = [
+                'auction_id'                  => $row['auction_id'],
+                'poster_title'                => $row['poster_title'],
+                'poster_image'                => $row['poster_image'],
+                'current_highest_bid'         => $row['current_highest_bid'],
+                'user_highest_bid'            => $row['user_highest_bid'],
+                'auction_actual_end_datetime' => $row['auction_actual_end_datetime'],
             ];
         }
-        $users[$uid]['items'][] = [
-            'auction_id'            => $row['auction_id'],
-            'poster_title'          => $row['poster_title'],
-            'poster_image'          => $row['poster_image'],
-            'current_highest_bid'   => $row['current_highest_bid'],
-            'user_highest_bid'      => $row['user_highest_bid'],
-            'auction_actual_end_datetime' => $row['auction_actual_end_datetime'],
-        ];
     }
     return array_values($users);
 }
@@ -92,27 +95,26 @@ function get_week_info($week_id) {
     $week_id = (int)$week_id;
     $rs = mysqli_query($GLOBALS['db_connect'],
         "SELECT * FROM tbl_auction_week WHERE auction_week_id = $week_id LIMIT 1");
-    return mysqli_fetch_assoc($rs);
+    return $rs ? mysqli_fetch_assoc($rs) : null;
 }
 
-function build_email_html($user, $week_info, $subject_intro, $week_link) {
-    $name  = htmlspecialchars($user['firstname']);
-    $items = $user['items'];
-    $end_date_label = date('D, M j \a\t g:i A', strtotime($week_info['auction_week_end_date'])) . ' EDT';
+function build_email_html($user, $week_info, $intro, $week_link) {
+    $name     = htmlspecialchars($user['firstname']);
+    $items    = $user['items'];
+    $end_label = date('D, M j \a\t g:i A', strtotime($week_info['auction_week_end_date'])) . ' EDT';
 
     $items_html = '';
     foreach ($items as $item) {
-        $img_url  = $item['poster_image']
+        $img_url = $item['poster_image']
             ? CLOUD_POSTER_THUMB_BUY . htmlspecialchars($item['poster_image'])
             : '';
-        $img_tag  = $img_url
+        $img_tag = $img_url
             ? '<img src="' . $img_url . '" width="130" height="130" alt="" style="display:block;object-fit:cover;border-radius:6px;">'
-            : '<div style="width:130px;height:130px;background:#0f3460;border-radius:6px;"></div>';
+            : '<div style="width:130px;height:130px;background:#0f3460;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#555;font-size:11px;">No Image</div>';
 
-        $item_url  = 'https://' . HOST_NAME . '/buy.php?mode=poster_details&auction_id=' . (int)$item['auction_id'] . '&live=1';
-        $end_fmt   = date('D, M j \a\t g:i A', strtotime($item['auction_actual_end_datetime'])) . ' EDT';
+        $item_url = 'https://' . HOST_NAME . '/buy.php?mode=poster_details&auction_id=' . (int)$item['auction_id'] . '&live=1';
+        $end_fmt  = date('D, M j \a\t g:i A', strtotime($item['auction_actual_end_datetime'])) . ' EDT';
 
-        // Time-left string (computed at send time — emails can't run JS)
         $secs_left = strtotime($item['auction_actual_end_datetime']) - time();
         if ($secs_left > 0) {
             $hours = floor($secs_left / 3600);
@@ -153,13 +155,13 @@ function build_email_html($user, $week_info, $subject_intro, $week_link) {
                   </tr>
                 </table>
                 <p style="margin:10px 0 4px;color:#ff6b6b;font-size:13px;">
-                  ⏰ <strong>' . $time_left . '</strong> &nbsp;·&nbsp; Ends ' . $end_fmt . '
+                  &#9200; <strong>' . $time_left . '</strong> &nbsp;&middot;&nbsp; Ends ' . $end_fmt . '
                 </p>
                 <a href="' . $item_url . '"
                    style="display:inline-block;margin-top:10px;background:#e94560;color:#fff;
                           text-decoration:none;padding:9px 20px;border-radius:5px;font-size:13px;
                           font-weight:bold;letter-spacing:.5px;">
-                  Bid Now →
+                  Bid Now &rarr;
                 </a>
               </td>
             </tr>
@@ -167,7 +169,7 @@ function build_email_html($user, $week_info, $subject_intro, $week_link) {
         </div>';
     }
 
-    $intro_html = nl2br(htmlspecialchars($subject_intro));
+    $intro_html = nl2br(htmlspecialchars($intro));
 
     return '<!DOCTYPE html>
 <html lang="en">
@@ -175,32 +177,27 @@ function build_email_html($user, $week_info, $subject_intro, $week_link) {
 <body style="margin:0;padding:0;background:#0d0d1a;font-family:Arial,sans-serif;">
 <div style="max-width:620px;margin:0 auto;background:#16213e;">
 
-  <!-- header -->
   <div style="background:linear-gradient(135deg,#0f3460,#1a1a4e);padding:30px 20px;text-align:center;">
     <div style="font-size:28px;font-weight:900;color:#e94560;letter-spacing:2px;">KAIJULINK</div>
     <div style="font-size:13px;color:#a8dadc;margin-top:4px;letter-spacing:1px;">MOVIE POSTER AUCTIONS</div>
   </div>
 
-  <!-- urgency banner -->
   <div style="background:#e94560;padding:10px 20px;text-align:center;">
     <span style="color:#fff;font-weight:bold;font-size:14px;">
-      ⚡ Don\'t let your favourite posters slip away — auction week closes ' . $end_date_label . '
+      &#9889; Don\'t let your favourite posters slip away &mdash; auction week closes ' . $end_label . '
     </span>
   </div>
 
-  <!-- greeting -->
   <div style="padding:25px 20px 10px;">
     <p style="color:#eee;font-size:15px;margin:0 0 10px;">Hi <strong>' . $name . '</strong>,</p>
     <p style="color:#c8c8d8;font-size:14px;line-height:1.6;margin:0 0 5px;">' . $intro_html . '</p>
-    <p style="color:#c8c8d8;font-size:14px;line-height:1.6;margin:0;">
+    <p style="color:#c8c8d8;font-size:14px;line-height:1.6;margin:10px 0 0;">
       Here\'s a look at the item' . (count($items) > 1 ? 's' : '') . ' you\'re currently being outbid on:
     </p>
   </div>
 
-  <!-- items -->
   <div style="padding:15px 0;">' . $items_html . '</div>
 
-  <!-- cta -->
   <div style="padding:10px 20px 25px;text-align:center;">
     <a href="' . $week_link . '"
        style="display:inline-block;background:#0f3460;color:#a8dadc;border:1px solid #a8dadc;
@@ -209,7 +206,6 @@ function build_email_html($user, $week_info, $subject_intro, $week_link) {
     </a>
   </div>
 
-  <!-- footer -->
   <div style="background:#0a0a1a;padding:20px;text-align:center;border-top:1px solid #1a3a5c;">
     <p style="color:#666;font-size:11px;margin:0;">
       You\'re receiving this because you placed a bid in this auction week.<br>
@@ -225,7 +221,7 @@ function build_email_html($user, $week_info, $subject_intro, $week_link) {
 // ─── pages ────────────────────────────────────────────────────────────────────
 
 function show_form() {
-    global $smarty;
+    require_once INCLUDE_PATH . "lib/adminCommon.php";
     $weeks = get_live_weeks();
     $smarty->assign('weeks', $weeks);
     $smarty->assign('mode', 'form');
@@ -233,52 +229,55 @@ function show_form() {
 }
 
 function show_preview() {
-    global $smarty;
+    require_once INCLUDE_PATH . "lib/adminCommon.php";
     $week_id   = (int)$_REQUEST['week_id'];
     $week_info = get_week_info($week_id);
     if (!$week_info) {
         show_form();
         return;
     }
-    $users     = get_losing_bidders($week_id);
-    $weeks     = get_live_weeks();
+    $users = get_losing_bidders($week_id);
+    $weeks = get_live_weeks();
 
     $default_subject = 'You\'ve been outbid on items you love — act before the auction ends!';
     $default_intro   = "The clock is ticking on this week's Kaijulink auction and you're currently being outbid on items you've already shown interest in. A small increase in your bid could make all the difference — don't let someone else take home your favourite piece of cinema history.";
 
-    $smarty->assign('mode',            'preview');
-    $smarty->assign('week_id',         $week_id);
-    $smarty->assign('week_info',       $week_info);
-    $smarty->assign('weeks',           $weeks);
-    $smarty->assign('users',           $users);
-    $smarty->assign('default_subject', $default_subject);
-    $smarty->assign('default_intro',   $default_intro);
+    $total_items = 0;
+    foreach ($users as $u) {
+        $total_items += count($u['items']);
+    }
+
+    $smarty->assign('mode',             'preview');
+    $smarty->assign('week_id',          $week_id);
+    $smarty->assign('week_info',        $week_info);
+    $smarty->assign('weeks',            $weeks);
+    $smarty->assign('users',            $users);
+    $smarty->assign('default_subject',  $default_subject);
+    $smarty->assign('default_intro',    $default_intro);
     $smarty->assign('total_recipients', count($users));
-    $smarty->assign('total_items',      array_sum(array_map(fn($u) => count($u['items']), $users)));
+    $smarty->assign('total_items',      $total_items);
     $smarty->display('admin_outbid_reminder.tpl');
 }
 
 function send_reminders() {
-    global $smarty;
-    $week_id  = (int)$_POST['week_id'];
-    $subject  = trim($_POST['email_subject'] ?? '');
-    $intro    = trim($_POST['email_intro']   ?? '');
+    require_once INCLUDE_PATH . "lib/adminCommon.php";
+    $week_id = (int)($_POST['week_id'] ?? 0);
+    $subject = trim($_POST['email_subject'] ?? '');
+    $intro   = trim($_POST['email_intro']   ?? '');
 
     if (!$week_id || !$subject || !$intro) {
         $smarty->assign('error', 'Missing required fields.');
-        show_form();
+        $smarty->assign('mode', 'form');
+        $smarty->assign('weeks', get_live_weeks());
+        $smarty->display('admin_outbid_reminder.tpl');
         return;
     }
 
     $week_info = get_week_info($week_id);
     $users     = get_losing_bidders($week_id);
-
     $week_link = 'https://' . HOST_NAME . '/buy?list=weekly&auction_week_id=' . $week_id;
 
-    $sent = 0;
-    $failed = 0;
-    $log = [];
-
+    $sent = 0; $failed = 0; $log = [];
     foreach ($users as $user) {
         $html = build_email_html($user, $week_info, $intro, $week_link);
         $ok   = sendMail($user['email'], $user['firstname'] . ' ' . $user['lastname'], $subject, $html);
@@ -291,11 +290,10 @@ function send_reminders() {
         }
     }
 
-    $weeks = get_live_weeks();
-    $smarty->assign('mode',    'result');
-    $smarty->assign('sent',    $sent);
-    $smarty->assign('failed',  $failed);
-    $smarty->assign('log',     $log);
-    $smarty->assign('weeks',   $weeks);
+    $smarty->assign('mode',   'result');
+    $smarty->assign('sent',   $sent);
+    $smarty->assign('failed', $failed);
+    $smarty->assign('log',    $log);
+    $smarty->assign('weeks',  get_live_weeks());
     $smarty->display('admin_outbid_reminder.tpl');
 }
