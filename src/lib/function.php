@@ -441,12 +441,25 @@ function sendMail($toMail, $toName, $subject, $textContent) {
         return false;
     }
 
+    if (empty(ZEPTOMAIL_SMTP_TOKEN)) {
+        error_log('sendMail failed: ZEPTOMAIL_SMTP_TOKEN is not set in environment');
+        return false;
+    }
+
+    // Sanitize to valid UTF-8 before encoding to prevent silent json_encode failure
+    $textContent = mb_convert_encoding($textContent, 'UTF-8', 'UTF-8');
+
     $payload = json_encode([
         'from'     => ['address' => SITE_EMAIL, 'name' => 'Kaijulink'],
         'to'       => [['email_address' => ['address' => $toMail, 'name' => trim($toName)]]],
         'subject'  => $subject,
         'htmlbody' => $textContent,
     ]);
+
+    if ($payload === false) {
+        error_log('sendMail json_encode failed (' . json_last_error_msg() . ') for subject: ' . $subject . ' to: ' . $toMail);
+        return false;
+    }
 
     $ch = curl_init(ZEPTOMAIL_API_URL);
     curl_setopt_array($ch, [
@@ -458,6 +471,8 @@ function sendMail($toMail, $toName, $subject, $textContent) {
             'Content-Type: application/json',
             'Accept: application/json',
         ],
+        CURLOPT_TIMEOUT        => 15,
+        CURLOPT_CONNECTTIMEOUT => 10,
     ]);
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -465,11 +480,11 @@ function sendMail($toMail, $toName, $subject, $textContent) {
     curl_close($ch);
 
     if ($curlErr) {
-        error_log('Zeptomail sendMail curl error: ' . $curlErr);
+        error_log('Zeptomail sendMail curl error (to:' . $toMail . '): ' . $curlErr);
         return false;
     }
     if ($httpCode < 200 || $httpCode >= 300) {
-        error_log('Zeptomail sendMail error ' . $httpCode . ': ' . $response);
+        error_log('Zeptomail sendMail HTTP ' . $httpCode . ' (to:' . $toMail . ' subject:' . $subject . '): ' . $response);
         return false;
     }
     return true;
