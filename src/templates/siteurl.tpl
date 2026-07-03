@@ -128,10 +128,8 @@
         <div class="sm-card-body">
             <a href="{$actualPath}/index">Home<span>Back to our homepage</span></a>
             <div class="sm-sep"></div>
-            <a href="{$actualPath}/buy?list=fixed">Shop Now — Fixed Price<span>Browse buy-it-now movie posters</span></a>
-            <a href="{$actualPath}/buy?list=weekly">Live Auctions<span>Current weekly &amp; extended bid auctions</span></a>
-            <a href="{$actualPath}/buy?list=monthly">Event Auctions<span>Monthly themed auction events</span></a>
-            <a href="{$actualPath}/buy?list=stills">Stills &amp; Photos<span>Vintage movie stills &amp; lobby cards</span></a>
+            <a href="{$actualPath}/buy?list=fixed">Browse Kaiju Memorabilia<span>Shop Godzilla, kaiju &amp; classic film collectibles</span></a>
+            <a href="{$actualPath}/buy?list=weekly">Our Event Auctions<span>Current weekly &amp; extended bid auctions</span></a>
             <div class="sm-sep"></div>
             <a href="{$actualPath}/sold_item">Sold Items Archive<span>View previously sold collectibles</span></a>
             <a href="{$actualPath}/buy?mode=refinesrc">Advanced Search<span>Filter by genre, decade, condition &amp; more</span></a>
