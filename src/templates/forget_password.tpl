@@ -162,7 +162,7 @@
                                 </form>
 
                                 <div class="fp-footer-links">
-                                    <a href="/auth">Sign In</a>
+                                    <a href="javascript:void(0);" onclick="showLogIn();">Sign In</a>
                                     <span class="fp-divider">|</span>
                                     <a href="/register">Create Account</a>
                                 </div>
