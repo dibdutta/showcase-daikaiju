@@ -63,11 +63,24 @@
                                                     <textarea name="content" id="content" style="width:100%;">{$blog.content|escape:'html'}</textarea>
                                                     <script src="https://cdn.ckeditor.com/4.22.1/standard-all/ckeditor.js"></script>
                                                     <script>
+                                                    {literal}
                                                     CKEDITOR.replace('content', {
                                                         imageUploadUrl: '/admin/blog_image_upload.php',
-                                                        extraPlugins: 'uploadimage',
-                                                        height: 500
+                                                        extraPlugins: 'uploadimage,colorbutton,font',
+                                                        allowedContent: true,
+                                                        height: 500,
+                                                        toolbar: [
+                                                            { name: 'basicstyles', items: ['Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat'] },
+                                                            { name: 'paragraph', items: ['NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
+                                                            { name: 'links', items: ['Link','Unlink','Anchor'] },
+                                                            { name: 'insert', items: ['Image','Table','HorizontalRule','SpecialChar'] },
+                                                            '/',
+                                                            { name: 'styles', items: ['Styles','Format','Font','FontSize'] },
+                                                            { name: 'colors', items: ['TextColor','BGColor'] },
+                                                            { name: 'tools', items: ['Maximize','Source'] }
+                                                        ]
                                                     });
+                                                    {/literal}
                                                     </script>
                                                 </td>
                                             </tr>
