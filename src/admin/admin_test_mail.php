@@ -28,8 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['test_to'])) {
 }
 
 function run_test($toMail, $subject, $bodyText) {
-    require_once INCLUDE_PATH . 'lib/adminCommon.php';
-
     $out = [];
 
     // ── Config snapshot ──────────────────────────────────────────────
@@ -156,8 +154,6 @@ echo ob_get_clean();
 .diag-btn { background:#0f3460; color:#fff; border:none; padding:9px 22px; font-size:12px; font-weight:700; border-radius:3px; cursor:pointer; text-transform:uppercase; letter-spacing:.5px; }
 .diag-btn:hover { background:#1a3a6e; }
 </style>
-
-<?php include INCLUDE_PATH . 'admin_templates/admin_header.tpl'; // can't use smarty display here — include directly ?>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr><td width="100%">
