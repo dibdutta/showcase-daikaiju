@@ -143,6 +143,8 @@
 
                                 {if $smarty.request.key == 1}
                                     <div class="fp-alert-ok">Your request has been submitted. Please check your email and follow the instructions.</div>
+                                {elseif $smarty.request.key == 3}
+                                    <div class="fp-alert-ok">&#10003; Your password has been updated successfully. You can now sign in with your new password.</div>
                                 {elseif $smarty.request.key == 2}
                                     <div class="fp-alert-err">Failed to send email. Please try again.</div>
                                 {elseif $errorMessage != ""}

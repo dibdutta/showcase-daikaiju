@@ -152,12 +152,12 @@ function reset_password(){
 	$chkUser=$objUser->updateData(USER_TABLE,array("user_setpass_code"=>''),array("user_setpass_code"=>$user_setpass_code),true);
 	if($chk){
 		$_SESSION['Err']="New password has been set";
-		header("location: forget_password.php");
+		header("location: forget_password.php?key=3");
 		exit;
 	 }else{
 	 	$_SESSION['Err']="Can not set new password. Please try again.";
-	 	header("location: forget_password.php");
-	 	exit;	
+	 	header("location: forget_password.php?key=2");
+	 	exit;
 	 }
 	}else{
 		$_SESSION['Err']="Can not set new password. Please try again.";
