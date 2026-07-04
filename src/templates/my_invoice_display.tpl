@@ -27,7 +27,6 @@
     if (!t) return;
     setTimeout(function(){ t.classList.add('show'); }, 100);
     setTimeout(function(){ t.classList.remove('show'); }, 5000);
-    // Clean up the URL so refresh doesn't re-show the toast
     if (window.history && window.history.replaceState) {
         var url = window.location.href.replace(/[?&]payment=(success|failed)/, '').replace(/\?$/, '');
         window.history.replaceState(null, '', url);
@@ -38,301 +37,493 @@
 {/if}
 
 <script type="text/javascript" src="{$actualPathJSCSS}js/jquery.mousewheel-3.0.6.pack.js"></script>
-	<script type="text/javascript" src="{$actualPathJSCSS}js/jquery.fancybox.js?v=2.1.5"></script>
-	<link rel="stylesheet" type="text/css" href="{$actualPathJSCSS}css/jquery.fancybox.css?v=2.1.5" media="screen" />
-	<style type="text/css">
-	.fancybox-overlay { z-index: 200000 !important; }
-	.fancybox-wrap    { z-index: 200001 !important; }
-	</style>
- 	{literal}
-	<script type="text/javascript">
-        //$(document).ready(function() {
-            /*
-            *   Examples - images
-            */
-        function fancy_images(i){
-            $.fancybox.open({
-                'href'			: $("#various_"+i).attr('href'),
-                'type'			: 'iframe',
-                'width'			: 900,
-                'height'		: 600,
-                'autoScale'		: true,
-                'transitionIn'	: 'none',
-                'transitionOut'	: 'none',
-                'closeBtn'		: true
-            });
-            return false;
-        }
-        function combine_buyer_invoice(){
-            var allVals = [];
-			var values= [];
-			var statusArr = [];
-            $(":checkbox").filter(":checked").each(function() {
-			    values=$(this).val().split('-');
-				auction_id=values[0];
-				invoice_status=values[1];				
-                allVals.push(auction_id);
-				statusArr.push(invoice_status);
-            });
-            var totalInv=allVals.length;
-			var result = in_array(statusArr, 'paid');
-						
-			if(!result){
-            if(totalInv >1){
-			  var url = "ajax.php";	
-			  $.get(url, {mode : 'chk_item_type', allVals : allVals}, function(data){
-				var key = data;
-				if(key==0){
-					if(confirm("Are you sure you want to combine invoices?")){
-							$.get("my_invoice", { mode:"combine_buyer_invoice","invoice_id[]": allVals},
-								function(data) {
-									if(data=='1'){
-										alert("Successfully invoices are combined");
-										window.location.reload();
-									}else{
-										alert("invoices are not combined");
-									}
-								});
-							$(":checkbox").filter(":checked").each(function() {
-								$(this).removeAttr("checked");
-							});
-						}else{
-						$(":checkbox").filter(":checked").each(function() {
-							$(this).removeAttr("checked");
-						});
-					}
-                    //alert(allVals);
-               } else{
-			   		alert("Please select invoices of same item type(Fixed,Auction,Alternative) to combine.");
-					$(":checkbox").filter(":checked").each(function() {
-						$(this).removeAttr("checked");
-					});
-			   }    
-                
-	 		  });
-                
-            }else if(totalInv >0 && totalInv <=1){
-                alert("Please select two or more invoices to combine.");
-                $(":checkbox").filter(":checked").each(function() {
-                    $(this).removeAttr("checked");
-                });
-            }else{
-				alert("Please select invoices you wish to combine.");
-                $(":checkbox").filter(":checked").each(function() {
-                    $(this).removeAttr("checked");
-                });
-			}
-		  }else{
-			 alert("Please select only unpaid invoices to combine.");
-			 $(":checkbox").filter(":checked").each(function() {
-				$(this).removeAttr("checked");
-			 });
-		  }
-        }
-		function archive_invoice(){
-			
-            var allVals = [];
-			var values= [];
-			var statusArr = [];
-            $(":checkbox").filter(":checked").each(function() {
-			    values=$(this).val().split('-');
-				auction_id=values[0];
-				invoice_status=values[1];				
-                allVals.push(auction_id);
-				statusArr.push(invoice_status);
-            });
-            var totalInv=allVals.length;
-			var result = in_array(statusArr, 'unpaid');			
-			if(!result){
-            if(totalInv >0){				
-                if(confirm("Click to confirm archive!")){
-				
-                    $.get("my_invoice", { mode:"archive_buyer_invoice","invoice_id[]": allVals},
-                            function(data) {							
-                                if(data=='1'){
-                                    alert("Archive Successful");
-                                    window.location.reload();
-                                }else{
-                                    alert("invoices are not archived");
-                                }
-                            });
-                    $(":checkbox").filter(":checked").each(function() {
-                        $(this).removeAttr("checked");
-                    });
-                }else{
-                    $(":checkbox").filter(":checked").each(function() {
-                        $(this).removeAttr("checked");
-                    });
-                }
-            }else{
-                alert("Please select one or more invoices to be Archived.");
-                $(":checkbox").filter(":checked").each(function() {
-                    $(this).removeAttr("checked");
-                });
-            }
-		  }else{
-			 alert("Please select only paid invoices to archive.");
-			 $(":checkbox").filter(":checked").each(function() {
-				$(this).removeAttr("checked");
-			 });
-		  }
-        
-		}
-		function in_array(array, id) {
-		  for(var i=0;i<array.length;i++) {
-			if(array[i] === id) {
-            return true;
-			}
-		  }
-		  return false;
-		}
-        //});
-	</script>
- 	{/literal}
-<div id="forinnerpage-container">
-	<div id="wrapper">
-        <!--Header themepanel Starts-->
+<script type="text/javascript" src="{$actualPathJSCSS}js/jquery.fancybox.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="{$actualPathJSCSS}css/jquery.fancybox.css?v=2.1.5" media="screen" />
+<style>
+.fancybox-overlay { z-index: 200000 !important; }
+.fancybox-wrap    { z-index: 200001 !important; }
 
-        <div id="headerthemepanel">
-         <!--{include file="search-login.tpl"}
-         Header Theme Starts-->
-                <!--<div id="searchbar">
-                    <div class="search-left-bg"></div>
-                    <div class="search-midrept-bg">
-                        <label><img src="images/search-img.png" width="20" height="32"  /></label>
-                        <input type="text" name="txt1" class="srchbox-txt" />
-                        <input type="button" value="Search" class="srchbtn-main"  />
-                        <input type="button" value="Refine Search" class="refine-srchbtn-main"  />
-                    </div>
-                    <div class="search-right-bg"></div>
-                  </div>--> 
-          <!--Header Theme Ends-->
-        </div>
-        <!--Header themepanel Ends-->    
+/* ── Page shell ─────────────────────────────────────── */
+.inv-page {
+    padding: 20px 0 40px;
+}
+
+/* ── Tab nav ────────────────────────────────────────── */
+.inv-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+.inv-tabs a {
+    display: inline-block;
+    padding: 9px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color .15s, border-color .15s;
+    white-space: nowrap;
+}
+.inv-tabs a:hover { color: #bd1a21; }
+.inv-tabs a.active {
+    color: #bd1a21;
+    border-bottom-color: #bd1a21;
+}
+
+/* ── Card wrapper ───────────────────────────────────── */
+.inv-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+.inv-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid #f0f0f0;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.inv-card-head h2 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    border: none;
+    padding: 0;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+.inv-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.inv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    transition: background .15s;
+}
+.inv-btn-combine {
+    background: #0f3460;
+    color: #fff;
+}
+.inv-btn-combine:hover { background: #1a4a80; }
+.inv-btn-archive {
+    background: #6c757d;
+    color: #fff;
+}
+.inv-btn-archive:hover { background: #5a6268; }
+
+/* ── Table ──────────────────────────────────────────── */
+.inv-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+.inv-table thead tr {
+    background: #f8f8f8;
+    border-bottom: 2px solid #e8e8e8;
+}
+.inv-table th {
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    white-space: nowrap;
+}
+.inv-table th.tac { text-align: center; }
+.inv-table th.tar { text-align: right; }
+.inv-table tbody tr {
+    border-bottom: 1px solid #f2f2f2;
+    transition: background .12s;
+}
+.inv-table tbody tr:last-child { border-bottom: none; }
+.inv-table tbody tr:hover { background: #fafafa; }
+.inv-table td {
+    padding: 12px 12px;
+    vertical-align: middle;
+    color: #333;
+}
+.inv-table td.tac { text-align: center; }
+.inv-table td.tar { text-align: right; }
+
+.inv-num {
+    font-size: 11px;
+    color: #aaa;
+    font-weight: 600;
+    text-align: center;
+}
+.inv-title {
+    font-size: 12px;
+    color: #222;
+    font-weight: 600;
+    line-height: 1.5;
+}
+.inv-title span {
+    display: block;
+    font-size: 11px;
+    color: #999;
+    font-weight: 400;
+}
+.inv-date {
+    font-size: 11px;
+    color: #888;
+    white-space: nowrap;
+    text-align: center;
+}
+.inv-amount {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* ── Status badges ──────────────────────────────────── */
+.inv-badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.inv-badge-paid     { background: #d4edda; color: #155724; }
+.inv-badge-unpaid   { background: #fff3cd; color: #856404; }
+.inv-badge-cancelled{ background: #f8d7da; color: #721c24; }
+.inv-badge-ordered  { background: #d1ecf1; color: #0c5460; }
+
+/* ── Row actions ────────────────────────────────────── */
+.inv-row-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.inv-pay-btn {
+    display: inline-block;
+    padding: 5px 13px;
+    background: #bd1a21;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    white-space: nowrap;
+    transition: background .15s;
+}
+.inv-pay-btn:hover { background: #9e1519; color: #fff; }
+.inv-print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 11px;
+    border: 1px solid #ddd;
+    color: #555;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 3px;
+    background: #fff;
+    white-space: nowrap;
+    transition: background .15s, color .15s;
+}
+.inv-print-btn:hover { background: #f5f5f5; color: #333; }
+.inv-print-btn svg { fill: currentColor; width: 12px; height: 12px; flex-shrink: 0; }
+
+/* ── Checkbox ───────────────────────────────────────── */
+.inv-chk {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    accent-color: #bd1a21;
+}
+
+/* ── Empty state ────────────────────────────────────── */
+.inv-empty {
+    text-align: center;
+    padding: 50px 20px;
+}
+.inv-empty svg {
+    fill: #ddd;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 14px;
+    display: block;
+}
+.inv-empty p {
+    font-size: 13px;
+    color: #aaa;
+    margin: 0;
+}
+
+/* ── Alert ──────────────────────────────────────────── */
+.inv-alert {
+    margin: 0 18px 14px;
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-size: 12px;
+    border: 1px solid #f5c6cb;
+    background: #f8d7da;
+    color: #721c24;
+}
+</style>
+
+{literal}
+<script type="text/javascript">
+function fancy_images(i){
+    $.fancybox.open({
+        'href'         : $("#various_"+i).attr('href'),
+        'type'         : 'iframe',
+        'width'        : 900,
+        'height'       : 600,
+        'autoScale'    : true,
+        'transitionIn' : 'none',
+        'transitionOut': 'none',
+        'closeBtn'     : true
+    });
+    return false;
+}
+function combine_buyer_invoice(){
+    var allVals = [], values = [], statusArr = [];
+    $(":checkbox").filter(":checked").each(function() {
+        values = $(this).val().split('-');
+        allVals.push(values[0]);
+        statusArr.push(values[1]);
+    });
+    var totalInv = allVals.length;
+    var result = in_array(statusArr, 'paid');
+    if (!result) {
+        if (totalInv > 1) {
+            $.get("ajax.php", {mode:'chk_item_type', allVals:allVals}, function(data){
+                if (data == 0) {
+                    if (confirm("Are you sure you want to combine invoices?")) {
+                        $.get("my_invoice", {mode:"combine_buyer_invoice","invoice_id[]":allVals}, function(data){
+                            if (data == '1') { alert("Invoices combined successfully."); window.location.reload(); }
+                            else { alert("Invoices could not be combined."); }
+                        });
+                        $(":checkbox").filter(":checked").removeAttr("checked");
+                    } else {
+                        $(":checkbox").filter(":checked").removeAttr("checked");
+                    }
+                } else {
+                    alert("Please select invoices of the same item type to combine.");
+                    $(":checkbox").filter(":checked").removeAttr("checked");
+                }
+            });
+        } else if (totalInv > 0) {
+            alert("Please select two or more invoices to combine.");
+            $(":checkbox").filter(":checked").removeAttr("checked");
+        } else {
+            alert("Please select the invoices you wish to combine.");
+            $(":checkbox").filter(":checked").removeAttr("checked");
+        }
+    } else {
+        alert("Please select only unpaid invoices to combine.");
+        $(":checkbox").filter(":checked").removeAttr("checked");
+    }
+}
+function archive_invoice(){
+    var allVals = [], values = [], statusArr = [];
+    $(":checkbox").filter(":checked").each(function() {
+        values = $(this).val().split('-');
+        allVals.push(values[0]);
+        statusArr.push(values[1]);
+    });
+    var totalInv = allVals.length;
+    var result = in_array(statusArr, 'unpaid');
+    if (!result) {
+        if (totalInv > 0) {
+            if (confirm("Archive selected invoices?")) {
+                $.get("my_invoice", {mode:"archive_buyer_invoice","invoice_id[]":allVals}, function(data){
+                    if (data == '1') { alert("Archive successful."); window.location.reload(); }
+                    else { alert("Invoices could not be archived."); }
+                });
+                $(":checkbox").filter(":checked").removeAttr("checked");
+            } else {
+                $(":checkbox").filter(":checked").removeAttr("checked");
+            }
+        } else {
+            alert("Please select one or more invoices to archive.");
+            $(":checkbox").filter(":checked").removeAttr("checked");
+        }
+    } else {
+        alert("Please select only paid invoices to archive.");
+        $(":checkbox").filter(":checked").removeAttr("checked");
+    }
+}
+function in_array(array, id) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i] === id) return true;
+    }
+    return false;
+}
+</script>
+{/literal}
+
+<div id="forinnerpage-container">
+    <div id="wrapper">
+        <div id="headerthemepanel"></div>
         <div id="inner-container2">
-        <!--{include file="right-panel.tpl"}-->
-          <div id="center"><div id="squeeze"><div class="right-corner">
-            <div id="inner-left-container">
-                 <div id="tabbed-inner-nav">
-                 <div class="tabbed-inner-nav-left">
-                    <ul class="menu">
-                        <li class="active"><a href="{$actualPath}/my_invoice"><span>My Invoice(Buyer)</span></a></li>
-						<li ><a href="{$actualPath}/my_invoice?mode=archive_invoice"><span>My Archived Invoices(Buyer)</span></a></li>
-                        <li ><a href="{$actualPath}/my_invoice?mode=buyer"><span>Reconciliation(Seller)</span></a></li>
-                        
-                    </ul>
-                    
- 					<!--<div class="tabbed-inner-nav-right"></div>-->
-                    </div>
-                 </div>
-                <div class="innerpage-container-main">
-                    <div class="top-mid"><div class="top-left"></div></div>
-                    
-                    <div class="left-midbg">
-                {*if $key=='2'}
-                    <div class="messageBox" style="width:883px; color:#FF0000;">NOTE: Once an invoice is generated, you may wait up to 72 hours to pay. This is to give you the ability to receive counter offers/offer acceptances and/or combine with other purchases within that time period. </div>
-                    {/if*}
-                     
-                    <div class="right-midbg"> 
-                    <div class="mid-rept-bg">
-                    {if $errorMessage<>""}<div class="messageBox">{$errorMessage}</div>{/if}
-                    {if $total>0}	
-                        <!--  inner listing starts-->                    
-                        <div class="display-listing-main">
-                        
-                            <input type="button" onclick="combine_buyer_invoice()" class="combine-btn" value="">
-							<input type="button" onclick="archive_invoice()" class="archive-btn" value="">
-							
-                            
-                        <div>
-                            <div class="gnrl-listing">
-                            <div style="margin:0 0 0 12px;">
-                            
-                            <form name="listFrom" id="listForm" action="" method="post">
-                                <input type="hidden" name="encoded_string" value="{$encoded_string}" />
-                                <table width="100%" cellpadding="3" cellspacing="1" align="left" border="0">
-                                    <tr>
-                                        <th width="25px"></th>
-                                        <th width="45px" class="tac">Sl No</th>
-                                        <th class="tal">Item</th>
-                                        <th width="80px" class="tac">Billing Date</th>                                    
-                                        <th width="70px" class="tac pr10">Price</th>
-                                        <th width="100px" class="tac">Action</th>
-                                    </tr>
-                                    {section name=counter loop=$invoiceData}
-                                    <tr>
-                                        <td class="tac"  {if $invoiceData[counter].is_paid == '0' && $invoiceData[counter].is_ordered == '0'} {elseif $invoiceData[counter].is_paid == '1' }  {/if}>
-                                            {if $invoiceData[counter].is_paid == '0' && $invoiceData[counter].is_ordered == '0'}
-												<input type="checkbox" name="invoice_id" value="{$invoiceData[counter].invoice_id}-unpaid" title="Combine Invoice" class="chx">
-											{elseif $invoiceData[counter].is_paid == '1' }
-												<input type="checkbox" name="archive_invoice_id" value="{$invoiceData[counter].invoice_id}-paid" title="Archive Invoice" class="chx">
-                                            {/if}
-                                        </td>
-                                      <td class="tac">
-                                           {$smarty.section.counter.index+1}
-                                       </td>
-                                      <td class="tal">
-                                        {section name=adCounter loop=$invoiceData[counter].auction_details}
-                                            {$smarty.section.adCounter.index+1}.&nbsp;{$invoiceData[counter].auction_details[adCounter].poster_title|stripslashes} &nbsp;<br />
-                                        {/section}
-                                        </td>
-                                      <td class="tac">{$invoiceData[counter].invoice_generated_on|date_format:"%m/%d/%Y"}</td>
-                                      <td class="tar">${$invoiceData[counter].total_amount}</td>
-                                        <td class="tac">
-                                        {if $invoiceData[counter].is_cancelled == '1'}
-                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Print" title="Print" src="{$smarty.const.CLOUD_STATIC}print.png"></a>
-                                        {elseif $invoiceData[counter].is_paid == '1'}
-                                        PAID &nbsp;<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Print" title="Print" src="{$smarty.const.CLOUD_STATIC}print.png"></a>
-                                        {elseif $invoiceData[counter].is_paid == '0' && $invoiceData[counter].is_cancelled == '0' && $invoiceData[counter].is_ordered == '0'}
-                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=order&invoice_id={$invoiceData[counter].invoice_id}"><img alt="Pay Now" title="Pay Now" width="67" src="{$smarty.const.CLOUD_STATIC}pay_now.png" /></a>
-                                        {elseif $invoiceData[counter].is_paid == '1' || $invoiceData[counter].is_cancelled == '1'}
-                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Print" title="Print" src="{$smarty.const.CLOUD_STATIC}print.png"></a>
-                                        {elseif $invoiceData[counter].is_ordered == '1' && $invoiceData[counter].is_cancelled == '0'}
-										<a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})"><img alt="Phone Order" title="Phone Order" src="{$smarty.const.CLOUD_STATIC}phn_order.png"></a>
-										{/if}
-                                        </td>
-                                    </tr>
-                                    {/section}
-                                </table>
-                            </form>
-                            </div>
-                            </div>		
-                        
-                        </div>
-                       
-                        </div>
-						
-                    {else}
-                    <table width="100%" cellpadding="3" cellspacing="1" align="left" border="0">
-                        <tr>
-                            <td colspan="4" align="center" style="font-size:11px; font-weight:bold;">Sorry No Invoice to Display.</td>
-                        </tr>
-                    </table>
-                   {/if}   
-                   
-                   <div class="clear"></div>  
-				   
-				   </div>
-                    </div>
-                    </div>
-					<div class="btm-mid"></div>
-                    <div class="mb40">
-                    {if $key=='2'}
-                            <input type="button" onclick="combine_buyer_invoice()" style="font-size:11px;" class="combine-btn" value="">
-							<input type="button" onclick="archive_invoice()" style="font-size:11px;" class="archive-btn" value="">
-						{/if}    
-                        <div>
+        <div id="center"><div id="squeeze"><div class="right-corner">
+        <div id="inner-left-container">
+
+            <div class="innerpage-container-main inv-page">
+
+                {* ── Tab navigation ───────────────────────── *}
+                <div class="inv-tabs">
+                    <a href="{$actualPath}/my_invoice" class="active">My Invoices</a>
+                    <a href="{$actualPath}/my_invoice?mode=archive_invoice">Archived Invoices</a>
+                    <a href="{$actualPath}/my_invoice?mode=buyer">Seller Reconciliation</a>
                 </div>
+
+                {* ── Main card ────────────────────────────── *}
+                <div class="inv-card">
+
+                    <div class="inv-card-head">
+                        <h2>Buyer Invoices</h2>
+                        <div class="inv-actions">
+                            <button class="inv-btn inv-btn-combine" onclick="combine_buyer_invoice()">
+                                <svg viewBox="0 0 24 24" width="13" height="13" style="fill:#fff;flex-shrink:0;"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+                                Combine
+                            </button>
+                            <button class="inv-btn inv-btn-archive" onclick="archive_invoice()">
+                                <svg viewBox="0 0 24 24" width="13" height="13" style="fill:#fff;flex-shrink:0;"><path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z"/></svg>
+                                Archive
+                            </button>
+                        </div>
+                    </div>
+
+                    {if $errorMessage != ""}
+                        <div class="inv-alert">{$errorMessage}</div>
+                    {/if}
+
+                    {if $total > 0}
+                    <form name="listFrom" id="listForm" action="" method="post">
+                        <input type="hidden" name="encoded_string" value="{$encoded_string}">
+                        <table class="inv-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:36px;"></th>
+                                    <th class="tac" style="width:40px;">#</th>
+                                    <th>Item(s)</th>
+                                    <th class="tac" style="width:100px;">Date</th>
+                                    <th class="tar" style="width:90px;">Amount</th>
+                                    <th class="tac" style="width:80px;">Status</th>
+                                    <th class="tac" style="width:120px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {section name=counter loop=$invoiceData}
+                            <tr>
+                                {* Checkbox *}
+                                <td class="tac">
+                                    {if $invoiceData[counter].is_paid == '0' && $invoiceData[counter].is_ordered == '0'}
+                                        <input type="checkbox" class="inv-chk chx" name="invoice_id" value="{$invoiceData[counter].invoice_id}-unpaid" title="Select to combine">
+                                    {elseif $invoiceData[counter].is_paid == '1'}
+                                        <input type="checkbox" class="inv-chk chx" name="archive_invoice_id" value="{$invoiceData[counter].invoice_id}-paid" title="Select to archive">
+                                    {/if}
+                                </td>
+
+                                {* Row number *}
+                                <td class="inv-num">{$smarty.section.counter.index+1}</td>
+
+                                {* Item titles *}
+                                <td>
+                                    <div class="inv-title">
+                                    {section name=adCounter loop=$invoiceData[counter].auction_details}
+                                        {$invoiceData[counter].auction_details[adCounter].poster_title|stripslashes}
+                                        {if $invoiceData[counter].auction_details|@count > 1}<br>{/if}
+                                    {/section}
+                                    <span>Invoice #{$invoiceData[counter].invoice_id}</span>
+                                    </div>
+                                </td>
+
+                                {* Date *}
+                                <td class="inv-date">{$invoiceData[counter].invoice_generated_on|date_format:"%b %d, %Y"}</td>
+
+                                {* Amount *}
+                                <td class="inv-amount">${$invoiceData[counter].total_amount}</td>
+
+                                {* Status badge *}
+                                <td class="tac">
+                                    {if $invoiceData[counter].is_cancelled == '1'}
+                                        <span class="inv-badge inv-badge-cancelled">Cancelled</span>
+                                    {elseif $invoiceData[counter].is_paid == '1'}
+                                        <span class="inv-badge inv-badge-paid">Paid</span>
+                                    {elseif $invoiceData[counter].is_ordered == '1'}
+                                        <span class="inv-badge inv-badge-ordered">Phone Order</span>
+                                    {else}
+                                        <span class="inv-badge inv-badge-unpaid">Unpaid</span>
+                                    {/if}
+                                </td>
+
+                                {* Action *}
+                                <td>
+                                    <div class="inv-row-actions">
+                                    {if $invoiceData[counter].is_paid == '0' && $invoiceData[counter].is_cancelled == '0' && $invoiceData[counter].is_ordered == '0'}
+                                        <a href="{$actualPath}/my_invoice?mode=order&invoice_id={$invoiceData[counter].invoice_id}" class="inv-pay-btn">Pay Now</a>
+                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})" class="inv-print-btn">
+                                            <svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+                                            View
+                                        </a>
+                                    {elseif $invoiceData[counter].is_ordered == '1' && $invoiceData[counter].is_cancelled == '0'}
+                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})" class="inv-print-btn">
+                                            <svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+                                            View
+                                        </a>
+                                    {else}
+                                        <a id="various_{$smarty.section.counter.index}" href="{$actualPath}/my_invoice?mode=print&invoice_id={$invoiceData[counter].invoice_id}" onclick="return fancy_images({$smarty.section.counter.index})" class="inv-print-btn">
+                                            <svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+                                            View
+                                        </a>
+                                    {/if}
+                                    </div>
+                                </td>
+                            </tr>
+                            {/section}
+                            </tbody>
+                        </table>
+                    </form>
+
+                    {else}
+                    <div class="inv-empty">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                        <p>No invoices to display.</p>
+                    </div>
+                    {/if}
+
+                </div>{* .inv-card *}
+
             </div>
-         
-          </div>
-          </div>
-          </div>
-		
-        </div>    
+        </div>
+        </div></div></div>
+        </div>
     </div>
-    <!--<div class="clear"></div>-->
-</div>
-</div>
 </div>
 {include file="foot.tpl"}
