@@ -118,7 +118,10 @@ function run_test($toMail, $subject, $bodyText) {
         } elseif ($httpCode === 422) {
             $out['hint'] = 'Sender address "' . $fromAddr . '" is not verified in Zeptomail. Go to Zeptomail → Mail Agents → Sender Addresses and verify it.';
         } elseif ($httpCode === 429) {
-            $out['hint'] = 'Rate limit hit. Wait a moment and try again.';
+            $creditExhausted = isset($decoded['error']['details'][0]['code']) && $decoded['error']['details'][0]['code'] === 'LE_102';
+            $out['hint'] = $creditExhausted
+                ? 'Email credits are exhausted. Log in to Zeptomail → Mail Agents → Credits / Billing and purchase more credits or upgrade your plan.'
+                : 'Rate limit hit. Wait a moment and try again, or check your Zeptomail plan quota.';
         } elseif ($httpCode === 0) {
             $out['hint'] = 'No response received — check outbound internet access from ECS or whether ' . $apiUrl . ' is reachable.';
         }
@@ -235,7 +238,8 @@ echo ob_get_clean();
             <tr><td style="padding:5px 8px;"><span class="diag-ok">2xx</span></td><td>Success</td><td>Email sent ✓</td></tr>
             <tr style="background:#fafafa;"><td style="padding:5px 8px;"><span class="diag-fail">401</span></td><td>Unauthorised</td><td>Update <code>ZEPTOMAIL_SMTP_TOKEN</code> in AWS SSM → redeploy ECS</td></tr>
             <tr><td style="padding:5px 8px;"><span class="diag-fail">422</span></td><td>Sender unverified</td><td>Verify <code>info@kaijulink.com</code> in Zeptomail → Mail Agents → Sender Addresses</td></tr>
-            <tr style="background:#fafafa;"><td style="padding:5px 8px;"><span class="diag-warn">429</span></td><td>Rate limited</td><td>Wait and retry; check Zeptomail plan quota</td></tr>
+            <tr style="background:#fafafa;"><td style="padding:5px 8px;"><span class="diag-warn">429 LE_102</span></td><td>Credits exhausted</td><td>Log in to Zeptomail → Mail Agents → Credits/Billing and top up</td></tr>
+            <tr><td style="padding:5px 8px;"><span class="diag-warn">429</span></td><td>Rate limited</td><td>Wait and retry; check Zeptomail plan quota</td></tr>
             <tr><td style="padding:5px 8px;"><span class="diag-fail">0</span></td><td>No connection</td><td>ECS task can't reach Zeptomail — check security group outbound rules</td></tr>
         </table>
     </div>
