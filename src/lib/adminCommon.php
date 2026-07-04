@@ -31,7 +31,9 @@
 	$smarty->assign('errorMessage', $_SESSION['adminErr'] ?? '');
 	$_SESSION['adminErr'] = "";
 
-	if(basename($_SERVER['PHP_SELF'])!="admin_main.php" && basename($_SERVER['PHP_SELF'])!="admin_login.php" && ($_SESSION['superAdmin'] ?? 0)!=1 && MULTIUSER_ADMIN == true){
+	$_is_ajax_req = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')
+	             || ($_REQUEST['mode'] ?? '') === 'fetch_invoice';
+	if(!$_is_ajax_req && basename($_SERVER['PHP_SELF'])!="admin_main.php" && basename($_SERVER['PHP_SELF'])!="admin_login.php" && ($_SESSION['superAdmin'] ?? 0)!=1 && MULTIUSER_ADMIN == true){
 		if(!in_array(basename($_SERVER['PHP_SELF']), $_SESSION['accessPages'] ?? [])){
 			$_SESSION['adminErr'] = "You don't have the access of this page.";
 			redirect_admin("admin_main.php");

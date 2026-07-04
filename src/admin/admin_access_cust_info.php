@@ -6,7 +6,15 @@ ob_start();
 define ("INCLUDE_PATH", "../");
 require_once INCLUDE_PATH."lib/inc.php";
 require_once INCLUDE_PATH."FCKeditor/fckeditor.php";
+$is_ajax = (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest')
+        || ($_REQUEST['mode'] ?? '') === 'fetch_invoice';
+
 if(!isset($_SESSION['adminLoginID'])){
+	if($is_ajax){
+		ob_clean();
+		echo '<p style="color:#dc3545;font-size:12px;padding:10px;">Your session has expired. Please <a href="../admin_login.php">log in again</a>.</p>';
+		exit();
+	}
 	redirect_admin("admin_login.php");
 }
 
