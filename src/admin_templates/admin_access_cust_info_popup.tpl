@@ -57,5 +57,17 @@
 			<td align="right" width="20%"><img src="{$smarty.const.CLOUD_STATIC}icon_edit.gif" align="absmiddle" alt="Update" title="Update" border="0" class="changeStatus" onclick="editNote()">&nbsp;&nbsp;<b>Total</b></td>
 			<td align="left" id="new_total_amnt">${$invoiceData.total_amount}</td>
 			<input type="hidden" id="total_cost_amnt" value="{$invoiceData.total_amount}"/>
-		</tr>	
+		</tr>
+		{if $invoiceData.is_shipped == '1'}
+		<tr>
+			<td colspan="5" style="padding:7px 4px 4px;">
+				<span style="font-size:12px;font-weight:700;color:#555;">Tracking Number:</span>&nbsp;
+				{if $invoiceData.tracking_number}
+					<span style="font-size:12px;font-family:monospace;background:#f5f5f5;border:1px solid #ddd;padding:2px 8px;border-radius:3px;">{$invoiceData.tracking_number}</span>
+				{else}
+					<span style="font-size:11px;color:#aaa;font-style:italic;">Not yet entered</span>
+				{/if}
+			</td>
+		</tr>
+		{/if}	
    </table>

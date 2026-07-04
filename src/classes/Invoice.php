@@ -1317,7 +1317,7 @@ class Invoice extends DBCommon{
 	}
 	function fetchInvoiceAuctionDetails($invoice_id, $user_id = '')
 	{
-		 $sql = "SELECT inv.invoice_id,inv.auction_details,inv.additional_charges,inv.discounts,inv.total_amount,inv.is_paid,inv.is_shipped,inv.note  FROM ".TBL_INVOICE." inv
+		 $sql = "SELECT inv.invoice_id,inv.auction_details,inv.additional_charges,inv.discounts,inv.total_amount,inv.is_paid,inv.is_shipped,inv.tracking_number,inv.note  FROM ".TBL_INVOICE." inv
 				WHERE inv.invoice_id = '".$invoice_id."'
 				AND inv.is_buyers_copy='1'";
 		if($user_id != ''){
