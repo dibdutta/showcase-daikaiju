@@ -1,6 +1,6 @@
 {include file="header.tpl"}
-<link href="{$smarty.const.DOMAIN_PATH}/javascript/jquery-countdown-1.5.9/jquery.countdown.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="{$smarty.const.DOMAIN_PATH}/javascript/jquery-countdown-1.5.9/jquery.countdown.js"></script>
+<link href="{$actualPathJSCSS}js/jquery-countdown-1.5.9/jquery.countdown.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="{$actualPathJSCSS}js/jquery-countdown-1.5.9/jquery.countdown.js"></script>
 
 {literal}
 <script type="text/javascript">

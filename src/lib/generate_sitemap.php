@@ -21,8 +21,7 @@ function generate_sitemap_xml($db, $base)
     // Static pages
     $static = [
         ['loc' => $base . '/',                'changefreq' => 'daily',   'priority' => '1.0'],
-        ['loc' => $base . '/buy?list=fixed',  'changefreq' => 'daily',   'priority' => '0.9'],
-        ['loc' => $base . '/buy?list=weekly', 'changefreq' => 'daily',   'priority' => '0.9'],
+        ['loc' => $base . '/buy',             'changefreq' => 'daily',   'priority' => '0.9'],
         ['loc' => $base . '/sell',            'changefreq' => 'monthly', 'priority' => '0.6'],
         ['loc' => $base . '/faq',             'changefreq' => 'monthly', 'priority' => '0.5'],
         ['loc' => $base . '/contactus',       'changefreq' => 'monthly', 'priority' => '0.5'],

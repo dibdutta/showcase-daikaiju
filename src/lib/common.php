@@ -239,4 +239,13 @@
 		}
 	}
 	$smarty->assign('featuredArticles', $featuredArticles);
+
+	// Auto-canonical: pages that don't set $canonicalUrl explicitly get one
+	// derived from the current HTTPS path (no query string). Pages like buy.php,
+	// blog.php, and index.php assign $canonicalUrl after common.php runs, so
+	// their $smarty->assign('canonicalUrl', ...) call will override this.
+	if (empty($GLOBALS['canonicalUrl'])) {
+		$_canonical_path = strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+		$smarty->assign('canonicalUrl', 'https://www.kaijulink.com' . $_canonical_path);
+	}
 ?>

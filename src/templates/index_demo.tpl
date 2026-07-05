@@ -150,7 +150,7 @@ function updateArrows(wrap) {
                         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px; color:blue;">
                             {if $featuredArticles}
                                 {foreach from=$featuredArticles item=article}
-                                <tr><td width="100%"><b><i><u><a href="{$smarty.const.DOMAIN_PATH}/blog.php?slug={$article.slug}" style="color:blue;font-size:14px;">{$article.title}</a></u></i></b></td></tr>
+                                <tr><td width="100%"><b><i><u><a href="{$actualPath}/blog.php?slug={$article.slug}" style="color:blue;font-size:14px;">{$article.title}</a></u></i></b></td></tr>
                                 {/foreach}
                             {else}
                                 <tr><td style="font-size:11px;color:#888;padding:4px 0;">No articles yet.</td></tr>
