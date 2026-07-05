@@ -184,7 +184,7 @@ body {
         <nav class="err-nav">
             <a href="https://www.kaijulink.com/" class="err-btn-primary">&#127968; Go to Homepage</a>
             <div class="err-links">
-                <a href="https://www.kaijulink.com/buy?list=fixed"  class="err-link">&#127914; Browse Posters</a>
+                <a href="https://www.kaijulink.com/buy?list=fixed"  class="err-link">&#127914; Browse Kaiju Memorabilia</a>
                 <a href="https://www.kaijulink.com/buy?list=weekly" class="err-link">&#128197; Weekly Auction</a>
                 <a href="https://www.kaijulink.com/contactus"       class="err-link">&#9993; Contact Us</a>
             </div>
