@@ -22,4 +22,11 @@ RewriteRule ^blog/([^/]+)/?$ blog.php?slug=$1 [QSA,L]
 # If request + .php exists, rewrite internally
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [L]
+
+# Catch-all: anything that didn't match above goes to the custom 404 page
+RewriteRule ^ 404.php [L]
 </IfModule>
+
+# Custom error pages
+ErrorDocument 404 /404.php
+ErrorDocument 403 /404.php
