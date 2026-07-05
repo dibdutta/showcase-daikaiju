@@ -145,7 +145,7 @@
                     </div>
 
                     <div class="faq-body">
-                        {$pageContent|nofilter}
+                        {$pageContent}
                     </div>
 
                 </div>
