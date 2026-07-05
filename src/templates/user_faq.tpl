@@ -1,384 +1,160 @@
+{include file="header.tpl"}
 
-<link href="{$actualPath}/css/template_test.css" rel="stylesheet" type="text/css"/>
-<body {if $smarty.session.sessUserID == ""} class="sidebar-left"{else}class="sidebars" {/if} style="min-width:680px; background:#f0f0f0;">
-      <div id="center" style="margin:0px; width:680px;">
-        
-          <div class="right-corner">
-            <div id="inner-left-container">
-              <div class="innerpage-container-main">
-                <div class="black-midrept"> <span class="white-txt"><strong>{if $pageHeaderName <> ""}{$pageHeaderName}{/if}</strong></span> </div>
-                <div class="black-right-crnr"></div>
-                <div class="black-left-crnr"></div>
-                <div class="left-midbg">
-                  <div class="right-midbg">
-                    <div class="mid-rept-bg">
-                      <div class="inner-area-general">
-                        <div class="mandatoryTxt">
-                          <p>
-                          <p>
-                          {literal}
-                          <style type="text/css">
+<style>
+/* ── Page shell ─────────────────────────────────────────── */
+.faq-page { padding: 24px 0 48px; }
 
-							h1 {
-								color: #337E40;
-								font-size: 16px;
-								padding-top:20px;
-								border-top: 2px groove #ddd;
-							}
+/* ── Hero header ────────────────────────────────────────── */
+.faq-hero {
+    background: linear-gradient(135deg, #bd1a21 0%, #8b0000 100%);
+    border-radius: 6px 6px 0 0;
+    padding: 22px 28px 18px;
+    display: flex; align-items: center; gap: 14px;
+}
+.faq-hero svg { fill: rgba(255,255,255,0.85); width: 26px; height: 26px; flex-shrink: 0; }
+.faq-hero h1 {
+    margin: 0; font-size: 17px; font-weight: 700;
+    color: #fff; letter-spacing: .3px;
+}
 
-							table.table_content td
-							{
-								 border:1px solid #ddd;
-							}
+/* ── Card ───────────────────────────────────────────────── */
+.faq-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+.faq-body { padding: 24px 28px 28px; }
 
-							a.headinglink, a
-							{
-								color:#096785
-							}
-							a.headinglink:hover, a:hover
-							{
-								color:#062d39;
-							}
-							
-							a.top
-							{
-								color:#C60;
-								font-size:14px;
-								font-weight:bold;
-								padding:6px;
-								background:#F3F3F3;
-								display:block;
-								border:1px solid #ddd;
-							}
-							a.top:hover
-							{
-								color:#F90;
-							
-							}</style>
-							{/literal}
-							</p>
-<p><a name="top"></a></p>
-<table width="94%" cellspacing="0" cellpadding="0" border="0" style="padding-bottom: 10px; padding-left: 10px; padding-right: 10px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; padding-top: 10px">
-    <tbody>
-      
-                <tr>
-                    <td>
-                    <blockquote>
-                    <p><br />
-                    <strong>Grading Definitions </strong></p>
-                    <p>The 10-point grading system was first introduced by Jon Warren in&nbsp;<em>Warren&rsquo;s Movie Poster Price Guide</em>. A great deal of thanks is owed to Jon for attempting to standardize grading and convert it to a 10-point system, which is already in use in many other hobbies and is far easier to understand than random systems used by many dealers to describe their merchandise (one dealer&rsquo;s &ldquo;excellent&rdquo; could be another&rsquo;s &ldquo;fine&rdquo; or condition &ldquo;B&rdquo;).</p>
-                    <p>A 10-point system easily allows any prospective buyer to visualize the condition of a poster without having to rely on a dealer&rsquo;s word grade, as a number allows both buyer and seller to think of the poster as a percentage of 10 (i.e 10 = 100%, so 8 = 80% of 10, 6 = 60%, etc.).</p>
-                    <p>&nbsp;</p>
-                    </blockquote>
-                    <table align="center" width="90%" cellspacing="1" cellpadding="2" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px" class="table_content">
-                        <tbody>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#666666" style="color: #fff">
-                                <p><strong>Number</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#666666" style="color: #fff">
-                                <p><strong>Name</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#666666" style="color: #fff">
-                                <p><strong>Notes</strong></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>10.0</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Gem Mint</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>Absolutely perfect, regardless of age</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>9.9</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>Mint</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#f3f3f3">
-                                <p>&nbsp;</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>9.8</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Near Mint/Mint</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>Appears fresh off the press</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>9.6</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>Near Mint +</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#f3f3f3">
-                                <p>&nbsp;</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>9.4</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Near Mint</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>&nbsp;</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>9.2</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>Near Mint -</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#f3f3f3">
-                                <p>No pinholes allowed in this grade or higher</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>9.0</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Very Fine/Near Mint</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>Highest grade allowed for restored/linenbacked items</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>8.5</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>Very Fine +</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#f3f3f3">
-                                <p>Bright, supple, and clean with a few minor flaws</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>8.0</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Very Fine</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>Small pinholes and/or small border creases</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>7.5</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>Very Fine -</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#f3f3f3">
-                                <p>No tape on poster in this grade or higher</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>7.0</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Fine/Very Fine</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>A nicely preserved item</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>6.5</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>Fine +</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#f3f3f3">
-                                <p>Possibly minor fading, or writing on back which bleeds through to front, small amount of paper loss ok</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>6.0</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Fine</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>Highest grade for a Window Card with the top trimmed</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>5.5</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>Fine -</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#f3f3f3">
-                                <p>&nbsp;</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>5.0</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Very Good/Fine</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>Heavily worn &amp; used, not suitable for many collectors</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>4.5</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>Very Good +</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#f3f3f3">
-                                <p>&nbsp;</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>4.0</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Very Good</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>Numerous tears, pinholes, creases, writing, etc.</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>3.5</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>Very Good -</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#f3f3f3">
-                                <p>&nbsp;</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>3.0</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Good/Very Good</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>Possibly fragile or brittle paper</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>2.5</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>Good +</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#f3f3f3">
-                                <p>&nbsp;</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>2.0</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Good</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>Heavy accumulation of defects, paper loss, severe fold separation, staining, holes, tape, etc.</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>1.8</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>Good -</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#f3f3f3">
-                                <p>&nbsp;</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>1.5</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Fair/Good</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>All the defects from 2-4, but to a greater degree</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>1.0</strong></p>
-                                </td>
-                                <td width="198" valign="top" bgcolor="#f3f3f3">
-                                <p><strong>Fair</strong></p>
-                                </td>
-                                <td width="373" valign="top" bgcolor="#f3f3f3">
-                                <p>&nbsp;</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="67" valign="top">
-                                <p><strong>.5</strong></p>
-                                </td>
-                                <td width="198" valign="top">
-                                <p><strong>Poor</strong></p>
-                                </td>
-                                <td width="373" valign="top">
-                                <p>Unsuitable for most any purpose, except on the very rarest of items</p>
-                                </td>
-                            </tr>
-                            <tr>
-                            <td colspan="3" align="right"><a href="#top" class="top">Top</a></td>
-                        </tbody>
-                    </table>
-                   </td>
-                    </tr>
-                </tbody>
-            </table>
-           
-                        </div>
-                      </div>
-                      <div class="clear"></div>
+/* ── CMS content styles ─────────────────────────────────── */
+.faq-body h1 {
+    color: #bd1a21;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 28px 0 10px;
+    padding: 0 0 8px;
+    border-bottom: 2px solid #f0f0f0;
+    letter-spacing: .2px;
+}
+.faq-body h1:first-child { margin-top: 0; }
+
+.faq-body h2 {
+    color: #333;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 18px 0 8px;
+}
+
+.faq-body p {
+    font-size: 12px;
+    color: #444;
+    line-height: 1.7;
+    margin: 0 0 10px;
+}
+.faq-body p:last-child { margin-bottom: 0; }
+
+.faq-body ul, .faq-body ol {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+}
+.faq-body li {
+    font-size: 12px;
+    color: #444;
+    line-height: 1.7;
+    margin-bottom: 4px;
+}
+.faq-body li a { color: #bd1a21; text-decoration: none; }
+.faq-body li a:hover { text-decoration: underline; }
+
+.faq-body a {
+    color: #bd1a21;
+    text-decoration: none;
+}
+.faq-body a:hover { text-decoration: underline; }
+
+/* ── Grading / data tables ──────────────────────────────── */
+.faq-body table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 14px 0 18px;
+}
+.faq-body table th,
+.faq-body table td {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    vertical-align: top;
+    color: #333;
+    line-height: 1.55;
+}
+.faq-body table td[bgcolor="#666666"],
+.faq-body table th {
+    background: #4a4a4a !important;
+    color: #fff !important;
+    font-weight: 700;
+}
+.faq-body table tr:nth-child(even) td { background: #fafafa; }
+.faq-body table td[bgcolor="#f3f3f3"] { background: #f7f7f7 !important; }
+
+.faq-body blockquote {
+    border-left: 3px solid #bd1a21;
+    margin: 0 0 16px 0;
+    padding: 10px 16px;
+    background: #fdf5f5;
+    border-radius: 0 4px 4px 0;
+}
+.faq-body blockquote p { color: #555; }
+
+/* ── Top-anchor link ────────────────────────────────────── */
+.faq-body a.top {
+    display: inline-block;
+    color: #bd1a21;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    background: #fdf5f5;
+    border: 1px solid #f0d0d0;
+    border-radius: 3px;
+    text-decoration: none;
+}
+.faq-body a.top:hover { background: #f9e0e0; }
+
+.faq-body hr {
+    border: none;
+    border-top: 1px solid #f0f0f0;
+    margin: 20px 0;
+}
+</style>
+
+<div id="forinnerpage-container">
+    <div id="wrapper">
+        <div id="headerthemepanel"></div>
+        <div id="inner-container2">
+        <div id="center"><div id="squeeze"><div class="right-corner">
+        <div id="inner-left-container">
+
+            <div class="innerpage-container-main faq-page">
+
+                <div class="faq-card">
+
+                    <div class="faq-hero">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+                        <h1>{if $pageHeaderName != ''}{$pageHeaderName}{else}FAQ{/if}</h1>
                     </div>
-                  </div>
-                </div>
-                <div class="btm-mid"><div class="btom-left"></div></div>
-                <div class="btom-right"></div>
-              </div>
-            </div>
-          </div>
-       
-      </div>
 
-</body>
+                    <div class="faq-body">
+                        {$pageContent|nofilter}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        </div></div></div>
+        </div>
+    </div>
+</div>
+
+{include file="foot.tpl"}
