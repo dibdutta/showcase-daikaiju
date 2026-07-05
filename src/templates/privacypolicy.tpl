@@ -76,7 +76,10 @@
 .policy-body a { color: #bd1a21; text-decoration: none; }
 .policy-body a:hover { text-decoration: underline; }
 
-.policy-body strong { color: #222; }
+.policy-body strong { font-weight: 700 !important; color: #111; }
+.policy-body b      { font-weight: 700 !important; color: #111; }
+.policy-body big    { font-size: 18px; font-weight: 700; color: #1a1a1a; display: block; margin-bottom: 6px; }
+.policy-body big strong { font-size: inherit; color: inherit; }
 
 .policy-body blockquote {
     border-left: 3px solid #bd1a21;
