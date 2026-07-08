@@ -107,7 +107,7 @@ function show_text(){
 									</td>
 									<td valign="top" class="pr10"><table width="100%" border="0" cellspacing="0" cellpadding="0">
 									  <tr>
-										<td class="pb20"><a href="{$actualPath}/buy?mode=poster_details&auction_id={$dataJstFinishedAuction[counter].auction_id}{if $dataJstFinishedAuction[counter].fk_auction_type_id == 1}&fixed=1{/if}&sold=1" style="cursor:pointer;" ><h1>{$dataJstFinishedAuction[counter].poster_title}&nbsp;</h1></a></td>
+										<td class="pb20"><a href="{posterUrl id=$dataJstFinishedAuction[counter].auction_id title=$dataJstFinishedAuction[counter].poster_title}" style="cursor:pointer;" ><h1>{$dataJstFinishedAuction[counter].poster_title}&nbsp;</h1></a></td>
 									  </tr>
 									  <tr>
 										<td class="buylisttbtopbg"></td>

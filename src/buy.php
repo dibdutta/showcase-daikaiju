@@ -1246,7 +1246,10 @@ if(isset($_SESSION['sessUserID'])){
 			'seller'          => ['@type' => 'Organization', 'name' => SITE_TITLE],
 		],
 	];
-	$smarty->assign('jsonLd', json_encode($_jsonLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+	// Only emit JSON-LD when we have a valid non-zero price — Google rejects price:"0.00"
+	if ((float)$_price > 0) {
+		$smarty->assign('jsonLd', json_encode($_jsonLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+	}
 
 	$smarty->assign('auctionDetails', $auctionDetails);
 	$smarty->assign('json_arr', json_encode($auctionDetails));

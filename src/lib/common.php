@@ -7,6 +7,13 @@
 
 	$smarty->setTemplateDir(INCLUDE_PATH.'templates/');
 	$smarty->setCompileDir(INCLUDE_PATH.'templates_c/');
+
+	// Expose posterUrl() so templates can link straight to the canonical
+	// /poster/{id}/{slug} URL instead of the old ?mode=poster_details query string
+	// (that old form 301-redirects, which Search Console flags as "Page with redirect").
+	$smarty->registerPlugin('function', 'posterUrl', function($params) {
+		return posterUrl($params['id'] ?? 0, $params['title'] ?? '');
+	});
 	if(isset($GLOBALS["pageTitle"])){
 		$smarty->assign('pageTitle', $GLOBALS["pageTitle"]);
 	}else{
