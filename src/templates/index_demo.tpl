@@ -219,9 +219,10 @@ function updateArrows(wrap) {
                     {section name=counter loop=$dataArrUpcoming}
                         <div class="hp-card">
                             <div class="hp-card-img-wrap">
+                                <a href="{$dataArrUpcoming[counter].poster_url}">
                                 <img src="{$dataArrUpcoming[counter].large_image}"
-                                     alt="{$dataArrUpcoming[counter].poster_title}"
-                                     onclick="redirect_poster_details({$dataArrUpcoming[counter].auction_id});">
+                                     alt="{$dataArrUpcoming[counter].poster_title}">
+                                </a>
                             </div>
                             <div class="hp-card-body">
                                 {if $smarty.session.sessUserID <> ""}
