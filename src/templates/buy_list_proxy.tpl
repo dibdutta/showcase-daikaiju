@@ -221,12 +221,12 @@ $(document).ready(function(){
                   <tr>
                     <td class="list-poster-box" valign="top"><div class="poster-area-list">
                         <input type="checkbox" name="auction_ids[]" value="{$auctionItems[counter].auction_id}"/>
-                        <span style="cursor:pointer;" onclick="redirect_poster_details({$auctionItems[counter].auction_id});"><strong>{$auctionItems[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$auctionItems[counter].poster_sku}){/if*}</strong></span> {if $auctionItems[counter].fk_auction_type_id=='3'}
+                        <span style="cursor:pointer;" onclick="redirect_poster_details({$auctionItems[counter].auction_id}, 2);"><strong>{$auctionItems[counter].poster_title}&nbsp;{*if $smarty.session.sessUserID <> ""}(#{$auctionItems[counter].poster_sku}){/if*}</strong></span> {if $auctionItems[counter].fk_auction_type_id=='3'}
                         <div  style="font-family:Calibri;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Event :{$auctionItems[counter].event_title}</div>
                         {/if} </div>
                       <div class="poster-area-list">
                         <div id="gallery_{$smarty.section.counter.index}" class="image-hldr"><div class="shadowbottom">
-                                       <div class="shadow-bringer shadow"> <img  class="image-brdr" src="{$smarty.const.CLOUD_POSTER_THUMB}{$auctionItems[counter].poster_thumb}"  onclick="redirect_poster_details({$auctionItems[counter].auction_id});" style="cursor:pointer;" /></div></div> </div>
+                                       <div class="shadow-bringer shadow"> <img  class="image-brdr" src="{$smarty.const.CLOUD_POSTER_THUMB}{$auctionItems[counter].poster_thumb}"  onclick="redirect_poster_details({$auctionItems[counter].auction_id}, 2);" style="cursor:pointer;" /></div></div> </div>
 
                         <div class="descrp-area"> {section name=catCounter loop=$auctionItems[counter].categories}
                           {if $auctionItems[counter].categories[catCounter].fk_cat_type_id == 1}
@@ -239,7 +239,7 @@ $(document).ready(function(){
                           {/section} </div>                      </div>
 
                       <div class="poster-area-list">
-                        <!--<input type="button" class="bidnow-btn" value="Details" onclick="redirect_poster_details({$auctionItems[counter].auction_id});"/>-->
+                        <!--<input type="button" class="bidnow-btn" value="Details" onclick="redirect_poster_details({$auctionItems[counter].auction_id}, 2);"/>-->
                       </div></td>
                     <td class="list-soldItems" valign="top"> {if $auctionItems[counter].fk_auction_type_id == 1}
                       <div class="auction-row">

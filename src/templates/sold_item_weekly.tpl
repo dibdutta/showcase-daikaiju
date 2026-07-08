@@ -110,7 +110,7 @@ function show_text(){
 								  <tr>
 									
 									<td width="200" class="buylisttb">
-									<div><img  class="image-brdr" src="{$dataJstFinishedAuction[counter].image_path}"  onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});" style="cursor:pointer;" /></div>
+									<div><img  class="image-brdr" src="{$dataJstFinishedAuction[counter].image_path}"  onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id}, 0, 1);" style="cursor:pointer;" /></div>
 									 
 																   
 																 

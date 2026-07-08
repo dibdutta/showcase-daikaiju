@@ -147,7 +147,7 @@ function chkQuantity(id,quantity,inputId){
                                 {section name=counter loop=$cart}
                                 <tr>								    
                                     <td align="left"><input type="checkbox" name="auction_ids[]" value="{$cart[counter].auction_id}" class="checkBox" /></td>
-                                    <td align="left" class="text"><span style="cursor:pointer;" onclick="redirect_poster_details({$cart[counter].auction_id});">{$cart[counter].poster_title}&nbsp;</span></td>
+                                    <td align="left" class="text"><span style="cursor:pointer;" onclick="redirect_poster_details({$cart[counter].auction_id}, {if $cart[counter].fk_auction_type_id=='1'}1{else}2{/if});">{$cart[counter].poster_title}&nbsp;</span></td>
                                     <td align="" class="text">
 									{if $cart[counter].fk_auction_type_id =='6'}
 									 $<span class="amount">{$cart[counter].auction_asked_price|number_format:2} </span>

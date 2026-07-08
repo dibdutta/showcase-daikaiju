@@ -1412,7 +1412,14 @@ function remove_dummy_password(){
 
 function redirect_poster_details(auction_id,type,sold)
 {
-	window.location="poster/"+auction_id;
+	// Route through buy.php so the fixed/sold hints (when the caller has them) disambiguate
+	// tbl_auction vs tbl_auction_live ID collisions. buy.php then 301s to the canonical
+	// /poster/{id}/{slug} URL, so the final address is still the SEO-friendly one.
+	var url = "buy?mode=poster_details&auction_id=" + auction_id;
+	if (type == 1) { url += "&fixed=1"; }
+	else if (type == 2) { url += "&live_item=1"; }
+	if (sold == 1) { url += "&sold=1"; }
+	window.location = url;
 }
 
 function redirect_to_cart(auction_id, user_id)

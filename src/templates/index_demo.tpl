@@ -180,9 +180,10 @@ function updateArrows(wrap) {
                     {section name=counter loop=$dataArrWeekly}
                         <div class="hp-card">
                             <div class="hp-card-img-wrap">
+                                <a href="{$dataArrWeekly[counter].poster_url}">
                                 <img src="{$dataArrWeekly[counter].large_image}"
-                                     alt="{$dataArrWeekly[counter].poster_title}"
-                                     onclick="redirect_poster_details({$dataArrWeekly[counter].auction_id});">
+                                     alt="{$dataArrWeekly[counter].poster_title}">
+                                </a>
                             </div>
                             <div class="hp-card-body">
                                 {if $smarty.session.sessUserID <> ""}
@@ -259,9 +260,10 @@ function updateArrows(wrap) {
                     {section name=counter loop=$dataArrFixed}
                         <div class="hp-card">
                             <div class="hp-card-img-wrap">
+                                <a href="{$dataArrFixed[counter].poster_url}">
                                 <img src="{$dataArrFixed[counter].large_image}"
-                                     alt="{$dataArrFixed[counter].poster_title}"
-                                     onclick="redirect_poster_details({$dataArrFixed[counter].auction_id}, 1);">
+                                     alt="{$dataArrFixed[counter].poster_title}">
+                                </a>
                             </div>
                             <div class="hp-card-body">
                                 {if $smarty.session.sessUserID <> ""}
@@ -298,9 +300,10 @@ function updateArrows(wrap) {
                     {section name=counter loop=$dataJstFinishedAuction}
                         <div class="hp-card">
                             <div class="hp-card-img-wrap">
+                                <a href="{$dataJstFinishedAuction[counter].poster_url}">
                                 <img src="{$dataJstFinishedAuction[counter].large_image}"
-                                     alt="{$dataJstFinishedAuction[counter].poster_title}"
-                                     onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id}{if $dataJstFinishedAuction[counter].fk_auction_type_id == 1}, 1{else}, 0{/if}, 1);">
+                                     alt="{$dataJstFinishedAuction[counter].poster_title}">
+                                </a>
                             </div>
                             <div class="hp-card-body">
                                 {if $smarty.session.sessUserID <> ""}

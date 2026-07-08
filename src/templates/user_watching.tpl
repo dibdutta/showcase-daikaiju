@@ -13,10 +13,6 @@ $(document).ready(function(){
 	}				   
 })
 
-function redirect_poster_details(auction_id)
-{
-	window.location="poster/"+auction_id;
-}
 </script>
 <script type="text/javascript">
 function toggleDiv(id,flagit,type,track) {
@@ -210,7 +206,7 @@ function toggleDiv(id,flagit,type,track) {
                                    
 						    </td>
 							<td width="200" class="buylisttb">
-<div><a href="#"><img  class="image-brdr"  src="{$watchingItems[counter].image_path}"  onclick="redirect_poster_details({$watchingItems[counter].auction_id});" style="cursor:pointer;"  /></a>
+<div><a href="#"><img  class="image-brdr"  src="{$watchingItems[counter].image_path}"  onclick="redirect_poster_details({$watchingItems[counter].auction_id}, {if $watchingItems[counter].fk_auction_type_id=='1'}1{else}2{/if});" style="cursor:pointer;"  /></a>
                                            
 										   </div>								
 								 
@@ -218,7 +214,7 @@ function toggleDiv(id,flagit,type,track) {
 							<td valign="top" class="pr10">
                   <!--3rd td-->  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 								    <tr>
-        							<td class="pb20"><h1><a href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}" style="cursor:pointer;" ><strong>{$watchingItems[counter].poster_title}&nbsp;</strong></a> </h1></td>
+        							<td class="pb20"><h1><a href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}{if $watchingItems[counter].fk_auction_type_id=='1'}&fixed=1{else}&live_item=1{/if}" style="cursor:pointer;" ><strong>{$watchingItems[counter].poster_title}&nbsp;</strong></a> </h1></td>
       							  </tr>
 								    <tr>
 									<td class="buylisttbtopbg"></td>

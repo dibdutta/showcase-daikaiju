@@ -1106,6 +1106,10 @@ if(isset($_SESSION['sessUserID'])){
 		$auctionDetails=$objAuction->select_details_auction($auction_id,1);
 	}elseif(isset($_REQUEST['extended']) && $_REQUEST['extended']=="true") {
 		$auctionDetails=$objAuction->select_details_auction($auction_id,'',1);
+	}elseif(isset($_REQUEST['live_item']) && $_REQUEST['live_item']==1){
+		// Caller knows this is a currently-active live/weekly/monthly auction (e.g. an open bid or
+		// a watched live item) — check tbl_auction_live first instead of defaulting to tbl_auction.
+		$auctionDetails=$objAuction->select_details_auction($auction_id);
 	}else{
 		// tbl_auction and tbl_auction_live have independent auto-increment sequences so their
 		// auction_ids can collide. We use the slug from the URL as a tie-breaker:
