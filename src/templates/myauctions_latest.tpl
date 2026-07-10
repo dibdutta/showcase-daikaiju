@@ -119,7 +119,7 @@ function fancy_images(i){
 											 {/if} 
                                             &nbsp;
                                           
-                                            <span style="cursor:pointer;" onclick="redirect_poster_details({$auction[counter].auction_id});"><strong>{$auction[counter].poster_title}&nbsp;(#{$auction[counter].poster_sku})</strong></span>
+                                            <span style="cursor:pointer;" onclick="redirect_poster_details({$auction[counter].auction_id}, {if $auction[counter].fk_auction_type_id=='1'}1{else}2{/if});"><strong>{$auction[counter].poster_title}&nbsp;(#{$auction[counter].poster_sku})</strong></span>
                                             <div class="clear"></div>
                                         </div>
                                         <div class="poster-area-list">

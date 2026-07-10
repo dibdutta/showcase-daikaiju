@@ -91,12 +91,12 @@
                                             <div id="gallery_{$smarty.section.counter.index}" class="posterdetails">
                                                 <table align="center"><tbody><tr><td align="left" valign="top" style="border:none; vertical-align:top;">
                                                     <div class="shadowbottom">
-                                                        <div class="shadow-bringer shadow"><img  class="image-brdr" src="{$auctionRows[counter].image_path}" border="0"  border="0" onclick="redirect_poster_details({$auctionRows[counter].auction_id});" style="cursor:pointer;" /></div></div>
+                                                        <div class="shadow-bringer shadow"><img  class="image-brdr" src="{$auctionRows[counter].image_path}" border="0"  border="0" onclick="redirect_poster_details({$auctionRows[counter].auction_id}, 1);" style="cursor:pointer;" /></div></div>
                                                 </td></tr></tbody></table>
                                             </div>
                                         </td>
                                         <td width="21%" valign="top">
-                                            <p class="poster-txt" style="cursor:pointer;" onclick="redirect_poster_details({$auctionRows[counter].auction_id});"><b>{$auctionRows[counter].poster_title}</b>&nbsp;{*$auctionRows[counter].poster_sku*}</p>
+                                            <p class="poster-txt" style="cursor:pointer;" onclick="redirect_poster_details({$auctionRows[counter].auction_id}, 1);"><b>{$auctionRows[counter].poster_title}</b>&nbsp;{*$auctionRows[counter].poster_sku*}</p>
                                             <p class="poster-txt">
                                                 {section name=catCounter loop=$auctionRows[counter].categories}
                                                     {if $auctionRows[counter].categories[catCounter].fk_cat_type_id == 1}

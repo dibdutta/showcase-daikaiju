@@ -51,7 +51,7 @@
                                             {if $totalBids > 0}
                                             {section name=counter loop=$bidDetails}
                                             <tr>
-                                                <td  width="55%"><span style="cursor:pointer;" onclick="redirect_poster_details({$bidDetails[counter].auction_id});"><!--<img src="{$bidDetails[counter].image_path}" width="20px" height="20px" border="0" />-->{$bidDetails[counter].poster_title}</span></td>
+                                                <td  width="55%"><span style="cursor:pointer;" onclick="redirect_poster_details({$bidDetails[counter].auction_id}, 2);"><!--<img src="{$bidDetails[counter].image_path}" width="20px" height="20px" border="0" />-->{$bidDetails[counter].poster_title}</span></td>
                                                 <td width="18%" class="tal">{$bidDetails[counter].bids[0].post_date}</td>
                                                 <td width="19%" class="tal">${$bidDetails[counter].bids[0].bid_amount}</td>
                                             </tr>                                        
@@ -85,7 +85,7 @@
                                             {if $totalOffers > 0}
                                             {section name=counter loop=$dataOfr}
                                             <tr>
-                                                <td  width="55%" class="tal"><span style="cursor:pointer;" onclick="redirect_poster_details({$dataOfr[counter].auction_id});"><!--<img src="{$dataOfr[counter].image_path}" width="20px" height="20px" border="0" />-->{$dataOfr[counter].poster_title}</span></td>
+                                                <td  width="55%" class="tal"><span style="cursor:pointer;" onclick="redirect_poster_details({$dataOfr[counter].auction_id}, 1);"><!--<img src="{$dataOfr[counter].image_path}" width="20px" height="20px" border="0" />-->{$dataOfr[counter].poster_title}</span></td>
                                                 <td width="18%"  class="tal">{$dataOfr[counter].post_date|date_format:"%m/%d/%Y"}</td>
                                                 <td width="19%"  class="tal">${$dataOfr[counter].offer_amount}</td>
                                             </tr>
@@ -117,7 +117,7 @@
                                             {if $totalSelling > 0}
                                             {section name=counter loop=$sellingItem}
                                             <tr>
-                                                <td  width="75%" class="tal"><span style="cursor:pointer;" onclick="redirect_poster_details({$sellingItem[counter].auction_id});"><!--<img src="{$sellingItem[counter].image_path}" width="20px" height="20px" border="0" />-->{$sellingItem[counter].poster_title}</span></td>
+                                                <td  width="75%" class="tal"><span style="cursor:pointer;" onclick="redirect_poster_details({$sellingItem[counter].auction_id}, {if $sellingItem[counter].fk_auction_type_id=='1'}1{else}2{/if});"><!--<img src="{$sellingItem[counter].image_path}" width="20px" height="20px" border="0" />-->{$sellingItem[counter].poster_title}</span></td>
                                                 <td width="25%"  class="tal">&nbsp;{if $sellingItem[counter].fk_auction_type_id=='1' }{if $sellingItem[counter].highest_offer > 0}${$sellingItem[counter].highest_offer}{else}--{/if}{else}{if $sellingItem[counter].highest_bid >0}${$sellingItem[counter].highest_bid}{else}--{/if}{/if}</td>
                                                 
                                             </tr>
@@ -150,7 +150,7 @@
                                             {if $total > 0}
                                              {section name=counter loop=$dataJstFinishedAuction}
                                             <tr>
-                                                <td  width="75%" class="tal"><span style="cursor:pointer;" onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id});"><!--<img src="{$dataJstFinishedAuction[counter].image_path}" width="20px" height="20px" border="0" />-->{$dataJstFinishedAuction[counter].poster_title}</span></td>
+                                                <td  width="75%" class="tal"><span style="cursor:pointer;" onclick="redirect_poster_details({$dataJstFinishedAuction[counter].auction_id}, 0, 1);"><!--<img src="{$dataJstFinishedAuction[counter].image_path}" width="20px" height="20px" border="0" />-->{$dataJstFinishedAuction[counter].poster_title}</span></td>
                                                 <td width="25%"  class="tal">${$dataJstFinishedAuction[counter].soldamnt}</td>
                                             </tr>
                                             {/section}

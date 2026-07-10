@@ -167,8 +167,8 @@ function clear_text(){
 										{if $auction[counter].fk_auction_type_id == 1}
 											<h1><span style="cursor:pointer;" onclick="redirect_poster_details({$auction[counter].auction_id},1);">{$auction[counter].poster_title}&nbsp;(#{$auction[counter].poster_sku})</span></h1>
 										{else}
-											<h1><span style="cursor:pointer;" onclick="redirect_poster_details({$auction[counter].auction_id});">{$auction[counter].poster_title}&nbsp;(#{$auction[counter].poster_sku})</span></h1>
-										{/if} 
+											<h1><span style="cursor:pointer;" onclick="redirect_poster_details({$auction[counter].auction_id}, 2);">{$auction[counter].poster_title}&nbsp;(#{$auction[counter].poster_sku})</span></h1>
+										{/if}
 									
 									
 									</td>

@@ -8,10 +8,6 @@ $(document).ready(function(){
 	setTimeout(function() { timeLeft(dataArr); }, 3000);
 })
 
-function redirect_poster_details(auction_id)
-{
-	window.location="poster/"+auction_id;
-}
 function lightbox_images_poster(){
     $(function() {
         $('#gallery a').lightBox();
@@ -114,7 +110,7 @@ function toggleDiv(id,flagit,type,track) {
 							<table class="list-view-main" cellpadding="0" cellspacing="0" border="0">
                             <tr>
 							<td width="200" valign="top" class="buylisttb">
-							<div><a href="#"><img  class="image-brdr"  src="{$mywantlist_array[counter].image_path}" border="0" onclick="redirect_poster_details({$mywantlist_array[counter].auction_id});" style="cursor:pointer;" /></a>
+							<div><a href="#"><img  class="image-brdr"  src="{$mywantlist_array[counter].image_path}" border="0" onclick="redirect_poster_details({$mywantlist_array[counter].auction_id}, {if $mywantlist_array[counter].fk_auction_type_id=='1'}1{else}2{/if});" style="cursor:pointer;" /></a>
                                            
 										   </div>	
 							</td>
@@ -122,7 +118,7 @@ function toggleDiv(id,flagit,type,track) {
 							<td valign="top" class="pr10">
                   <!--3rd td-->  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 								    <tr>
-        							<td class="pb20"><h1><a href="{$actualPath}/buy?mode=poster_details&auction_id={$mywantlist_array[counter].auction_id}" style="cursor:pointer;" ><strong>{$mywantlist_array[counter].poster_title}&nbsp;</strong></a> </h1></td>
+        							<td class="pb20"><h1><a href="{$actualPath}/buy?mode=poster_details&auction_id={$mywantlist_array[counter].auction_id}{if $mywantlist_array[counter].fk_auction_type_id=='1'}&fixed=1{else}&live_item=1{/if}" style="cursor:pointer;" ><strong>{$mywantlist_array[counter].poster_title}&nbsp;</strong></a> </h1></td>
       							  </tr>
 								    <tr>
 									<td class="buylisttbtopbg"></td>

@@ -178,13 +178,13 @@ function toggleDiv(id,flagit) {
                                         <div id="gallery_{$smarty.section.counter.index}" style="margin:12px;">
                                         <table align="center"><tbody><tr><td align="left" valign="middle" style="border:none;">
                                                 <div class="buylisttb">
-                                       <div><img  class="image-brdr" src="{$bidDetails[counter].image_path}" border="0"  border="0" onclick="redirect_poster_details({$bidDetails[counter].auction_id});" style="cursor:pointer;" /></div></div>
+                                       <div><img  class="image-brdr" src="{$bidDetails[counter].image_path}" border="0"  border="0" onclick="redirect_poster_details({$bidDetails[counter].auction_id}, 2);" style="cursor:pointer;" /></div></div>
                                        </td></tr></tbody></table>
                                          </div>
                                        </div>
                                     </td>
                                     <td style="width:129px;" valign="top" class="text">
-                                    <span style="cursor:pointer;" onclick="redirect_poster_details({$bidDetails[counter].auction_id});"> &nbsp;&nbsp;{$bidDetails[counter].poster_title}{*$bidDetails[counter].poster_sku*}</span><br/><br/>
+                                    <span style="cursor:pointer;" onclick="redirect_poster_details({$bidDetails[counter].auction_id}, 2);"> &nbsp;&nbsp;{$bidDetails[counter].poster_title}{*$bidDetails[counter].poster_sku*}</span><br/><br/>
                                      {if $bidDetails[counter].fk_auction_type_id==3}
                                         <strong>&nbsp;&nbsp;Start Bid</strong><br />
                                         <span><em>&nbsp;&nbsp;${$bidDetails[counter].auction_asked_price|number_format:2}</em></span><br />
