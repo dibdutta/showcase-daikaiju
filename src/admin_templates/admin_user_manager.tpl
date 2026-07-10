@@ -30,25 +30,16 @@ function view_all(){
 								<table align="center" width="96%" border="0" cellspacing="1" cellpadding="2" class="header_bordercolor" >
 									<tbody>
 									<tr>
-									<td colspan="2">Sort By:&nbsp;
-									<select name="search" class="look" id='search_id' onChange="this.form.submit();">
-                                        	<option value="FIRSTNAME" selected="selected" >{$userNameTXT}</option>
-											<option value="USERNAME" {if $search == "USERNAME"} selected="selected"{/if} >{$userIdTXT}</option>
-                                        	<option value="EMAIL" {if $search == "EMAIL"} selected="selected"{/if} >{$emailTXT}</option>
-<!--                                        	<option value="weekly" {if $search == "weekly"} selected="selected"{/if} >Weekly</option>-->
-<!--                                        	<option value="monthly" {if $search == "monthly"} selected="selected"{/if} >Monthly</option>-->
-										</select>
-									</td>
-									<td colspan="3">Search:&nbsp;<input type="text" name="search_user" value="{$search_user_by}" class="look">&nbsp;<input type="submit"  value="Search" class="button">
+									<td colspan="5">Search (First Name, Last Name or Username):&nbsp;<input type="text" name="search_user" value="{$search_user_by}" class="look">&nbsp;<input type="submit"  value="Search" class="button">
 									&nbsp;<input type="button"  value="View All" class="button" onclick="view_all()"></td>
 									</tr>
 									{if $total>0}
 										<tr class="header_bgcolor" height="26">
 											<td align="center" class="headertext" width="6%"></td >
-											<td align="center" class="headertext" width="15%">{$userNameTXT}</td>
-											<td align="center" class="headertext" width="15%">{$userIdTXT}</td>
-											<td align="center" class="headertext" width="15%">{$emailTXT}</td>
-											<td align="center" class="headertext" width="15%">Date of Creation</td>
+											<td align="center" class="headertext" width="15%"><a href="{$adminActualPath}/admin_user_manager.php?encoded_string={$encoded_string}&search_user={$search_user_by|escape:"url"}&order_by=firstname&order_type={if $order_by == 'firstname' && $order_type == 'ASC'}DESC{else}ASC{/if}" class="headertext">{$userNameTXT}{if $order_by == 'firstname'}&nbsp;{if $order_type == 'ASC'}&#9650;{else}&#9660;{/if}{/if}</a></td>
+											<td align="center" class="headertext" width="15%"><a href="{$adminActualPath}/admin_user_manager.php?encoded_string={$encoded_string}&search_user={$search_user_by|escape:"url"}&order_by=username&order_type={if $order_by == 'username' && $order_type == 'ASC'}DESC{else}ASC{/if}" class="headertext">{$userIdTXT}{if $order_by == 'username'}&nbsp;{if $order_type == 'ASC'}&#9650;{else}&#9660;{/if}{/if}</a></td>
+											<td align="center" class="headertext" width="15%"><a href="{$adminActualPath}/admin_user_manager.php?encoded_string={$encoded_string}&search_user={$search_user_by|escape:"url"}&order_by=email&order_type={if $order_by == 'email' && $order_type == 'ASC'}DESC{else}ASC{/if}" class="headertext">{$emailTXT}{if $order_by == 'email'}&nbsp;{if $order_type == 'ASC'}&#9650;{else}&#9660;{/if}{/if}</a></td>
+											<td align="center" class="headertext" width="15%"><a href="{$adminActualPath}/admin_user_manager.php?encoded_string={$encoded_string}&search_user={$search_user_by|escape:"url"}&order_by=post_date&order_type={if $order_by == 'post_date' && $order_type == 'ASC'}DESC{else}ASC{/if}" class="headertext">Date of Creation{if $order_by == 'post_date'}&nbsp;{if $order_type == 'ASC'}&#9650;{else}&#9660;{/if}{/if}</a></td>
 											<td align="center" class="headertext" width="15%">{$statusTXT}</td >
 											<td align="center" class="headertext" width="15%">Action</td>
 										</tr>

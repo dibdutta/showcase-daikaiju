@@ -86,11 +86,12 @@ class User extends DBCommon{
 	}
 	
 	function totalUsers($search_user_by=''){
-		$sql = "SELECT COUNT(".$this->_userID.") AS counter 
-				FROM ".$this->_userTable." 
+		$sql = "SELECT COUNT(".$this->_userID.") AS counter
+				FROM ".$this->_userTable."
 				WHERE ";
 		if($search_user_by!=''){
-			$sql.= "  ".$this->_email." like '%".$search_user_by."%' or ".$this->_lastname." like '%".$search_user_by."%' or ".$this->_firstname." like '%".$search_user_by."%' ";
+			$_search = mysqli_real_escape_string($GLOBALS['db_connect'], $search_user_by);
+			$sql.= "  ".$this->_email." like '%".$_search."%' or ".$this->_lastname." like '%".$_search."%' or ".$this->_firstname." like '%".$_search."%' or ".$this->_username." like '%".$_search."%' ";
 		}else{
 			$sql.=' 1 ';
 		}
@@ -114,13 +115,14 @@ class User extends DBCommon{
 	
 	function fetchAllUsers($search_user_by=''){
 		$sql = "SELECT * FROM ".$this->_userTable." WHERE ";
-		
+
 		if($search_user_by!=''){
-			$sql.= "  ".$this->_email." like '%".$search_user_by."%' or ".$this->_lastname." like '%".$search_user_by."%' or ".$this->_firstname." like '%".$search_user_by."%' ";
+			$_search = mysqli_real_escape_string($GLOBALS['db_connect'], $search_user_by);
+			$sql.= "  ".$this->_email." like '%".$_search."%' or ".$this->_lastname." like '%".$_search."%' or ".$this->_firstname." like '%".$_search."%' or ".$this->_username." like '%".$_search."%' ";
 		}else{
 			$sql.=" 1 ";
 		}
-		$sql.=" ORDER BY ".$this->orderBy." ".$this->orderType." 
+		$sql.=" ORDER BY ".$this->orderBy." ".$this->orderType."
 				LIMIT ".$this->offset.", ".$this->toShow." ";
 		//echo $sql;		  
 		if($res = mysqli_query($GLOBALS['db_connect'],$sql)){

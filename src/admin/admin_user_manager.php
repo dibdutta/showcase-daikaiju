@@ -64,39 +64,29 @@ function dispmiddle(){
 	$obj = new User();
 	$obj->status = "";
 	$total = $obj->totalUsers($_REQUEST['search_user'] ?? '');
-	if(!isset($_REQUEST['search'])){
-		$_REQUEST['search']='USERNAME';
-	}
 	if(isset($_REQUEST['search_user'])){
 		$search_user_by=trim($_REQUEST['search_user']);
-		
 	}else{
 		$search_user_by='';
 	}
 
-	
 		$smarty->assign('search_user_by', "$search_user_by");
 		$smarty->assign('userNameTXT', "User Name");
-		$smarty->assign('userIdTXT', "User Id");
-		//$smarty->assign('userNameTXT', orderBy("User Name", USERNAME, 1, "toplink"));
+		$smarty->assign('userIdTXT', "Username");
 		$smarty->assign('emailTXT', "Email Address");
 		$smarty->assign('statusTXT', "Status");
-		
+
 		$smarty->assign('startIndex', $GLOBALS['offset']+1);
 		if($total>0){
-		if(isset($_REQUEST['order_by'])){
-			$obj->orderBy = $_REQUEST['order_by'];
-		}else{
-			$obj->orderBy = $_REQUEST['search'] ?? 'USERNAME';
-		}
-		$smarty->assign('search', $_REQUEST['search'] ?? 'USERNAME');
-		if(isset($_REQUEST['order_type'])){
-			$obj->orderType = $_REQUEST['order_type'];
-		}else{
-			$obj->orderType = 'ASC';
-		}
-		//$obj->orderBy = USER_ID;
-		//$obj->orderType = 'DESC';
+		// Whitelist sortable columns so order_by can't be used to inject arbitrary SQL.
+		$_sortableColumns = array(FIRSTNAME, LASTNAME, USERNAME, EMAIL, POST_DATE);
+		$_orderBy = strtolower(trim($_REQUEST['order_by'] ?? ''));
+		$obj->orderBy = in_array($_orderBy, $_sortableColumns) ? $_orderBy : USERNAME;
+
+		$obj->orderType = (isset($_REQUEST['order_type']) && strtoupper($_REQUEST['order_type']) == 'DESC') ? 'DESC' : 'ASC';
+
+		$smarty->assign('order_by', $obj->orderBy);
+		$smarty->assign('order_type', $obj->orderType);
 		$row = $obj->fetchAllUsers($search_user_by);
 		$row = $row ?? [];
 
