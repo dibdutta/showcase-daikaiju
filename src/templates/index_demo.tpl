@@ -36,7 +36,6 @@ function formSubmit(){
     document.getElementById("frm1").submit();
 }
 
-/* ── Carousel logic ─────────────────────────────────────────────────────── */
 $(function(){
     $('.hp-carousel-wrap').each(function(){
         updateArrows($(this));
