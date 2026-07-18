@@ -212,6 +212,22 @@ $(document).ready(function() {
 		);
 	});
 
+	$("#mark_as_shipped_btn").click(function(){
+		var invoice_id = $("#invoice_id").val();
+		if(!confirm("Are you sure to mark this invoice as shipped?")){ return; }
+		$.get("admin_manage_auction_week.php", { mode:"mark_shipped_buyer_invoice", "invoice_id": invoice_id },
+			function(data) {
+				if(data=='1'){
+					alert("Successfully marked as shipped.");
+					location.reload();
+				}else if(data=='3'){
+					alert("Please enter and save a tracking number before marking this invoice as shipped.");
+				}else{
+					alert("Failed to mark as shipped.");
+				}
+			});
+	});
+
 });
 
 function del_charge(id){
@@ -318,6 +334,8 @@ function del_discount(id)
                             &nbsp;<span id="tracking_status" style="font-size:11px;"></span>
                             {if $invoiceData.is_shipped=='1'}
                                 &nbsp;<span style="color:green; font-size:11px; font-weight:bold;">&#10003; Shipped{if $invoiceData.shipped_date} on {$invoiceData.shipped_date|date_format:"%b %d, %Y"}{/if}</span>
+                            {elseif $chk_item_type=='1' && $invoiceData.is_paid=='1'}
+                                &nbsp;<input type="button" id="mark_as_shipped_btn" value="Mark as Shipped" class="button" style="font-size:11px;" />
                             {/if}
                         </td>
                     </tr>
