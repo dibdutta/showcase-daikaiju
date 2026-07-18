@@ -112,7 +112,12 @@ function build_email_html($user, $week_info, $intro, $week_link) {
             ? '<img src="' . $img_url . '" width="130" height="130" alt="" style="display:block;object-fit:cover;border-radius:6px;">'
             : '<div style="width:130px;height:130px;background:#0f3460;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#555;font-size:11px;">No Image</div>';
 
-        $item_url = 'https://' . HOST_NAME . '/buy.php?mode=poster_details&auction_id=' . (int)$item['auction_id'] . '&live=1';
+        // Use the same SEO-friendly /poster/{id}/{slug} URL as the weekly listing page
+        // (buy?list=weekly) instead of the old query-string link. tbl_auction and
+        // tbl_auction_live share the same auction_id sequence space, so a bare numeric
+        // ID can collide with an unrelated fixed-price item; the slug lets poster_details()
+        // resolve to the correct live-table item instead of guessing.
+        $item_url = posterUrl($item['auction_id'], $item['poster_title']);
         $end_fmt  = date('D, M j \a\t g:i A', strtotime($item['auction_actual_end_datetime'])) . ' EDT';
 
         $secs_left = strtotime($item['auction_actual_end_datetime']) - time();

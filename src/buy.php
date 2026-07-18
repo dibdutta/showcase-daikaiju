@@ -1106,9 +1106,10 @@ if(isset($_SESSION['sessUserID'])){
 		$auctionDetails=$objAuction->select_details_auction($auction_id,1);
 	}elseif(isset($_REQUEST['extended']) && $_REQUEST['extended']=="true") {
 		$auctionDetails=$objAuction->select_details_auction($auction_id,'',1);
-	}elseif(isset($_REQUEST['live_item']) && $_REQUEST['live_item']==1){
-		// Caller knows this is a currently-active live/weekly/monthly auction (e.g. an open bid or
-		// a watched live item) — check tbl_auction_live first instead of defaulting to tbl_auction.
+	}elseif((isset($_REQUEST['live_item']) && $_REQUEST['live_item']==1) || !empty($_REQUEST['live'])){
+		// Caller knows this is a currently-active live/weekly/monthly auction (e.g. an open bid,
+		// a watched live item, or an outbid email link that didn't map to an archived auction
+		// above) — check tbl_auction_live first instead of defaulting to tbl_auction.
 		$auctionDetails=$objAuction->select_details_auction($auction_id);
 	}else{
 		// tbl_auction and tbl_auction_live have independent auto-increment sequences so their
