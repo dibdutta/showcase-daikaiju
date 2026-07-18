@@ -126,6 +126,8 @@
 					    if(data==1){
 						$("#shipped").hide();
                             alert("Successfully marked as Shipped.");
+						 }else if(data==3){
+							alert("Please enter a tracking number for this invoice before marking it as shipped.");
 						 }else{
 							alert("Falied to mark as Shipped.");
 						 }

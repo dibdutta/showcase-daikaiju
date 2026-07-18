@@ -1157,9 +1157,41 @@ class Invoice extends DBCommon{
 			if(isset($toMailPeter) && $toMailPeter!=''){
 				$check = sendMail($toMailPeter, $toNamePeter, $subject, $textContent, $fromMail, $fromName, $html=1);
 			}
-			
-			
+
+
 		}
+	}
+
+	function mailShipped($invoice_id)
+	{
+		$sql = "SELECT usr.email, usr.firstname, usr.lastname, inv.invoice_id, inv.tracking_number
+				FROM ".TBL_INVOICE." inv, ".USER_TABLE." usr
+				WHERE usr.user_id = inv.fk_user_id AND inv.invoice_id = '".(int)$invoice_id."'";
+		$rs = mysqli_query($GLOBALS['db_connect'], $sql);
+		$row = mysqli_fetch_array($rs);
+		if(!$row || empty($row['email'])){
+			return false;
+		}
+
+		$toMail = $row['email'];
+		$toName = $row['firstname']." ".$row['lastname'];
+		$fromMail = ADMIN_EMAIL_ADDRESS;
+		$fromName = ADMIN_NAME;
+		$subject = "Kaijulink::Your order #".$row['invoice_id']." has shipped";
+
+		$textContent = 'Dear '.$row['firstname'].' '.$row['lastname'].',<br /><br />';
+		$textContent .= 'Good news! Your order has shipped.<br /><br />';
+		$textContent .= '<b>Order Number:</b> '.$row['invoice_id'].'<br /><br />';
+		if(!empty($row['tracking_number'])){
+			$textContent .= '<b>Tracking Number:</b> '.htmlspecialchars($row['tracking_number']).'<br /><br />';
+		}else{
+			$textContent .= 'We will send your tracking number as soon as it is available.<br /><br />';
+		}
+		$textContent .= 'For more details, please <a href="https://'.HOST_NAME.'/">login</a> and go to <b>My Account &gt; Invoices/Reconciliation</b>.<br /><br />';
+		$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
+		$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;
+
+		return sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 	}
 	
 	function auctionWinnerForReport($auction_id){

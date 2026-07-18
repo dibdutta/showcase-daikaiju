@@ -248,33 +248,32 @@ define("CLOUD_TEST_THUMB_BUY_GALLERY","http://c15168210.r10.cf2.rackcdn.com/");
 
 //////////////   Mail Body variables   ///////////////////////////////
 	
-define ('MAIL_BODY_TOP', '<html><head></head><body style="  padding:0px; margin:0px;">
-<table align="center" bgcolor="#FFFFFF" width="600px" border="0" cellspacing="0" cellpadding="0"> 
+define ('MAIL_BODY_TOP', '<html><head></head><body style="padding:0px; margin:0px; background-color:#eeeeee;">
+<table align="center" bgcolor="#eeeeee" width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td align="center" style="padding:24px 12px;">
+<table align="center" bgcolor="#FFFFFF" width="600" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #dbd9da; border-collapse:collapse;">
 
 	<tr>
-		<td background="'.CLOUD_STATIC.'emailer-bg.png" width="100%" height="10"> 
-		</td>
+		<td width="100%" height="4" style="font-size:0; line-height:0; background-color:#c0392b;">&nbsp;</td>
 	</tr>
 	<tr>
-		<td valign="middle" width="100%" style=" padding:10px;border-left:1px solid #dbd9da; border-right:1px solid #dbd9da; background-color:#f5f5f5; border-bottom:1px solid #dbd9da;">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-			</table>
+		<td align="center" valign="middle" width="100%" style="padding:22px 10px; background-color:#f7f7f7; border-bottom:1px solid #dbd9da;">
+			<img src="'.CLOUD_STATIC.'kaiju-link-logo.jpg" alt="Kaijulink" width="155" height="64" style="display:block; border:0;" />
 		</td>
 	</tr>
-	<tr><td width="100%" valign="top" style="border-left:1px solid #dbd9da; border-right:1px solid #dbd9da; padding: 5px; font-family: Trebuchet MS, Arial, Helvetica, sans-serif; font-size:14px;"><br />');
+	<tr><td width="100%" valign="top" style="padding: 25px 30px; font-family: Trebuchet MS, Arial, Helvetica, sans-serif; font-size:14px; line-height:1.5; color:#333333;">');
 
 define ('MAIL_BODY_BOTTOM', '</td></tr>
 <tr>
-<td  background="'.CLOUD_STATIC.'footer-bg.png"  width="100%" height="75">
-	<table align="center" width="100%" cellspacing="0" cellpadding="0">
-		<tr>
-			<td align="right"><p style="padding: 5px; font-family: Trebuchet MS, Arial, Helvetica, sans-serif; font-size:12px; color: #a2a8ab;" ><span>&copy; ' . date('Y') . '. All rights reserved.</span>
-			</td>
-		</tr>
-	</table>
+<td align="center" width="100%" style="padding:16px; background-color:#2b2b2b;">
+	<p style="margin:0; padding:0; font-family: Trebuchet MS, Arial, Helvetica, sans-serif; font-size:12px; color:#bbbbbb;">&copy; ' . date('Y') . ' Kaijulink. All rights reserved.</p>
 </td>
-</tr></table>
-
+</tr>
+</table>
+</td>
+</tr>
+</table>
 </body></html>');
 	
 ////////////////////////////////////////////////////////////////

@@ -1792,7 +1792,7 @@ function save_tracking_number() {
     if (!$invoiceId) { echo json_encode(['ok' => false]); exit; }
     $db = $GLOBALS['db_connect'];
     $safe = mysqli_real_escape_string($db, $trackingNumber);
-    $ok = mysqli_query($db, "UPDATE tbl_invoice SET tracking_number='$safe', is_shipped=1, shipped_date=NOW() WHERE invoice_id=$invoiceId");
+    $ok = mysqli_query($db, "UPDATE tbl_invoice SET tracking_number='$safe' WHERE invoice_id=$invoiceId");
     echo json_encode(['ok' => (bool)$ok]);
     exit;
 }

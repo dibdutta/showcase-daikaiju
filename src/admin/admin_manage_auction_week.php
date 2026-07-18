@@ -1037,7 +1037,17 @@ function combine_seller_invoice(){
     function mark_shipped_buyer_invoice(){
         require_once INCLUDE_PATH."lib/adminCommon.php";
         $dbCommonObj = new Invoice();
-        if($update=$dbCommonObj->updateData(TBL_INVOICE,array('shipped_date'=>date('Y-m-d :H:i:s'),'is_shipped'=>'1'),array('invoice_id'=>$_REQUEST['invoice_id']),true)){
+        $invoice_id = $_REQUEST['invoice_id'];
+        $prev = mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'], "SELECT is_shipped, tracking_number FROM ".TBL_INVOICE." WHERE invoice_id='".(int)$invoice_id."'"));
+        if(!$prev || trim((string)$prev['tracking_number']) === ''){
+            echo "3";
+            return;
+        }
+        $wasShipped = $prev['is_shipped']=='1';
+        if($update=$dbCommonObj->updateData(TBL_INVOICE,array('shipped_date'=>date('Y-m-d :H:i:s'),'is_shipped'=>'1'),array('invoice_id'=>$invoice_id),true)){
+            if(!$wasShipped){
+                $dbCommonObj->mailShipped($invoice_id);
+            }
             echo "1";
         }else{
             echo "2";

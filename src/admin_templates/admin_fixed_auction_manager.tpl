@@ -142,6 +142,8 @@ function reset_date(ele) {
 							if(data=='1'){
 								alert("Successfully invoice(s) are marked as shipped.");
 								$(".changeStatus_"+id).attr('src',"{/literal}{$smarty.const.CLOUD_STATIC_ADMIN}{literal}shipped.png");
+							}else if(data=='3'){
+								alert("Please enter a tracking number for this invoice before marking it as shipped.");
 							}else{
 								alert("Invoices are not marked as shipped.");
 							}

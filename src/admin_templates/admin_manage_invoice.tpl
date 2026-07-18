@@ -204,7 +204,7 @@ $(document).ready(function() {
 			{ invoice_id: invoice_id, tracking_number: tracking },
 			function(data) {
 				if (data.ok) {
-					$("#tracking_status").text("Saved! Item marked as shipped.").css("color","green");
+					$("#tracking_status").text("Tracking number saved.").css("color","green");
 				} else {
 					$("#tracking_status").text("Save failed.").css("color","red");
 				}
