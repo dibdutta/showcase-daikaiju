@@ -18,7 +18,33 @@
 .user-accordion-header:hover { background:#e0e8f0; }
 .user-accordion-body { padding:0 12px 12px; display:none; }
 .user-accordion-body.open { display:block; }
+.user-accordion.recipient-excluded { opacity:.5; }
+.recipient-checkbox { margin-right:10px; vertical-align:middle; }
 </style>
+<script>
+function updateRecipientCount(){
+  var checked = document.querySelectorAll('.recipient-checkbox:checked').length;
+  var sendBtn = document.getElementById('sendBtn');
+  if (sendBtn) {
+    sendBtn.value = 'Send Reminders to ' + checked + ' Recipient' + (checked != 1 ? 's' : '');
+    sendBtn.disabled = (checked === 0);
+  }
+  var countLabel = document.getElementById('selectedRecipientCount');
+  if (countLabel) { countLabel.textContent = checked; }
+}
+function toggleAllRecipients(checked){
+  var boxes = document.querySelectorAll('.recipient-checkbox');
+  for (var i = 0; i < boxes.length; i++) {
+    boxes[i].checked = checked;
+    boxes[i].closest('.user-accordion').classList.toggle('recipient-excluded', !checked);
+  }
+  updateRecipientCount();
+}
+function onRecipientCheckboxChange(cb){
+  cb.closest('.user-accordion').classList.toggle('recipient-excluded', !cb.checked);
+  updateRecipientCount();
+}
+</script>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -115,21 +141,29 @@
           {* Per-recipient preview *}
           <table width="90%" align="center" border="0" cellpadding="4" cellspacing="1" class="header_bordercolor" style="margin-bottom:16px;">
             <tr class="header_bgcolor" height="28">
-              <td class="headertext">&nbsp;Recipients Preview — click a row to expand items</td>
+              <td class="headertext">
+                &nbsp;Recipients Preview — click a row to expand items
+                &nbsp;&nbsp;
+                <a href="#" onclick="toggleAllRecipients(true); return false;" style="color:#fff;text-decoration:underline;font-weight:normal;">Select All</a>
+                &nbsp;|&nbsp;
+                <a href="#" onclick="toggleAllRecipients(false); return false;" style="color:#fff;text-decoration:underline;font-weight:normal;">Select None</a>
+              </td>
             </tr>
             <tr class="tr_bgcolor">
               <td style="padding:10px 12px;">
                 {section name=u loop=$users}
                   {assign var="user" value=$users[u]}
                   <div class="user-accordion">
-                    <div class="user-accordion-header" onclick="this.nextElementSibling.classList.toggle('open')">
+                    <div class="user-accordion-header">
                       <span>
+                        <input type="checkbox" class="recipient-checkbox" name="recipient_ids[]" value="{$user.user_id}" checked
+                               onclick="event.stopPropagation(); onRecipientCheckboxChange(this);">
                         <strong>{$user.firstname} {$user.lastname}</strong>
                         &nbsp;&lt;{$user.email}&gt;
                         &nbsp;&nbsp;
                         <span class="badge-losing">{$user.items|@count} item{if $user.items|@count != 1}s{/if}</span>
                       </span>
-                      <span style="color:#0f3460;font-size:12px;">▼ expand</span>
+                      <span style="color:#0f3460;font-size:12px;cursor:pointer;" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">▼ expand</span>
                     </div>
                     <div class="user-accordion-body">
                       {section name=i loop=$user.items}
@@ -181,11 +215,12 @@
                 <input type="submit" id="sendBtn"
                        value="Send Reminders to {$total_recipients} Recipient{if $total_recipients != 1}s{/if}"
                        class="addbutton"
-                       onclick="return confirm('Send outbid reminder emails to {$total_recipients} recipient(s)?\n\nThis cannot be undone.');">
+                       onclick="var n = document.querySelectorAll('.recipient-checkbox:checked').length; if(n===0){ alert('Please select at least one recipient.'); return false; } return confirm('Send outbid reminder emails to ' + n + ' recipient(s)?\n\nThis cannot be undone.');">
               </td>
             </tr>
           </table>
         </form>
+        <script>updateRecipientCount();</script>
 
         {else}
           <table width="90%" align="center" border="0" cellpadding="8" cellspacing="1">

@@ -269,9 +269,10 @@ function send_reminders() {
     $week_id = (int)($_POST['week_id'] ?? 0);
     $subject = trim($_POST['email_subject'] ?? '');
     $intro   = trim($_POST['email_intro']   ?? '');
+    $recipient_ids = array_map('intval', $_POST['recipient_ids'] ?? []);
 
-    if (!$week_id || !$subject || !$intro) {
-        $smarty->assign('error', 'Missing required fields.');
+    if (!$week_id || !$subject || !$intro || !$recipient_ids) {
+        $smarty->assign('error', !$recipient_ids ? 'Please select at least one recipient.' : 'Missing required fields.');
         $smarty->assign('mode', 'form');
         $smarty->assign('weeks', get_live_weeks());
         $smarty->display('admin_outbid_reminder.tpl');
@@ -280,6 +281,9 @@ function send_reminders() {
 
     $week_info = get_week_info($week_id);
     $users     = get_losing_bidders($week_id);
+    $users     = array_values(array_filter($users, function($u) use ($recipient_ids) {
+        return in_array((int)$u['user_id'], $recipient_ids, true);
+    }));
     $week_link = 'https://' . HOST_NAME . '/buy?list=weekly&auction_week_id=' . $week_id;
 
     $sent = 0; $failed = 0; $log = [];
