@@ -136,7 +136,11 @@ function build_email_html($user, $week_info, $intro, $week_link) {
             $time_left = 'Ending soon';
         }
 
-        $bid_gap = number_format($item['current_highest_bid'] - $item['user_highest_bid'], 2);
+        // A raw (current - user) subtraction reads as "$0.00 more" when the two bids are
+        // tied (ties are broken by earliest bid, so the loser can be sitting at the exact
+        // same amount as the leader). Show the actual minimum bid required to take the
+        // lead instead: current top bid plus the site's minimum increment for that tier.
+        $min_next_bid = number_format($item['current_highest_bid'] + increment_amount($item['current_highest_bid']), 2);
 
         $items_html .= '
         <div style="margin:0 20px 20px;border:1px solid #e94560;border-radius:10px;overflow:hidden;background:#1a1a2e;">
@@ -155,8 +159,8 @@ function build_email_html($user, $week_info, $intro, $week_link) {
                     <td style="color:#ffd166;padding-left:8px;">$' . number_format($item['user_highest_bid'], 2) . '</td>
                   </tr>
                   <tr>
-                    <td style="color:#a8dadc;">Increase by:</td>
-                    <td style="color:#06d6a0;padding-left:8px;">just $' . $bid_gap . ' more</td>
+                    <td style="color:#a8dadc;">Next minimum bid:</td>
+                    <td style="color:#06d6a0;padding-left:8px;">$' . $min_next_bid . '</td>
                   </tr>
                 </table>
                 <p style="margin:10px 0 4px;color:#ff6b6b;font-size:13px;">
