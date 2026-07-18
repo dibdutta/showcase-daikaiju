@@ -39,14 +39,14 @@ function sync_missing(id){
 					<tr>
 						<td align="center">
 							<form name="listFrom" id="listForm" action="" method="post">
-								<table align="center" width="70%" border="0" cellspacing="1" cellpadding="2" class="header_bordercolor" >
+								<table align="center" width="98%" border="0" cellspacing="1" cellpadding="2" class="header_bordercolor" >
 									<tbody>
 										<tr class="header_bgcolor" height="26">
 											<!--<td align="center" class="headertext" width="6%"></td>-->
-											<td align="center" class="headertext" width="20%">Auction Week Title </td>
-                                            <td align="center" class="headertext" width="25%">Start Time</td>
-                                            <td align="center" class="headertext" width="25%">End Time </td>
-											<td align="center" class="headertext" width="30%">Action</td>
+											<td align="center" class="headertext" width="12%">Auction Week Title </td>
+                                            <td align="center" class="headertext" width="14%">Start Time</td>
+                                            <td align="center" class="headertext" width="14%">End Time </td>
+											<td align="center" class="headertext" width="60%" style="white-space:nowrap;">Action</td>
 										</tr>
 										{section name=counter loop=$auction_week}
                                             <tr class="{cycle values="odd_tr,even_tr"}">
@@ -54,7 +54,7 @@ function sync_missing(id){
                                                 <td align="center" class="smalltext">{$auction_week[counter].auction_week_title}</td>
                                                 <td align="center" class="smalltext">{$auction_week[counter].start_date}</td>
                                                 <td align="center" class="smalltext">{$auction_week[counter].end_date}</td>
-                                                <td align="center" class="bold_text">
+                                                <td align="center" class="bold_text" style="white-space:nowrap;">
                                                     <a href="{$adminActualPath}/admin_manage_auction_week.php?mode=edit_auction_week&auction_week_id={$auction_week[counter].auction_week_id}&encoded_string={$encoded_string}" class="view_link"><img src="{$smarty.const.CLOUD_STATIC_ADMIN}icon_edit.gif" align="absmiddle" alt="Update Category" title="Update Category" border="0" class="changeStatus" /></a>&nbsp;&nbsp;
                                                     <a href="#" class="view_link" onclick="javascript: deleteConfirmRecord('{$adminActualPath}/admin_manage_auction_week.php?mode=delete_auction_week&auction_week_id={$auction_week[counter].auction_week_id}&encoded_string={$encoded_string}', 'Record'); return false;"><img src="{$smarty.const.CLOUD_STATIC_ADMIN}delete_image.png" align="absmiddle" alt="Delete Message" title="Delete Message" border="0" class="changeStatus" /></a>&nbsp;&nbsp;
                                                     <a href="{$adminActualPath}/admin_manage_auction_week.php?mode=manage_weekly_auction&week_id={$auction_week[counter].auction_week_id}" class="view_link"><img src="{$smarty.const.CLOUD_STATIC_ADMIN}icon_open.gif" align="absmiddle" alt="Manage Weekly Auction" title="Manage Weekly Auction" border="0" class="changeStatus" /></a>
