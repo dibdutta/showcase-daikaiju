@@ -100,6 +100,12 @@
 @media (max-width: 520px) {
     .cu-form-row { flex-direction: column; }
 }
+
+.cu-captcha-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+.cu-captcha-row img { border: 1px solid #ddd; border-radius: 3px; }
+.cu-captcha-icons { display: flex; gap: 6px; align-items: center; }
+.cu-captcha-icons a img { border: none; opacity: .6; }
+.cu-captcha-icons a:hover img { opacity: 1; }
 </style>
 
 <div id="forinnerpage-container">
@@ -173,6 +179,18 @@
                                 <label>Message <span class="req">*</span></label>
                                 <textarea name="comments" class="cu-textarea"
                                           placeholder="How can we help you?"></textarea>
+                            </div>
+
+                            <div class="cu-field">
+                                <label>Security Check <span class="req">*</span></label>
+                                <div class="cu-captcha-row">
+                                    <img src="{$actualPath}/securimage/securimage_show.php" alt="CAPTCHA" id="cu-captcha-img">
+                                    <div class="cu-captcha-icons">
+                                        <a href="{$actualPath}/securimage/securimage_play.php" title="Listen"><img src="{$actualPath}/securimage/images/audio_icon.gif" alt="Audio" border="0"></a>
+                                        <a href="#" title="Refresh" onclick="document.getElementById('cu-captcha-img').src='{$actualPath}/securimage/securimage_show.php?'+Math.random();return false;"><img src="{$actualPath}/securimage/images/refresh.gif" alt="Refresh" border="0"></a>
+                                    </div>
+                                </div>
+                                <input type="text" name="code" value="" class="cu-input" placeholder="Type the code shown above" autocomplete="off">
                             </div>
 
                             <div class="cu-actions">

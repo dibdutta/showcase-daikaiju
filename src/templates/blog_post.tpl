@@ -175,6 +175,11 @@
     border-radius: 3px;
 }
 .bp-submit-btn:hover { background: #9e1519; }
+.bp-captcha-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+.bp-captcha-row img { border: 1px solid #ddd; border-radius: 3px; }
+.bp-captcha-icons { display: flex; gap: 6px; align-items: center; }
+.bp-captcha-icons a img { border: none; opacity: .6; }
+.bp-captcha-icons a:hover img { opacity: 1; }
 .bp-alert-ok {
     background: #d4edda; border: 1px solid #28a745; color: #155724;
     padding: 8px 12px; font-size: 12px; border-radius: 3px; margin-bottom: 12px;
@@ -269,6 +274,17 @@
                                 <div class="bp-form-group" style="margin-bottom:12px;">
                                     <label><span>*</span> Comment</label>
                                     <textarea name="comment_text" rows="5" placeholder="Share your thoughts…" required></textarea>
+                                </div>
+                                <div class="bp-form-group" style="margin-bottom:12px;">
+                                    <label><span>*</span> Security Check</label>
+                                    <div class="bp-captcha-row">
+                                        <img src="{$actualPath}/securimage/securimage_show.php" alt="CAPTCHA" id="bp-captcha-img">
+                                        <div class="bp-captcha-icons">
+                                            <a href="{$actualPath}/securimage/securimage_play.php" title="Listen"><img src="{$actualPath}/securimage/images/audio_icon.gif" alt="Audio" border="0"></a>
+                                            <a href="#" title="Refresh" onclick="document.getElementById('bp-captcha-img').src='{$actualPath}/securimage/securimage_show.php?'+Math.random();return false;"><img src="{$actualPath}/securimage/images/refresh.gif" alt="Refresh" border="0"></a>
+                                        </div>
+                                    </div>
+                                    <input type="text" name="code" placeholder="Type the code shown above" autocomplete="off" required>
                                 </div>
                                 <button type="submit" class="bp-submit-btn">Post Comment</button>
                             </form>

@@ -72,29 +72,41 @@ function save_contactus()
 	}
 }
 function valid_contactus_form(){
-	
+
 	$errCounter = 0;
 
 	if($_REQUEST['firstname'] == ""){
 		$GLOBALS['firstname_err'] = "Please enter Name.";
-		 $errCounter++;	
+		 $errCounter++;
 	}
 
 	if($_REQUEST['email'] == ""){
 		$GLOBALS['email_err'] = "Please enter E-mail Address.";
-		 $errCounter++;	
+		 $errCounter++;
 	}elseif(checkEmail($_REQUEST['email'], '') == 1){
 		$GLOBALS['email_err'] = "Invalid E-mail Address.";
 		 $errCounter++;
-		
+
 	}
-	
+
 	/*if($_REQUEST['category_id'] == ""){
 		$GLOBALS['category_err'] = "Please enter Enquery On.";
-		 $errCounter++;			
+		 $errCounter++;
 	}*/
-	
+
+	require_once INCLUDE_PATH."securimage/securimage.php";
+	$image = new Securimage();
+	if(!$image->check($_REQUEST['code'] ?? '')){
+		$GLOBALS['code_err'] = "The security code entered was incorrect. Please try again.";
+		$errCounter++;
+	}
+
 	if($errCounter > 0){
+		$_SESSION['Err'] = implode(' ', array_filter([
+			$GLOBALS['firstname_err'] ?? '',
+			$GLOBALS['email_err']     ?? '',
+			$GLOBALS['code_err']      ?? '',
+		]));
 		return false;
 	}else{
 		return true;

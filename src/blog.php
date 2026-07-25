@@ -94,6 +94,7 @@ function dispmiddle() {
 
 function post_comment() {
     require_once INCLUDE_PATH . 'classes/Blog.php';
+    require_once INCLUDE_PATH . 'securimage/securimage.php';
 
     $slug  = trim($_POST['slug'] ?? '');
     $name  = trim($_POST['commenter_name'] ?? '');
@@ -105,6 +106,12 @@ function post_comment() {
     if ($name === '')  $err = 'Please enter your name.';
     elseif ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) $err = 'Please enter a valid email address.';
     elseif ($text === '') $err = 'Please enter your comment.';
+    else {
+        $image = new Securimage();
+        if (!$image->check($_POST['code'] ?? '')) {
+            $err = 'The security code entered was incorrect. Please try again.';
+        }
+    }
 
     if ($err) {
         $_SESSION['comment_err'] = $err;
