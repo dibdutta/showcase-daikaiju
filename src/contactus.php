@@ -62,11 +62,11 @@ function save_contactus()
 		$check = sendMail($toMail, $toName, $subject, $textContent, $fromMail, $fromName, $html=1);
 		if($check){
 			$_SESSION['Err']="Thank You for Contacting with us. We will get back to you soon!";
-			header("location: ".PHP_SELF);	
+			header("location: ".PHP_SELF."#cu-form");	
 			exit();			
 		}else{
 			$_SESSION['Err']="Please provide your contact details again.";
-			header("location: ".PHP_SELF);
+			header("location: ".PHP_SELF."#cu-form");
 			exit();
 		}
 	}

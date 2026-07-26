@@ -134,7 +134,7 @@
                 {/if}
 
                 {* ── Contact form card ─────────────────── *}
-                <div class="cu-card">
+                <div class="cu-card" id="cu-form" style="scroll-margin-top:20px;">
                     {if $pageContent == ''}
                     <div class="cu-hero">
                         <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
@@ -155,7 +155,7 @@
                             {/if}
                         {/if}
 
-                        <form name="frm_contact" id="frm_contact" action="" method="post">
+                        <form name="frm_contact" id="frm_contact" action="#cu-form" method="post">
                             <input type="hidden" name="mode" value="insert_contact">
 
                             <div class="cu-form-row">

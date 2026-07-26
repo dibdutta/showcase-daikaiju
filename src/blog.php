@@ -125,7 +125,7 @@ function post_comment() {
         $_SESSION['comment_ok'] = 'Thank you! Your comment has been submitted and is awaiting approval.';
     }
 
-    header('Location: ' . PAGE_LINK . '/blog/' . rawurlencode($slug));
+    header('Location: ' . PAGE_LINK . '/blog/' . rawurlencode($slug) . '#comment-form');
     exit;
 }
 ?>

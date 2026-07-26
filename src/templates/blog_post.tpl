@@ -229,7 +229,7 @@
                     </div>
 
                     {* ── Comments card ────────────────────────────── *}
-                    <div class="bp-comments-card">
+                    <div class="bp-comments-card" id="comment-form" style="scroll-margin-top:20px;">
 
                         <div class="bp-comments-heading">
                             Comments{if $comments} ({$comments|@count}){/if}
