@@ -1120,14 +1120,28 @@ if(isset($_SESSION['sessUserID'])){
 		//   3. If tbl_auction returned nothing, fall back to auto-detect (checks tbl_auction_live).
 		$_urlSlug = isset($_REQUEST['poster_slug']) ? trim($_REQUEST['poster_slug']) : '';
 		$auctionDetails=$objAuction->select_details_auction($auction_id,1);
+		$_needLiveLookup = false;
 		if(!empty($auctionDetails[0]['auction_id']) && $_urlSlug !== ''){
 			$_foundSlug = generatePosterSlug($auctionDetails[0]['poster_title'] ?? '');
 			if($_foundSlug !== $_urlSlug){
 				// Slug mismatch: ID collision — this auction_id belongs to a live-table item
-				$auctionDetails=$objAuction->select_details_auction($auction_id);
+				$_needLiveLookup = true;
 			}
 		}elseif(empty($auctionDetails[0]['auction_id'])){
 			// Not in tbl_auction at all — must be an active live auction
+			$_needLiveLookup = true;
+		}
+		if($_needLiveLookup){
+			// This ID isn't (correctly) in tbl_auction. It's either a currently-active
+			// live-table item, or a stale /poster/{id}/{slug} link (e.g. from the outbid
+			// reminder email) pointing at an auction that has since ended and been
+			// archived under a different auction_id. Check the mapping table before
+			// assuming it's still live, same as the &live=1 query-string links above.
+			$_mapped_new = $objAuction->getAfterSoldAuctionID($auction_id);
+			if($_mapped_new){
+				header('Location: /buy?mode=poster_details&auction_id='.intval($_mapped_new).'&sold=1');
+				exit;
+			}
 			$auctionDetails=$objAuction->select_details_auction($auction_id);
 		}
 	}

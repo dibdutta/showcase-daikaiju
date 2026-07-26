@@ -188,12 +188,12 @@ function build_email_html($user, $week_info, $intro, $week_link) {
 
   <div style="background:linear-gradient(135deg,#0f3460,#1a1a4e);padding:30px 20px;text-align:center;">
     <div style="font-size:28px;font-weight:900;color:#e94560;letter-spacing:2px;">KAIJULINK</div>
-    <div style="font-size:13px;color:#a8dadc;margin-top:4px;letter-spacing:1px;">MOVIE POSTER AUCTIONS</div>
+    <div style="font-size:13px;color:#a8dadc;margin-top:4px;letter-spacing:1px;">The Online Marketplace for Kaiju Collectors</div>
   </div>
 
   <div style="background:#e94560;padding:10px 20px;text-align:center;">
     <span style="color:#fff;font-weight:bold;font-size:14px;">
-      &#9889; Don\'t let your favourite posters slip away &mdash; auction week closes ' . $end_label . '
+      &#9889; Don\'t let your favourite items slip away &mdash; auction week closes ' . $end_label . '
     </span>
   </div>
 
@@ -249,7 +249,7 @@ function show_preview() {
     $weeks = get_live_weeks();
 
     $default_subject = 'You\'ve been outbid on items you love — act before the auction ends!';
-    $default_intro   = "The clock is ticking on this week's Kaijulink auction and you're currently being outbid on items you've already shown interest in. A small increase in your bid could make all the difference — don't let someone else take home your favourite piece of cinema history.";
+    $default_intro   = "The clock is ticking on this week's Kaijulink auction and you're currently being outbid on items you've already shown interest in. A small increase in your bid could make all the difference — don't let someone else take home your favourite piece of kaiju collection.";
 
     $total_items = 0;
     foreach ($users as $u) {
