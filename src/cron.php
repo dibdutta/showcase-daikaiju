@@ -44,7 +44,6 @@ define ('MAIL_BODY_BOTTOM', '</td></tr>
 </tr>
 </table>
 </body></html>');
-
 /*if(HOST_NAME=="192.168.100.140:8082"){
 	define ("DB_NAME", "mpe_test");
 	define ("DB_SERVER", "localhost");
