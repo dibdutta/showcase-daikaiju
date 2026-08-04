@@ -6507,7 +6507,7 @@ function fetchStillsLiveAuctions($view_mode=''){
 		 $sql = $sql." GROUP BY tsa.auction_id ";
 		 if($sort_by=='poster_title'){
             $sql .= " ORDER BY p.poster_title ".$sort_type;
-         }elseif($sort_by=='auction_actual_end_datetime'){
+         }elseif($sort_by=='invoice_generated_on'){
 		 	$sql .= " ORDER BY tsa.invoice_generated_on ".$sort_type;
 		 }elseif($sort_by=='auction_asked_price'){
 		 	$sql .= " ORDER BY tsa.soldamnt ".$sort_type;
