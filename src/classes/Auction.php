@@ -6706,7 +6706,7 @@ function fetchStillsLiveAuctions($view_mode=''){
 	
 	function countKeySearchLiveAuctionsGlobal($keyword = '',$list='',$search_type='',$auction_week_id='')
 	{
-		$rowAuction='';
+		$rowAuction=array();
 		$sqlCat="SELECT cat_id from tbl_category where fk_cat_type_id=2 AND lower(cat_value) LIKE '%".mysqli_real_escape_string($GLOBALS['db_connect'],strtolower($keyword))."%' ";
 		
 		$rowCat=mysqli_fetch_assoc(mysqli_query($GLOBALS['db_connect'],$sqlCat));
