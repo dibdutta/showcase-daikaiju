@@ -161,7 +161,6 @@ function updateArrows(wrap) {
             </div>
             <div class="clear"></div>
         </div>
-
     </div>{* end .featuredgallerydiv — floats cleared by .home_fi clear:both below *}
 
     {* ── Carousel sections ──────────────────────────────────────────────────── *}
