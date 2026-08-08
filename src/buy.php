@@ -675,13 +675,11 @@ function displayKeySearchGlobal()
     
 	$auctionItemsOthers = $objAuction->fetchKeySearchLiveAuctionsGlobals('fixed',$arrayList,$_SESSION['sessAuctionView']);
 	$auctionItemsAuction = $objAuction->fetchKeySearchLiveAuctionsGlobals('weekly',$arrayListAuction,$_SESSION['sessAuctionView']);
-	if(!empty($auctionItemsOthers) && !empty($auctionItemsAuction)){
-		$auctionItems = array_merge($auctionItemsOthers,$auctionItemsAuction);
-	}else if(empty($auctionItemsOthers)){
-		$auctionItems = $auctionItemsAuction;
-	}else if(empty($auctionItemsAuction)){
-		$auctionItems = $auctionItemsOthers;
-	}
+	// fetchKeySearchLiveAuctionsGlobals() can return false (query failure) or an empty
+	// result — normalize both to an array so count($auctionItems) below never fatals.
+	$auctionItemsOthers = is_array($auctionItemsOthers) ? $auctionItemsOthers : array();
+	$auctionItemsAuction = is_array($auctionItemsAuction) ? $auctionItemsAuction : array();
+	$auctionItems = array_merge($auctionItemsOthers,$auctionItemsAuction);
 	$smarty->assign('is_expired', 0);
 	
 

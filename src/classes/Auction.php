@@ -6838,6 +6838,11 @@ function fetchStillsLiveAuctions($view_mode=''){
 	
 	function fetchKeySearchLiveAuctionsGlobals($list='',$arrList='',$view_mode='')
 		{
+            if(trim($arrList) === ''){
+                // No candidate auction_ids for this side of the search — "IN ()" is
+                // invalid SQL, so just return no results instead of querying.
+                return array();
+            }
             if(!isset($_SESSION['sessUserID'])){
                 $user_id='';
             }else{
@@ -6990,15 +6995,16 @@ function fetchStillsLiveAuctions($view_mode=''){
 				  LIMIT ".$this->offset.", ".$this->toShow."";
             }
 	   if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
+		   $dataArr = array();
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $dataArr[] = $row;
 		   }
-		   
+
 		   return $dataArr;
 	   }
 	   return false;
 	}
-	
+
 	function fetchTotalAuctionsAdminRecon($user_id = '', $auctionStatus = '',$start_date='',$end_date='',$auction_type='',$auction_week='')
     {
 	
