@@ -361,6 +361,9 @@ function displaySearch()
 	    $aucetionWeeks = $auctionWeekObj->fetchUpcomingWeeksWithItem();
         $smarty->assign('UpcomingAuctionWeeks', $aucetionWeeks);
     }
+	// The fetch* calls above can return false on a query failure — normalize so
+	// count($auctionItems) below never hits a non-array (PHP 8 fatals on that).
+	$auctionItems = is_array($auctionItems) ? $auctionItems : array();
 	if($_REQUEST['country_id']!=''){
 			$objCategory = new Category();
 			$cat_value = $objCategory->selectCategoryName($_REQUEST['country_id']);
@@ -403,11 +406,15 @@ function displaySearch()
 			$auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
 		}           
         
-		if($auctionItems[$i]['fk_auction_type_id'] != 1){		
+		if($auctionItems[$i]['fk_auction_type_id'] != 1){
 			$auctionItems[$i]['auction_countdown'] = '<span id="cd_'.$auctionItems[$i]['auction_id'].'"><script language="javascript">$("#cd_'.$auctionItems[$i]['auction_id'].'").countdown({until: dateAdd(\'s\', '.$auctionItems[$i]['seconds_left'].', new Date())});</script></span>';
 		}
 	}
-	
+
+	foreach ($auctionItems as $i => $item) {
+		$auctionItems[$i]['poster_url'] = posterUrl($item['auction_id'], $item['poster_title']);
+	}
+
 	$smarty->assign('auctionItems', $auctionItems);
 	$smarty->assign('json_arr', json_encode($auctionItems));
 

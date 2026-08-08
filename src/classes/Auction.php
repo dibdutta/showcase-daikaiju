@@ -877,8 +877,9 @@ class Auction extends DBCommon{
 				$qry.= " ) ";
 		}
 		if($srcFlag == ''){
+			$ids = array();
 			if($list=="weekly"){
-				$sql = "SELECT a.fk_poster_id FROM tbl_poster_live p, tbl_auction_live a 
+				$sql = "SELECT a.fk_poster_id FROM tbl_poster_live p, tbl_auction_live a
 				LEFT JOIN tbl_poster_images_live pi ON a.fk_poster_id = pi.fk_poster_id
 				WHERE 1 AND pi.is_default = '1' AND a.fk_poster_id = p.poster_id ".$qry;
 				$rs = mysqli_query($GLOBALS['db_connect'],$sql);
@@ -886,7 +887,7 @@ class Auction extends DBCommon{
 					$ids[] = $row['fk_poster_id'];
 				}
 			}else{
-				$sql = "SELECT a.fk_poster_id FROM ".TBL_POSTER." p, ".TBL_AUCTION." a 
+				$sql = "SELECT a.fk_poster_id FROM ".TBL_POSTER." p, ".TBL_AUCTION." a
 				LEFT JOIN ".TBL_POSTER_IMAGES." pi ON a.fk_poster_id = pi.fk_poster_id
 				WHERE 1 AND pi.is_default = '1' AND a.fk_poster_id = p.poster_id ".$qry;
 				$rs = mysqli_query($GLOBALS['db_connect'],$sql);
@@ -894,7 +895,7 @@ class Auction extends DBCommon{
 					$ids[] = $row['fk_poster_id'];
 				}
 			}
-			
+
 			$poster_ids = implode(',', $ids);
 		}
 
@@ -1060,6 +1061,7 @@ class Auction extends DBCommon{
         }
 		
 		if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
+		   $dataArr = array();
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $dataArr[] = $row;
 		   }
@@ -1117,6 +1119,7 @@ class Auction extends DBCommon{
 				  LIMIT ".$this->offset.", ".$this->toShow."";
 
         if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
+            $dataArr = array();
             while($row = mysqli_fetch_assoc($rs)){
                 $dataArr[] = $row;
             }
@@ -5176,6 +5179,7 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
         }
 
 		if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
+		   $dataArr = array();
 		   while($row = mysqli_fetch_assoc($rs)){
 			   $dataArr[] = $row;
 		   }
@@ -5184,7 +5188,7 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 		   return $dataArr;
 		}
 		return false;
-	
+
 	}
 	function countLiveWeeklyAuctions(){
 		$sql=" Select count(1) as total from tbl_auction_live 
