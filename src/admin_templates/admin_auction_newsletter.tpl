@@ -5,11 +5,13 @@
 .nl-section h3 { font-size:13px; font-weight:700; color:#0f3460; margin:0 0 12px; border-bottom:1px solid #eee; padding-bottom:8px; text-transform:uppercase; letter-spacing:.5px; }
 .nl-box-ok  { background:#d4edda; border:1px solid #28a745; color:#155724; border-radius:4px; padding:10px 14px; font-size:13px; margin-bottom:14px; }
 .nl-box-warn{ background:#fff3cd; border:1px solid #ffc107; color:#664d03; border-radius:4px; padding:10px 14px; font-size:13px; margin-bottom:14px; }
-.nl-item-card { display:flex; gap:12px; border:1px solid #ddd; border-radius:6px; padding:10px; margin-bottom:10px; align-items:flex-start; }
-.nl-item-card img { width:90px; height:90px; object-fit:cover; border-radius:4px; }
-.nl-item-card .noimg { width:90px; height:90px; background:#f0f0f0; border-radius:4px; }
-.nl-item-title { font-size:13px; font-weight:700; color:#333; margin-bottom:4px; }
-.nl-item-bid { font-size:12px; color:#c0392b; font-weight:700; }
+.nl-item-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; }
+.nl-item-card { border:1px solid #ddd; border-radius:6px; padding:10px; text-align:center; }
+.nl-item-card img { width:100%; max-width:130px; height:130px; object-fit:cover; border-radius:4px; margin:0 auto 8px; display:block; }
+.nl-item-card .noimg { width:100%; max-width:130px; height:130px; background:#f0f0f0; border-radius:4px; margin:0 auto 8px; }
+.nl-item-title { font-size:12px; font-weight:700; color:#333; margin-bottom:4px; line-height:1.3; }
+.nl-item-bid { font-size:11px; color:#c0392b; font-weight:700; }
+@media (max-width:600px) { .nl-item-grid { grid-template-columns:repeat(2, 1fr); } }
 .nl-copy-btn { background:#0f3460; color:#fff; border:none; padding:7px 16px; font-size:12px; font-weight:700; border-radius:3px; cursor:pointer; }
 .nl-copy-btn:hover { background:#1a3a6e; }
 .nl-copy-btn.copied { background:#28a745; }
@@ -81,11 +83,12 @@ function copyFromTextarea(id, btn){
 
             <label style="font-size:11px;font-weight:600;color:#666;">Number of popular items to feature:</label>
             <select name="item_count" style="padding:4px 8px;margin-left:6px;">
-              {section name=n loop=12}
+              {section name=n loop=15}
                 {assign var="n" value=$smarty.section.n.index+1}
                 <option value="{$n}" {if $n == $item_count}selected{/if}>{$n}</option>
               {/section}
             </select>
+            <div style="font-size:11px;color:#999;margin-top:4px;">Rendered as a 3-per-row grid, so 15 fills 5 full rows.</div>
 
             <div style="margin-top:14px;">
               <input type="submit" value="Refresh Preview" class="addbutton">
@@ -96,19 +99,19 @@ function copyFromTextarea(id, btn){
         <div class="nl-section">
           <h3>Popular Items Being Featured</h3>
           {if $items}
-            {foreach from=$items item=it}
-            <div class="nl-item-card">
-              {if $it.poster_thumb}
-                <img src="{$smarty.const.CLOUD_POSTER_THUMB_BUY_GALLERY}{$it.poster_thumb}" alt="">
-              {else}
-                <div class="noimg"></div>
-              {/if}
-              <div>
+            <div class="nl-item-grid">
+              {foreach from=$items item=it}
+              <div class="nl-item-card">
+                {if $it.poster_thumb}
+                  <img src="{$smarty.const.CLOUD_POSTER_THUMB_BUY_GALLERY}{$it.poster_thumb}" alt="">
+                {else}
+                  <div class="noimg"></div>
+                {/if}
                 <div class="nl-item-title">{$it.poster_title}</div>
                 <div class="nl-item-bid">${$it.max_bid_amount|string_format:"%.2f"}</div>
               </div>
+              {/foreach}
             </div>
-            {/foreach}
           {else}
             <p style="font-size:12px;color:#999;">No currently live auction items found to feature.</p>
           {/if}

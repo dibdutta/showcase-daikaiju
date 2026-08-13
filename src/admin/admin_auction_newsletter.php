@@ -47,7 +47,7 @@ function get_active_week() {
 }
 
 function get_popular_items($limit) {
-    $limit = max(1, min(12, (int)$limit));
+    $limit = max(1, min(15, (int)$limit));
     $rs = mysqli_query($GLOBALS['db_connect'], "
         SELECT a.auction_id, a.max_bid_amount, a.bid_count, a.auction_actual_end_datetime,
                p.poster_title, pi.poster_thumb
@@ -93,33 +93,41 @@ function get_all_unique_recipient_emails() {
 
 function build_items_html($items) {
     if (empty($items)) return '';
-    $html = '<table width="100%" cellpadding="0" cellspacing="0" border="0">';
+    $cols = 3;
+
+    $cells = [];
     foreach ($items as $item) {
         $img_url = $item['poster_thumb']
             ? CLOUD_POSTER_THUMB_BUY_GALLERY . htmlspecialchars($item['poster_thumb'])
             : '';
         $img_tag = $img_url
-            ? '<img src="' . $img_url . '" width="120" height="120" alt="" style="display:block;object-fit:cover;border-radius:6px;border:1px solid #dbd9da;">'
-            : '<div style="width:120px;height:120px;background:#f5f5f5;border-radius:6px;border:1px solid #dbd9da;"></div>';
+            ? '<img src="' . $img_url . '" width="150" height="150" alt="" style="display:block;object-fit:cover;border-radius:6px;border:1px solid #dbd9da;margin:0 auto 10px;">'
+            : '<div style="width:150px;height:150px;background:#f5f5f5;border-radius:6px;border:1px solid #dbd9da;margin:0 auto 10px;"></div>';
 
         $item_url = posterUrl($item['auction_id'], $item['poster_title']);
         $bidLabel = $item['max_bid_amount'] > 0 ? 'Current Bid' : 'Starting Bid';
 
-        $html .= '
-        <tr>
-          <td style="padding:0 0 16px;">
+        $cells[] = '
+          <td width="33%" valign="top" align="center" style="padding:0 6px 16px;">
             <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #dbd9da;border-radius:6px;">
               <tr>
-                <td width="130" style="padding:12px;vertical-align:top;">' . $img_tag . '</td>
-                <td style="padding:12px 12px 12px 0;vertical-align:top;">
-                  <div style="font-size:14px;font-weight:bold;color:#333333;margin-bottom:6px;">' . htmlspecialchars($item['poster_title']) . '</div>
-                  <div style="font-size:13px;color:#666666;margin-bottom:10px;">' . $bidLabel . ': <strong style="color:#c0392b;">$' . number_format((float)$item['max_bid_amount'], 2) . '</strong></div>
-                  <a href="' . $item_url . '" style="display:inline-block;background:#c0392b;color:#ffffff;text-decoration:none;padding:8px 18px;border-radius:4px;font-size:12px;font-weight:bold;">Bid Now &rarr;</a>
+                <td align="center" style="padding:12px;">
+                  ' . $img_tag . '
+                  <div style="font-size:12px;font-weight:bold;color:#333333;margin-bottom:6px;line-height:1.3;">' . htmlspecialchars($item['poster_title']) . '</div>
+                  <div style="font-size:11px;color:#666666;margin-bottom:10px;">' . $bidLabel . ': <strong style="color:#c0392b;">$' . number_format((float)$item['max_bid_amount'], 2) . '</strong></div>
+                  <a href="' . $item_url . '" style="display:inline-block;background:#c0392b;color:#ffffff;text-decoration:none;padding:6px 14px;border-radius:4px;font-size:11px;font-weight:bold;">Bid Now &rarr;</a>
                 </td>
               </tr>
             </table>
-          </td>
-        </tr>';
+          </td>';
+    }
+
+    $html = '<table width="100%" cellpadding="0" cellspacing="0" border="0">';
+    foreach (array_chunk($cells, $cols) as $row) {
+        while (count($row) < $cols) {
+            $row[] = '<td width="33%">&nbsp;</td>'; // keep columns aligned on a partial last row
+        }
+        $html .= '<tr>' . implode('', $row) . '</tr>';
     }
     $html .= '</table>';
     return $html;
@@ -160,8 +168,8 @@ function build_email_html($endingText, $introHtml, $itemsHtml, $ctaLabel, $weekL
 function show_preview() {
     require_once INCLUDE_PATH . 'lib/adminCommon.php';
 
-    $itemCount = (int)($_REQUEST['item_count'] ?? 6);
-    if ($itemCount < 1 || $itemCount > 12) $itemCount = 6;
+    $itemCount = (int)($_REQUEST['item_count'] ?? 15);
+    if ($itemCount < 1 || $itemCount > 15) $itemCount = 15;
 
     $week  = get_active_week();
     $items = get_popular_items($itemCount);
