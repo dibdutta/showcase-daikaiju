@@ -119,7 +119,13 @@
                         <li><a href="#">MANAGE AUCTION WEEKS</a>
                         	<ul>
                                 <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_manage_auction_week.php?mode=show_all_auction_week">Show All Auction Weeks</a></li>
-                                
+
+                            </ul>
+                        </li>
+                        <li><a href="#">MARKETING</a>
+                        	<ul>
+                                <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_outbid_reminder.php">Outbid Reminder Email</a></li>
+                                <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_auction_newsletter.php">Auction Newsletter Template</a></li>
                             </ul>
                         </li>
 						{if $adminTracker==1}
