@@ -123,5 +123,24 @@ if (mysqli_query($db, $fixSql)) {
     $results[] = "ERROR fixing duplicate is_default: " . mysqli_error($db);
 }
 
+// 10. Click tracking for manually-sent newsletter campaigns (admin_auction_newsletter.php).
+// user_id/email are only populated when the clicker happens to be logged in at
+// click time — newsletters are sent as one identical BCC'd email, so there's no
+// per-recipient link to attribute anonymous clicks to.
+runSql($db, "CREATE TABLE IF NOT EXISTS tbl_newsletter_click_log (
+    click_id     INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    campaign     VARCHAR(100) NOT NULL DEFAULT '',
+    item_ref     VARCHAR(50) NOT NULL DEFAULT '',
+    target_url   VARCHAR(500) NOT NULL DEFAULT '',
+    user_id      INT UNSIGNED NULL,
+    email        VARCHAR(150) NULL,
+    ip_address   VARCHAR(45) NOT NULL DEFAULT '',
+    user_agent   VARCHAR(255) NOT NULL DEFAULT '',
+    clicked_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    KEY idx_campaign (campaign),
+    KEY idx_item_ref (item_ref),
+    KEY idx_user_id (user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", $results);
+
 echo "<pre>" . implode("\n", $results) . "\n\nMigration complete. Delete this file.</pre>";
 ?>

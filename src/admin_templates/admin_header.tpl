@@ -126,6 +126,7 @@
                         	<ul>
                                 <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_outbid_reminder.php">Outbid Reminder Email</a></li>
                                 <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_auction_newsletter.php">Auction Newsletter Template</a></li>
+                                <li><a href="{$smarty.const.ADMIN_PAGE_LINK}/admin_newsletter_stats.php">Newsletter Click Stats</a></li>
                             </ul>
                         </li>
 						{if $adminTracker==1}

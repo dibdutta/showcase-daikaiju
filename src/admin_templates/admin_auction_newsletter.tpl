@@ -81,6 +81,14 @@ function copyFromTextarea(id, btn){
             <label style="font-size:11px;font-weight:600;color:#666;display:block;margin-bottom:4px;">"See All Items" Button Label</label>
             <input type="text" name="cta_label" value="{$cta_label}" style="width:100%;padding:7px 10px;font-size:13px;box-sizing:border-box;margin-bottom:12px;" maxlength="80">
 
+            <label style="font-size:11px;font-weight:600;color:#666;display:block;margin-bottom:4px;">Campaign Label (for click tracking)</label>
+            <input type="text" name="campaign" value="{$campaign}" style="width:100%;padding:7px 10px;font-size:13px;box-sizing:border-box;margin-bottom:4px;" maxlength="100">
+            <div style="font-size:11px;color:#999;margin-bottom:12px;">
+              Every link in the email is routed through a click tracker tagged with this label, so you can tell
+              this send apart from others in the <a href="{$adminActualPath}/admin_newsletter_stats.php">click stats page</a>.
+              Keep it the same while you're still tweaking this send — change it only for a new campaign.
+            </div>
+
             <label style="font-size:11px;font-weight:600;color:#666;">Total number of items to feature:</label>
             <select name="item_count" style="padding:4px 8px;margin-left:6px;">
               {section name=n loop=20}

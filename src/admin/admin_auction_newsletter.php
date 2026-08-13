@@ -140,7 +140,16 @@ function get_all_unique_recipient_emails() {
     return $emails;
 }
 
-function build_items_html($items) {
+// Wraps a destination URL in the click-tracking redirect (nl_click.php) so
+// opening it gets logged to tbl_newsletter_click_log before bouncing on.
+function tracked_url($campaign, $itemRef, $destinationUrl) {
+    return 'https://' . HOST_NAME . '/nl_click.php?'
+        . 'campaign=' . rawurlencode($campaign)
+        . '&item=' . rawurlencode($itemRef)
+        . '&url=' . rawurlencode($destinationUrl);
+}
+
+function build_items_html($items, $campaign) {
     if (empty($items)) return '';
     $cols = 3;
 
@@ -153,7 +162,7 @@ function build_items_html($items) {
             ? '<img src="' . $img_url . '" width="150" height="150" alt="" style="display:block;object-fit:cover;border-radius:6px;border:1px solid #dbd9da;margin:0 auto 10px;">'
             : '<div style="width:150px;height:150px;background:#f5f5f5;border-radius:6px;border:1px solid #dbd9da;margin:0 auto 10px;"></div>';
 
-        $item_url = posterUrl($item['auction_id'], $item['poster_title']);
+        $item_url = tracked_url($campaign, (string)$item['auction_id'], posterUrl($item['auction_id'], $item['poster_title']));
         $bidLabel = $item['max_bid_amount'] > 0 ? 'Current Bid' : 'Starting Bid';
 
         $cells[] = '
@@ -182,7 +191,8 @@ function build_items_html($items) {
     return $html;
 }
 
-function build_email_html($endingText, $introHtml, $itemsHtml, $ctaLabel, $weekLink) {
+function build_email_html($endingText, $introHtml, $itemsHtml, $ctaLabel, $weekLink, $campaign) {
+    $weekLink = tracked_url($campaign, 'cta', $weekLink);
     // Generic salutation — this template is copied out and sent manually
     // (e.g. via BCC or an ESP campaign tool), not personalized per recipient.
     $textContent = 'Dear Collector,<br /><br />';
@@ -243,18 +253,23 @@ function show_preview() {
     $defaultIntro    = "Our current auction is heating up and closing soon. Take one more look before it's gone — rare original posters and kaiju memorabilia are waiting for their next home.";
     $defaultCtaLabel = 'See All Live Auction Items';
 
+    $defaultCampaign = 'newsletter-' . date('Y-m-d');
+
     $subject   = trim($_REQUEST['email_subject'] ?? $defaultSubject);
     $endingTxt = $_REQUEST['ending_text']  ?? $defaultEnding;
     $intro     = trim($_REQUEST['email_intro']   ?? $defaultIntro);
     $ctaLabel  = trim($_REQUEST['cta_label']     ?? $defaultCtaLabel);
+    $campaign  = trim($_REQUEST['campaign']      ?? $defaultCampaign);
     if ($subject === '') $subject = $defaultSubject;
     if ($intro === '')   $intro   = $defaultIntro;
     if ($ctaLabel === '') $ctaLabel = $defaultCtaLabel;
+    if ($campaign === '') $campaign = $defaultCampaign;
+    $campaign = substr($campaign, 0, 100);
 
-    $itemsHtml = build_items_html($items);
+    $itemsHtml = build_items_html($items, $campaign);
     $introHtml = nl2br(htmlspecialchars($intro));
     $weekLink  = 'https://' . HOST_NAME . '/buy?list=weekly';
-    $renderedHtml = build_email_html($endingTxt, $introHtml, $itemsHtml, $ctaLabel, $weekLink);
+    $renderedHtml = build_email_html($endingTxt, $introHtml, $itemsHtml, $ctaLabel, $weekLink, $campaign);
 
     // Flag any manually-typed IDs that didn't resolve to a live item (sold,
     // ended, or just a typo) so the admin isn't left guessing why one's missing.
@@ -264,6 +279,7 @@ function show_preview() {
     $smarty->assign('week', $week);
     $smarty->assign('items', $items);
     $smarty->assign('item_count', $itemCount);
+    $smarty->assign('campaign', $campaign);
     $smarty->assign('manual_ids', $manualIdsRaw);
     $smarty->assign('pinned_count', count($pinnedItems));
     $smarty->assign('invalid_manual_ids', $invalidManualIds);
