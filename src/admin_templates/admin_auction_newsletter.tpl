@@ -125,7 +125,7 @@ function copyFromTextarea(id, btn){
                   <div class="noimg"></div>
                 {/if}
                 <div class="nl-item-title">{$it.poster_title}</div>
-                <div class="nl-item-bid">${$it.max_bid_amount|string_format:"%.2f"}</div>
+                <div class="nl-item-bid">{$it.bid_label}: ${$it.display_amount|string_format:"%.2f"}</div>
               </div>
               {/foreach}
             </div>

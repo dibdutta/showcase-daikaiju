@@ -57,7 +57,7 @@ function get_popular_items($limit, $excludeIds = []) {
     }
 
     $rs = mysqli_query($GLOBALS['db_connect'], "
-        SELECT a.auction_id, a.max_bid_amount, a.bid_count, a.auction_actual_end_datetime,
+        SELECT a.auction_id, a.max_bid_amount, a.auction_asked_price, a.bid_count, a.auction_actual_end_datetime,
                p.poster_title, pi.poster_thumb
         FROM tbl_auction_live a
         INNER JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
@@ -89,7 +89,7 @@ function get_items_by_ids($ids) {
     if (empty($ids)) return [];
 
     $rs = mysqli_query($GLOBALS['db_connect'], "
-        SELECT a.auction_id, a.max_bid_amount, a.bid_count, a.auction_actual_end_datetime,
+        SELECT a.auction_id, a.max_bid_amount, a.auction_asked_price, a.bid_count, a.auction_actual_end_datetime,
                p.poster_title, pi.poster_thumb
         FROM tbl_auction_live a
         INNER JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
@@ -154,7 +154,6 @@ function build_items_html($items) {
             : '<div style="width:150px;height:150px;background:#f5f5f5;border-radius:6px;border:1px solid #dbd9da;margin:0 auto 10px;"></div>';
 
         $item_url = posterUrl($item['auction_id'], $item['poster_title']);
-        $bidLabel = $item['max_bid_amount'] > 0 ? 'Current Bid' : 'Starting Bid';
 
         $cells[] = '
           <td width="33%" valign="top" align="center" style="padding:0 6px 16px;">
@@ -163,7 +162,7 @@ function build_items_html($items) {
                 <td align="center" style="padding:12px;">
                   ' . $img_tag . '
                   <div style="font-size:12px;font-weight:bold;color:#333333;margin-bottom:6px;line-height:1.3;">' . htmlspecialchars($item['poster_title']) . '</div>
-                  <div style="font-size:11px;color:#666666;margin-bottom:10px;">' . $bidLabel . ': <strong style="color:#c0392b;">$' . number_format((float)$item['max_bid_amount'], 2) . '</strong></div>
+                  <div style="font-size:11px;color:#666666;margin-bottom:10px;">' . $item['bid_label'] . ': <strong style="color:#c0392b;">$' . number_format((float)$item['display_amount'], 2) . '</strong></div>
                   <a href="' . $item_url . '" style="display:inline-block;background:#c0392b;color:#ffffff;text-decoration:none;padding:6px 14px;border-radius:4px;font-size:11px;font-weight:bold;">Bid Now &rarr;</a>
                 </td>
               </tr>
@@ -221,8 +220,8 @@ function show_preview() {
     if ($itemCount < 1 || $itemCount > 20) $itemCount = 15;
 
     // Manually pinned items (e.g. items with no bids yet) always appear, in
-    // the order typed. item_count then controls how many additional
-    // auto-picked popular items fill out the rest, up to the cap.
+    // the order typed, after the auto-picked popular ones. item_count controls
+    // how many popular items fill out the rest, up to the cap.
     $manualIdsRaw = trim($_REQUEST['manual_ids'] ?? '');
     $manualIds = array_filter(preg_split('/[\s,]+/', $manualIdsRaw));
     $pinnedItems = get_items_by_ids($manualIds);
@@ -232,7 +231,17 @@ function show_preview() {
     $autoItems = get_popular_items($autoLimit, $pinnedIds);
 
     $week  = get_active_week();
-    $items = array_merge($pinnedItems, $autoItems);
+    $items = array_merge($autoItems, $pinnedItems);
+
+    // Items with no bids yet would otherwise show "Starting Bid: $0.00" since
+    // max_bid_amount is 0 until someone bids — fall back to the asking price.
+    foreach ($items as &$item) {
+        $hasBid = $item['max_bid_amount'] > 0;
+        $item['bid_label'] = $hasBid ? 'Current Bid' : 'Starting Bid';
+        $item['display_amount'] = $hasBid ? $item['max_bid_amount'] : $item['auction_asked_price'];
+    }
+    unset($item);
+
     $emails = get_all_unique_recipient_emails();
 
     $defaultEnding = '';
