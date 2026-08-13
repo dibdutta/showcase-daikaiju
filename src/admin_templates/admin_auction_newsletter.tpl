@@ -81,14 +81,31 @@ function copyFromTextarea(id, btn){
             <label style="font-size:11px;font-weight:600;color:#666;display:block;margin-bottom:4px;">"See All Items" Button Label</label>
             <input type="text" name="cta_label" value="{$cta_label}" style="width:100%;padding:7px 10px;font-size:13px;box-sizing:border-box;margin-bottom:12px;" maxlength="80">
 
-            <label style="font-size:11px;font-weight:600;color:#666;">Number of popular items to feature:</label>
+            <label style="font-size:11px;font-weight:600;color:#666;">Total number of items to feature:</label>
             <select name="item_count" style="padding:4px 8px;margin-left:6px;">
-              {section name=n loop=15}
+              {section name=n loop=20}
                 {assign var="n" value=$smarty.section.n.index+1}
                 <option value="{$n}" {if $n == $item_count}selected{/if}>{$n}</option>
               {/section}
             </select>
-            <div style="font-size:11px;color:#999;margin-top:4px;">Rendered as a 3-per-row grid, so 15 fills 5 full rows.</div>
+            <div style="font-size:11px;color:#999;margin-top:4px;">Rendered as a 3-per-row grid (e.g. 15 = 5 full rows, 20 = 7 rows).</div>
+
+            <label style="font-size:11px;font-weight:600;color:#666;display:block;margin-top:14px;margin-bottom:4px;">Always Include These Item IDs</label>
+            <input type="text" name="manual_ids" value="{$manual_ids}" style="width:100%;padding:7px 10px;font-size:13px;box-sizing:border-box;" placeholder="e.g. 4821, 4903, 5017">
+            <div style="font-size:11px;color:#999;margin-top:4px;">
+              Comma or space separated auction IDs. Useful for spotlighting items with no bids yet — these
+              are always shown first, and count toward the total above (the rest is filled with popular items).
+            </div>
+            {if $pinned_count > 0}
+              <div class="nl-box-ok" style="margin-top:10px;">{$pinned_count} manually-pinned item{if $pinned_count != 1}s{/if} included.</div>
+            {/if}
+            {if $invalid_manual_ids}
+              <div class="nl-box-warn" style="margin-top:10px;">
+                Could not find a live auction for ID{if $invalid_manual_ids|@count != 1}s{/if}:
+                {foreach from=$invalid_manual_ids item=iid name=badid}{$iid}{if !$smarty.foreach.badid.last}, {/if}{/foreach}
+                — it may be sold, ended, or mistyped.
+              </div>
+            {/if}
 
             <div style="margin-top:14px;">
               <input type="submit" value="Refresh Preview" class="addbutton">

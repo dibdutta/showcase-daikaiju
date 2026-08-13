@@ -46,8 +46,16 @@ function get_active_week() {
     return $rs ? mysqli_fetch_assoc($rs) : null;
 }
 
-function get_popular_items($limit) {
-    $limit = max(1, min(15, (int)$limit));
+function get_popular_items($limit, $excludeIds = []) {
+    $limit = max(0, min(20, (int)$limit));
+    if ($limit === 0) return [];
+
+    $excludeSql = '';
+    $excludeIds = array_values(array_filter(array_map('intval', $excludeIds)));
+    if (!empty($excludeIds)) {
+        $excludeSql = ' AND a.auction_id NOT IN (' . implode(',', $excludeIds) . ') ';
+    }
+
     $rs = mysqli_query($GLOBALS['db_connect'], "
         SELECT a.auction_id, a.max_bid_amount, a.bid_count, a.auction_actual_end_datetime,
                p.poster_title, pi.poster_thumb
@@ -60,6 +68,7 @@ function get_popular_items($limit) {
           AND a.in_cart = '0'
           AND a.auction_actual_start_datetime <= NOW()
           AND a.auction_actual_end_datetime >= NOW()
+          $excludeSql
         ORDER BY a.max_bid_amount DESC, a.bid_count DESC
         LIMIT $limit");
     $items = [];
@@ -69,6 +78,46 @@ function get_popular_items($limit) {
         }
     }
     return $items;
+}
+
+// Fetch specific auction_ids the admin pinned by hand (e.g. items with no bids
+// yet that wouldn't otherwise rank into the popular list). Still restricted to
+// currently live/approved/unsold items — a sold or ended auction_id is silently
+// dropped rather than shown broken. Order follows the admin's input order.
+function get_items_by_ids($ids) {
+    $ids = array_values(array_filter(array_map('intval', $ids)));
+    if (empty($ids)) return [];
+
+    $rs = mysqli_query($GLOBALS['db_connect'], "
+        SELECT a.auction_id, a.max_bid_amount, a.bid_count, a.auction_actual_end_datetime,
+               p.poster_title, pi.poster_thumb
+        FROM tbl_auction_live a
+        INNER JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
+        INNER JOIN tbl_poster_images_live pi ON a.fk_poster_id = pi.fk_poster_id
+        WHERE pi.is_default = '1'
+          AND a.auction_is_approved = '1'
+          AND a.auction_is_sold = '0'
+          AND a.in_cart = '0'
+          AND a.auction_actual_start_datetime <= NOW()
+          AND a.auction_actual_end_datetime >= NOW()
+          AND a.auction_id IN (" . implode(',', $ids) . ")");
+
+    $byId = [];
+    if ($rs) {
+        while ($row = mysqli_fetch_assoc($rs)) {
+            $byId[(int)$row['auction_id']] = $row;
+        }
+    }
+
+    // Preserve the order the admin typed the IDs in, dropping any that
+    // weren't found (sold/ended/invalid).
+    $ordered = [];
+    foreach ($ids as $id) {
+        if (isset($byId[$id]) && !isset($ordered[$id])) {
+            $ordered[$id] = $byId[$id];
+        }
+    }
+    return array_values($ordered);
 }
 
 // All unique registered-user email addresses, case-insensitively deduplicated.
@@ -169,10 +218,21 @@ function show_preview() {
     require_once INCLUDE_PATH . 'lib/adminCommon.php';
 
     $itemCount = (int)($_REQUEST['item_count'] ?? 15);
-    if ($itemCount < 1 || $itemCount > 15) $itemCount = 15;
+    if ($itemCount < 1 || $itemCount > 20) $itemCount = 15;
+
+    // Manually pinned items (e.g. items with no bids yet) always appear, in
+    // the order typed. item_count then controls how many additional
+    // auto-picked popular items fill out the rest, up to the cap.
+    $manualIdsRaw = trim($_REQUEST['manual_ids'] ?? '');
+    $manualIds = array_filter(preg_split('/[\s,]+/', $manualIdsRaw));
+    $pinnedItems = get_items_by_ids($manualIds);
+    $pinnedIds = array_map(function($it) { return (int)$it['auction_id']; }, $pinnedItems);
+
+    $autoLimit = max(0, $itemCount - count($pinnedItems));
+    $autoItems = get_popular_items($autoLimit, $pinnedIds);
 
     $week  = get_active_week();
-    $items = get_popular_items($itemCount);
+    $items = array_merge($pinnedItems, $autoItems);
     $emails = get_all_unique_recipient_emails();
 
     $defaultEnding = '';
@@ -196,9 +256,17 @@ function show_preview() {
     $weekLink  = 'https://' . HOST_NAME . '/buy?list=weekly';
     $renderedHtml = build_email_html($endingTxt, $introHtml, $itemsHtml, $ctaLabel, $weekLink);
 
+    // Flag any manually-typed IDs that didn't resolve to a live item (sold,
+    // ended, or just a typo) so the admin isn't left guessing why one's missing.
+    $foundIds = array_map(function($it) { return (int)$it['auction_id']; }, $pinnedItems);
+    $invalidManualIds = array_values(array_diff(array_map('intval', $manualIds), $foundIds));
+
     $smarty->assign('week', $week);
     $smarty->assign('items', $items);
     $smarty->assign('item_count', $itemCount);
+    $smarty->assign('manual_ids', $manualIdsRaw);
+    $smarty->assign('pinned_count', count($pinnedItems));
+    $smarty->assign('invalid_manual_ids', $invalidManualIds);
     $smarty->assign('recipient_emails', $emails);
     $smarty->assign('total_recipients', count($emails));
     $smarty->assign('email_subject', $subject);
