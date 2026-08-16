@@ -36,7 +36,7 @@ $results[] = str_repeat("-", 60);
 // 1. Confirm the auction exists and is sold
 $rs_auction = mysqli_query($db,
     "SELECT a.auction_id, a.fk_poster_id, a.auction_is_sold, a.max_bid_amount, a.highest_user,
-            p.poster_title
+            a.fk_auction_type_id, a.fk_auction_week_id, p.poster_title
      FROM tbl_auction a
      JOIN tbl_poster p ON a.fk_poster_id = p.poster_id
      WHERE a.auction_id = $auction_id
@@ -130,6 +130,36 @@ $results[] = "INFO: Buyer — {$row['firstname']} {$row['lastname']} (user_id={$
 $results[] = "INFO: Amount — \${$row['amount']}";
 
 $winner_name = $row['firstname'] . ' ' . $row['lastname'];
+
+// 5. Insert tbl_sold_archive — mirrors generateInvoice() in cron.php, which writes this
+// row unconditionally whenever an invoice is generated (it's what powers "My Sold Watch
+// List" and the admin sold-item reports). cron.php hardcodes fk_auction_type_id='2'
+// because that code path only ever runs for weekly auctions; this script isn't scoped
+// that way, so it uses the auction's real fk_auction_type_id instead.
+$sold_existing = mysqli_fetch_assoc(mysqli_query($db,
+    "SELECT COUNT(*) AS cnt FROM tbl_sold_archive WHERE auction_id = $auction_id"));
+if ($sold_existing && $sold_existing['cnt'] > 0) {
+    $results[] = "SKIPPED: tbl_sold_archive already has {$sold_existing['cnt']} row(s) for auction_id=$auction_id.";
+} else {
+    $sql_sold = "INSERT INTO tbl_sold_archive
+        (auction_id, invoice_generated_on, fk_auction_type_id, poster_id, winnerName, soldamnt, is_cloud, auction_week_id, poster_thumb)
+        VALUES (
+            '" . (int)$auction_id . "',
+            '" . date("Y-m-d H:i:s") . "',
+            '" . (int)$auction['fk_auction_type_id'] . "',
+            '" . (int)$row['poster_id'] . "',
+            '" . mysqli_real_escape_string($db, $winner_name) . "',
+            '" . (float)$row['amount'] . "',
+            '1',
+            '" . (int)$row['fk_auction_week_id'] . "',
+            '" . mysqli_real_escape_string($db, $row['poster_thumb']) . "'
+        )";
+    if (mysqli_query($db, $sql_sold)) {
+        $results[] = "OK: tbl_sold_archive inserted for auction_id=$auction_id.";
+    } else {
+        $results[] = "ERROR: tbl_sold_archive insert failed — " . mysqli_error($db);
+    }
+}
 
 // Serialize billing + shipping addresses
 $billing_address = serialize([
