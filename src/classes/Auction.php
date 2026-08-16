@@ -4571,15 +4571,15 @@ function soldAuctionMONTHLY($auctionStatus = '', $user_id = '',$sort_type='',$se
 				MAX(a.is_cloud)     AS is_cloud,
 
 				MAX(a.soldamnt)     AS last_bid_amount,
-				COUNT(b.bid_id)     AS bid_count
+				MAX(ta.bid_count)   AS bid_count
 
 			FROM tbl_sold_archive a
 			INNER JOIN " . TBL_POSTER . " p
 				ON a.poster_id = p.poster_id
 			INNER JOIN " . TBL_AUCTION_WEEK . " aw
 				ON a.auction_week_id = aw.auction_week_id
-			LEFT JOIN tbl_bid_archive b
-				ON b.bid_fk_auction_id = a.auction_id
+			LEFT JOIN " . TBL_AUCTION . " ta
+				ON ta.auction_id = a.auction_id
 
 			WHERE 1 = 1
 			";
