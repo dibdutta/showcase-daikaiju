@@ -242,14 +242,26 @@ function toggleDiv(id,flagit,type,track) {
 										<th>&nbsp;&nbsp;Status</th>
 									  </tr>
 								{/if}
-                                {section name=counter loop=$watchingItems}		
-								
+                                {section name=counter loop=$watchingItems}
+								{* tbl_auction and tbl_auction_live have independent auction_id sequences, so a bare
+								   mode=poster_details&auction_id= link can resolve to the wrong (colliding) item.
+								   Tag the type so poster_details() looks in the right table. *}
+								{if $smarty.request.type == ''}
+									{assign var="pd_suffix" value="&live_item=1"}
+								{elseif $smarty.request.type == 'fixed'}
+									{assign var="pd_suffix" value="&fixed=1"}
+								{elseif $smarty.request.type == 'sold'}
+									{assign var="pd_suffix" value="&sold=1"}
+								{else}
+									{assign var="pd_suffix" value=""}
+								{/if}
+
 									{if $smarty.request.type == ''}
 									  <tr>
 										<td style="width:150px;">
 											<div >
 												<div>
-													<a href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}"><img class="image-brdr" src="{$watchingItems[counter].image_path}" width="22px" height="22px"  /></a>&nbsp; <a href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}" style="font-size:10px;">{$watchingItems[counter].poster_title} </a>
+													<a href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}{$pd_suffix}"><img class="image-brdr" src="{$watchingItems[counter].image_path}" width="22px" height="22px"  /></a>&nbsp; <a href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}{$pd_suffix}" style="font-size:10px;">{$watchingItems[counter].poster_title} </a>
 												</div>
 											</div>
 										
@@ -309,24 +321,24 @@ function toggleDiv(id,flagit,type,track) {
 													<div id="gallery_{$smarty.section.counter.index}" class="image-hldr">
 														 <div class="buygridtb">
 															<div>
-															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}"><img class="image-brdr" src="{$watchingItems[counter].image_path}"  /></a>
+															<a href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}{$pd_suffix}"><img class="image-brdr" src="{$watchingItems[counter].image_path}"  /></a>
 															</div>
 														  </div>
 															{if ($smarty.request.list=='alternative' || $smarty.request.list=='') && $watchingItems[counter].fk_auction_type_id == 6}
-															<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}" style="cursor:pointer;" >{$watchingItems[counter].poster_title}</a></h3></div>
-															 <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}" style="cursor:pointer;" >{$watchingItems[counter].artist}</a></h3></div>	
-															<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}" style="cursor:pointer;" >{$watchingItems[counter].poster_size}</a></h3></div>
+															<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}{$pd_suffix}" style="cursor:pointer;" >{$watchingItems[counter].poster_title}</a></h3></div>
+															 <div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}{$pd_suffix}" style="cursor:pointer;" >{$watchingItems[counter].artist}</a></h3></div>	
+															<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}{$pd_suffix}" style="cursor:pointer;" >{$watchingItems[counter].poster_size}</a></h3></div>
 															{if $watchingItems[counter].field_1 <> ''}
-															<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}" style="cursor:pointer;" >{$watchingItems[counter].field_1}</a></h3></div>
+															<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}{$pd_suffix}" style="cursor:pointer;" >{$watchingItems[counter].field_1}</a></h3></div>
 															{/if}
 															{if $watchingItems[counter].field_2 <> ''}
-															<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}" style="cursor:pointer;" >{$watchingItems[counter].field_2}</a></h3></div>
+															<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}{$pd_suffix}" style="cursor:pointer;" >{$watchingItems[counter].field_2}</a></h3></div>
 															{/if}
 															{if $watchingItems[counter].field_3 <> ''}
-															<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}" style="cursor:pointer;" >{$watchingItems[counter].field_3}</a></h3></div>
+															<div class="pb05 pl10 pr10 tac" ><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}{$pd_suffix}" style="cursor:pointer;" >{$watchingItems[counter].field_3}</a></h3></div>
 															{/if}
 															{else}
-															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}" style="cursor:pointer;" >{$watchingItems[counter].poster_title}</a></h3></div>
+															<div class="pb05 pl10 pr10 tac" style="height:40px;"><h3><a class="gridView" href="{$actualPath}/buy?mode=poster_details&auction_id={$watchingItems[counter].auction_id}{$pd_suffix}" style="cursor:pointer;" >{$watchingItems[counter].poster_title}</a></h3></div>
 															{/if}	
 															 {if $is_expired=='0' && $is_expired_stills !='1' && $smarty.request.list!='alternative' &&  $smarty.request.list!=''}
 															   {if $watchingItems[counter].fk_auction_type_id <> '1'}

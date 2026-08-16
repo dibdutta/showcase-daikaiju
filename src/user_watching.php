@@ -117,7 +117,8 @@ function displayList()
 	
 
 	
-	if($total > 0){					
+	if($total > 0){
+		$dataArr = array();
 		if($rs_watching = mysqli_query($GLOBALS['db_connect'],$sql_watching)){
 			while($row_watching = mysqli_fetch_assoc($rs_watching)){
 				$dataArr[] = $row_watching;
