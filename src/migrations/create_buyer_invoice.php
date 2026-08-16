@@ -15,8 +15,10 @@ if (!isset($_POST['auction_id'])) {
         <h3>Create Buyer Invoice for a tbl_auction record</h3>
         <p style='color:#888;font-size:13px;'>
             Looks up the winning bid in tbl_bid_archive for the given auction,
-            then generates a buyer invoice (tbl_invoice + tbl_invoice_to_auction + tbl_sold_archive).<br>
-            Will refuse to run if an invoice already exists for this auction.
+            then generates a buyer invoice (tbl_invoice + tbl_invoice_to_auction) and a
+            tbl_sold_archive row.<br>
+            If an invoice already exists for this auction, invoice creation is skipped and
+            it will only backfill the missing tbl_sold_archive row.
         </p>
         <label>Auction ID (from tbl_auction):
             <input type='number' name='auction_id' min='1' required style='margin-left:8px;width:100px;'>
@@ -54,12 +56,13 @@ if ($auction['auction_is_sold'] != '1') {
     output($results); exit;
 }
 
-// 2. Guard: invoice must not already exist
+// 2. Check whether an invoice already exists. If it does, we don't touch tbl_invoice /
+// tbl_invoice_to_auction at all — we only fall through to backfill tbl_sold_archive below.
 $existing = mysqli_fetch_assoc(mysqli_query($db,
     "SELECT COUNT(*) AS cnt FROM tbl_invoice_to_auction WHERE fk_auction_id = $auction_id"));
-if ($existing && $existing['cnt'] > 0) {
-    $results[] = "SKIPPED: Invoice already exists for auction_id=$auction_id (tbl_invoice_to_auction has {$existing['cnt']} row(s)). No action taken.";
-    output($results); exit;
+$invoice_exists = $existing && $existing['cnt'] > 0;
+if ($invoice_exists) {
+    $results[] = "INFO: Invoice already exists for auction_id=$auction_id (tbl_invoice_to_auction has {$existing['cnt']} row(s)). Skipping invoice creation — will only check/insert tbl_sold_archive.";
 }
 
 // 3. Find the winning bid in tbl_bid_archive
@@ -102,7 +105,8 @@ if (!$winning_bid) {
 $bid_id     = (int)$winning_bid['bid_id'];
 $bid_amount = (float)$winning_bid['bid_amount'];
 
-// 4. Generate invoice — mirrors generateInvoice($bid_id, true, $auction_id) from cron.php
+// 4. Fetch buyer/poster/auction details — needed for both tbl_sold_archive and (if not
+// already invoiced) tbl_invoice. Mirrors generateInvoice($bid_id, true, $auction_id) from cron.php
 $sql_user = "SELECT u.user_id, u.firstname, u.lastname, u.country_id, u.city, u.state,
                     u.address1, u.address2, u.zipcode, c.country_name, c.country_code,
                     u.shipping_country_id, u.shipping_city, u.shipping_state, u.shipping_address1,
@@ -161,66 +165,70 @@ if ($sold_existing && $sold_existing['cnt'] > 0) {
     }
 }
 
-// Serialize billing + shipping addresses
-$billing_address = serialize([
-    'billing_firstname'    => $row['firstname'],
-    'billing_lastname'     => $row['lastname'],
-    'billing_country_id'   => $row['country_id'],
-    'billing_country_name' => $row['country_name'],
-    'billing_country_code' => $row['country_code'],
-    'billing_city'         => mysqli_real_escape_string($db, $row['city']),
-    'billing_state'        => mysqli_real_escape_string($db, $row['state']),
-    'billing_address1'     => mysqli_real_escape_string($db, $row['address1']),
-    'billing_address2'     => mysqli_real_escape_string($db, $row['address2']),
-    'billing_zipcode'      => $row['zipcode'],
-]);
-$shipping_address = serialize([
-    'shipping_firstname'    => $row['firstname'],
-    'shipping_lastname'     => $row['lastname'],
-    'shipping_country_id'   => $row['shipping_country_id'],
-    'shipping_country_name' => $row['shipping_country_name'],
-    'shipping_country_code' => $row['shipping_country_code'],
-    'shipping_city'         => mysqli_real_escape_string($db, $row['shipping_city']),
-    'shipping_state'        => mysqli_real_escape_string($db, $row['shipping_state']),
-    'shipping_address1'     => mysqli_real_escape_string($db, $row['shipping_address1']),
-    'shipping_address2'     => mysqli_real_escape_string($db, $row['shipping_address2']),
-    'shipping_zipcode'      => $row['shipping_zipcode'],
-]);
-$auction_details = serialize([
-    0 => [
-        'auction_id'   => $row['auction_id'],
-        'poster_sku'   => $row['poster_sku'],
-        'poster_title' => mysqli_real_escape_string($db, $row['poster_title']),
-        'amount'       => $row['amount'],
-    ],
-]);
+// 6. Insert tbl_invoice — skipped entirely when an invoice already exists (see step 2).
+if (!$invoice_exists) {
+    // Serialize billing + shipping addresses
+    $billing_address = serialize([
+        'billing_firstname'    => $row['firstname'],
+        'billing_lastname'     => $row['lastname'],
+        'billing_country_id'   => $row['country_id'],
+        'billing_country_name' => $row['country_name'],
+        'billing_country_code' => $row['country_code'],
+        'billing_city'         => mysqli_real_escape_string($db, $row['city']),
+        'billing_state'        => mysqli_real_escape_string($db, $row['state']),
+        'billing_address1'     => mysqli_real_escape_string($db, $row['address1']),
+        'billing_address2'     => mysqli_real_escape_string($db, $row['address2']),
+        'billing_zipcode'      => $row['zipcode'],
+    ]);
+    $shipping_address = serialize([
+        'shipping_firstname'    => $row['firstname'],
+        'shipping_lastname'     => $row['lastname'],
+        'shipping_country_id'   => $row['shipping_country_id'],
+        'shipping_country_name' => $row['shipping_country_name'],
+        'shipping_country_code' => $row['shipping_country_code'],
+        'shipping_city'         => mysqli_real_escape_string($db, $row['shipping_city']),
+        'shipping_state'        => mysqli_real_escape_string($db, $row['shipping_state']),
+        'shipping_address1'     => mysqli_real_escape_string($db, $row['shipping_address1']),
+        'shipping_address2'     => mysqli_real_escape_string($db, $row['shipping_address2']),
+        'shipping_zipcode'      => $row['shipping_zipcode'],
+    ]);
+    $auction_details = serialize([
+        0 => [
+            'auction_id'   => $row['auction_id'],
+            'poster_sku'   => $row['poster_sku'],
+            'poster_title' => mysqli_real_escape_string($db, $row['poster_title']),
+            'amount'       => $row['amount'],
+        ],
+    ]);
 
-// Insert tbl_invoice
-$sql_invoice = "INSERT INTO tbl_invoice SET
-    fk_user_id           = '" . (int)$row['user_id'] . "',
-    billing_address      = '" . mysqli_real_escape_string($db, $billing_address) . "',
-    shipping_address     = '" . mysqli_real_escape_string($db, $shipping_address) . "',
-    total_amount         = '" . (float)$row['amount'] . "',
-    auction_details      = '" . mysqli_real_escape_string($db, $auction_details) . "',
-    invoice_generated_on = '" . date("Y-m-d H:i:s") . "',
-    is_buyers_copy       = '1'";
+    $sql_invoice = "INSERT INTO tbl_invoice SET
+        fk_user_id           = '" . (int)$row['user_id'] . "',
+        billing_address      = '" . mysqli_real_escape_string($db, $billing_address) . "',
+        shipping_address     = '" . mysqli_real_escape_string($db, $shipping_address) . "',
+        total_amount         = '" . (float)$row['amount'] . "',
+        auction_details      = '" . mysqli_real_escape_string($db, $auction_details) . "',
+        invoice_generated_on = '" . date("Y-m-d H:i:s") . "',
+        is_buyers_copy       = '1'";
 
-if (mysqli_query($db, $sql_invoice)) {
-    $invoice_id = mysqli_insert_id($db);
-    $results[]  = "OK: tbl_invoice inserted — invoice_id=$invoice_id.";
+    if (mysqli_query($db, $sql_invoice)) {
+        $invoice_id = mysqli_insert_id($db);
+        $results[]  = "OK: tbl_invoice inserted — invoice_id=$invoice_id.";
 
-    // Link invoice to auction
-    $sql_link = "INSERT INTO tbl_invoice_to_auction SET
-        fk_auction_id = '" . (int)$auction_id . "',
-        fk_invoice_id = '" . (int)$invoice_id . "',
-        amount        = '" . (float)$row['amount'] . "'";
-    if (mysqli_query($db, $sql_link)) {
-        $results[] = "OK: tbl_invoice_to_auction linked (auction_id=$auction_id → invoice_id=$invoice_id).";
+        // Link invoice to auction
+        $sql_link = "INSERT INTO tbl_invoice_to_auction SET
+            fk_auction_id = '" . (int)$auction_id . "',
+            fk_invoice_id = '" . (int)$invoice_id . "',
+            amount        = '" . (float)$row['amount'] . "'";
+        if (mysqli_query($db, $sql_link)) {
+            $results[] = "OK: tbl_invoice_to_auction linked (auction_id=$auction_id → invoice_id=$invoice_id).";
+        } else {
+            $results[] = "ERROR: tbl_invoice_to_auction insert failed — " . mysqli_error($db);
+        }
     } else {
-        $results[] = "ERROR: tbl_invoice_to_auction insert failed — " . mysqli_error($db);
+        $results[] = "ERROR: tbl_invoice insert failed — " . mysqli_error($db);
     }
 } else {
-    $results[] = "ERROR: tbl_invoice insert failed — " . mysqli_error($db);
+    $results[] = "INFO: Invoice creation skipped (already existed).";
 }
 
 $results[] = "";
