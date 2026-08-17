@@ -876,8 +876,22 @@ function archive_bid_immediately($bid_id){
 // on every bid they insert, and fetchExpiredAuctionDetails() moves pre-existing bids to
 // tbl_bid_archive before the loop runs. Kept as a catch-all for unexpected edge cases.
 function sync_auction_bid_fun($auction_ids){
-	$ids = join(",",$auction_ids);
-	$sql = "Select * from tbl_bid b where b.bid_fk_auction_id  IN (".$ids.")";
+	if(empty($auction_ids)){ return; }
+	$ids = join(",",array_map('intval',$auction_ids));
+
+	// CRITICAL — do not remove the NOT IN guard below.
+	// tbl_bid is keyed by tbl_auction_live.auction_id, but $auction_ids holds the NEW
+	// tbl_auction.auction_id values just created by fetchExpiredAuctionDetails(). Those two
+	// tables have independent auto-increment sequences, so a freshly-archived ID can collide
+	// with the ID of a COMPLETELY DIFFERENT item that is still live and still taking bids.
+	// Unguarded, this sweep matched that live item's bids, re-tagged them onto the archived
+	// auction in tbl_bid_archive, and DELETED them from tbl_bid — corrupting the archived
+	// item's bid history and wiping the live item's. archive_bid_immediately() carries a note
+	// about the same hazard. Rule: an auction_id still present in tbl_auction_live belongs to
+	// the live ID space — never touch its bids here.
+	$sql = "Select * from tbl_bid b
+			where b.bid_fk_auction_id IN (".$ids.")
+			  and b.bid_fk_auction_id NOT IN (SELECT auction_id FROM tbl_auction_live)";
 	$rs= mysqli_query($GLOBALS['db_connect'],$sql);
 	while($row=mysqli_fetch_array($rs)){
 		if($row['bid_fk_user_id'] >0){
@@ -901,7 +915,8 @@ function sync_auction_bid_fun($auction_ids){
 // (bid_is_won=0) but never generated the missing invoice. Branch C now checks tbl_bid_archive
 // as a fallback, so this function is effectively a no-op for correctly processed auctions.
 function sync_auction_bids($auction_ids){
-	$ids = join(",",$auction_ids);
+	if(empty($auction_ids)){ return; }
+	$ids = join(",",array_map('intval',$auction_ids));
 	$sql = " SELECT a.auction_id,a.fk_poster_id,a.max_bid_amount,p.poster_title,a.highest_user FROM tbl_auction a,tbl_poster p WHERE a.auction_id IN (".$ids.") AND a.auction_is_sold='1' AND 
 a.fk_poster_id=p.poster_id ";
 	echo $sql;

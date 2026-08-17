@@ -1067,7 +1067,16 @@ function combine_seller_invoice(){
 		require_once INCLUDE_PATH."lib/adminCommon.php";
 		$auction_week_id = $_REQUEST['week_id'];
 		echo $auction_week_id ;
-		$sql = "Select b.* from tbl_bid b,tbl_auction a where b.bid_fk_auction_id = a.auction_id and a.fk_auction_week_id = ".$auction_week_id;
+		// CRITICAL — do not remove the NOT IN guard below. See sync_auction_bid_fun() in
+		// cron.php for the full explanation. tbl_bid is keyed by tbl_auction_live.auction_id,
+		// but this joins it against tbl_auction, whose IDs come from a separate auto-increment
+		// sequence. Unguarded, clicking "Sync Auction Bids" steals the bids of any still-live
+		// item whose live ID happens to collide with an archived auction ID in this week —
+		// re-tagging them onto the wrong auction and deleting them from tbl_bid.
+		$sql = "Select b.* from tbl_bid b,tbl_auction a
+				where b.bid_fk_auction_id = a.auction_id
+				  and a.fk_auction_week_id = ".(int)$auction_week_id."
+				  and b.bid_fk_auction_id NOT IN (SELECT auction_id FROM tbl_auction_live)";
 		$rs= mysqli_query($GLOBALS['db_connect'],$sql);
 		while($row=mysqli_fetch_array($rs)){
 			
