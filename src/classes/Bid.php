@@ -727,9 +727,14 @@ class Bid extends DBCommon{
 		}
 		$auction_ids = trim($auction_ids, ',');
 
-		 $sql = "SELECT bid_fk_auction_id, count(bid_id) AS counter, max(bid_amount) AS highest_bid
-				FROM tbl_bid_archive WHERE bid_fk_auction_id IN (".$auction_ids.") GROUP BY bid_fk_auction_id";
-				
+		// tbl_auction.bid_count / max_bid_amount are the source of truth for closed auctions.
+		// They are maintained live (mybuying.php, cron.php proxy resolution) and copied into
+		// tbl_auction when cron archives the auction, so they survive intact even when the
+		// tbl_bid -> tbl_bid_archive move loses or mis-keys rows. Counting tbl_bid_archive
+		// under-reports on any auction hit by that archiving bug.
+		 $sql = "SELECT a.auction_id AS bid_fk_auction_id, a.bid_count AS counter, a.max_bid_amount AS highest_bid
+				FROM ".TBL_AUCTION." a WHERE a.auction_id IN (".$auction_ids.")";
+
 	    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 		   while($row = mysqli_fetch_assoc($rs)){
 			   for($i=0;$i<count($dataArr);$i++){
@@ -741,6 +746,33 @@ class Bid extends DBCommon{
 			   }
 		   }
 	    }
+
+		// Fall back to the archive aggregate for legacy rows where the counter was never
+		// populated (bid_count NULL/0) but archived bids do exist.
+		$fallback_ids = '';
+		for($i=0;$i<count($dataArr);$i++){
+			if(empty($dataArr[$i]['count_bid'])){
+				$fallback_ids .= $dataArr[$i]['auction_id'].",";
+			}
+		}
+		$fallback_ids = trim($fallback_ids, ',');
+		if($fallback_ids != ''){
+			$sql = "SELECT bid_fk_auction_id, count(bid_id) AS counter, max(bid_amount) AS highest_bid
+					FROM tbl_bid_archive WHERE bid_fk_auction_id IN (".$fallback_ids.") GROUP BY bid_fk_auction_id";
+			if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
+			   while($row = mysqli_fetch_assoc($rs)){
+				   for($i=0;$i<count($dataArr);$i++){
+						if($dataArr[$i]['auction_id'] == $row['bid_fk_auction_id']){
+							$dataArr[$i]['count_bid'] = $row['counter'];
+							if(empty($dataArr[$i]['highest_bid'])){
+								$dataArr[$i]['highest_bid'] = $row['highest_bid'];
+							}
+							break;
+						}
+				   }
+			   }
+			}
+		}
 		
 		/*for($i=0;$i<count($dataArr);$i++){
 			$sql = "SELECT count(bid_id) AS counter, max(bid_amount) AS highest_bid
