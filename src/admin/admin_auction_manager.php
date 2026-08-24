@@ -2079,8 +2079,43 @@ function delete_invoice_charge(){
  function cancel_invoice(){
 	define ("PAGE_HEADER_TEXT", "Admin Invoice Manager");
  	require_once INCLUDE_PATH."lib/adminCommon.php";
+ 	$db = $GLOBALS['db_connect'];
+
+	// adminCommon.php skips the per-page ACL for AJAX requests, so re-check it here.
+	if(MULTIUSER_ADMIN == true && ($_SESSION['superAdmin'] ?? 0) != 1
+		&& !in_array(basename($_SERVER['PHP_SELF']), $_SESSION['accessPages'] ?? [])){
+		echo '0';
+		return;
+	}
+
+	$invoice_id = (int)($_REQUEST['invoice_id'] ?? 0);
+	if($invoice_id <= 0){
+		echo '0';
+		return;
+	}
+
+	// Only an unpaid, not-already-cancelled invoice may be cancelled.
+	$rsChk = mysqli_query($db, "SELECT invoice_id FROM ".TBL_INVOICE."
+								WHERE invoice_id = ".$invoice_id."
+								  AND is_paid = '0'
+								  AND is_cancelled = '0'");
+	if(!$rsChk || !mysqli_fetch_assoc($rsChk)){
+		echo '0';
+		return;
+	}
+
  	$dbCommonObj = new DBCommon();
- 	$update=$dbCommonObj->updateData(TBL_INVOICE,array('cancelled_on'=>date('Y-m-d :H:i:s'),'is_cancelled'=>'1'),array('invoice_id'=>$_REQUEST['invoice_id']),true);
+ 	$update=$dbCommonObj->updateData(TBL_INVOICE,array('cancelled_on'=>date('Y-m-d H:i:s'),'is_cancelled'=>'1'),array('invoice_id'=>$invoice_id),true);
+
+	// Release fixed-price inventory (fk_auction_type_id = 1) so the item can sell again.
+	$sqlRelease = "UPDATE ".TBL_AUCTION." a, ".TBL_INVOICE_TO_AUCTION." tia
+					SET a.auction_is_sold = '0'
+					WHERE tia.fk_auction_id = a.auction_id
+					  AND tia.fk_invoice_id = ".$invoice_id."
+					  AND a.fk_auction_type_id = '1'";
+	mysqli_query($db, $sqlRelease);
+
+	echo '1';
  }
  function reopen_fixed(){
 	define ("PAGE_HEADER_TEXT", "Admin Fixed Price Sale Manager");

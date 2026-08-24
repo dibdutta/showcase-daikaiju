@@ -136,6 +136,10 @@ $(document).ready(function() {
             var invoice_id=$("#invoice_id").val();
             $.get("admin_auction_manager.php?mode=cancel_invoice", {invoice_id :invoice_id },
                     function(data) {
+                        if($.trim(data) != '1'){
+                            alert("This invoice could not be cancelled. It may already be paid or cancelled.");
+                            return;
+                        }
                         $("#approved").hide();
                         $("#mark_as_paid").hide();
                         $("#cancel").hide();
