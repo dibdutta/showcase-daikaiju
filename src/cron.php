@@ -226,8 +226,17 @@ function updateBidCronJob(){
 	
 	$auction_week_id= fetchExpiredAuctions();
 	if($auction_week_id>0){
-			$sql_update_auction_week = "UPDATE tbl_auction_week  SET is_processing= '1' WHERE auction_week_id=".$auction_week_id;
-			$sql_update_res_auction=mysqli_query($GLOBALS['db_connect'],$sql_update_auction_week);
+			// Atomic claim. fetchExpiredAuctions() reads is_processing='0' and this block sets
+			// it to '1' — two separate statements. The cron fires every minute, so two runs can
+			// both pass the read before either writes and then process the same week
+			// concurrently. Adding "AND is_processing='0'" makes the claim conditional, and
+			// affected_rows tells us whether THIS run won it.
+			$sql_update_auction_week = "UPDATE tbl_auction_week  SET is_processing= '1' WHERE auction_week_id=".(int)$auction_week_id." AND is_processing= '0'";
+			mysqli_query($GLOBALS['db_connect'],$sql_update_auction_week);
+			if(mysqli_affected_rows($GLOBALS['db_connect']) !== 1){
+				echo "[CRON] auction week ".(int)$auction_week_id." is already being processed by another run — skipping.\n";
+				return;
+			}
 
 			$sql_update_week = "UPDATE tbl_auction_week  SET is_latest= '0' WHERE is_latest= '1' AND is_stills= '0' ";
 			mysqli_query($GLOBALS['db_connect'],$sql_update_week);
@@ -385,21 +394,21 @@ function updateBidCronJob(){
 
 function fetchExpiredAuctions()
 {
-	$sql = "SELECT
-            tw.fk_auction_week_id
+	// The is_processing filter MUST be inside the SQL, before LIMIT 1.
+	// Previously LIMIT 1 grabbed the first expired item and only then checked its week's
+	// lock in PHP — so if that one week happened to be locked (including permanently, when
+	// a run died before releasing it), this returned nothing and EVERY other week with
+	// expired items stopped being processed too. One stuck week halted all auction closing.
+	$sql = "SELECT tw.fk_auction_week_id
 			from tbl_auction_live tw
-WHERE (UNIX_TIMESTAMP(tw.auction_actual_end_datetime) - UNIX_TIMESTAMP()) <= 0 LIMIT 1
-";
+			INNER JOIN tbl_auction_week w ON w.auction_week_id = tw.fk_auction_week_id
+			WHERE (UNIX_TIMESTAMP(tw.auction_actual_end_datetime) - UNIX_TIMESTAMP()) <= 0
+			  AND w.is_processing = '0'
+			LIMIT 1";
    $auction_week_id = '';
    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
 	   while($row = mysqli_fetch_assoc($rs)){
-		    $sqlCheckAuctionWeek = "SELECT is_processing from tbl_auction_week where auction_week_id=".$row['fk_auction_week_id'];
-			$rsCheckAuctionWeek = mysqli_query($GLOBALS['db_connect'],$sqlCheckAuctionWeek);
-			$rowCheckAuctionWeek = mysqli_fetch_assoc($rsCheckAuctionWeek);
-			if($rowCheckAuctionWeek["is_processing"] == '0'){
-				$auction_week_id=$row['fk_auction_week_id'];
-			}
-			
+			$auction_week_id=$row['fk_auction_week_id'];
 	   }
 	  }
 	 return $auction_week_id;
@@ -427,7 +436,21 @@ function fetchExpiredAuctionDetails($auction_week_id){
 				// echo $insert_auction;
 				$auction_id_new_res=mysqli_query($GLOBALS['db_connect'],$insert_auction);
 				$auction_id_new= mysqli_insert_id($GLOBALS['db_connect']);
-				array_push($processed_items,$auction_id_new);
+				if($auction_id_new>0){
+					// Only track IDs that actually exist. Pushing a failed insert's 0 put
+					// "IN (0, ...)" into every downstream sweep/lookup.
+					array_push($processed_items,$auction_id_new);
+				}else{
+					// Worse than the poster-insert skip: tbl_poster_live IS deleted below while
+					// tbl_auction_live is not, leaving a live auction row pointing at a poster
+					// that no longer exists. Loud log so this is caught immediately.
+					$_aucErr = mysqli_error($GLOBALS['db_connect']);
+					echo "[CRON][ARCHIVE-FAIL] auction insert failed after poster was created — "
+					   ."orphan risk. live auction_id=".$row_auction['auction_id']
+					   ." new poster_id=".$poster_id_new." week=".$auction_week_id." err=".$_aucErr."\n";
+					error_log("[CRON][ARCHIVE-FAIL] live auction_id=".$row_auction['auction_id']
+					   ." new poster_id=".$poster_id_new." err=".$_aucErr);
+				}
 				if($auction_id_new>0){
 				    ###################  tbl_proxy_bid_live to tbl_proxy_bid  ##########################################
 					$select_proxy ="Select * from tbl_proxy_bid_live where fk_auction_id=".$row['auction_id'];
@@ -506,10 +529,22 @@ function fetchExpiredAuctionDetails($auction_week_id){
 					mysqli_query($GLOBALS['db_connect'],$del_auction);
 				}
 				$del_poster="Delete from tbl_poster_live where poster_id=".$row['poster_id'];
-				mysqli_query($GLOBALS['db_connect'],$del_poster);			
-				
+				mysqli_query($GLOBALS['db_connect'],$del_poster);
+
+			}else{
+				// Do not let this fail silently. A failed tbl_poster insert skips the whole
+				// item: its auction is never archived and its tbl_auction_live row is never
+				// deleted, so it stays live past its end time, the cron re-attempts this week
+				// every minute forever, and its bids sit in tbl_bid under a live-space ID.
+				// That is exactly how items go missing after a close — make it visible.
+				$_skipErr = mysqli_error($GLOBALS['db_connect']);
+				echo "[CRON][ARCHIVE-SKIP] poster insert failed — item left live. "
+				   ."poster_id=".$row['poster_id']." auction_id=".$row['auction_id']
+				   ." week=".$auction_week_id." err=".$_skipErr."\n";
+				error_log("[CRON][ARCHIVE-SKIP] poster_id=".$row['poster_id']
+				   ." auction_id=".$row['auction_id']." week=".$auction_week_id." err=".$_skipErr);
 			}
-			
+
 		}
 	 }
 	 return $processed_items;

@@ -406,7 +406,9 @@ function displaySearch()
 			$auctionItems[$i]['image_path']=CLOUD_POSTER_THUMB_BUY_GALLERY.$auctionItems[$i]['poster_thumb'];
 		}           
         
-		if($auctionItems[$i]['fk_auction_type_id'] != 1){
+		// Only emit a countdown when there is a real number of seconds to count down from;
+		// a NULL/empty seconds_left renders as "NaN NaN NaN" in jquery.countdown.
+		if($auctionItems[$i]['fk_auction_type_id'] != 1 && is_numeric($auctionItems[$i]['seconds_left'])){
 			$auctionItems[$i]['auction_countdown'] = '<span id="cd_'.$auctionItems[$i]['auction_id'].'"><script language="javascript">$("#cd_'.$auctionItems[$i]['auction_id'].'").countdown({until: dateAdd(\'s\', '.$auctionItems[$i]['seconds_left'].', new Date())});</script></span>';
 		}
 	}
@@ -1283,6 +1285,13 @@ if(isset($_SESSION['sessUserID'])){
 		}else{
 			$itemImageArry=$objAuction->fetchTotalPostersForItem($auctionDetails[0]['poster_id'],'');
 		}
+		// A weekly auction that has ended is cleared from tbl_poster_images_live by cron, so the
+		// 'weekly' lookup above comes back empty for an ended-but-unsold item. Fall back to the
+		// master image table rather than fatalling on count(NULL).
+		if(empty($itemImageArry)){
+			$itemImageArry=$objAuction->fetchTotalPostersForItem($auctionDetails[0]['poster_id'],'');
+		}
+		$itemImageArry = is_array($itemImageArry) ? $itemImageArry : array();
 		for($i=0;$i<count($itemImageArry);$i++){        
             if ($itemImageArry[$i]['is_cloud']!='1'){                
                $itemImageArry[$i]['image_path']=CLOUD_POSTER_THUMB.$itemImageArry[$i]['poster_image'];  

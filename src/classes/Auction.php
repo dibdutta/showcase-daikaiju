@@ -1036,6 +1036,26 @@ class Auction extends DBCommon{
         }
 		/*$sql .= " AND a.auction_is_sold IN ('0','3') AND case when (a.fk_auction_type_id ='2' || a.fk_auction_type_id ='5') then  (a.auction_actual_start_datetime <= now() AND a.auction_actual_end_datetime >= now()) when a.fk_auction_type_id ='3' then  (a.auction_actual_start_datetime <= now() AND a.auction_actual_end_datetime >= now() and a.is_approved_for_monthly_auction = '1') when  a.fk_auction_type_id ='4' then a.auction_is_approved='1'  else  a.fk_auction_type_id ='1' end ";*/
 
+		// searchPosterIds() narrows by auction type/status but returns *poster* ids. A poster can
+		// own several rows in tbl_auction (e.g. an old weekly auction that ended unsold plus a
+		// later fixed-price relist), so without re-applying the same filter here those other rows
+		// leak into the result set. Mirrors the $qry branches in searchPosterIds().
+		if($list != 'weekly'){
+			if($list == ''){
+				$sql .= " AND a.auction_is_sold IN ('0','3')
+						  AND case when a.fk_auction_type_id ='2' then  (a.auction_actual_start_datetime <= now() AND a.auction_actual_end_datetime >= now()) when a.fk_auction_type_id ='3' then  (a.auction_actual_start_datetime <= now() AND a.auction_actual_end_datetime >= now() and a.is_approved_for_monthly_auction = '1')  else  a.fk_auction_type_id ='1' end ";
+			}elseif($list == 'fixed'){
+				$sql .= " AND a.auction_is_sold IN ('0','3')
+						  AND a.fk_auction_type_id ='1' ";
+			}elseif($list == 'monthly'){
+				$sql .= " AND a.auction_is_sold = '0'
+						  AND a.fk_auction_type_id ='3' AND a.auction_actual_start_datetime <= now() AND a.auction_actual_end_datetime >= now() AND a.is_approved_for_monthly_auction = '1' ";
+			}elseif($list == 'stills'){
+				$sql .= " AND a.auction_is_sold IN ('0','3')
+						  AND a.fk_auction_type_id = '4' ";
+			}
+		}
+
 		$orderBy=$this->orderBy;
         if($orderBy=="auction_actual_end_datetime"){
             $sql .= " GROUP BY a.auction_id ORDER BY
@@ -6212,6 +6232,7 @@ function fetchStillsLiveAuctions($view_mode=''){
 		return false;
 	}
 	function fetchTotalPostersForItem($poster_id,$type=''){
+	  $dataArr = array();
 	  if($type=='weekly'){
 		$sql = "SELECT poster_image,is_cloud from tbl_poster_images_live where fk_poster_id = ".$poster_id." and is_default='1' " ;
 		if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
