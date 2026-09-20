@@ -728,7 +728,11 @@ function postBid($lastBid)
         mysqli_query($GLOBALS['db_connect'],$update_sql_latest);
     }
     ############### ends here ############################
-    if($bid != false){
+    // $bid tracks the *status* returned to the caller, and several branches above record bids
+    // with a raw mysqli_query() without ever setting it (e.g. when an incoming bid exactly ties
+    // the standing proxy maximum, so $bid_amount > $highest_proxy_amnt is false). $latest_bid_count
+    // is the reliable "did any bid actually land" signal, so the anti-snipe extension keys off both.
+    if($bid != false || $latest_bid_count > 0){
         $auction_incr_time_span = '00'.':'.AUCTION_INCR_BY_MIN.':'.AUCTION_INCR_BY_SEC;
 
         if($lastBid['seconds_left'] <= AUCTION_INCR_TIME_SPAN){
@@ -1407,7 +1411,11 @@ function placeAllBids($lastBid, $auction_id, $bid_amount)
         mysqli_query($GLOBALS['db_connect'],$update_sql_latest);
     }
     ############### ends here ############################
-    if($bid != false){
+    // $bid tracks the *status* returned to the caller, and several branches above record bids
+    // with a raw mysqli_query() without ever setting it (e.g. when an incoming bid exactly ties
+    // the standing proxy maximum, so $bid_amount > $highest_proxy_amnt is false). $latest_bid_count
+    // is the reliable "did any bid actually land" signal, so the anti-snipe extension keys off both.
+    if($bid != false || $latest_bid_count > 0){
         $auction_incr_time_span = '00'.':'.AUCTION_INCR_BY_MIN.':'.AUCTION_INCR_BY_SEC;
 
         if($lastBid['seconds_left'] <= AUCTION_INCR_TIME_SPAN){
