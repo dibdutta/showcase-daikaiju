@@ -1354,6 +1354,100 @@ function increment_amount($buy_now){
  		return 1000000;
  	}
  }
+
+/**
+ * Read the EXIF Orientation tag (1–8) from a JPEG. Returns 1 when absent.
+ * Parses the APP1 segment directly so it works without the exif extension.
+ */
+function getJpegExifOrientation($path) {
+	if (function_exists('exif_read_data')) {
+		$exif = @exif_read_data($path);
+		if ($exif !== false) {
+			$o = (int)($exif['Orientation'] ?? 1);
+			return ($o >= 1 && $o <= 8) ? $o : 1;
+		}
+	}
+	$fh = @fopen($path, 'rb');
+	if (!$fh) return 1;
+	$data = fread($fh, 262144);
+	fclose($fh);
+	if (substr($data, 0, 2) !== "\xFF\xD8") return 1;
+
+	$pos = 2;
+	$len = strlen($data);
+	while ($pos + 4 <= $len) {
+		if ($data[$pos] !== "\xFF") return 1;
+		$marker = ord($data[$pos + 1]);
+		if ($marker === 0xDA || $marker === 0xD9) return 1; // start of scan / end of image
+		$segLen = unpack('n', substr($data, $pos + 2, 2))[1];
+		if ($marker === 0xE1 && substr($data, $pos + 4, 6) === "Exif\0\0") {
+			$tiff = substr($data, $pos + 10, $segLen - 8);
+			$le   = substr($tiff, 0, 2) === 'II';
+			$u16  = function ($s, $o) use ($le) { return unpack($le ? 'v' : 'n', substr($s, $o, 2))[1]; };
+			$u32  = function ($s, $o) use ($le) { return unpack($le ? 'V' : 'N', substr($s, $o, 4))[1]; };
+			if (strlen($tiff) < 8) return 1;
+			$ifd = $u32($tiff, 4);
+			if ($ifd + 2 > strlen($tiff)) return 1;
+			$count = $u16($tiff, $ifd);
+			for ($i = 0; $i < $count; $i++) {
+				$entry = $ifd + 2 + $i * 12;
+				if ($entry + 12 > strlen($tiff)) break;
+				if ($u16($tiff, $entry) === 0x0112) {
+					$o = $u16($tiff, $entry + 8);
+					return ($o >= 1 && $o <= 8) ? $o : 1;
+				}
+			}
+			return 1;
+		}
+		$pos += 2 + $segLen;
+	}
+	return 1;
+}
+
+/**
+ * Rewrite an image file so its pixels match the given EXIF orientation (2–8).
+ * The re-encoded file carries no EXIF, so it displays the same everywhere.
+ */
+function applyImageOrientation($path, $orientation) {
+	$orientation = (int)$orientation;
+	if ($orientation < 2 || $orientation > 8) return false;
+
+	$info = @getimagesize($path);
+	if (!$info) return false;
+	switch ($info[2]) {
+		case IMAGETYPE_JPEG: $img = @imagecreatefromjpeg($path); break;
+		case IMAGETYPE_PNG:  $img = @imagecreatefrompng($path);  break;
+		case IMAGETYPE_GIF:  $img = @imagecreatefromgif($path);  break;
+		default: return false;
+	}
+	if (!$img) return false;
+
+	$rotate = [3 => 180, 5 => -90, 6 => -90, 7 => 90, 8 => 90]; // GD rotates counter-clockwise
+	if (isset($rotate[$orientation])) {
+		$rotated = imagerotate($img, $rotate[$orientation], 0);
+		imagedestroy($img);
+		$img = $rotated;
+	}
+	if (in_array($orientation, [2, 5, 7])) imageflip($img, IMG_FLIP_HORIZONTAL);
+	if ($orientation === 4) imageflip($img, IMG_FLIP_VERTICAL);
+
+	switch ($info[2]) {
+		case IMAGETYPE_JPEG: $ok = imagejpeg($img, $path, 92); break;
+		case IMAGETYPE_PNG:  imagesavealpha($img, true); $ok = imagepng($img, $path); break;
+		default:             $ok = imagegif($img, $path); break;
+	}
+	imagedestroy($img);
+	return $ok;
+}
+
+/** Bake a JPEG's EXIF rotation into its pixels. Returns true if the file was changed. */
+function normalizeImageOrientation($path) {
+	$info = @getimagesize($path);
+	if (!$info || $info[2] !== IMAGETYPE_JPEG) return false;
+	$orientation = getJpegExifOrientation($path);
+	return $orientation > 1 ? applyImageOrientation($path, $orientation) : false;
+}
+
  function dynamicPosterUpload($posterArr,$poster_id,$is_default,$src_temp,$dest_poster_photo,$destThumb,$destThumb_buy,$destThumb_buy_gallery,$destThumb_big_slider,$type=''){
 	//require('configures.php');
  	//require('cloudfiles/cloudfiles.php');
@@ -1454,6 +1548,8 @@ function increment_amount($buy_now){
 			$fileName = $imgNewName;
 			$dest = $dest_poster_photo.$fileName;
 			if(rename($src, $dest)){
+				// Bake EXIF rotation into the pixels — GD ignores it and drops it from thumbnails
+				normalizeImageOrientation($dest);
 				create_thumbnail($destThumb,$dest,$fileName,100,100);
 				create_thumbnail_for_buy($destThumb_buy,$dest,$fileName,150,150);
 				create_thumbnail_for_buy_gallery($destThumb_buy_gallery,$dest,$fileName,200,200);

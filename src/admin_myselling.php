@@ -1460,6 +1460,7 @@ function renameImage($pathOfAuctionDir,$imageArray){
 //                 copy($dest, $destThumb);
 //              }
 			if (copy($sourceFile, $dest)){
+				normalizeImageOrientation($dest);
 				//copy($dest, $destThumb);
 				create_thumbnail($destThumb,$dest,$fileName,100,100);
 				create_thumbnail_for_buy($destThumb_buy,$dest,$fileName,150,150);
