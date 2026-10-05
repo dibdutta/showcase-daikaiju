@@ -101,6 +101,7 @@ resource "aws_ecs_task_definition" "web" {
         { name = "SITE_DOMAIN", value = "kaijulink.com" },
         { name = "CDN_STATIC_URL", value = "https://${aws_cloudfront_distribution.main.domain_name}" },
         { name = "S3_STATIC_BUCKET", value = aws_s3_bucket.static_assets.id },
+        { name = "CLOUDFRONT_DIST_ID", value = aws_cloudfront_distribution.main.id },
         { name = "USPS_CONSUMER_KEY", value = var.usps_consumer_key },
         { name = "USPS_CONSUMER_SECRET", value = var.usps_consumer_secret }
       ]
