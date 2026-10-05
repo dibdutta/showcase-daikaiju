@@ -110,6 +110,23 @@ resource "aws_iam_role_policy" "ecs_task_s3" {
   })
 }
 
+# Lets the admin image-orientation fix clear stale poster images from the CDN
+resource "aws_iam_role_policy" "ecs_task_cloudfront" {
+  name = "${local.name_prefix}-cloudfront-invalidation"
+  role = aws_iam_role.ecs_task.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = "cloudfront:CreateInvalidation"
+        Resource = aws_cloudfront_distribution.main.arn
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy" "ecs_task_efs" {
   name = "${local.name_prefix}-efs-access"
   role = aws_iam_role.ecs_task.id
