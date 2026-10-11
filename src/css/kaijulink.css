@@ -278,3 +278,157 @@ input.track-btn[value="Watching"]:hover { background: #f0f7f4; border-color: #2d
 #footernavigator .left ul.menu li a:hover { color: #bd1a21; }
 #footernavigator .right p,
 #footernavigator .right p span { color: #666 !important; font-size: 11px; }
+
+/* ── Live auction hero (homepage, shown while a weekly auction runs) ── */
+.kl-live-hero {
+  background: #141414;
+  color: #fff;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+/* Content lines up with the .home_fi sections: 967px wide, 32px in from the 1200px #wrapper */
+.kl-live-inner {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 52px 201px 56px 32px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 48px;
+  align-items: center;
+}
+.kl-live-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+.kl-live-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: #ff6b66;
+}
+.kl-live-eyebrow .kl-live-dot { width: 10px; height: 10px; }
+.kl-live-title {
+  margin: 0;
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: 0.01em;
+  color: #fff;
+}
+.kl-live-title span { color: #bd1a21; }
+.kl-live-title--long { font-size: 54px; }
+.kl-live-lede { margin: 0; font-size: 17px; line-height: 1.6; color: #d6d6d6; max-width: 560px; }
+.kl-live-countdown-label { font-size: 12px; letter-spacing: 0.14em; color: #9e9e9e; }
+.kl-live-countdown { display: flex; gap: 10px; margin-top: -10px; }
+.kl-live-unit {
+  width: 86px;
+  padding: 10px 0;
+  background: #262626;
+  border-top: 3px solid #bd1a21;
+  text-align: center;
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+}
+.kl-live-unit span { display: block; font-size: 44px; font-weight: 600; line-height: 1; }
+.kl-live-unit small { display: block; margin-top: 6px; font-size: 11px; letter-spacing: 0.14em; color: #9e9e9e; }
+.kl-live-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+a.kl-live-btn:link,
+a.kl-live-btn:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  padding: 0 28px;
+  background: #bd1a21;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+a.kl-live-btn:hover { background: #a3141a; color: #fff; }
+a.kl-live-btn--ghost:link,
+a.kl-live-btn--ghost:visited { background: transparent; border: 1px solid #6e6e6e; font-weight: 600; letter-spacing: 0; padding: 0 24px; }
+a.kl-live-btn--ghost:hover { background: #262626; border-color: #9e9e9e; color: #fff; }
+a.kl-live-btn--block:link,
+a.kl-live-btn--block:visited { display: flex; width: 100%; height: 48px; font-size: 13px; letter-spacing: 0.08em; }
+.kl-live-stats {
+  display: flex;
+  gap: 32px;
+  padding-top: 18px;
+  border-top: 1px solid #2e2e2e;
+  font-size: 13px;
+  color: #bdbdbd;
+}
+.kl-live-stats strong { color: #fff; font-size: 18px; }
+
+.kl-live-lot { flex: 0 0 340px; background: #fff; color: #1c1c1c; }
+.kl-live-lot-img {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 340px;
+  background: #f5f5f5;
+  overflow: hidden;
+}
+.kl-live-lot-img img { max-width: 100%; max-height: 100%; display: block; }
+.kl-live-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #141414;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 5px 9px;
+  border-radius: 3px;
+}
+.kl-live-lot-body { padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+.kl-live-lot-body h2 { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.35; }
+.kl-live-lot-body h2 a { color: #1c1c1c; text-decoration: none; }
+.kl-live-lot-body h2 a:hover { color: #bd1a21; }
+.kl-live-lot-meta { display: flex; justify-content: space-between; align-items: flex-end; font-size: 13px; color: #666; }
+.kl-live-lot-meta small { display: block; font-size: 12px; color: #666; }
+.kl-live-lot-meta strong { display: block; font-size: 26px; color: #1c1c1c; }
+a.kl-live-signin:link,
+a.kl-live-signin:visited { display: block; margin-top: 4px; font-size: 14px; font-weight: 600; color: #bd1a21; text-decoration: underline; }
+
+.kl-live-next { background: #262626; color: #d6d6d6; font-size: 13px; }
+.kl-live-next-inner { width: 1200px; margin: 0 auto; padding: 12px 201px 12px 32px; box-sizing: border-box; display: flex; gap: 6px; align-items: center; }
+.kl-live-next-inner strong { color: #fff; }
+.kl-live-next-inner a:link,
+.kl-live-next-inner a:visited { margin-left: auto; color: #ff8a85; font-weight: 600; text-decoration: none; }
+.kl-live-next-inner a:hover { color: #fff; }
+
+/* LIVE badge + bid count on the "More lots" carousel cards */
+.hp-card-img-wrap { position: relative; }
+.kl-live-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #141414;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 4px 8px;
+  border-radius: 3px;
+}
+.kl-live-badge .kl-live-dot { width: 6px; height: 6px; }
+.hp-card-bids { font-size: 12px; color: #666; }
+.home_fi h2 .kl-live-dot { margin-right: 10px; }
+
+/* Featured Articles, moved below the carousels while the live hero is shown */
+.kl-blog-strip ul { list-style: none; margin: 0; padding: 6px 18px; background: #fff; }
+.kl-blog-strip li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid #e2e2e2; font-size: 14px; }
+.kl-blog-strip li:last-child { border-bottom: 0; }
+.kl-blog-strip li a { color: #1c1c1c; text-decoration: none; font-weight: 600; }
+.kl-blog-strip li a:hover { color: #bd1a21; }
+.kl-blog-strip li span { color: #888; white-space: nowrap; }

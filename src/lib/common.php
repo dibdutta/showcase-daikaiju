@@ -247,6 +247,27 @@
 	}
 	$smarty->assign('featuredArticles', $featuredArticles);
 
+	// Running weekly auction (earliest-ending if several overlap) with at least one
+	// approved lot. Drives the LIVE badge in the header and the homepage hero.
+	$liveAuctionWeek = null;
+	if (LIVE_AUCTION_HIGHLIGHT) {
+		$liveSql = "SELECT w.auction_week_id, w.auction_week_title, w.auction_week_start_date, w.auction_week_end_date,
+		                   COUNT(a.auction_id) AS lot_count, COALESCE(SUM(a.bid_count), 0) AS bid_total
+		            FROM tbl_auction_week w
+		            INNER JOIN tbl_auction_live a ON a.fk_auction_week_id = w.auction_week_id
+		                   AND a.fk_auction_type_id = '2' AND a.auction_is_approved = '1' AND a.auction_is_sold = '0'
+		            WHERE w.is_stills = '0' AND w.auction_week_start_date <= NOW() AND w.auction_week_end_date >= NOW()
+		            GROUP BY w.auction_week_id
+		            ORDER BY w.auction_week_end_date ASC
+		            LIMIT 1";
+		$liveRs = mysqli_query($GLOBALS['db_connect'], $liveSql);
+		if ($liveRs && ($liveRow = mysqli_fetch_assoc($liveRs))) {
+			$liveAuctionWeek = $liveRow;
+		}
+	}
+	$GLOBALS['liveAuctionWeek'] = $liveAuctionWeek;
+	$smarty->assign('liveAuctionWeek', $liveAuctionWeek);
+
 	// Auto-canonical: pages that don't set $canonicalUrl explicitly get one
 	// derived from the current HTTPS path (no query string). Pages like buy.php,
 	// blog.php, and index.php assign $canonicalUrl after common.php runs, so

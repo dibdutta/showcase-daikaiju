@@ -256,6 +256,21 @@
 												<td class="smalltext"><input type="text" name="bannerLink" value="{$bannerLink}" class="look"  style="width:250px;" /><br><span class="err">{$bannerLink_err}</span></td>
 											</tr>
 											<tr class="header_bgcolor" height="24">
+												<td colspan="2" align="left" class="headertext">Live Auction Homepage</td>
+											</tr>
+											<tr class="tr_bgcolor">
+												<td class="bold_text" valign="top">Live auction hero :</td>
+												<td class="smalltext">
+												{if $live_auction_highlight === null}
+													Run <b>migrations/add_live_auction_highlight.php</b> to enable this setting. Currently on.
+												{else}
+													<input type="radio" name="live_auction_highlight" value="1" {if $live_auction_highlight != '0'} checked="checked" {/if} />&nbsp;On
+													<input type="radio" name="live_auction_highlight" value="0" {if $live_auction_highlight == '0'} checked="checked" {/if} />&nbsp;Off
+													<br />While a weekly auction is running: shows the auction hero on the homepage instead of the slider, and a LIVE badge next to Auctions in the menu.
+												{/if}
+												</td>
+											</tr>
+											<tr class="header_bgcolor" height="24">
 												<td colspan="2" align="left" class="headertext">Auction Shorting Settings</td>
 											</tr>
 											<tr class="tr_bgcolor">

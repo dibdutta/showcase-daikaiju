@@ -100,6 +100,10 @@ define ("SEAN_EMAIL_ID", $row[SEAN_EMAIL]);
 define ("BANNER_TITLE", $row['banner_title']);
 define ("BANNER_LINK", $row['banner_link']);
 
+// Live auction hero + LIVE nav badge. Defaults to on until the
+// live_auction_highlight column exists (migrations/add_live_auction_highlight.php).
+define ("LIVE_AUCTION_HIGHLIGHT", ($row['live_auction_highlight'] ?? '1') != '0');
+
 define ("SHORT_TYPE", $row['short_type']);
 
 /* Shipping Default Parameters Ends */

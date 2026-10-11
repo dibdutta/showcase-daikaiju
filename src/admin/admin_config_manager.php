@@ -133,6 +133,8 @@ function dispmiddle() {
  	$smarty->assign('bannerLink', $bannerLink);
  	$smarty->assign('bannerTitle', $bannerTitle);
  	$smarty->assign('short_type', $short_type);
+	// null until migrations/add_live_auction_highlight.php has run
+	$smarty->assign('live_auction_highlight', array_key_exists('live_auction_highlight', $row) ? $row['live_auction_highlight'] : null);
 	foreach ($_POST ?? [] as $key => $value ) {
 		$smarty->assign($key.'_err', $GLOBALS[$key.'_err'] ?? '');
 	}
@@ -188,6 +190,11 @@ function checkValue(){
 	}
 }
 
+function liveHighlightColumnExists() {
+	$rs = mysqli_query($GLOBALS['db_connect'], "SHOW COLUMNS FROM ".CONFIG_TABLE." LIKE 'live_auction_highlight'");
+	return $rs && mysqli_num_rows($rs) > 0;
+}
+
 function save_content() {
 
 	 $sql = "UPDATE ".CONFIG_TABLE." SET
@@ -226,6 +233,7 @@ function save_content() {
    			 banner_title = '".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['bannerTitle'] ?? '')."',
 			 banner_link = '".mysqli_real_escape_string($GLOBALS['db_connect'],$_REQUEST['bannerLink'] ?? '')."',
 			 short_type = '".($_REQUEST['shortType'] ?? '')."',
+			".(liveHighlightColumnExists() ? "live_auction_highlight = '".(($_REQUEST['live_auction_highlight'] ?? '1') === '0' ? '0' : '1')."'," : "")."
 			".STATUS."='1', 
 			".UPDATE_DATE."=now(), 
 			".POST_IP."='".$_SERVER['REMOTE_ADDR']."'";
