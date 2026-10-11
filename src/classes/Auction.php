@@ -3359,7 +3359,8 @@ class Auction extends DBCommon{
 							p.poster_title,
 							MAX(pi.poster_thumb) AS poster_thumb,
 							MAX(pi.is_cloud) AS is_cloud,
-							a.max_bid_amount AS last_bid_amount
+							a.max_bid_amount AS last_bid_amount,
+							a.bid_count
 						FROM {$auctionTable} a
 						INNER JOIN {$posterTable} p ON a.fk_poster_id = p.poster_id
 						INNER JOIN {$posterImageTable} pi ON a.fk_poster_id = pi.fk_poster_id
@@ -3401,7 +3402,8 @@ class Auction extends DBCommon{
 					p.poster_title,
 					MAX(pi.poster_thumb) AS poster_thumb,
 					MAX(pi.is_cloud) AS is_cloud,
-					a.max_bid_amount AS last_bid_amount
+					a.max_bid_amount AS last_bid_amount,
+					a.bid_count
 				FROM {$auctionTable} a
 				INNER JOIN {$posterTable} p ON a.fk_poster_id = p.poster_id
 				INNER JOIN {$posterImageTable} pi ON a.fk_poster_id = pi.fk_poster_id
@@ -3434,7 +3436,7 @@ class Auction extends DBCommon{
 
 		// GROUP BY to satisfy MySQL 8 ONLY_FULL_GROUP_BY
 		$sql .= " GROUP BY a.auction_id, a.fk_auction_type_id, a.auction_asked_price, a.auction_buynow_price,
-				p.poster_id, p.poster_title, a.max_bid_amount";
+				p.poster_id, p.poster_title, a.max_bid_amount, a.bid_count";
 
 		$sql .= " ORDER BY RAND() LIMIT {$to}";
 

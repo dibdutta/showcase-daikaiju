@@ -9249,3 +9249,45 @@ outline: 0;
 .ddpanel .ddpaneltab a:hover span{ /*"toggle" tab related CSS*/
 background-color: transparent;
 }
+
+/* ── Live auction indicator (header nav badge, shared pulsing dot) ── */
+@keyframes kl-live-pulse {
+	0%   { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.7); }
+	70%  { box-shadow: 0 0 0 8px rgba(229, 57, 53, 0); }
+	100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
+}
+.kl-live-dot {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #e53935;
+	animation: kl-live-pulse 1.6s infinite;
+	vertical-align: middle;
+}
+#header #mainnavigation ul.menu li a { position: relative; }
+#header #mainnavigation ul.menu li a .kl-nav-live {
+	position: absolute;
+	top: 3px;
+	right: -4px;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	background: #bd1a21;
+	color: #fff;
+	font-style: normal;
+	font-size: 9px;
+	line-height: 1;
+	letter-spacing: 0.08em;
+	padding: 3px 5px;
+	border-radius: 3px;
+}
+#header #mainnavigation ul.menu li a .kl-nav-live .kl-live-dot {
+	width: 5px;
+	height: 5px;
+	background: #fff;
+	animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+	.kl-live-dot { animation: none; }
+}

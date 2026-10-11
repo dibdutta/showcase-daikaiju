@@ -101,7 +101,18 @@ function dispmiddle(){
         $smarty->assign("totFixed", $totFixed);
     }
     $dataArrWeekly=$objAuction->fetchLiveAuctionsHomePage('weekly');
-    if(!empty($dataArrWeekly) && count($dataArrWeekly) > 1 ){
+
+	##### Live auction hero — replaces the slider + sidebar while a weekly auction runs #####
+	$liveHero = buildLiveAuctionHero($GLOBALS['liveAuctionWeek'] ?? null);
+	if($liveHero && !empty($dataArrWeekly)){
+		// The featured lot is in the hero; don't repeat it in the "More lots" carousel
+		$dataArrWeekly = array_values(array_filter($dataArrWeekly, function($r) use ($liveHero){
+			return $r['auction_id'] != $liveHero['featured']['auction_id'];
+		}));
+	}
+	$smarty->assign("liveHero", $liveHero);
+
+    if(!empty($dataArrWeekly) && count($dataArrWeekly) > ($liveHero ? 0 : 1) ){
 
         $totWeekly=count($dataArrWeekly);
         for($i=0;$i<$totWeekly;$i++){
@@ -195,6 +206,76 @@ function dispmiddle(){
 	$smarty->assign('canonicalUrl', SITE_URL . '/');
 
 	$smarty->display("index_demo.tpl");
+}
+
+/**
+ * Data for the homepage live auction hero, or null when there is nothing to show.
+ * Featured lot: the item picked in admin "Set First Image for Home → Auction",
+ * else the live lot with the most bids.
+ */
+function buildLiveAuctionHero($liveWeek){
+	if(!$liveWeek){
+		return null;
+	}
+	$db = $GLOBALS['db_connect'];
+
+	$featSql = "SELECT a.auction_id, a.auction_asked_price, a.max_bid_amount AS last_bid_amount, a.bid_count,
+	                   p.poster_title, MAX(pi.poster_thumb) AS poster_thumb
+	            FROM tbl_auction_live a
+	            INNER JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
+	            INNER JOIN tbl_poster_images_live pi ON pi.fk_poster_id = a.fk_poster_id AND pi.is_default = '1'
+	            WHERE a.fk_auction_type_id = '2' AND a.auction_is_approved = '1' AND a.auction_is_sold = '0'
+	              AND a.auction_actual_start_datetime <= NOW() AND a.auction_actual_end_datetime >= NOW()
+	            GROUP BY a.auction_id
+	            ORDER BY a.slider_first_position_status DESC, a.bid_count DESC, a.auction_id ASC
+	            LIMIT 1";
+	$featRs = mysqli_query($db, $featSql);
+	$featured = $featRs ? mysqli_fetch_assoc($featRs) : null;
+	if(!$featured){
+		return null;
+	}
+	$featured['big_image']  = CLOUD_POSTER_THUMB_BIG_GALLERY.$featured['poster_thumb'];
+	$featured['poster_url'] = posterUrl($featured['auction_id'], $featured['poster_title']);
+
+	$weekId = (int)$liveWeek['auction_week_id'];
+	$bidders = 0;
+	$biddersRs = mysqli_query($db, "SELECT COUNT(DISTINCT b.bid_fk_user_id) AS cnt
+	                                FROM tbl_bid b INNER JOIN tbl_auction_live a ON a.auction_id = b.bid_fk_auction_id
+	                                WHERE a.fk_auction_week_id = $weekId");
+	if($biddersRs && ($r = mysqli_fetch_assoc($biddersRs))){
+		$bidders = (int)$r['cnt'];
+	}
+
+	$next = null;
+	$nextRs = mysqli_query($db, "SELECT auction_week_title, auction_week_start_date FROM tbl_auction_week
+	                             WHERE is_stills = '0' AND auction_week_start_date > NOW()
+	                             ORDER BY auction_week_start_date ASC LIMIT 1");
+	if($nextRs && ($r = mysqli_fetch_assoc($nextRs))){
+		$next = array('title' => $r['auction_week_title'],
+		              'starts' => date('l, F j', strtotime($r['auction_week_start_date'])));
+	}
+
+	// "Halloween Auction" → "Halloween" + accented "Auction"
+	$title = trim($liveWeek['auction_week_title']);
+	$words = preg_split('/\s+/', $title);
+	$accent = count($words) > 1 ? array_pop($words) : '';
+
+	$endTs = strtotime($liveWeek['auction_week_end_date']);
+	return array(
+		'title'        => $title,
+		'title_lead'   => implode(' ', $words),
+		'title_accent' => $accent,
+		'is_long'      => strlen($title) > 22,
+		'end_ms'       => $endTs * 1000,
+		'server_ms'    => time() * 1000,
+		'end_day'      => date('l, F j', $endTs),
+		'end_time'     => date('g:i A T', $endTs),
+		'lots'         => (int)$liveWeek['lot_count'],
+		'bids'         => (int)$liveWeek['bid_total'],
+		'bidders'      => $bidders,
+		'featured'     => $featured,
+		'next'         => $next,
+	);
 }
 function select_watchlist(){
 	
