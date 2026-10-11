@@ -284,7 +284,11 @@ input.track-btn[value="Watching"]:hover { background: #f0f7f4; border-color: #2d
   background: #141414;
   color: #fff;
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  border-bottom: 3px solid #bd1a21;
 }
+/* Breathing room between the hero and the dark section headers below it */
+.kl-live-hero ~ #outer-container { padding-top: 48px; }
+.kl-live-hero ~ #outer-container .home_fi { margin-bottom: 44px; }
 /* Content lines up with the .home_fi sections: 967px wide, 32px in from the 1200px #wrapper */
 .kl-live-inner {
   width: 1200px;
