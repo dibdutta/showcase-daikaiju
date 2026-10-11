@@ -9266,10 +9266,11 @@ background-color: transparent;
 	vertical-align: middle;
 }
 #header #mainnavigation ul.menu li a { position: relative; }
+/* Sits in the link's 30px right padding, just after the text, so it never covers the label */
 #header #mainnavigation ul.menu li a .kl-nav-live {
 	position: absolute;
-	top: 3px;
-	right: -4px;
+	top: 15px;
+	left: calc(100% - 24px);
 	display: inline-flex;
 	align-items: center;
 	gap: 4px;
@@ -9291,3 +9292,8 @@ background-color: transparent;
 @media (prefers-reduced-motion: reduce) {
 	.kl-live-dot { animation: none; }
 }
+
+/* Category bar: the selector boxes are wider than their columns (width + padding),
+   so Category ran into Subcategory and Select Language hung past the bar's right edge. */
+div.features_menu_column { width: 194px; }
+div.features_menu_column2 div.features_selector2 { left: auto; right: 0; width: auto; }
