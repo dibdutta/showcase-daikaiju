@@ -94,6 +94,7 @@ function updateArrows(wrap) {
             </div>
         </div>
 
+        {if $liveHero.featured}
         <article class="kl-live-lot">
             <a class="kl-live-lot-img" href="{$liveHero.featured.poster_url}">
                 <img src="{$liveHero.featured.big_image}" alt="{$liveHero.featured.poster_title}">
@@ -118,6 +119,7 @@ function updateArrows(wrap) {
                 <a class="kl-live-btn kl-live-btn--block" href="{$liveHero.featured.poster_url}">PLACE A BID</a>
             </div>
         </article>
+        {/if}
     </div>
 </section>
 {if $liveHero.next}

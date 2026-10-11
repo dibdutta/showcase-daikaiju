@@ -104,7 +104,7 @@ function dispmiddle(){
 
 	##### Live auction hero — replaces the slider + sidebar while a weekly auction runs #####
 	$liveHero = buildLiveAuctionHero($GLOBALS['liveAuctionWeek'] ?? null);
-	if($liveHero && !empty($dataArrWeekly)){
+	if($liveHero && $liveHero['featured'] && !empty($dataArrWeekly)){
 		// The featured lot is in the hero; don't repeat it in the "More lots" carousel
 		$dataArrWeekly = array_values(array_filter($dataArrWeekly, function($r) use ($liveHero){
 			return $r['auction_id'] != $liveHero['featured']['auction_id'];
@@ -210,8 +210,8 @@ function dispmiddle(){
 
 /**
  * Data for the homepage live auction hero, or null when there is nothing to show.
- * Featured lot: the item picked in admin "Set First Image for Home → Auction",
- * else the live lot with the most bids.
+ * Featured lot: only a live lot with is_set_for_home_big_slider = '1' (set from admin
+ * "Set First Image for Home → Auction"). None flagged → the hero shows without the lot card.
  */
 function buildLiveAuctionHero($liveWeek){
 	if(!$liveWeek){
@@ -224,18 +224,18 @@ function buildLiveAuctionHero($liveWeek){
 	            FROM tbl_auction_live a
 	            INNER JOIN tbl_poster_live p ON a.fk_poster_id = p.poster_id
 	            INNER JOIN tbl_poster_images_live pi ON pi.fk_poster_id = a.fk_poster_id AND pi.is_default = '1'
-	            WHERE a.fk_auction_type_id = '2' AND a.auction_is_approved = '1' AND a.auction_is_sold = '0'
+	            WHERE a.is_set_for_home_big_slider = '1'
+	              AND a.fk_auction_type_id = '2' AND a.auction_is_approved = '1' AND a.auction_is_sold = '0'
 	              AND a.auction_actual_start_datetime <= NOW() AND a.auction_actual_end_datetime >= NOW()
 	            GROUP BY a.auction_id
-	            ORDER BY a.slider_first_position_status DESC, a.bid_count DESC, a.auction_id ASC
+	            ORDER BY a.auction_id ASC
 	            LIMIT 1";
 	$featRs = mysqli_query($db, $featSql);
 	$featured = $featRs ? mysqli_fetch_assoc($featRs) : null;
-	if(!$featured){
-		return null;
+	if($featured){
+		$featured['big_image']  = CLOUD_POSTER_THUMB_BIG_GALLERY.$featured['poster_thumb'];
+		$featured['poster_url'] = posterUrl($featured['auction_id'], $featured['poster_title']);
 	}
-	$featured['big_image']  = CLOUD_POSTER_THUMB_BIG_GALLERY.$featured['poster_thumb'];
-	$featured['poster_url'] = posterUrl($featured['auction_id'], $featured['poster_title']);
 
 	$weekId = (int)$liveWeek['auction_week_id'];
 	$bidders = 0;
