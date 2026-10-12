@@ -168,7 +168,7 @@
                     <div class="right-midbg">   
 					<div class="mid-rept-bg">
 					 {if $smarty.request.mode=='search'}
-					  	<div class="messageBox"> You have searched for {$cat_value}</div>
+					  	<div class="messageBox"> You have searched for {$cat_value|escape:'html'}</div>
 					  {/if}
 					{if $errorMessage<>""}<div class="messageBox">{$errorMessage}</div>{/if}
                     	{if $total > 0}
@@ -194,7 +194,7 @@
 								<div class="soldSearchblock">
                             	
 								<div style="width:270px; height:26px;border:1px solid #cecfd0; float:left;">
-                                    <input style="width:232px; height:23px;border:0px solid #cecfd0; padding:3px 0 0 0;" type="text" class="midSearchbg_edit fll" id="search_buy_items" name="search_sold" {if $smarty.request.mode == 'key_search'} value="{$smarty.request.keyword}" {elseif $smarty.request.list == 'stills'} value="Search Stills.." {else} value="Search Auctions.."{/if} onclick="clear_text();" onfocus="{literal}$(this).keypress(function(event){
+                                    <input style="width:232px; height:23px;border:0px solid #cecfd0; padding:3px 0 0 0;" type="text" class="midSearchbg_edit fll" id="search_buy_items" name="search_sold" {if $smarty.request.mode == 'key_search'} value="{$smarty.request.keyword|escape:'html'}" {elseif $smarty.request.list == 'stills'} value="Search Stills.." {else} value="Search Auctions.."{/if} onclick="clear_text();" onfocus="{literal}$(this).keypress(function(event){
 			var keycode = (event.keyCode ? event.keyCode : event.which);
 			if(keycode == '13' && keycode != ''){
 			var list= {/literal}{if $smarty.request.list==''}''{else}'{$smarty.request.list}'{/if}{literal};
@@ -475,7 +475,7 @@
 								<div class="soldSearchblock">
                             	 <div style="width:270px; height:26px;border:1px solid #cecfd0; float:left;"> 	
 
-                                    <input type="text" style="width:232px; height:23px;border:0px solid #cecfd0; padding:3px 0 0 0;" class="midSearchbg_edit fll" id="search_buy_items" name="search_sold" {if $smarty.request.mode == 'key_search'} value="{$smarty.request.keyword}" {elseif $smarty.request.list == 'stills'} value="Search Stills.." {else} value="Search Auctions.."{/if} onclick="clear_text();" onfocus="{literal}$(this).keypress(function(event){
+                                    <input type="text" style="width:232px; height:23px;border:0px solid #cecfd0; padding:3px 0 0 0;" class="midSearchbg_edit fll" id="search_buy_items" name="search_sold" {if $smarty.request.mode == 'key_search'} value="{$smarty.request.keyword|escape:'html'}" {elseif $smarty.request.list == 'stills'} value="Search Stills.." {else} value="Search Auctions.."{/if} onclick="clear_text();" onfocus="{literal}$(this).keypress(function(event){
 			var keycode = (event.keyCode ? event.keyCode : event.which);
 			if(keycode == '13' && keycode != ''){
 			var list= {/literal}{if $smarty.request.list==''}''{else}'{$smarty.request.list}'{/if}{literal};

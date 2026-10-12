@@ -72,7 +72,7 @@ function show_text(){
                             	
 								<div style="width:500px; height:26px; border:1px solid #cecfd0; float:left;">
                                 
-                                <input type="text" style="width:450px; height:23px;border:0px solid #cecfd0; padding:3px 0 0 5px;" class="midSearchbg_auction fll" id="search_sold" name="search_sold" {if $smarty.request.mode == 'search_sold_stills'} value="{$smarty.request.search_sold}" {else} value="Search sold items by their title.."{/if} onfocus="clear_text()"  />
+                                <input type="text" style="width:450px; height:23px;border:0px solid #cecfd0; padding:3px 0 0 5px;" class="midSearchbg_auction fll" id="search_sold" name="search_sold" {if $smarty.request.mode == 'search_sold_stills'} value="{$smarty.request.search_sold|escape:'html'}" {else} value="Search sold items by their title.."{/if} onfocus="clear_text()"  />
                                 <input type="submit" class="rightSearchbg" value="" />
                             </div>
                             </div>

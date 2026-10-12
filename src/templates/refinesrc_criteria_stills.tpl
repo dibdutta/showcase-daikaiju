@@ -45,7 +45,7 @@ $(document).ready(function() {
                                             <td width="210px" valign="top" colspan="3"><label>Keyword{*<span class="red-star">*</span>*}</label></td>
                                         </tr>
                                         <tr>
-                                            <td valign="top" colspan="3"><input type="text" name="keyword" id="keyword" value="{$keyword}" class="midSearchbg" /></td>
+                                            <td valign="top" colspan="3"><input type="text" name="keyword" id="keyword" value="{$keyword|escape:'html'}" class="midSearchbg" /></td>
                                         </tr>
                                         <tr>
                                             <td valign="top" colspan="3">&nbsp;</td>

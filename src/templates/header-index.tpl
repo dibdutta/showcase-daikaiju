@@ -243,7 +243,7 @@
                     <input type="hidden" name="list" value="{$smarty.request.list}" class="srchbox-txt" />
                     <input type="hidden" name="mode" value="key_search_global" class="srchbox-txt" />
 					<input type="hidden" name="is_expired" value="{$is_expired}"  />
-                    <input type="text" name="keyword"  id="search_for_poster" class="srchbox-txt"  {if $smarty.request.mode == 'key_search'} value="{$smarty.request.keyword}"{else} value="Search For Items by Title,Descriptions,Genre.." {/if} onclick="clear_text_for_poster();" />
+                    <input type="text" name="keyword"  id="search_for_poster" class="srchbox-txt"  {if $smarty.request.mode == 'key_search'} value="{$smarty.request.keyword|escape:'html'}"{else} value="Search For Items by Title,Descriptions,Genre.." {/if} onclick="clear_text_for_poster();" />
                     <!--<div style="float:left;"><img src="{$smarty.const.CLOUD_STATIC}search_right_crn.png" width="11" height="35" /></div>-->
                     <!--<div class="styled-select">
                         <select name="search_type" >

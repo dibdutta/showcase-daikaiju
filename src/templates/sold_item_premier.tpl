@@ -63,7 +63,7 @@ function show_text(){
 							<div class="soldSearchblock" style="margin-bottom:20px;">
                             	<div class="leftSearchbg"></div>
                                 
-                            	<input type="text" style="width:160px;" class="midSearchbg" id="search_sold" name="search_sold" {if $smarty.request.mode == 'search_sold_premier'} value="{$smarty.request.search_sold}" {else} value="Search sold items by their title.."{/if} onfocus="clear_text()"  />
+                            	<input type="text" style="width:160px;" class="midSearchbg" id="search_sold" name="search_sold" {if $smarty.request.mode == 'search_sold_premier'} value="{$smarty.request.search_sold|escape:'html'}" {else} value="Search sold items by their title.."{/if} onfocus="clear_text()"  />
                                 <input type="submit" class="rightSearchbg" value="" />
                             </div>
 							{/if}

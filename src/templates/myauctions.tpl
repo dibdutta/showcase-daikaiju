@@ -84,7 +84,7 @@ function clear_text(){
                             
 							<div class="soldSearchblock">
                             <div style="width:270px; height:26px;border:1px solid #cecfd0; float:left;">	                             
-                            	<input type="text" onclick="clear_text()" {if $smarty.request.search_sold!=''} value="{$smarty.request.search_sold}" {else}  value="Search by title.." {/if} name="search_sold" id="search_buy_items" class="midSearchbg_edit fll" style="width:232px; height:23px;border:0px solid #cecfd0; padding:3px 0 0 0;" >
+                            	<input type="text" onclick="clear_text()" {if $smarty.request.search_sold!=''} value="{$smarty.request.search_sold|escape:'html'}" {else}  value="Search by title.." {/if} name="search_sold" id="search_buy_items" class="midSearchbg_edit fll" style="width:232px; height:23px;border:0px solid #cecfd0; padding:3px 0 0 0;" >
                                 <input type="submit" value="" class="rightSearchbg">
                             </div>
                             </div>

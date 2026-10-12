@@ -44,7 +44,7 @@ $(document).ready(function() {
                                             <td valign="top"><label>Select Fixed Or Auction</label></td>
                                         </tr>
                                         <tr>
-                                            <td style="padding-top:10px;"><input type="text" name="keyword" id="keyword" value="{$keyword}" class="midSearchbg" /></td>
+                                            <td style="padding-top:10px;"><input type="text" name="keyword" id="keyword" value="{$keyword|escape:'html'}" class="midSearchbg" /></td>
                                             <td style="padding-top:10px;">
 											  <div class="sortblock">
 												<select name="poster_type" class="look">
