@@ -1,4 +1,5 @@
-FROM php:8.3-apache
+# Pinned: 8.3.36 fixes PHP2Shell (CVE-2026-109618, CVE-2026-109619)
+FROM php:8.3.36-apache
 
 # Install GD dependencies (for image processing)
 RUN apt-get update && apt-get install -y libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
@@ -28,6 +29,7 @@ RUN { \
     echo 'post_max_size = 25M'; \
     echo 'memory_limit = 256M'; \
     echo 'max_execution_time = 120'; \
+    echo 'session.upload_progress.enabled = 0'; \
     } > /usr/local/etc/php/conf.d/custom.ini
 
 # Copy application source
