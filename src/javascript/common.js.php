@@ -494,7 +494,7 @@ function timeLeft(dataArr,list)
                         $('#cd_'+bidDataArr[i]['auction_id']).countdown('destroy');
                         $('#timer_'+bidDataArr[i]['auction_id']).hide();
                     }
-                    dispData = '<input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="1"><div class="text bold">This poster has been sold.</div>';
+                    dispData = '<input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="1"><div class="text bold">This item has been sold.</div>';
                     $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
 					dispData='';
 					//if(parseInt(bidDataArr[i]['auction_is_closed']) ==1 && parseInt(bidDataArr[i]['seconds_left']) > -3){
@@ -626,7 +626,7 @@ function timeLeftGallery(dataArr,list)
                         $('#cd_'+bidDataArr[i]['auction_id']).countdown('destroy');
                         $('#timer_'+bidDataArr[i]['auction_id']).hide();
                     }
-                    dispData = '<input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="1"><div class="text bold">This poster has been sold.</div>';
+                    dispData = '<input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="1"><div class="text bold">This item has been sold.</div>';
                     $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
 					
                 }else if(parseInt(bidDataArr[i]['auction_is_sold']) == 3){
@@ -745,7 +745,7 @@ function timeLeftPosterDetails(dataArr, listType)
                         $('#timer_'+bidDataArr[i]['auction_id']).hide();
                     }
 
-                    dispData = '<input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="1"><div class="text bold BigFont"><span class="message">This poster has been sold.</span></div>';
+                    dispData = '<input type="hidden" id="is_sold_track_'+bidDataArr[i]['auction_id']+'" value="1"><div class="text bold BigFont"><span class="message">This item has been sold.</span></div>';
 
                     $('#auction_data_'+bidDataArr[i]['auction_id']).html(dispData);
 					if(parseInt(bidDataArr[i]['auction_is_closed']) ==1 && parseInt(bidDataArr[i]['seconds_left']) > -3){

@@ -628,39 +628,10 @@ function fetchExpiredAuctionDetailsList($auction_ids)
                         ";
                $sql_update_res=mysqli_query($GLOBALS['db_connect'],$sql_update);
            }
-		   // Logic  to move unsold to Fixed
-		   else{
-			      
-                //"auction_reserve_offer_price" => $offer_price,
-                //"is_offer_price_percentage" => $is_percentage,
-                  
-			    $sql_insert_unsold_fixed="Insert into `tbl_auction` (`fk_poster_id`,
-													 `auction_asked_price`,
-													 `fk_auction_type_id`,
-							 						 `auction_is_approved`,
-							 						 `auction_is_sold`,
-							 						 `post_date`,
-													 `up_date`,
-													 `status`,
-													 `post_ip`,
-													 `reopen_auction_id`,
-													 `is_reopened`) values
-							 						 (
-													  '".$row['fk_poster_id']."',							 						  
-							 						  '10',
-							 						  '1',
-													  '0',
-													  '0',
-							 						  '".date("Y-m-d H:i:s")."',
-							 						  '".date("Y-m-d H:i:s")."',
-													  '1',
-													  '".($_SERVER["REMOTE_ADDR"] ?? 'cron')."',
-													  '".$row['auction_id']."',
-													  '1'													  
-							 						 )";
-				//echo($sql_insert_unsold_fixed);
-			    mysqli_query($GLOBALS['db_connect'],$sql_insert_unsold_fixed);
-		   }
+		   // A lot that closes with no bids is NOT relisted. Its closed row stays in tbl_auction
+		   // with auction_is_sold='0', which is how it shows as Unsold (seller and admin lists) and
+		   // keeps the auction record intact for audit. Relisting as fixed price is a deliberate
+		   // admin action (admin_auction_manager.php), not something the close does on its own.
 	   }
 	 
 	  if(!empty($is_stills) && $auction_stills_id!=''){
