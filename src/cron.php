@@ -115,7 +115,11 @@ define ('ZEPTOMAIL_API_URL',   getenv('ZEPTOMAIL_API_URL')   ?: 'https://api.zep
 
 require_once __DIR__ . "/lib/function.php";
 
+// Settlement problems found during this run; emailed to admin at the end of a close.
+$GLOBALS['settle_problems'] = [];
+
 process_offers();
+checkStuckLocks();
 updateBidCronJob();
 
 function sendMailCron($toMail, $toName, $subject, $textContent) {
@@ -222,6 +226,64 @@ function sendOfferMailCron($row, $status)
 /**
  * 
  */
+// Record a settlement problem: logged now (stderr -> CloudWatch) and emailed to admin by
+// sendSettleAlert() at the end of the close.
+function noteProblem($msg){
+	$GLOBALS['settle_problems'][] = $msg;
+	error_log($msg);
+}
+
+// Send admin one email listing this run's settlement problems, if any. One email per close run.
+function sendSettleAlert($auction_week_id){
+	$problems = $GLOBALS['settle_problems'] ?? [];
+	if(empty($problems)){ return; }
+	$items = '';
+	foreach($problems as $p){ $items .= '<li style="margin-bottom:6px;"><code>'.htmlspecialchars($p, ENT_QUOTES, 'UTF-8').'</code></li>'; }
+	$subject = "Kaijulink::ALERT auction close needs attention - week ".(int)$auction_week_id." (".count($problems)." problem".(count($problems) == 1 ? '' : 's').")";
+	$body  = '<p><b>The auction close for week '.(int)$auction_week_id.' finished with problems.</b> Some lots may be missing an invoice or have more than one winning bid.</p>';
+	$body .= '<ul>'.$items.'</ul>';
+	$body .= '<p>Missing invoices can be created with <code>migrations/create_buyer_invoice.php</code>. Steps: <code>docs/runbooks/auction-close-recovery.md</code>. Full log: CloudWatch <code>/ecs/showcase-prod-cron</code>.</p>';
+	sendCronAlert($subject, $body);
+}
+
+// A close that dies mid-run leaves its week locked (is_processing='1') forever, and the rest of
+// its lots never close. A healthy close takes a minute or two, so a locked week with lots more
+// than 15 minutes past their end time means the run died. Log it every run; email at 15 minutes
+// overdue and then hourly. Each email window is 2 minutes wide, so with a run every minute it
+// fires once or twice per window and needs no stored "already sent" state. Read-only.
+function checkStuckLocks(){
+	$rs = mysqli_query($GLOBALS['db_connect'],
+		"SELECT w.auction_week_id, w.auction_week_title, COUNT(*) AS overdue_lots,
+		        MIN(l.auction_actual_end_datetime) AS oldest_end,
+		        TIMESTAMPDIFF(MINUTE, MIN(l.auction_actual_end_datetime), NOW()) AS minutes_overdue
+		 FROM tbl_auction_week w
+		 JOIN tbl_auction_live l ON l.fk_auction_week_id = w.auction_week_id
+		 WHERE w.is_processing = '1'
+		   AND l.auction_actual_end_datetime < NOW() - INTERVAL 15 MINUTE
+		 GROUP BY w.auction_week_id, w.auction_week_title");
+	while($rs && $row = mysqli_fetch_assoc($rs)){
+		$m = (int)$row['minutes_overdue'];
+		$msg = "[CRON][STUCK-LOCK] week=".$row['auction_week_id']." overdue_lots=".$row['overdue_lots']." oldest_end=".$row['oldest_end']." minutes_overdue=".$m;
+		echo $msg."\n";
+		error_log($msg);
+		if($m >= 15 && (($m - 15) % 60) < 2){
+			$subject = "Kaijulink::ALERT auction close is stuck - week ".(int)$row['auction_week_id'];
+			$body  = '<p><b>The auction close for week '.(int)$row['auction_week_id'].' ('.htmlspecialchars($row['auction_week_title'], ENT_QUOTES, 'UTF-8').') appears to have stopped.</b></p>';
+			$body .= '<p>The week is still locked (<code>is_processing = 1</code>) and <b>'.(int)$row['overdue_lots'].'</b> lot(s) are still live, the oldest ended at '.htmlspecialchars($row['oldest_end'], ENT_QUOTES, 'UTF-8').' ('.$m.' minutes ago). These lots will not close until the lock is released.</p>';
+			$body .= '<p>Do not just release the lock: lots the stopped run already moved may have no invoice, and one lot may be half-moved. Follow <code>docs/runbooks/auction-close-recovery.md</code>. This email repeats hourly while the week stays stuck.</p>';
+			sendCronAlert($subject, $body);
+		}
+	}
+}
+
+function sendCronAlert($subject, $body){
+	if(empty(ADMIN_EMAIL_ADDRESS)){
+		error_log("[CRON][ALERT] no admin email configured, alert not sent: ".$subject);
+		return;
+	}
+	sendMailCron(ADMIN_EMAIL_ADDRESS, ADMIN_NAME, $subject, MAIL_BODY_TOP.$body.MAIL_BODY_BOTTOM);
+}
+
 function updateBidCronJob(){
 	
 	$auction_week_id= fetchExpiredAuctions();
@@ -248,19 +310,22 @@ function updateBidCronJob(){
 			$auction_ids=fetchExpiredAuctionDetails($auction_week_id);
 			$auctionItems=fetchExpiredAuctionDetailsList($auction_ids);
 			for($i=0;$i<count($auctionItems);$i++){
+				// Reset per lot. A bid ID left over from the previous lot must never be reused.
+				$last_bid_id = 0;
+				$auction_id = (int)$auctionItems[$i]['auction_id'];
 				if($auctionItems[$i]['bid_count'] > 0){
 				
 					if($auctionItems[$i]['fk_auction_type_id'] == '2' || $auctionItems[$i]['fk_auction_type_id'] == '5'){
 					  
 					   if( ($auctionItems[$i]['proxy_amount'] > $auctionItems[$i]['max_bid_amount']) &&  ($auctionItems[$i]['highest_user'] != $auctionItems[$i]['fk_user_id']) ){
-							$auction_id = $auctionItems[$i]['auction_id'];
+							// A proxy above the current high bid belongs to someone else: resolve it now.
+							// Closing bids go straight into tbl_bid_archive (see insertClosingBid()).
 							$sql_second_highest="SELECT amount,fk_user_id FROM tbl_proxy_bid
 											 WHERE is_override = '0' AND fk_auction_id='".$auction_id."' and amount =
 											( SELECT MAX(amount) FROM tbl_proxy_bid WHERE  is_override = '0' AND fk_auction_id='".$auction_id."' and amount<(SELECT max(amount) FROM tbl_proxy_bid WHERE is_override ='0' AND fk_auction_id='".$auction_id."'))";
 							
 							$sql_second_highest_res=mysqli_fetch_array(mysqli_query($GLOBALS['db_connect'],$sql_second_highest));
-							$second_highest_val=$sql_second_highest_res['amount'];
-							$second_highest_user=$sql_second_highest_res['fk_user_id'];
+							$second_highest_val=$sql_second_highest_res['amount'] ?? 0;
 							
 							if($second_highest_val > $auctionItems[$i]['max_bid_amount']){
 									$next_bid = $second_highest_val + increment_amount($second_highest_val);
@@ -269,18 +334,12 @@ function updateBidCronJob(){
 									}
 									// Skip if capped next_bid equals current max — no new bid needed, winner already set
 									if($next_bid > 0 && $next_bid != $auctionItems[$i]['max_bid_amount']){
-										$sql_insert="Insert into tbl_bid (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,bid_is_won,post_date,post_ip) values ('".$auctionItems[$i]['highest_user']."','".$auction_id."','".$second_highest_val."','0','0','".date('Y-m-d H:i:s')."','".$_SERVER['REMOTE_ADDR']."')";
-										mysqli_query($GLOBALS['db_connect'],$sql_insert);
-										archive_bid_immediately(mysqli_insert_id($GLOBALS['db_connect']));
+										insertClosingBid($auction_id, $auctionItems[$i]['highest_user'], $second_highest_val, false);
+										$last_bid_id = insertClosingBid($auction_id, $auctionItems[$i]['fk_user_id'], $next_bid, true);
 
-										$sql_insert="Insert into tbl_bid (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,bid_is_won,post_date,post_ip) values ('".$auctionItems[$i]['fk_user_id']."','".$auction_id."','".$next_bid."','1','1','".date('Y-m-d H:i:s')."','".$_SERVER['REMOTE_ADDR']."')";
-										mysqli_query($GLOBALS['db_connect'],$sql_insert);
-										$last_bid_id = mysqli_insert_id($GLOBALS['db_connect']);
-										// Do NOT archive yet — processExpiredAuction reads tbl_bid to generate invoice
-
-										$update_sql_latest="Update tbl_auction set highest_user ='".$auctionItems[$i]['fk_user_id']."',max_bid_amount='".$next_bid."',bid_count=bid_count + 2 where auction_id='".$auction_id."'";
+										$update_sql_latest="Update tbl_auction set highest_user ='".(int)$auctionItems[$i]['fk_user_id']."',max_bid_amount='".(float)$next_bid."',bid_count=bid_count + 2 where auction_id='".$auction_id."'";
 										mysqli_query($GLOBALS['db_connect'],$update_sql_latest);
-										}
+									}
 							}else{
 									$next_bid = $auctionItems[$i]['max_bid_amount'] + increment_amount($auctionItems[$i]['max_bid_amount']);
 									if($next_bid > $auctionItems[$i]['proxy_amount']){
@@ -288,105 +347,69 @@ function updateBidCronJob(){
 									}
 									// Skip if capped next_bid equals current max — no new bid needed, winner already set
 									if($next_bid > 0 && $next_bid != $auctionItems[$i]['max_bid_amount']){
-										$sql_insert="Insert into tbl_bid (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,bid_is_won,post_date,post_ip) values ('".$auctionItems[$i]['fk_user_id']."','".$auction_id."','".$next_bid."','1','1','".date('Y-m-d H:i:s')."','".$_SERVER['REMOTE_ADDR']."')";
-										mysqli_query($GLOBALS['db_connect'],$sql_insert);
-										$last_bid_id = mysqli_insert_id($GLOBALS['db_connect']);
-										// Do NOT archive yet — processExpiredAuction reads tbl_bid to generate invoice
+										$last_bid_id = insertClosingBid($auction_id, $auctionItems[$i]['fk_user_id'], $next_bid, true);
 
-										$update_sql_latest="Update tbl_auction set highest_user ='".$auctionItems[$i]['fk_user_id']."',max_bid_amount='".$next_bid."',bid_count=bid_count + 1 where auction_id='".$auction_id."'";
+										$update_sql_latest="Update tbl_auction set highest_user ='".(int)$auctionItems[$i]['fk_user_id']."',max_bid_amount='".(float)$next_bid."',bid_count=bid_count + 1 where auction_id='".$auction_id."'";
 										mysqli_query($GLOBALS['db_connect'],$update_sql_latest);
 									}
 								}
-							$sqlForOutbid ="SELECT usr.firstname, usr.lastname, usr.email,p.poster_title
-											FROM ".USER_TABLE." usr,".TBL_AUCTION." a,".TBL_POSTER." p
-											WHERE usr.user_id='".$auctionItems[$i]['highest_user']."'
-											and a.auction_id='".$auction_id."'
-											and a.fk_poster_id=p.poster_id ";
-							$rsOutbid = mysqli_query($GLOBALS['db_connect'],$sqlForOutbid);
-							$rowOutbid = mysqli_fetch_array($rsOutbid);
+							if($last_bid_id > 0){
+								// The previous high bidder lost to the proxy.
+								$sqlForOutbid ="SELECT usr.firstname, usr.lastname, usr.email,p.poster_title
+												FROM ".USER_TABLE." usr,".TBL_AUCTION." a,".TBL_POSTER." p
+												WHERE usr.user_id='".$auctionItems[$i]['highest_user']."'
+												and a.auction_id='".$auction_id."'
+												and a.fk_poster_id=p.poster_id ";
+								$rsOutbid = mysqli_query($GLOBALS['db_connect'],$sqlForOutbid);
+								$rowOutbid = mysqli_fetch_array($rsOutbid);
 		
-							$toMail = $rowOutbid['email'];
-							$toName = $rowOutbid['firstname'].' '.$rowOutbid['lastname'];
-							$fromMail = ADMIN_EMAIL_ADDRESS;
-							$fromName = ADMIN_NAME;
+								$toMail = $rowOutbid['email'];
+								$toName = $rowOutbid['firstname'].' '.$rowOutbid['lastname'];
+								$fromMail = ADMIN_EMAIL_ADDRESS;
+								$fromName = ADMIN_NAME;
 		
-							$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
+								$subject = "Kaijulink::You have been outbid - ".$rowOutbid['poster_title']." ";
 		
-							$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
-							$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
-							$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="https://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'&live=1">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'&live=1</a><br /><br />';
-							$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction posters, please click the following link:<br/> <a href="https://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
-							$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
-							$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;		
+								$textContent = 'Dear '.$rowOutbid['firstname'].' '.$rowOutbid['lastname'].',<br /><br />';
+								$textContent .= '<b>You have been outbid on the following item : </b>'.$rowOutbid['poster_title'].'<br /><br />';
+								$textContent .= 'To view the item or increase your bid, please click the following link:<br /> <a href="https://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'&live=1">http://'.HOST_NAME.'/buy.php?mode=poster_details&auction_id='.$auction_id.'&live=1</a><br /><br />';
+								$textContent .= 'Do not let other items you are interested in get away!<br />To view all Auction posters, please click the following link:<br/> <a href="https://'.HOST_NAME.'/buy.php?list=weekly">http://'.HOST_NAME.'/buy.php?list=weekly</a><br /><br />';
+								$textContent .= "<p style='margin:20px 0 0 0; color:#333333;'>Warm regards,<br /><strong>".ADMIN_NAME."</strong><br /><a href='mailto:".ADMIN_EMAIL_ADDRESS."' style='color:#c0392b;'>".ADMIN_EMAIL_ADDRESS."</a></p>";
+								$textContent = MAIL_BODY_TOP.$textContent.MAIL_BODY_BOTTOM;		
 		
-							// To send HTML mail, the Content-type header must be set
-							$headers  = 'MIME-Version: 1.0' . "\r\n";
-							$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+								// To send HTML mail, the Content-type header must be set
+								$headers  = 'MIME-Version: 1.0' . "\r\n";
+								$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 		
-							// Additional headers
-							//$headers .= 'To: '.$toName.' <'.$toMail.'>' . "\r\n";
-							$headers .= 'From: '.ADMIN_NAME.' <'.ADMIN_EMAIL_ADDRESS.'>' . "\r\n";
-							//$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
-							//$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
+								// Additional headers
+								//$headers .= 'To: '.$toName.' <'.$toMail.'>' . "\r\n";
+								$headers .= 'From: '.ADMIN_NAME.' <'.ADMIN_EMAIL_ADDRESS.'>' . "\r\n";
+								//$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
+								//$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
 		
-							sendMailCron($toMail, $toName, $subject, $textContent);
-							processExpiredAuction($auctionItems[$i]['auction_id'], $last_bid_id);
-							// Archive the proxy winner bid AFTER invoice is generated (generateInvoice reads tbl_bid)
-							if($last_bid_id > 0){ archive_bid_immediately($last_bid_id); }
-
-					   }elseif($auctionItems[$i]['max_bid_amount'] > $auctionItems[$i]['bid_amount_from_bid']
-					           && $auctionItems[$i]['highest_user'] == $auctionItems[$i]['fk_user_id']){
-					        // Proxy holder IS the tbl_auction winner.
-					        // fetchExpiredAuctionDetails moves bids to tbl_bid_archive before this runs,
-					        // so check there first to avoid inserting a duplicate closing bid.
-					        // Check for ANY bid at the winning amount — direct (is_proxy=0) or proxy (is_proxy=1).
-					        // The winner may have won with a direct bid even though they also hold a proxy,
-					        // so filtering is_proxy='1' would miss their real bid and cause a duplicate.
-					        $rs_arch_bid = mysqli_query($GLOBALS['db_connect'],
-					            "SELECT bid_id FROM tbl_bid_archive
-					             WHERE bid_fk_user_id='".$auctionItems[$i]['fk_user_id']."'
-					               AND bid_fk_auction_id='".$auctionItems[$i]['auction_id']."'
-					               AND bid_amount='".$auctionItems[$i]['max_bid_amount']."'
-					             ORDER BY bid_id DESC LIMIT 1");
-					        $arch_bid = $rs_arch_bid ? mysqli_fetch_assoc($rs_arch_bid) : null;
-					        if($arch_bid){
-					            $last_bid_id = (int)$arch_bid['bid_id'];
-					        } else {
-							    $sql_insert="Insert into tbl_bid (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,post_date,post_ip) values ('".$auctionItems[$i]['fk_user_id']."','".$auctionItems[$i]['auction_id']."','".$auctionItems[$i]['max_bid_amount']."','1','".date('Y-m-d H:i:s')."','".$_SERVER['REMOTE_ADDR']."')";
-							    mysqli_query($GLOBALS['db_connect'],$sql_insert);
-							    $last_bid_id = mysqli_insert_id($GLOBALS['db_connect']);
-					        }
-							processExpiredAuction($auctionItems[$i]['auction_id'], $last_bid_id);
-							if(!$arch_bid){ archive_bid_immediately($last_bid_id); }
+								sendMailCron($toMail, $toName, $subject, $textContent);
+							}else{
+								// No proxy bid was placed, so the current high bidder stands.
+								$last_bid_id = resolveWinningBid($auction_id, $auctionItems[$i]['highest_user'], $auctionItems[$i]['max_bid_amount'], $auctionItems[$i]['fk_user_id']);
+							}
+					   }else{
+							// The current high bidder won (with a direct bid or a proxy).
+							$last_bid_id = resolveWinningBid($auction_id, $auctionItems[$i]['highest_user'], $auctionItems[$i]['max_bid_amount'], $auctionItems[$i]['fk_user_id']);
 					   }
-					   else{
-					        // Non-proxy winner: find their real bid — check tbl_bid first, then tbl_bid_archive
-					        // (fetchExpiredAuctionDetails moves bids to archive before this branch runs)
-					        $winner_where = "bid_fk_user_id='".$auctionItems[$i]['highest_user']."'
-					               AND bid_fk_auction_id='".$auctionItems[$i]['auction_id']."'
-					               AND bid_amount='".$auctionItems[$i]['max_bid_amount']."'
-					               AND is_proxy='0'";
-					        $rs_existing = mysqli_query($GLOBALS['db_connect'],
-					            "SELECT bid_id FROM tbl_bid WHERE $winner_where ORDER BY bid_id DESC LIMIT 1");
-					        $existing_bid = $rs_existing ? mysqli_fetch_assoc($rs_existing) : null;
-					        if(!$existing_bid){
-					            $rs_arch = mysqli_query($GLOBALS['db_connect'],
-					                "SELECT bid_id FROM tbl_bid_archive WHERE $winner_where ORDER BY bid_id DESC LIMIT 1");
-					            $existing_bid = $rs_arch ? mysqli_fetch_assoc($rs_arch) : null;
-					        }
-					        if($existing_bid){
-					            $winner_bid_id = (int)$existing_bid['bid_id'];
-					            processExpiredAuction($auctionItems[$i]['auction_id'], $winner_bid_id);
-					            archive_bid_immediately($winner_bid_id);
-					        }
-						}
-							
+					   if($last_bid_id > 0){
+							processExpiredAuction($auction_id, $last_bid_id);
+					   }else{
+							echo "[CRON][SETTLE-FAIL] no winning bid found — no invoice. auction_id=".$auction_id." highest_user=".(int)$auctionItems[$i]['highest_user']." max_bid=".$auctionItems[$i]['max_bid_amount']."\n";
+							noteProblem("[CRON][SETTLE-FAIL] no winning bid found. auction_id=".$auction_id);
+					   }
+						
 					}elseif($auctionItems[$i]['fk_auction_type_id'] == '3' && $auctionItems[$i]['auction_reserve_offer_price'] <= $auctionItems[$i]['last_bid_amount']){
-						processExpiredAuction($auctionItems[$i]['auction_id'], $auctionItems[$i]['last_bid_id']);
+						processExpiredAuction($auction_id, $auctionItems[$i]['last_bid_id']);
 					}           
 				}
 			}
 			sync_auction_bid_fun($auction_ids);
+			sendSettleAlert((int)$auction_week_id);
 			$sql_update_auction_week_done = "UPDATE tbl_auction_week  SET is_processing= '0' WHERE auction_week_id=".$auction_week_id;		   
 			$sql_update_res_auction_done=mysqli_query($GLOBALS['db_connect'],$sql_update_auction_week_done);
 	}
@@ -448,7 +471,7 @@ function fetchExpiredAuctionDetails($auction_week_id){
 					echo "[CRON][ARCHIVE-FAIL] auction insert failed after poster was created — "
 					   ."orphan risk. live auction_id=".$row_auction['auction_id']
 					   ." new poster_id=".$poster_id_new." week=".$auction_week_id." err=".$_aucErr."\n";
-					error_log("[CRON][ARCHIVE-FAIL] live auction_id=".$row_auction['auction_id']
+					noteProblem("[CRON][ARCHIVE-FAIL] live auction_id=".$row_auction['auction_id']
 					   ." new poster_id=".$poster_id_new." err=".$_aucErr);
 				}
 				if($auction_id_new>0){
@@ -464,11 +487,15 @@ function fetchExpiredAuctionDetails($auction_week_id){
 						}
 					}
 					###################  tbl_bid to tbl_bid_archive  ##########################################
+					// bid_is_won is always archived as '0'. The winner is decided once, at close, by
+					// markWinningBid(). A '1' carried over from tbl_bid is never trustworthy: before the
+					// Oct 2026 fix, closing one lot could flag a bid on a still-running lot whose
+					// tbl_bid.bid_id happened to equal an archive bid_id, leaving several "won" bids.
 					$select_bids = "SELECT * FROM tbl_bid WHERE bid_fk_auction_id = ".$row['auction_id'];
 					if($rs_bids = mysqli_query($GLOBALS['db_connect'], $select_bids)){
 						while($row_bid = mysqli_fetch_assoc($rs_bids)){
 							$sql_bid_archive = "INSERT INTO tbl_bid_archive (bid_fk_user_id, bid_fk_auction_id, bid_amount, is_proxy, bid_is_won, post_date, post_ip, is_snipe)
-								VALUES (".$row_bid['bid_fk_user_id'].",".$auction_id_new.",".$row_bid['bid_amount'].",'".$row_bid['is_proxy']."','".$row_bid['bid_is_won']."','".$row_bid['post_date']."','".$row_bid['post_ip']."','".$row_bid['is_snipe']."')";
+								VALUES (".$row_bid['bid_fk_user_id'].",".$auction_id_new.",".$row_bid['bid_amount'].",'".$row_bid['is_proxy']."','0','".$row_bid['post_date']."','".$row_bid['post_ip']."','".$row_bid['is_snipe']."')";
 							if(mysqli_query($GLOBALS['db_connect'], $sql_bid_archive)){
 								$sql_del_bid = "DELETE FROM tbl_bid WHERE bid_id = ".$row_bid['bid_id'];
 								mysqli_query($GLOBALS['db_connect'], $sql_del_bid);
@@ -541,7 +568,7 @@ function fetchExpiredAuctionDetails($auction_week_id){
 				echo "[CRON][ARCHIVE-SKIP] poster insert failed — item left live. "
 				   ."poster_id=".$row['poster_id']." auction_id=".$row['auction_id']
 				   ." week=".$auction_week_id." err=".$_skipErr."\n";
-				error_log("[CRON][ARCHIVE-SKIP] poster_id=".$row['poster_id']
+				noteProblem("[CRON][ARCHIVE-SKIP] poster_id=".$row['poster_id']
 				   ." auction_id=".$row['auction_id']." week=".$auction_week_id." err=".$_skipErr);
 			}
 
@@ -552,13 +579,22 @@ function fetchExpiredAuctionDetails($auction_week_id){
 
 function fetchExpiredAuctionDetailsList($auction_ids)
 {
-	$ids = join(",",$auction_ids);
+	if(empty($auction_ids)){ return []; }
+	$ids = join(",",array_map('intval',$auction_ids));
+	// $auction_ids are NEW tbl_auction IDs (archive ID space), and every bid for them has
+	// already been moved to tbl_bid_archive by fetchExpiredAuctionDetails(). The winning bid
+	// must therefore be read from tbl_bid_archive only. This used to LEFT JOIN tbl_bid, whose
+	// rows are keyed by tbl_auction_live IDs: when lots were still running (end time extended
+	// by late bids) a new archive ID could equal a running lot's live ID, and its bids were
+	// read as this lot's bids. Highest bid first; on a tie the proxy bid wins (same rule the
+	// old countMax() CASE applied), then the latest.
 	$sql = "SELECT
             a.auction_id,
             a.fk_auction_type_id,
 			a.fk_auction_week_id,
-            tb.bid_id  AS last_bid_id,
-			MAX(tb.bid_amount) AS bid_amount_from_bid,
+            (SELECT ab.bid_id FROM tbl_bid_archive ab WHERE ab.bid_fk_auction_id = a.auction_id
+              ORDER BY ab.bid_amount DESC, ab.is_proxy DESC, ab.bid_id DESC LIMIT 1) AS last_bid_id,
+			(SELECT MAX(ab.bid_amount) FROM tbl_bid_archive ab WHERE ab.bid_fk_auction_id = a.auction_id) AS bid_amount_from_bid,
             a.bid_count,
 			a.highest_user,
 			a.max_bid_amount,
@@ -567,26 +603,14 @@ function fetchExpiredAuctionDetailsList($auction_ids)
 			max(p.amount) as proxy_amount
 			FROM tbl_auction a
 			LEFT JOIN tbl_proxy_bid p
-                  ON a.auction_id = p.fk_auction_id	
-			and p.is_override ='0'	  
+                  ON a.auction_id = p.fk_auction_id
+			and p.is_override ='0'
 			and p.amount =
 							( SELECT MAX(amount) FROM tbl_proxy_bid WHERE is_override ='0' AND  fk_auction_id=a.auction_id group by fk_auction_id )
-            LEFT JOIN tbl_bid tb
-                  ON a.auction_id = tb.bid_fk_auction_id				
-                AND CASE WHEN countMax(a.auction_id) = 1 THEN tb.bid_amount = (SELECT
-                                                                       MAX(ntb.bid_amount)
-                                                                     FROM tbl_bid ntb
-                                                                     WHERE ntb.bid_fk_auction_id = a.auction_id
-                                                                     GROUP BY ntb.bid_fk_auction_id)WHEN countMax(a.auction_id) > 1 THEN tb.bid_amount = (SELECT
-                                                                                                                                                            MAX(ntb.bid_amount)
-                                                                                                                                                          FROM tbl_bid ntb
-                                                                                                                                                          WHERE ntb.bid_fk_auction_id = a.auction_id
-                                                                                                                                                          GROUP BY ntb.bid_fk_auction_id)
-      AND tb.is_proxy = '1' END
 	  WHERE a.auction_id IN (".$ids.")
 	  GROUP BY a.auction_id ";
-	  echo $sql;
    if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
+   	$dataArr = [];
    	$auction_stills_id = '';
    	$auction_week_id = '';
 	   while($row = mysqli_fetch_assoc($rs)){
@@ -630,7 +654,7 @@ function fetchExpiredAuctionDetailsList($auction_ids)
 							 						  '".date("Y-m-d H:i:s")."',
 							 						  '".date("Y-m-d H:i:s")."',
 													  '1',
-													  '".$_SERVER["REMOTE_ADDR"]."',
+													  '".($_SERVER["REMOTE_ADDR"] ?? 'cron')."',
 													  '".$row['auction_id']."',
 													  '1'													  
 							 						 )";
@@ -639,7 +663,7 @@ function fetchExpiredAuctionDetailsList($auction_ids)
 		   }
 	   }
 	 
-	  if($is_stills==1 && $auction_stills_id!=''){
+	  if(!empty($is_stills) && $auction_stills_id!=''){
 			$sql_update_week = "UPDATE tbl_auction_week  SET is_latest= '0' where is_latest= '1' AND is_stills= '1' ";
 			$sql_update_res_week=mysqli_query($GLOBALS['db_connect'],$sql_update_week);
 	   
@@ -648,23 +672,88 @@ function fetchExpiredAuctionDetailsList($auction_ids)
 	  } 
 	   return $dataArr;
    }
-   return false;
+   // The lots are already out of the live tables at this point, so a failure here means none
+   // of them gets a winner or an invoice. Make it loud; returning false used to crash the
+   // caller's count() and leave the week locked.
+   $_listErr = mysqli_error($GLOBALS['db_connect']);
+   echo "[CRON][SETTLE-FAIL] closed-lot query failed, no winners processed. ids=".$ids." err=".$_listErr."\n";
+   noteProblem("[CRON][SETTLE-FAIL] closed-lot query failed. ids=".$ids." err=".$_listErr);
+   return [];
 }
 
 
+// Mark $bid_id as the one winning bid of closed auction $auction_id, and clear any other
+// bid_is_won flag on that auction so there is never more than one winner per lot.
+// Works on tbl_bid_archive only, and only if the bid really belongs to $auction_id.
+// Returns true when the bid was found and marked.
+function markWinningBid($auction_id, $bid_id)
+{
+	$auction_id = (int)$auction_id;
+	$bid_id = (int)$bid_id;
+	if($auction_id <= 0 || $bid_id <= 0){ return false; }
+	$rs = mysqli_query($GLOBALS['db_connect'],
+		"SELECT bid_id FROM tbl_bid_archive WHERE bid_id=".$bid_id." AND bid_fk_auction_id=".$auction_id." LIMIT 1");
+	if(!$rs || !mysqli_fetch_assoc($rs)){ return false; }
+	mysqli_query($GLOBALS['db_connect'],
+		"UPDATE tbl_bid_archive SET bid_is_won = IF(bid_id=".$bid_id.",'1','0') WHERE bid_fk_auction_id=".$auction_id);
+	return true;
+}
+
+// Archive a bid the close itself creates (proxy resolution / closing proxy bid) directly into
+// tbl_bid_archive under the closed auction's NEW tbl_auction ID. Never write these to tbl_bid:
+// tbl_bid is keyed by tbl_auction_live IDs, and a closed auction's new ID can equal the ID of
+// a lot that is still running. Returns the new archive bid_id (0 on failure).
+function insertClosingBid($auction_id, $user_id, $amount, $is_proxy)
+{
+	$sql = "INSERT INTO tbl_bid_archive (bid_fk_user_id, bid_fk_auction_id, bid_amount, is_proxy, bid_is_won, post_date, post_ip, is_snipe)
+			VALUES (".(int)$user_id.", ".(int)$auction_id.", ".(float)$amount.", '".($is_proxy ? '1' : '0')."', '0', '".date('Y-m-d H:i:s')."', '".mysqli_real_escape_string($GLOBALS['db_connect'], $_SERVER['REMOTE_ADDR'] ?? 'cron')."', '0')";
+	if(mysqli_query($GLOBALS['db_connect'], $sql)){
+		return (int)mysqli_insert_id($GLOBALS['db_connect']);
+	}
+	$_insErr = mysqli_error($GLOBALS['db_connect']);
+	echo "[CRON][SETTLE-FAIL] closing bid insert failed. auction_id=".(int)$auction_id." user=".(int)$user_id." amount=".$amount." err=".$_insErr."\n";
+	noteProblem("[CRON][SETTLE-FAIL] closing bid insert failed. auction_id=".(int)$auction_id." user=".(int)$user_id." amount=".$amount." err=".$_insErr);
+	return 0;
+}
+
+// Find the closed auction's winning bid in tbl_bid_archive: the high bidder's bid at the
+// final high amount (direct or proxy, latest first). If the high bidder won through their
+// proxy and no bid row at that amount exists yet, add the closing proxy bid. Returns the
+// archive bid_id, or 0 when no winning bid can be identified.
+function resolveWinningBid($auction_id, $highest_user, $max_bid_amount, $proxy_user)
+{
+	$auction_id = (int)$auction_id;
+	$highest_user = (int)$highest_user;
+	if($auction_id <= 0 || $highest_user <= 0){ return 0; }
+	$rs = mysqli_query($GLOBALS['db_connect'],
+		"SELECT bid_id FROM tbl_bid_archive
+		 WHERE bid_fk_auction_id=".$auction_id."
+		   AND bid_fk_user_id=".$highest_user."
+		   AND bid_amount='".(float)$max_bid_amount."'
+		 ORDER BY bid_id DESC LIMIT 1");
+	$found = $rs ? mysqli_fetch_assoc($rs) : null;
+	if($found){ return (int)$found['bid_id']; }
+	if($highest_user == (int)$proxy_user){
+		return insertClosingBid($auction_id, $highest_user, $max_bid_amount, true);
+	}
+	return 0;
+}
+
 function processExpiredAuction($auction_id, $bid_id)
 {
-    // Mark won in both tables — bid may be in tbl_bid (newly inserted by proxy branches)
-    // or already in tbl_bid_archive (moved by fetchExpiredAuctionDetails before the loop ran).
-    mysqli_query($GLOBALS['db_connect'], "UPDATE ".TBL_BID." SET bid_is_won='1' WHERE bid_id='".$bid_id."'");
-    mysqli_query($GLOBALS['db_connect'], "UPDATE tbl_bid_archive SET bid_is_won='1' WHERE bid_id='".$bid_id."'");
+    // $auction_id is a closed lot's tbl_auction ID and $bid_id a tbl_bid_archive ID. Never look
+    // either up in tbl_bid / tbl_auction_live: those use a separate ID sequence, so the same
+    // number can belong to a different, still-running lot (the Oct 2026 Halloween close bug).
+    if(!markWinningBid($auction_id, $bid_id)){
+        echo "[CRON][SETTLE-FAIL] winning bid not found in archive for this lot — no invoice. auction_id=".(int)$auction_id." bid_id=".(int)$bid_id."\n";
+        noteProblem("[CRON][SETTLE-FAIL] winning bid not found. auction_id=".(int)$auction_id." bid_id=".(int)$bid_id);
+        return;
+    }
     $status = generateInvoice($bid_id, true, $auction_id);
      if($status=='true'){
-        $bid_union_winner = "(SELECT bid_id,bid_fk_user_id,bid_fk_auction_id FROM tbl_bid WHERE bid_id='".$bid_id."'
-                             UNION ALL
-                             SELECT bid_id,bid_fk_user_id,bid_fk_auction_id FROM tbl_bid_archive WHERE bid_id='".$bid_id."') b";
-        $sql_winnerMail="Select u.email,u.firstname,u.lastname,p.poster_title from tbl_poster p,user_table u ,".$bid_union_winner.",tbl_auction a
-                        where b.bid_id='".$bid_id."' and b.bid_fk_user_id = u.user_id and a.auction_id=b.bid_fk_auction_id and a.fk_poster_id=p.poster_id";
+        $textContentAdmin = '';
+        $sql_winnerMail="Select u.email,u.firstname,u.lastname,p.poster_title from tbl_poster p,user_table u ,tbl_bid_archive b,tbl_auction a
+                        where b.bid_id='".(int)$bid_id."' and b.bid_fk_auction_id='".(int)$auction_id."' and b.bid_fk_user_id = u.user_id and a.auction_id=b.bid_fk_auction_id and a.fk_poster_id=p.poster_id";
         $res_sql_winnerMail=mysqli_query($GLOBALS['db_connect'],$sql_winnerMail);
         $row=mysqli_fetch_array($res_sql_winnerMail);
         $toMail = $row['email'];
@@ -750,11 +839,11 @@ function processExpiredAuction($auction_id, $bid_id)
 function generateInvoice($id, $is_bid,$auction_id='')
 {
 	if($is_bid){
-		// Union both tables so the invoice can be generated whether the bid is still in tbl_bid
-		// or has already been moved to tbl_bid_archive by fetchExpiredAuctionDetails.
-		$bid_source = "(SELECT * FROM tbl_bid WHERE bid_id='".intval($id)."'
-		               UNION ALL
-		               SELECT * FROM tbl_bid_archive WHERE bid_id='".intval($id)."') b";
+		// tbl_bid_archive ONLY, and the bid must belong to $auction_id. This used to UNION
+		// tbl_bid and tbl_bid_archive by bid_id — two independent ID sequences — so when lots
+		// were still running, a still-live bid with the same bid_id was picked up and invoiced
+		// to the wrong buyer, for the wrong amount, against the wrong auction.
+		$bid_source = "(SELECT * FROM tbl_bid_archive WHERE bid_id='".intval($id)."' AND bid_fk_auction_id='".intval($auction_id)."') b";
 		$sql = "SELECT u.user_id, u.firstname, u.lastname, u.country_id, u.city, u.state,
 				u.address1, u.address2, u.zipcode, c.country_name, c.country_code,
 				u.shipping_country_id, u.shipping_city, u.shipping_state, u.shipping_address1,
@@ -788,30 +877,15 @@ function generateInvoice($id, $is_bid,$auction_id='')
 			   AND pi.is_default = '1' ";	
 	}
 	$rs = mysqli_query($GLOBALS['db_connect'],$sql);
-	$row = mysqli_fetch_array($rs);
+	$row = $rs ? mysqli_fetch_array($rs) : null;
+	if(!$row){
+		// Missing buyer country, default image, or the bid/auction pair. Previously this went
+		// on to write a sold record and an invoice with an empty buyer and amount.
+		echo "[CRON][SETTLE-FAIL] invoice data not found — no invoice. id=".(int)$id." auction_id=".(int)$auction_id." err=".mysqli_error($GLOBALS['db_connect'])."\n";
+		noteProblem("[CRON][SETTLE-FAIL] invoice data not found. id=".(int)$id." auction_id=".(int)$auction_id);
+		return "false";
+	}
 	$winnerName = $row['firstname'].' '.$row['lastname'];
-	
-	$sql_insert_sold="Insert into `tbl_sold_archive` (`auction_id`,
-													 `invoice_generated_on`,
-													 `fk_auction_type_id`,
-							 						 `poster_id`,
-							 						 `winnerName`,
-							 						 `soldamnt`,
-													 `is_cloud`,
-													 `auction_week_id`,
-													 `poster_thumb`) values
-							 						 (
-													  '".$row['auction_id']."',							 						  
-							 						  '".date("Y-m-d H:i:s")."',
-							 						  '2',							 						  
-							 						  '".$row['poster_id']."',
-							 						  '".$winnerName."',
-							 						  '".$row['amount']."',
-													  '1',
-													  '".$row['fk_auction_week_id']."',
-													  '".$row['poster_thumb']."'
-							 						 )";
-	mysqli_query($GLOBALS['db_connect'],$sql_insert_sold);	
 	if($is_bid){
 		$amount = $row['amount'];
 		$auction_id = $row['bid_fk_auction_id'];	
@@ -847,10 +921,24 @@ function generateInvoice($id, $is_bid,$auction_id='')
 												  'poster_sku' => $row['poster_sku'],
 												  'poster_title' => mysqli_real_escape_string($GLOBALS['db_connect'],$row['poster_title']),
 												  'amount' => $amount)));
-    $select_is_sold="SELECT fk_invoice_id from tbl_invoice_to_auction where fk_auction_id ='".$auction_id."' ";
+    $select_is_sold="SELECT fk_invoice_id from tbl_invoice_to_auction where fk_auction_id ='".(int)$auction_id."' ";
     $res_select_is_sold=mysqli_fetch_row(mysqli_query($GLOBALS['db_connect'],$select_is_sold));
 
     if($res_select_is_sold==0){
+
+        // Sold record only together with the (first) invoice. It used to be written before this
+        // check, so a second pass over an already-invoiced auction added a duplicate row.
+        $sql_insert_sold="Insert into `tbl_sold_archive` (`auction_id`,`invoice_generated_on`,`fk_auction_type_id`,`poster_id`,`winnerName`,`soldamnt`,`is_cloud`,`auction_week_id`,`poster_thumb`) values
+                          ('".(int)$row['auction_id']."',
+                           '".date("Y-m-d H:i:s")."',
+                           '2',
+                           '".(int)$row['poster_id']."',
+                           '".mysqli_real_escape_string($GLOBALS['db_connect'], $winnerName)."',
+                           '".(float)$amount."',
+                           '1',
+                           '".(int)$row['fk_auction_week_id']."',
+                           '".mysqli_real_escape_string($GLOBALS['db_connect'], $row['poster_thumb'])."')";
+        mysqli_query($GLOBALS['db_connect'],$sql_insert_sold);
 
         $data = array('fk_user_id' => $row['user_id'], 'billing_address' => $billing_address, 'shipping_address' => $shipping_address,
 				  'total_amount' => $amount, 'auction_details' => $auction_details, 'invoice_generated_on' => date("Y-m-d H:i:s"), 'is_buyers_copy' => 1);
@@ -890,56 +978,35 @@ function generateInvoice($id, $is_bid,$auction_id='')
         return "false";
     }
 }
-// Immediately archive a just-inserted tbl_bid row by bid_id, then delete it.
-// Used for proxy-resolved bids inserted during cron processing so they never linger
-// in tbl_bid under a new tbl_auction ID that may collide with an active live auction ID.
-function archive_bid_immediately($bid_id){
-	$row = mysqli_fetch_assoc(mysqli_query($GLOBALS['db_connect'], "SELECT * FROM tbl_bid WHERE bid_id=".$bid_id." LIMIT 1"));
-	if(!$row) return;
-	$sql_archive = "INSERT INTO tbl_bid_archive (bid_fk_user_id,bid_fk_auction_id,bid_amount,is_proxy,bid_is_won,post_date,post_ip,is_snipe)
-		VALUES (".$row['bid_fk_user_id'].",".$row['bid_fk_auction_id'].",".$row['bid_amount'].",'".$row['is_proxy']."','".$row['bid_is_won']."','".$row['post_date']."','".$row['post_ip']."','".$row['is_snipe']."')";
-	mysqli_query($GLOBALS['db_connect'], $sql_archive);
-	if(mysqli_insert_id($GLOBALS['db_connect']) > 0){
-		mysqli_query($GLOBALS['db_connect'], "DELETE FROM tbl_bid WHERE bid_id=".$bid_id);
-	}
-}
-
 // increment_amount() lives in lib/function.php — no duplicate needed here
-//processExpiredAuction('2','2')
-// Safety net: moves any tbl_bid rows that were not archived during the main processing loop.
-// In normal operation this finds nothing — Branches A and B both call archive_bid_immediately()
-// on every bid they insert, and fetchExpiredAuctionDetails() moves pre-existing bids to
-// tbl_bid_archive before the loop runs. Kept as a catch-all for unexpected edge cases.
+
+// After the close: report, loudly, any lot of this run that is sold but has no invoice, or
+// has more than one bid flagged as won. These lines show up in /ecs/showcase-prod-cron;
+// fix with migrations/create_buyer_invoice.php.
+//
+// This replaces a "safety net" that swept tbl_bid for the new tbl_auction IDs and moved
+// whatever it found into tbl_bid_archive. tbl_bid is keyed by tbl_auction_live IDs, so any
+// match was a bid on a different lot that was still running. Together with
+// archive_bid_immediately() (removed) it moved live bids off running lots. The close no
+// longer writes to tbl_bid at all, so there is nothing to sweep.
 function sync_auction_bid_fun($auction_ids){
 	if(empty($auction_ids)){ return; }
 	$ids = join(",",array_map('intval',$auction_ids));
-
-	// CRITICAL — do not remove the NOT IN guard below.
-	// tbl_bid is keyed by tbl_auction_live.auction_id, but $auction_ids holds the NEW
-	// tbl_auction.auction_id values just created by fetchExpiredAuctionDetails(). Those two
-	// tables have independent auto-increment sequences, so a freshly-archived ID can collide
-	// with the ID of a COMPLETELY DIFFERENT item that is still live and still taking bids.
-	// Unguarded, this sweep matched that live item's bids, re-tagged them onto the archived
-	// auction in tbl_bid_archive, and DELETED them from tbl_bid — corrupting the archived
-	// item's bid history and wiping the live item's. archive_bid_immediately() carries a note
-	// about the same hazard. Rule: an auction_id still present in tbl_auction_live belongs to
-	// the live ID space — never touch its bids here.
-	$sql = "Select * from tbl_bid b
-			where b.bid_fk_auction_id IN (".$ids.")
-			  and b.bid_fk_auction_id NOT IN (SELECT auction_id FROM tbl_auction_live)";
-	$rs= mysqli_query($GLOBALS['db_connect'],$sql);
-	while($row=mysqli_fetch_array($rs)){
-		if($row['bid_fk_user_id'] >0){
-			$sql_insert = "Insert into tbl_bid_archive (`bid_fk_user_id`,`bid_fk_auction_id`,`bid_amount`,`is_proxy`,`bid_is_won`,`post_date`,`post_ip`,`is_snipe`) values
-						(".$row['bid_fk_user_id'].",".$row['bid_fk_auction_id'].",".$row['bid_amount'].",'".$row['is_proxy']."','".$row['bid_is_won']."','".$row['post_date']."','".$row['post_ip']."','".$row['is_snipe']."' )" ;
-			mysqli_query($GLOBALS['db_connect'],$sql_insert);
-			$bid_id_new =mysqli_insert_id($GLOBALS['db_connect']);
-			if($bid_id_new>0){
-				$sql_del = "Delete from tbl_bid where bid_id=".$row['bid_id'];
-				mysqli_query($GLOBALS['db_connect'],$sql_del);
-			}
-		}
-
+	$rs = mysqli_query($GLOBALS['db_connect'],
+		"SELECT a.auction_id FROM tbl_auction a
+		 WHERE a.auction_id IN (".$ids.") AND a.auction_is_sold='1'
+		   AND NOT EXISTS (SELECT 1 FROM tbl_invoice_to_auction t WHERE t.fk_auction_id=a.auction_id)");
+	while($rs && $row = mysqli_fetch_assoc($rs)){
+		echo "[CRON][SETTLE-CHECK] sold without invoice: auction_id=".$row['auction_id']."\n";
+		noteProblem("[CRON][SETTLE-CHECK] sold without invoice: auction_id=".$row['auction_id']);
+	}
+	$rs = mysqli_query($GLOBALS['db_connect'],
+		"SELECT bid_fk_auction_id, COUNT(*) AS n FROM tbl_bid_archive
+		 WHERE bid_fk_auction_id IN (".$ids.") AND bid_is_won='1'
+		 GROUP BY bid_fk_auction_id HAVING n > 1");
+	while($rs && $row = mysqli_fetch_assoc($rs)){
+		echo "[CRON][SETTLE-CHECK] ".$row['n']." bids flagged won: auction_id=".$row['bid_fk_auction_id']."\n";
+		noteProblem("[CRON][SETTLE-CHECK] multiple won bids: auction_id=".$row['bid_fk_auction_id']);
 	}
 	sync_auction_bids($auction_ids);
 }
