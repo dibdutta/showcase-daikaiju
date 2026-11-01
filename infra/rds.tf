@@ -87,7 +87,10 @@ resource "aws_db_instance" "main" {
 
   allocated_storage     = 20
   max_allocated_storage = 100
-  storage_type          = "gp2"
+  # gp3: cheaper than gp2 and a steady 3,000 IOPS / 125 MB/s baseline (gp2 at 20 GB is
+  # 100 IOPS, bursting to 3,000). No apply_immediately, so RDS applies the change in the
+  # next maintenance window (Sun 04:00–05:00 UTC), online, with no downtime.
+  storage_type          = "gp3"
   storage_encrypted     = true
 
   db_name  = var.db_name
