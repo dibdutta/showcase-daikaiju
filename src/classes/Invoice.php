@@ -693,7 +693,7 @@ class Invoice extends DBCommon{
 	
    }
    
-   function generateSellerInvoice($buyer_invoice_id)
+   function generateSellerInvoice($buyer_invoice_id, $only_auction_id = null)
    {
 		$sql = "SELECT a.auction_id,a.fk_auction_type_id, p.poster_sku, p.poster_title, ita.amount, u.user_id, u.firstname, u.lastname,u.email,
 				u.country_id, u.city, u.state, u.address1, u.address2, u.zipcode, c.country_name, c.country_code,i.shipping_address,i.billing_address,i.invoice_generated_on
@@ -704,6 +704,9 @@ class Invoice extends DBCommon{
 				AND p.fk_user_id = u.user_id
 				AND u.country_id = c.country_id
 				AND i.invoice_id = '".$buyer_invoice_id."'";
+		if($only_auction_id !== null){
+			$sql .= " AND a.auction_id = '".(int)$only_auction_id."'";
+		}
 		$rs = mysqli_query($GLOBALS['db_connect'], $sql);
 		while($invoice = mysqli_fetch_array($rs)){
 			$billing_address = serialize(array('billing_firstname' => mysqli_real_escape_string($GLOBALS['db_connect'],$invoice['firstname']),
