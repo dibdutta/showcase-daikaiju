@@ -1028,6 +1028,7 @@ function combine_seller_invoice(){
         require_once INCLUDE_PATH."lib/adminCommon.php";
         $dbCommonObj = new Invoice();
         if($update=$dbCommonObj->updateData(TBL_INVOICE,array('paid_on'=>date('Y-m-d :H:i:s'),'is_paid'=>'1'),array('invoice_id'=>$_REQUEST['invoice_id']),true)){
+            $dbCommonObj->generateSellerInvoice($_REQUEST['invoice_id']);
             echo "1";
         }else{
             echo "2";
