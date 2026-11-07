@@ -91,6 +91,7 @@ function mark_paid_seller_invoice(id){
                                     <td align="center" class="headertext" width="10%">Action</td>
                                 </tr>
                                     {assign var="user_id" value=""}
+                                    {assign var="invoice_group_key" value=""}
 
                                     {section name=counter loop=$auctionRows_sold}
 
@@ -105,13 +106,24 @@ function mark_paid_seller_invoice(id){
                                             {if $auctionRows_sold[counter].is_combined=='0' }
                                                 <a href="javascript:void(0);" onclick="combine_buyer_invoice('auction_id_{$auctionRows_sold[counter].user_id}')">combine</a>
                                              {/if}
-                                            {if $auctionRows_sold[counter].is_approved=='1' && $auctionRows_sold[counter].is_paid=='0'}
-                                                <a href="javascript:void(0);" onclick="mark_paid_seller_invoice('{$auctionRows_sold[counter].invoice_id}')">Mark as paid</a>
-                                            {/if}
                                             </td>
                                         {/if}
 
                                     </tr>
+                                    {if $invoice_group_key != $auctionRows_sold[counter].invoice_group_key}
+                                    <tr height="30">
+                                        <td colspan="6" style="background:#f0f0f0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;">
+                                            {if $auctionRows_sold[counter].invoice_id}
+                                                <b>Seller Invoice #{$auctionRows_sold[counter].invoice_id}</b>&nbsp;&mdash;&nbsp;{$auctionRows_sold[counter].invoice_group_count} poster(s)&nbsp;&mdash;&nbsp;${$auctionRows_sold[counter].invoice_group_amount|number_format:2}
+                                                {if $auctionRows_sold[counter].is_approved=='1' && $auctionRows_sold[counter].is_paid=='0'}
+                                                    &nbsp;<a href="javascript:void(0);" onclick="mark_paid_seller_invoice('{$auctionRows_sold[counter].invoice_id}')">Mark as paid</a>
+                                                {/if}
+                                            {else}
+                                                <b>Not yet invoiced</b> (buyer hasn't paid)&nbsp;&mdash;&nbsp;{$auctionRows_sold[counter].invoice_group_count} poster(s)&nbsp;&mdash;&nbsp;${$auctionRows_sold[counter].invoice_group_amount|number_format:2}
+                                            {/if}
+                                        </td>
+                                    </tr>
+                                    {/if}
                                     <tr id="tr_{$auctionRows_sold[counter].auction_id}" class="{cycle values="odd_tr,even_tr"}">
                                         <!--<td align="center" class="smalltext"><input type="checkbox" name="poster_ids[]" value="{$posterRows[counter].poster_id}" class="checkBox" /></td>-->
                                         <td align="center" class="smalltext"><img src="{$auctionRows_sold[counter].image_path}" height="78" width="100" /><br />{$auctionRows_sold[counter].poster_title}<br /><b>SKU: </b>{$auctionRows_sold[counter].poster_sku}</td>
@@ -143,6 +155,7 @@ function mark_paid_seller_invoice(id){
                                         </td>
                                     </tr>
                                         {assign var="user_id" value=$auctionRows_sold[counter].user_id}
+                                        {assign var="invoice_group_key" value=$auctionRows_sold[counter].invoice_group_key}
                                     {/section}
 
                                 <tr class="header_bgcolor" height="26">

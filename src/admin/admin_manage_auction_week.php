@@ -933,6 +933,25 @@ function combine_buyer_invoice(){
             $auctionRows_sold[$key]['tot_auction']=$totAuction;
         }
 
+        // Group rows that share the same seller invoice together (a seller can have
+        // multiple separate seller invoices; items with no seller invoice yet — buyer
+        // hasn't paid — are grouped once per seller since there's nothing to group them by).
+        $invoice_group_totals = array();
+        foreach($auctionRows_sold as $key => $val){
+            $groupKey = !empty($val['invoice_id']) ? 'inv_'.$val['invoice_id'] : 'none_'.$val['user_id'];
+            if(!isset($invoice_group_totals[$groupKey])){
+                $invoice_group_totals[$groupKey] = array('count' => 0, 'amount' => 0);
+            }
+            $invoice_group_totals[$groupKey]['count']++;
+            $invoice_group_totals[$groupKey]['amount'] += $val['amount'];
+        }
+        foreach($auctionRows_sold as $key => $val){
+            $groupKey = !empty($val['invoice_id']) ? 'inv_'.$val['invoice_id'] : 'none_'.$val['user_id'];
+            $auctionRows_sold[$key]['invoice_group_key'] = $groupKey;
+            $auctionRows_sold[$key]['invoice_group_count'] = $invoice_group_totals[$groupKey]['count'];
+            $auctionRows_sold[$key]['invoice_group_amount'] = $invoice_group_totals[$groupKey]['amount'];
+        }
+
         $smarty->assign('total_sold', $total_sold);
         $smarty->assign('auctionRows_sold', $auctionRows_sold);
         $smarty->assign('displayCounterTXT', displayCounter($total_sold, $GLOBALS['offset'], $GLOBALS['toshow'], "headertext", $message="", $start=5, $end=100, $step=5, $use=1));

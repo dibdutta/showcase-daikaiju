@@ -2478,10 +2478,10 @@ class Auction extends DBCommon{
         $sql .= " GROUP BY a.auction_id";
 
         if($type=='sold' && $is_limit=='1'){
-            $sql .= " ORDER BY ubuyer.user_id DESC
+            $sql .= " ORDER BY ubuyer.user_id DESC, i_buyer.invoice_id DESC
                         LIMIT ".$this->offset.", ".$this->toShow."";
         }elseif($type=='sold' && $is_limit=='0'){
-            $sql .= " ORDER BY ubuyer.user_id DESC ";
+            $sql .= " ORDER BY ubuyer.user_id DESC, i_buyer.invoice_id DESC ";
         }
 
         if($rs = mysqli_query($GLOBALS['db_connect'],$sql)){
